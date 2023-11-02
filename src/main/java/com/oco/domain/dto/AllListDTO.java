@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AllListDTO {
-	List<BusinessUserDTO> ulist;
+	List<BusinessDTO> ulist;
 	List<BusinessInfoDTO> ilist;
 }
