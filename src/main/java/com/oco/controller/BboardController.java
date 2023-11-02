@@ -17,6 +17,8 @@ import com.oco.service.FindListService;
 public class BboardController {
 	@Autowired
 	private FindListService Fservice;
+	
+	
 
 	// 찾아보기 리스트 가져오기 
 	@ResponseBody
