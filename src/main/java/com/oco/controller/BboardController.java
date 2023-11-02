@@ -19,14 +19,10 @@ public class BboardController {
 	@Autowired
 	private FindListService Fservice;
 	
-<<<<<<< HEAD
-	
-=======
 	@GetMapping("getlist")
 	public String getlist() {
 		return "business/list/listindex.html";
 	}
->>>>>>> 8512cec1f109645dbd829e973eaa99b092d963a2
 
 	// 찾아보기 리스트 가져오기 
 	@ResponseBody
