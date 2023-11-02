@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<title>oco</title>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+	<link rel="stylesheet" th:href="@{/main/css/main.css}">
+
+</head>
+<body id="main" class="intro notouch">
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="wrap">
+	<section class="main01 hidden">
+		<div class="main01-slide-wrap">
+			<div class="main01-slide">
+		    	<div class="main01-slide-txt">
+		        	<img src="images/ico-quotes.svg" alt=""/>
+		        	<p>여행, 일일이 찾는게 귀찮을 때
+						<strong>오시오</strong>
+					</p>
+				</div>
+		        <div class="img-area">
+		        	<img th:src="@{/main/images/main_visual01.jpg}">
+		        </div>
+		    </div>
+		    <div class="main01-slide">
+		    	<div class="main01-slide-txt">
+		        	<img src="images/ico-quotes.svg" alt=""/>
+		        	<p>여행, 일일이 찾는게 귀찮을 때
+						<strong>오시오</strong>
+					</p>
+				</div>
+		        <div class="img-area">
+		        	<img th:src="@{/main/images/main_visual02.jpg}">
+		        </div>
+		    </div>
+		</div>
+		<div class="main01-inner">
+		    <button class="ico ico-main-scroll"></button>
+		    <!--<p class="typo">Our Offer, Connect, Onward"</p>-->
+		    <div class="main01-slide-control">
+				<button class="main01-slide-btn prev"></button>
+				<button class="main01-slide-btn next"></button>
+				<button class="play"><i class="ico ico-play"></i></button>
+				<button class="pause"><i class="ico ico-pause"></i></button>
+			</div>
+		</div>
+	</section>
+	<section class="main02">
+		<div class="main02-inner">
+			<div class="category-tit">
+				<h3>제공서비스</h3>
+				<p>여행을 제안받고 나에게 맞는 플랜을 세워보세요!</p>	
+			</div>
+			<div class="category-con">
+		      	<div class="category-item">
+		      		<div class="category-icon">
+		      			<a href="#">
+		      				<img th:src="@{/main/images/main_icon01.png}">
+		  				</a>
+		      		</div>
+		      		<p class="category-txt">숙소</p>
+		      	</div>
+		      	<div class="category-item">
+		      		<div class="category-icon">
+		      			<a href="#">
+		      				<img th:src="@{/main/images/main_icon02.png}">
+		  				</a>
+		      		</div>
+		      		<p class="category-txt">식당</p>
+		      	</div>
+		      	<div class="category-item">
+		      		<div class="category-icon">
+		      			<a href="#">
+		      				<img th:src="@{/main/images/main_icon03.png}">
+		  				</a>
+		      		</div>
+		      		<p class="category-txt">카페</p>
+		      	</div>
+		      	<div class="category-item">
+		      		<div class="category-icon">
+		      			<a href="#">
+		      				<img th:src="@{/main/images/main_icon04.png}">
+		  				</a>
+		      		</div>
+		      		<p class="category-txt">렌터카</p>
+		      	</div>
+		      	<div class="category-item">
+		      		<div class="category-icon">
+		      			<a href="#">
+		      				<img th:src="@{/main/images/main_icon05.png}">
+		  				</a>
+		      		</div>
+		      		<p class="category-txt">기타</p>
+		      	</div>
+			</div><!--.category-con-->
+		</div><!--.inner-->
+	</section>
+	<section class="main03">
+		<div class="inner">
+			<div class="category-tit">
+				<h3>인기 플레이스</h3>
+				<p>지금 가장 핫한 플레이스를 만나보세요!</p>	
+			</div>
+		</div>
+		<swiper-container class="mySwiper"space-between="30"
+		    slides-per-view="3.5" autoplay="true">
+		    <swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img01.jpg}">
+					<div class="main03-txt">
+						<h4>[강원 양양군] 쏠비치 양양</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img02.jpg}">
+					<div class="main03-txt">
+						<h4>[제주 제주] 일도</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img03.jpg}">
+					<div class="main03-txt">
+						<h4>[경기 남양주] 포러데이 팔당</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img04.jpg}">
+					<div class="main03-txt">
+						<h4>[부산 기장군] 고고 렌터카</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img04.jpg}">
+					<div class="main03-txt">
+						<div class="main03-txt">
+						<h4>[강원 양양군] 쏠비치 양양</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+			<swiper-slide>
+				<div class="main03-con">
+					<img th:src="@{/main/images/main02_img04.jpg}">
+					<div class="main03-txt">
+						<h4>[강원 양양군] 쏠비치 양양</h4>
+						<h4><strong>★</strong> 4.9</h4>
+					</div>
+					<p>이용횟수 812,321회</p>
+				</div>
+			</swiper-slide>
+		  </swiper-container>
+		
+		  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+
+	</section>
+	
+	
+	</div><!--#wrap-->
+	
+	
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+  <script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+  <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+  <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+  <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+  
+
+</html>

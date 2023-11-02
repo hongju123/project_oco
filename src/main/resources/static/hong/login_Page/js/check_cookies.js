@@ -1,0 +1,35 @@
+
+
+// 쿠키를 읽는 함수
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+// 페이지 로드 시 쿠키 확인
+window.onload = function() {
+    var loginCookie = getCookie("login");
+    if (loginCookie == "fail") {
+        alert("로그인 실패");
+    } 
+    var userid = getCookie("userId")
+    if (userid !=null){
+		console.log("userid : "+userid);
+		document.querySelector(".userid_input").value = userid;
+		document.querySelector(".userpw_input").focus();
+	}
+	
+	/*쿠키 있을경우 alert으로 알림, pw는 이메일로 날라가게 해놨음*/
+	var userpw = getCookie("userpw");
+    if (userpw == "true") {
+        alert("이메일을 확인해주세요");
+    } 
+    onlyFindUserID
+    var onlyFindUserID = getCookie("onlyFindUserID");
+    if (onlyFindUserID != null) {
+		document.querySelector(".userid_input").value = onlyFindUserID;
+        alert("회원님의 아이디는" + onlyFindUserID +"입니다");
+    } 
+}
+console.log(document.cookie);

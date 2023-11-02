@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oco.mapper.FindListMapper">
+	  <select id="getMainList">
+	  select * from business_users where business_category like('${main1}%${main2}%') having business_address like ('${addr1}%${addr2}%');
+	  </select>
+	  <select id="getinfo">
+		  select * from business_info order by overall_grade desc;
+	  </select>
+  </mapper>
+ 

@@ -1,0 +1,94 @@
+/*.title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid blue;
+}
+
+
+.userid_div{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: white;
+    flex-grow: 1;
+    border-bottom: 1px solid black;
+}
+.userid_input{
+    all:unset;
+    color: black;
+    height: 100%;
+}
+.userpw_div{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: white;
+    flex-grow: 1;
+}
+.userpw_input{
+    all:unset;
+    color: black;
+    height: 100%;
+
+}
+
+.finduser_Page_button{
+    margin-top: 1vw;
+    width: 30%;
+    height: 15%;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+
+.id_form, .password_form{
+    margin: 20px;
+}
+
+*/
+
+
+.finduser_Page{
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    z-index: 100000;
+    width: 600px;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+.choose{
+    display: flex;
+    cursor: pointer;
+}
+.choose>div{
+    display: flex;
+    border: 1px solid white;
+    flex-wrap: wrap;	
+    width: 300px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+form{
+	margin: 20px;
+}
+
+.color{
+    font-weight: bolder;
+    background-color: rgba(0, 0, 0,0.9);
+}
+.finduser_Page_button{
+	margin-top: 20px;
+    height: 35px;
+    width: 60px;
+    border-radius: 5px;
+    text-align: center;
+}   
+    
+    

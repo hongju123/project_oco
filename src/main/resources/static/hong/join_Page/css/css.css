@@ -1,0 +1,44 @@
+html{width: 100%; height: 100%;}body{width: 100%;height: 100%; display: flex; align-items: center;justify-content: center;}
+.hidden{
+	display: none;
+}
+.form_area{
+    background-color: rgba(0, 0, 0,0.9);
+    display: flex;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.join_form{
+    color: white;
+    font-weight: bolder;
+}
+input[type="text"], input[type="password"] {
+    border-radius: 5px;
+    width: 200px;
+    height: 20px;
+}
+input[type="button"]{
+    font-weight: bolder;
+    border-radius: 7px;
+    width: 70px;
+}
+#sample6_extraAddress{
+    width: 50px;
+}
+.alarming{
+    margin-left: 20px;
+    text-align: center;
+    font-size: smaller;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.9);
+    font-weight: bolder;
+    font-size : 10px;
+}
+.hidden{
+	/*display: none;*/
+}
+.unset{
+    all:unset;
+}

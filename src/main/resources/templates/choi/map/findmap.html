@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		#wrap {
+			margin: 0 auto;
+			width: 1200px;
+			border: 1px solid black;
+			height: 1000px;
+		}
+
+		.select_map {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		#map {
+			border: 1px solid black;
+			width: 1000px;
+			height: 750px;
+		}
+
+		.info_wrap {
+			position: absolute;
+			left: 0;
+			bottom: 40px;
+			width: 288px;
+			height: 132px;
+			margin-left: -144px;
+			text-align: left;
+			overflow: hidden;
+			font-size: 12px;
+			font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+			line-height: 1.5;
+		}
+
+		.info_wrap * {
+			padding: 0;
+			margin: 0;
+		}
+
+		.info_wrap .info {
+			width: 286px;
+			height: 120px;
+			border-radius: 5px;
+			border-bottom: 2px solid #ccc;
+			border-right: 1px solid #ccc;
+			overflow: hidden;
+			background: #fff;
+		}
+
+		.info_wrap .info:nth-child(1) {
+			border: 0;
+			box-shadow: 0px 1px 2px #888;
+		}
+
+		.info_wrap .title {
+			padding: 5px 0 0 10px;
+			height: 30px;
+			background: #eee;
+			border-bottom: 1px solid #ddd;
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.info_wrap #close {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			color: #888;
+			width: 17px;
+			height: 17px;
+			background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+		}
+
+		.info_wrap #close:hover {
+			cursor: pointer;
+		}
+
+		.info_wrap .body {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.info_wrap .desc {
+			position: relative;
+			margin: 13px 0 0 90px;
+			height: 75px;
+		}
+
+		.desc .ellipsis {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.desc .jibun {
+			font-size: 11px;
+			color: #888;
+			margin-top: -2px;
+		}
+
+		.info_wrap .img {
+			position: absolute;
+			top: 6px;
+			left: 5px;
+			width: 73px;
+			height: 71px;
+			border: 1px solid #ddd;
+			color: #888;
+			overflow: hidden;
+		}
+
+		.info_wrap:after {
+			content: '';
+			position: absolute;
+			margin-left: -12px;
+			left: 50%;
+			bottom: 0;
+			width: 22px;
+			height: 12px;
+			background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+		}
+
+		.info_wrap .link {
+			color: #5085BB;
+		}
+	</style>
+	</style>
+</head>
+
+<body>
+	<div id="wrap">
+		<div class="select_map">
+			<div class="select_category_section">
+				<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
+				<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+				<div id="category_select_section">
+
+				</div>
+			</div>
+			<div id="map">
+
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/list/js/selectcity.js}"></script>
+<script th:src="@{/list/js/selectmain.js}"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
+<script th:src="@{/map/js/onposition.js}"></script>
+<script>
+
+	var markers = [];
+
+	let mapContainer = document.getElementById('map'), // 지도를 표시할 div
+		mapOption = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level: 4 // 지도의 확대 레벨
+		};
+	let map = new kakao.maps.Map(mapContainer, mapOption); // 지도생성
+
+	const selectService = (function () {
+
+		function selectAll(data) {
+			$.ajax({
+				url: "/list/getlist",
+				method: "GET",
+				data: {"main": data.category, "city": data.city},
+				contentType: "application/json;charset=utf-8",
+				success: function (data) {
+
+					const user = data.ulist; //유저 데이터 추출
+					const info = data.ilist;
+					const category = ["숙소", "카페", "식당", "렌터카", "기타"]
+					
+					if (markers.length != 0) {
+					for (let i = 0; i < markers.length; i++) {
+						markers[i].setMap(null);
+					}
+					markers = [];
+				}
+
+					for (let use of user) { //빠른 for문
+						for (let inf of info) {
+							if (use.businessId == inf.businessId) {
+
+								var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성합니다
+
+								geocoder.addressSearch(use.businessAddress, function (result, status) { // DB 주소로 좌표 검색
+
+									if (status === kakao.maps.services.Status.OK) { //검색 완료
+
+										var coords = new kakao.maps.LatLng(result[0].y, result[0].x); //
+
+										var marker = new kakao.maps.Marker({  // 결과값으로 받은 위치를 마커로 표시합니다
+											position: coords // 주소
+										});
+
+										markers.push(marker)
+
+										for (let i = 0; i < markers.length; i++) {
+											markers[i].setMap(map)
+										}
+										
+										// 마커 위에 커스텀오버레이를 표시합니다
+										// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+										var overlay = new kakao.maps.CustomOverlay({
+											map: map,
+											position: marker.getPosition(),  //마커 포지션
+										});
+
+										overlay.setMap(null); // 처음에는 지워둠
+										clickOverlay = null;
+
+										kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭 했을때만 지움
+											if (clickOverlay != null) {
+
+												clickOverlay.setMap(null);
+											}
+											overlay.setMap(map)
+											clickOverlay = overlay;
+										});
+
+										var info_wrap = document.createElement('div');
+										info_wrap.className = 'info_wrap';
+
+										var info = document.createElement('div');
+										info.className = 'info';
+										var title = document.createElement('div');
+										title.className = 'title';
+										title.innerHTML = use.businessStoreName
+										var close = document.createElement('div');
+										close.id = 'close';
+										close.title = '닫기';
+										close.onclick = function () {overlay.setMap(null);};
+
+										var body = document.createElement('div');
+										body.className = 'body';
+										var img = document.createElement('div');
+										img.className = 'img';
+										var picture = document.createElement('img');
+										picture.src = 'img/숙소.png';
+										picture.style.cssText = "width:73px; height:70px";
+
+										var desc = document.createElement('div');
+										desc.className = 'desc';
+										var ellipsis = document.createElement('div');
+										ellipsis.className = 'ellipsis';
+										ellipsis.innerHTML = use.businessAddress;
+										var jibun = document.createElement('div');
+										jibun.className = 'jibun ellipsis';
+										jibun.innerHTML = use.businessAddress
+
+										var in_a = document.createElement('div');
+										var link = document.createElement('a');
+										link.innerHTML = "개인 페이지"
+										link.className = 'link';
+										link.href = '#';
+
+
+
+										info_wrap.appendChild(info).appendChild(title).append(close)
+										info.appendChild(body).appendChild(img).appendChild(picture)
+										body.appendChild(desc).appendChild(ellipsis)
+										body.appendChild(desc).appendChild(jibun)
+										body.appendChild(desc).appendChild(in_a).appendChild(link)
+
+										overlay.setContent(info_wrap);
+									}
+								})
+							}
+						}
+					}
+				}
+			})
+		}
+		return {getlist: selectAll}
+	})();
+
+	function category_select() {
+		selectService.getlist({"category": category_main.value, "city": category_city.value})
+	} category_select();
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oco.mapper.KakaoUserMapper">
+    <select id="findByUser">
+        select * from kakao_users where kakao_idx=#{kakaoIdx}
+    </select> 
+	<insert id="insertUser">
+		insert into kakao_users(kakao_idx,kakao_name) values(#{kakaoIdx},#{kakaoName})
+	</insert>
+	
+</mapper>

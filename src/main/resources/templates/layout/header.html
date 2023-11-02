@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+</head>
+<body>
+<th:block th:fragment="header">
+	<header id="header" class="white" >
+    <div class="header-inner">
+      <button class="ham-btn">
+        <i>
+          <span class="line01"></span>
+          <span class="line02"></span>
+          <span class="line03"></span>
+        </i>
+      </button>
+      <h1 class="logo"><a href="#"><img th:src="@{/main/images/logo.png}" style="width:80px;"></a></h1>
+      <div class="header-right">
+        <ul class="depth1">
+          <li><a th:href="@{/reservation/reservationwrite}">요청하기</a></li>
+          <li><a th:href="@{choi/list/listindex.html}">찾아보기</a></li>
+          <li><a href="#">커뮤니티</a></li>
+          <li><a href="#">플래너</a></li>
+ 
+        </ul>
+        <ul class="util">
+			<th:block th:if="${session.loginUser ==null}">
+				<li><a th:href="@{/user/login}">로그인</a></li>
+            	<li><a th:href="@{/user/join.html}">회원가입</a></li>
+            	<li><a th:href="@{/user/join_business_Page}">사업자가입</a></li>
+            </th:block>
+            <th:block th:if="${session.loginUser != null}">
+  				<li><a th:href="@{/user/logout}">로그아웃</a></li>
+            </th:block>
+		</ul>
+      </div>
+    </div>
+    <!-- 슬라이드메뉴 -->
+	<div class="slidemenu">
+		<div class="slidemenu-area">
+	    	<div class="slidemenu-wrap">
+	        	<button>요청하기</button>
+		    </div>
+			<div class="slidemenu-wrap">
+	    		<button>찾아보기</button>
+			</div>
+			<div class="slidemenu-wrap">
+	    		<button>커뮤니티</button>
+			</div>
+			<div class="slidemenu-wrap">
+	    		<button>플래너</button>
+			</div>
+		</div>
+	</div>
+    
+</header>
+</th:block>
+</body>
+</html>
+
+

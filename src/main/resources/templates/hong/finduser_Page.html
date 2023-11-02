@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/hong/finduser_Page/css/reset.css}">
+
+    <link rel="stylesheet" th:href="@{/hong/finduser_Page/css/frame.css}">
+    <link rel="stylesheet" th:href="@{/hong/finduser_Page/css/finduser_Page.css}">
+    
+</head>
+<body>
+            <!--finduser_Page_form을 삭제 후, from 두개를 만들고 ->id_form, password_form hidden -->
+    <div class="container">
+        <div class="finduser_Page">
+            <div class="choose">
+            	<div class="choose_id color">아이디찾기</div>
+            	<div class="choose_pw">비밀번호찾기</div>
+            </div>
+           <form class="id_form" name="id_form" th:action="@{/user/onlyFindUserID}" method="post">
+               <span>이메일 주소</span>
+               <div>
+                   <input type="useremail" class="email" placeholder="이메일주소 입력" name="userEmail" id="">
+                   <input type="button" class="get_code" value="인증번호 받기">                    
+               </div>
+               <div>
+                   <input type="text" placeholder="인증번호 입력">
+                   <input type="button" class="check_code_button" value="인증번호 확인">
+               </div>
+	           <button class="finduser_Page_button">next</button>
+           </form>
+<form class="password_form hidden" name="password_form" th:action="@{/user/checkUserInfo}" method="post">
+    <span>아이디</span>
+    <div>
+        <input type="text" placeholder="아이디를 입력해주세요" name="userId" id="id" class="userid">
+        <input type="button" value="아이디체크" class="userid_button">
+    </div>
+    <span>이메일 주소</span>
+    <div>
+        <input type="email" class="email" placeholder="" name="userEmail" id="email">
+        <input type="button" class="get_code" value="인증번호 받기">                    
+    </div>
+    <div>
+        <input type="text" placeholder="인증번호 입력해주세요">
+        <input type="button" class ="check_code_button" value="인증번호 확인">
+    </div>
+    <button class="finduser_Page_button">next</button>
+</form>
+
+        </div>
+    </div>
+    
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script th:src="@{/hong/finduser_Page/js/changeOption.js}"></script>
+    <script th:src="@{/hong/finduser_Page/js/validator.js}"></script>
+    <script th:src="@{/hong/finduser_Page/js/duplicateID.js}"></script>
+    <script th:src="@{/hong/finduser_Page/js/check_cookies.js}"></script>
+    
+</body>
+</html>

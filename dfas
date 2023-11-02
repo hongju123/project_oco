@@ -1,0 +1,26 @@
+[33mac58570[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/new[m[33m)[m HEAD@{0}: checkout: moving from new to origin/new
+[33mfa49367[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mnew[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{1}: checkout: moving from 1c167437e9ead18fe97e5ab307ce59a5d99dde7e to new
+[33m1c16743[m HEAD@{2}: commit: feat testing
+[33mac58570[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/new[m[33m)[m HEAD@{3}: checkout: moving from new to origin/new
+[33mfa49367[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mnew[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{4}: checkout: moving from master to new
+[33mfa49367[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mnew[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{5}: pull origin master --no-rebase: Merge made by the 'ort' strategy.
+[33m8bd807a[m HEAD@{6}: commit: update join_Page.html
+[33m4e0f73c[m HEAD@{7}: commit: add 비밀번호찾기,아이디찾기 구현완료
+[33m7e587bc[m HEAD@{8}: commit: add 해결
+[33mc858bc1[m HEAD@{9}: commit: add 이메일 사용으로 아이디찾기
+[33ma800cf7[m HEAD@{10}: commit: modify name
+[33mf75b6d9[m HEAD@{11}: commit: add cookie update email code
+[33m0a66f32[m HEAD@{12}: commit: add login logic
+[33mb7ba03f[m HEAD@{13}: commit: update mysql
+[33m23be8ef[m HEAD@{14}: commit: add my_sql
+[33mf3cd019[m HEAD@{15}: commit: add join_business
+[33m532023d[m HEAD@{16}: commit: update id duplication check
+[33m1802856[m HEAD@{17}: merge origin/main: Merge made by the 'ort' strategy.
+[33m34904bf[m HEAD@{18}: commit: update addressAPI
+[33m562b34e[m HEAD@{19}: pull origin master: Fast-forward
+[33mdcc48ae[m HEAD@{20}: pull origin master --allow-unrelated-histories: Merge made by the 'ort' strategy.
+[33md7b0445[m HEAD@{21}: commit: add all
+[33m4387937[m HEAD@{22}: reset: moving to 43879
+[33m4387937[m HEAD@{23}: commit: start point
+[33m820a56a[m HEAD@{24}: commit: first commit
+[33mf630701[m HEAD@{25}: commit (initial): add sociallogin
