@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>findList</title>
+	
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+
+	
+	<style>
+		.wrap {
+			width: 1200px;
+			border: 1px solid black;
+			box-sizing: border-box;
+			padding: 10px;
+			margin: 150px auto;
+		}
+		
+		.main_section{
+			
+			border: 1px solid black;
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="wrap">
+		<section class="main_section">
+			<div class="inner">
+				<div class="category_section">
+					<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
+					<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+					<div id="category_select_section">
+
+					</div>
+				</div>
+				<a th:href="@{/Bboard/findmap}">맵으로 보기</a>
+				<a th:href="@{/Bboard/write}">글쓰기</a>
+				<div id="find_list_section">
+				</div>
+			</div>
+		</section>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
+<script th:src="@{list/js/selectcity.js}"></script>
+<script th:src="@{list/js/selectmain.js}"></script>
+<script th:inline="javascript">
+	const list_section = document.getElementById("find_list_section")
+
+	const selectService = (function () {
+
+		function selectAll(data) {
+
+			$.ajax({
+				url: "/Bboard/findlist",
+				method: "GET",
+				data: {"main": data.category, "city": data.city},
+				contentType: "application/json;charset=utf-8",
+				success: function (data) {
+					const user = data.ulist;
+					const info = data.ilist;
+					let txt = "";
+					for (let inf of info) {
+						for (let use of user) {
+							if (use.businessId == inf.businessId) {
+								txt += '<div class="service_list_section" onclick="sandit()">';
+								txt += '<div id="service_list_deteil_1">'
+								txt += '<h6>' + use.businessStoreName + use.businessId + '<h6>'
+								txt += '<div class="service_menu">'
+								txt += '<div class="overall_grade_area">'
+								txt += '<span>' + parseFloat(inf.overallGrade).toFixed(2) + '</span>'
+								txt += '</div>'
+								txt += '<p>' + '-' + inf.visitCount + '</p>'
+								txt += '<p>' + '-' + inf.useTime + '</p>'
+								txt += '<p>' + '-' + use.businessAddress + '</p>'
+								txt += '<p>' + '-' + use.businessCategory + '</p>'
+								txt += '</div>'
+								txt += '</div>'
+								txt += '<div class="service_list_deteil_2">'
+								txt += '<img src="#s" alt="">'
+								txt += '</div>'
+								txt += '</div>'
+							}
+						}
+					}
+					list_section.innerHTML = txt;
+				}
+			})
+		}
+		return {getlist: selectAll}
+	})();
+
+	function category_select() {
+
+		selectService.getlist(
+			{"category": category_main.value, "city": category_city.value}
+
+		)
+	} category_select();
+
+</script>
+
+</html>

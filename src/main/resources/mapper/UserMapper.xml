@@ -3,23 +3,23 @@
 <mapper namespace="com.oco.mapper.UserMapper">
     <!--ajax로 아이디 중복확인-->
     <select id="findById" resultType="com.oco.domain.dto.UserDTO">
-        select * from users where user_id=#{userId}
+        select * from users where user_id=#{userid}
     </select> 
     <!--로그인시 아이디 비밀번호로 아이디 진위확인-->
     <select id="findByUser" resultType="com.oco.domain.dto.UserDTO">
-		select * from users where user_id=#{userId} and user_password=#{userPassword}
+		select * from users where user_id=#{userid} and user_password=#{userpw}
 	</select>
 	<!--이메일로 아이디 찾기-->
 	<select id="findByEmail" resultType="com.oco.domain.dto.UserDTO">
-		select * from users where user_email=#{userEmail}
+		select * from users where user_email=#{useremail}
 	</select>
 	<!--아이디와 이메일로 비밀번호찾기-->
 	<select id="findByUserInfo" resultType="com.oco.domain.dto.UserDTO" >
-		select * from users where user_id=#{userId} and user_email = #{userEmail}
+		select * from users where user_id=#{userid} and user_email = #{useremail}
 	</select>
 	<!--유저 회원가입-->
 	<insert id="insertUser">
 		insert into users (user_id,user_password,user_name,user_gender,zip_code,address,address_detail,additional_info,user_hobby,user_phone_number,user_email)
-		values(#{userId},#{userPassword},#{userName},#{userGender},#{zipCode},#{userAddress},#{userAddressdetail},#{userAdditionalinfo},#{userHobby},#{userPhoneNumber},#{userEmail})
+		values(#{userid},#{userpassword},#{username},#{usergender},#{zipcode},#{useraddress},#{useraddressdetail},#{useradditionalinfo},#{userhobby},#{userphonenumber},#{useremail})
 	</insert>
 </mapper>

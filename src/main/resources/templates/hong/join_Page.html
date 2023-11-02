@@ -10,14 +10,14 @@
 		<form class="join_form" method="post" th:action="@{/user/join}">
 			<label for="userid">아이디</label>
 			<br>
-			<input type="text" value="" class="userid" id="userid" name="userId" placeholder="">
+			<input type="text" value="" class="userid" id="userid" name="userid" placeholder="">
 			<input type="button" class="userid_button" value="중복확인">
 			<br>
 			<span class="alarming hidden">존재하는 아이디입니다.</span>
 			<br>
 			<label for="userpw">비밀번호</label>
 			<br>
-			<input type="password" value="" id="userpw" class="userpw" name="userPassword">
+			<input type="password" value="" id="userpw" class="userpw" name="userpassword">
 			<br>
 			<span class="alarming hidden">영문, 숫자, 특수문자 포함 8~15자의 문자를 입력해주세요</span>
 			<span class="alarming hidden">비밀번호를 입력해주세요</span>
@@ -30,11 +30,11 @@
 			<br>
 			<label for="username">이름</label>
 			<br>
-			<input type="text" name="userName" class="username" id="username">
+			<input type="text" name="username" class="username" id="username">
 			<br>
 			<label for="useremail">이메일</label>
 			<br>
-			<input type="text" name="userEmail" class="email" id="useremail">
+			<input type="text" name="useremail" class="email" id="useremail">
 			<input type="button" value="인증번호" class="get_code" disabled>
 			<br>
 			<input type="text" value="" class="check_code" placeholder="인증번호를 적어주세요" id="check_code">
@@ -46,25 +46,25 @@
 			<br>
 			<label for="userphonenumber">핸드폰번호</label>
 			<br>
-			<input type="text" name="userPhoneNumber" class="userphonenumber" id="userphonenumber">
+			<input type="text" name="userphonenumber" class="userphonenumber" id="userphonenumber">
 			<br>
 			<span class="alarming hidden">"-"를 제외한 11자를 입력해주세요</span>
 			<br>
 			<label for="sample6_postcode">우편번호</label>
 			<br>
-			<input type="text" name="zipCode" id="sample6_postcode" placeholder="우편번호" readonly class="zipcode">
+			<input type="text" name="zipcode" id="sample6_postcode" placeholder="우편번호" readonly class="zipcode">
 			<input type="button" onclick="sample6_execDaumPostcode()" value="주소찾기"><br>
 
-			<input type="text" name="userAddress" id="sample6_address" placeholder="주소" class="useraddress" readonly><br>
-			<input type="text" name="userAddressdetail" id="sample6_detailAddress" placeholder="상세주소" class="useraddressdetail">
-			<input type="text" name="userAdditionalinfo" id="sample6_extraAddress"  readonly class="useradditionalinfo">
+			<input type="text" name="useraddress" id="sample6_address" placeholder="주소" class="useraddress" readonly><br>
+			<input type="text" name="useraddressdetail" id="sample6_detailAddress" placeholder="상세주소" class="useraddressdetail">
+			<input type="text" name="useradditionalinfo" id="sample6_extraAddress"  readonly class="useradditionalinfo">
 			<br>
-			<input type="radio" id="usergender1" name="userGender" value="M" class="usergender"><label for="usergender1">남자</label>
-			<input type="radio" id="usergender2" name="userGender" value="W" class="usergender"><label for="usergender2">여자</label>
+			<input type="radio" id="usergender1" name="usergender" value="Male" class="usergender"><label for="usergender1">남자</label>
+			<input type="radio" id="usergender2" name="usergender" value="Female" class="usergender"><label for="usergender2">여자</label>
 			<br>
 			<label for="hobby">취미</label>
 			<br>
-			<input type="text" id="hobby" name="userHobby" class="userhobby">
+			<input type="text" id="hobby" name="userhobby" class="userhobby">
 			<br>
 			<button id="submitButton" type="button">제출</button>
 	</form>

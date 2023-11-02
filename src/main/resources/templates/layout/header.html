@@ -18,20 +18,15 @@
       <div class="header-right">
         <ul class="depth1">
           <li><a th:href="@{/reservation/reservationwrite}">요청하기</a></li>
-          <li><a th:href="@{choi/list/listindex.html}">찾아보기</a></li>
+          <li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
           <li><a href="#">커뮤니티</a></li>
           <li><a href="#">플래너</a></li>
  
         </ul>
         <ul class="util">
-			<th:block th:if="${session.loginUser ==null}">
-				<li><a th:href="@{/user/login}">로그인</a></li>
-            	<li><a th:href="@{/user/join.html}">회원가입</a></li>
-            	<li><a th:href="@{/user/join_business_Page}">사업자가입</a></li>
-            </th:block>
-            <th:block th:if="${session.loginUser != null}">
-  				<li><a th:href="@{/user/logout}">로그아웃</a></li>
-            </th:block>
+			<li><a href="#">로그인</a></li>
+            <li><a th:href="@{/user/join.html}">회원가입</a></li>
+            <li><a href="#">사업자가입</a></li>
 		</ul>
       </div>
     </div>

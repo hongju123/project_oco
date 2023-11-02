@@ -21,7 +21,7 @@
            <form class="id_form" name="id_form" th:action="@{/user/onlyFindUserID}" method="post">
                <span>이메일 주소</span>
                <div>
-                   <input type="useremail" class="email" placeholder="이메일주소 입력" name="userEmail" id="">
+                   <input type="useremail" class="email" placeholder="이메일주소 입력" name="useremail" id="">
                    <input type="button" class="get_code" value="인증번호 받기">                    
                </div>
                <div>
@@ -33,12 +33,12 @@
 <form class="password_form hidden" name="password_form" th:action="@{/user/checkUserInfo}" method="post">
     <span>아이디</span>
     <div>
-        <input type="text" placeholder="아이디를 입력해주세요" name="userId" id="id" class="userid">
+        <input type="text" placeholder="아이디를 입력해주세요" name="userid" id="id" class="userid">
         <input type="button" value="아이디체크" class="userid_button">
     </div>
     <span>이메일 주소</span>
     <div>
-        <input type="email" class="email" placeholder="" name="userEmail" id="email">
+        <input type="email" class="email" placeholder="" name="useremail" id="email">
         <input type="button" class="get_code" value="인증번호 받기">                    
     </div>
     <div>

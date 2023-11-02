@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<style>
+		#wrap {
+			margin: 150px auto;
+			border: 1px solid black;
+			width: 1200px;
+			height: 1000px;
+		}
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div id="wrap">
+		<form class="main_info" method="post" >
+			<div class="title_section">
+
+			</div>
+			<div class="shot_info">
+
+			</div>
+			<div class="main content">
+
+			</div>
+			<div class="free_service">
+
+			</div>
+			<div class="photo_zone">
+
+			</div>
+			<div class="reply">
+
+			</div>
+		</form>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+
+</html>
