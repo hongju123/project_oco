@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>견적서 작성</title>
+</head>
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
+<script th:src="@{/reservation/js/reservation.js}"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
+
+        div .data{
+            background-color : white;
+            height: auto;
+            width: 400px;
+            margin: 0px;
+            padding: 20px;
+            margin: 0 auto;
+            border-radius:5px;
+            box-shadow:0px 40px 30px -20px rgba(0,0,0,0.3);
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+        }
+
+        .Calendar {
+            text-align: center;
+        }
+
+        .Calendar>thead>tr:first-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .Calendar>thead>tr:last-child>td {
+            font-family: 'Questrial', sans-serif;
+            font-weight: 600;     
+        }
+
+        .Calendar>tbody>tr>td>p {
+            font-family: 'Montserrat', sans-serif;
+            height: 45px;
+            width: 45px;
+            border-radius: 45px;
+            transition-duration: .2s;
+            line-height: 45px;
+            margin: 2.5px;
+            display: block;
+            text-align: center;
+        }        
+
+        .pastDay {
+            color: lightgray;
+        }
+
+        .today {
+            background-color: #F5D042;            
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .futureDay {
+            background-color: #FFFFFF;
+            cursor: pointer;
+        }
+        .futureDay:hover{
+            background:#eee;
+        }
+
+        .futureDay.choiceDay,
+        .today.choiceDay {
+            background: #0A174E;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="main02-inner">
+	<h2>견적서 작성</h2>
+	<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}">
+		<input type="hidden" th:value="${session.loginUser}" name="userid">
+		<select id="category" onchange="f()" name="category">
+			<option value="" selected disabled>카테고리를 선택하세요</option>
+			<option class="categoryA" value="숙소">숙소</option> 
+			<option class="categoryB" value="식당">식당</option>
+			<option class="categoryC" value="카페">카페</option>
+			<option class="categoryD" value="렌터카">렌터카</option>
+			<option class="categoryE" value="기타">기타</option>
+		</select>
+		<ul>
+			<li><input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
+				<ul id="area">
+
+				</ul>
+			</li>
+			<li><input type="text" class="type" name="requesttype" id="requesttype" value="유형" readonly>
+				<div class="types">
+					<div class="typeA">
+						<ul>
+							<li><a href="#" class="typeAA">모텔</a></li>
+							<li><a href="#" class="typeAB">호텔</a></li>
+							<li><a href="#" class="typeAC">펜션</a></li>
+							<li><a href="#" class="typeAD">에어비엔비</a></li>
+							<li><a href="#" class="typeAE">캠핑장</a></li>
+						</ul>
+					</div>
+					<div class="typeB">
+						<ul>
+							<li><a href="#" class="typeBA">한식</a></li>
+							<li><a href="#" class="typeBB">일식</a></li>
+							<li><a href="#" class="typeBC">중식</a></li>
+							<li><a href="#" class="typeBD">분식</a></li>
+							<li><a href="#" class="typeBE">야식</a></li>
+						</ul>
+					</div>
+					<div class="typeC">
+						<ul>
+							<li><a href="#" class="typeCA">개인</a></li>
+							<li><a href="#" class="typeCB">프랜차이즈</a></li>
+							<li><a href="#" class="typeCC">베이커리</a></li>
+							<li><a href="#" class="typeCD">디저트</a></li>
+						</ul>
+					</div>
+					<div class="typeD">
+						<ul>
+							<li><a href="#" class="typeDA">경형/소형</a></li>
+							<li><a href="#" class="typeDB">중형/대형</a></li>
+							<li><a href="#" class="typeDC">SUV/승합</a></li>
+						</ul>
+					</div>
+					<div class="typeE">
+						<ul>
+							<li><a href="#" class="typeEA">회의실</a></li>
+							<li><a href="#" class="typeEB">파티룸</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li><a href="#" class="calendar">날짜</a><input type="text" class="calendars" name="regdate" readonly>
+				<div class="data">
+					<table class="Calendar">
+						<thead>
+							<tr>
+								<td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+								<td colspan="5">
+									<span id="calYear"></span>년
+									<span id="calMonth"></span>월
+								</td>
+								<td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+							</tr>
+							<tr>
+								<td>일</td>
+								<td>월</td>
+								<td>화</td>
+								<td>수</td>
+								<td>목</td>
+								<td>금</td>
+								<td>토</td>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				<a href="#" class="calendarcheck" >선택완료</a>
+				</div>
+			</li>
+			<li><select class="personnel" name="personnel">
+					<option value="" selected disabled>인원수를 설정해주세요</option>
+					<option value="1">1명</option>
+					<option value="2">2명</option>
+					<option value="3">3명</option>
+					<option value="4">4명</option>
+					<option value="5">5명</option>
+					<option value="6">6명</option>
+					<option value="7">7명</option>
+					<option value="8">8명</option>
+					<option value="9">9명</option>
+					<option value="10">10명</option>
+				</select>
+				<select class="fuel" name="fuel">
+					<option value="" selected disabled>연료를 설정해주세요</option>
+					<option>전기</option>
+					<option>하이브리드</option>
+					<option>가솔린</option>
+					<option>디젤</option>
+					<option>LPG</option>
+				</select>
+			</li>
+			<li>
+				<select class="money" name="cost">
+					<option value="" selected disabled>금액대를 설정해주세요</option>
+					<option value="5">5만원~</option>
+					<option value="10">10만원~</option>
+					<option value="15">15만원</option>
+					<option value="30">30만원~</option>
+					<option value="40">40만원~</option>
+					<option value="50">50만원~</option>
+				</select>
+			</li>
+			<li>
+				<input type="text" class="amenities" name="amenities" id="amenities" value="편의시설(기타)" readonly>
+				<div class="amenitiess">
+					<div class="amenitiesA">
+						<ul>
+							<li><input type="checkbox" value="와이파이" name="typeA" id="check_btn">와이파이</li>
+							<li><input type="checkbox" value="스파" name="typeA" id="check_btn">스파</li>
+							<li><input type="checkbox" value="욕조" name="typeA" id="check_btn">욕조</li>
+							<li><input type="checkbox" value="드라이기" name="typeA" id="check_btn">드라이기</li>
+							<li><input type="checkbox" value="다리미" name="typeA" id="check_btn">다리미</li>
+							<li><input type="checkbox" value="픽업" name="typeA" id="check_btn">픽업</li>
+							<li><input type="checkbox" value="주차" name="typeA" id="check_btn">주차</li>
+							<li><input type="checkbox" value="취사" name="typeA" id="check_btn">취사</li>
+							<li><input type="checkbox" value="반려견동반" name="typeA" id="check_btn">반려견동반</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeA" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<div class="amenitiesB">
+						<ul>
+							<li><input type="checkbox" value="단체룸" name="typeB" id="check_btn">단체룸</li>
+							<li><input type="checkbox" value="주차" name="typeB" id="check_btn">주차</li>
+							<li><input type="checkbox" value="발렛" name="typeB" id="check_btn">발렛</li>
+							<li><input type="checkbox" value="유아 동반" name="typeB" id="check_btn">유아 동반</li>
+							<li><input type="checkbox" value="반려견 동반" name="typeB" id="check_btn">반려견 동반</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeB" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<div class="amenitiesC">
+						<ul>
+							<li><input type="checkbox" value="단체룸" name="typeC" id="check_btn">단체룸</li>
+							<li><input type="checkbox" value="와이파이" name="typeC" id="check_btn">와이파이</li>
+							<li><input type="checkbox" value="충전가능" name="typeC" id="check_btn">충전가능</li>
+							<li><input type="checkbox" value="프린트" name="typeC" id="check_btn">프린트</li>
+							<li><input type="checkbox" value="주차" name="typeC" id="check_btn">주차</li>
+							<li><input type="checkbox" value="발렛" name="typeC" id="check_btn">발렛</li>
+							<li><input type="checkbox" value="유아 동반" name="typeC" id="check_btn">유아 동반</li>
+							<li><input type="checkbox" value="반려견 동반" name="typeC" id="check_btn">반려견 동반</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeC" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<div class="amenitiesD">
+						<ul>
+							<li><input type="checkbox" value="후방카메라" name="typeD" id="check_btn">후방카메라</li>
+							<li><input type="checkbox" value="블루투스" name="typeD" id="check_btn">블루투스</li>
+							<li><input type="checkbox" value="내비게이션" name="typeD" id="check_btn">내비게이션</li>
+							<li><input type="checkbox" value="카시트" name="typeD" id="check_btn">카시트</li>
+							<li><input type="checkbox" value="유모차" name="typeD" id="check_btn">유모차</li>
+							<li><input type="checkbox" value="유아 동반" name="typeD" id="check_btn">유아 동반</li>
+							<li><input type="checkbox" value="반려견 동반" name="typeD" id="check_btn">반려견 동반</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeD" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<div class="amenitiesE">
+						<ul>
+							<li><input type="checkbox" value="빔 프로젝트" name="typeE" id="check_btn">빔 프로젝트</li>
+							<li><input type="checkbox" value="사무용품" name="typeE" id="check_btn">사무용품</li>
+							<li><input type="checkbox" value="프린트" name="typeE" id="check_btn">프린트</li>
+							<li><input type="checkbox" value="주차" name="typeE" id="check_btn">주차</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeE" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<div class="amenitiesF">
+						<ul>
+							<li><input type="checkbox" value="생일파티" name="typeF" id="check_btn">생일파티</li>
+							<li><input type="checkbox" value="기념일 이벤트" name="typeF" id="check_btn">기념일 이벤트</li>
+							<li><input type="checkbox" value="브라이덜 샤워" name="typeF" id="check_btn">브라이덜 샤워</li>
+							<li><input type="checkbox" value="웨딩/돌잔치" name="typeF" id="check_btn">웨딩/돌잔치</li>
+							<li><input type="checkbox" value="주차" name="typeF" id="check_btn">주차</li>
+							<li><input type="checkbox" value="유아 동반" name="typeF" id="check_btn">유아 동반</li>
+							<li><input type="checkbox" value="반려견 동반" name="typeF" id="check_btn">반려견 동반</li>
+							<li><input type="checkbox" value="장애인 편의시설" name="typeF" id="check_btn">장애인 편의시설</li>
+						</ul>
+					</div>
+					<a href="#" class="sum">확인</a>
+				</div>
+			</li>
+			<li><textarea placeholder="요청사항을 적어주세요!" class="memo" name="memo" id="memo" style="width: 200px; height: 100px; resize: none;"></textarea></li>
+		</ul>
+	</form>
+	<a href="javascript:sendit()">등록</a>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script>
+	function sendit() {
+		const Form = document.Form;
+		Form.submit();
+	}
+
+
+
+	$(document).ready(function () {
+		$(".city").hide();
+		$(".data").hide();
+		$(".name").hide();
+		$(".typeA").hide();
+		$(".typeB").hide();
+		$(".typeC").hide();
+		$(".typeD").hide();
+		$(".typeE").hide();
+		$(".amenitiesA").hide();
+		$(".amenitiesB").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesE").hide();
+		$(".amenitiesF").hide();
+	})
+	const category = $("#category");
+	function f() {
+		const val = $("#category option:selected").val();
+		console.log(val);
+		if (val == "렌터카") {
+			$(".personnel").hide();
+			$(".fuel").show();
+		}
+		else {
+			$(".fuel").hide();
+			$(".personnel").show();
+		}
+	}
+	$(".type").on("click", function (e) {
+		e.preventDefault();
+		const val = $("#category option:selected").val();
+		if (val == "숙소") {
+			$(".typeA").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "식당") {
+			$(".typeB").show();
+			$(".typeA").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "카페") {
+			$(".typeC").show();
+			$(".typeB").hide();
+			$(".typeA").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "렌터카") {
+			$(".typeD").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeA").hide();
+			$(".typeE").hide();
+		}
+		if (val == "기타") {
+			$(".typeE").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeA").hide();
+		}
+	})
+	$(".area").on("click", function (e) {
+		e.preventDefault();
+		$(".city").show();
+	})
+	$(".typeAA").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("모텔");
+		$(".typeA").hide();
+	})
+	$(".typeAB").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("호텔");
+		$(".typeA").hide();
+	})
+	$(".typeAC").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("펜션");
+		$(".typeA").hide();
+	})
+	$(".typeAD").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("에어비엔비");
+		$(".typeA").hide();
+	})
+	$(".typeAE").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("캠핑장");
+		$(".typeA").hide();
+	})
+	$(".typeBA").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("한식");
+		$(".typeB").hide();
+	})
+	$(".typeBB").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("일식");
+		$(".typeB").hide();
+	})
+	$(".typeBC").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("중식");
+		$(".typeB").hide();
+	})
+	$(".typeBD").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("분식");
+		$(".typeB").hide();
+	})
+	$(".typeBE").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("야식");
+		$(".typeB").hide();
+	})
+	$(".typeCA").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("개인");
+		$(".typeC").hide();
+	})
+	$(".typeCB").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("프랜차이즈");
+		$(".typeC").hide();
+	})
+	$(".typeCC").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("베이커리");
+		$(".typeC").hide();
+	})
+	$(".typeCD").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("디저트");
+		$(".typeC").hide();
+	})
+	$(".typeDA").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("경형/소형");
+		$(".typeD").hide();
+	})
+	$(".typeDB").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("중형/대형");
+		$(".typeD").hide();
+	})
+	$(".typeDC").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("SUV/승합");
+		$(".typeD").hide();
+	})
+	$(".typeEA").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("회의실");
+		$(".typeE").hide();
+	})
+	$(".typeEB").on("click", function (e) {
+		e.preventDefault();
+		const num = $(".type");
+		num.val("파티룸");
+		$(".typeE").hide();
+	})
+
+	$(".amenities").on("click", function (e) {
+		e.preventDefault();
+		const val = $("#category option:selected").val();
+		const vals = $(".type").val();
+		console.log(vals)
+		if (val == "숙소") {
+			$(".amenitiesA").show();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "식당") {
+			$(".amenitiesB").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "카페") {
+			$(".amenitiesC").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "렌터카") {
+			$(".amenitiesD").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (vals == "회의실") {
+			$(".amenitiesE").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesF").hide();
+		}
+		if (vals == "파티룸") {
+			$(".amenitiesF").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+		}
+	})
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeA]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+
+		});
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesA").hide();
+
+		}
+	})
+
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeB]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+		});
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesB").hide();
+		}
+	})
+
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeC]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+		});
+
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesC").hide();
+		}
+	})
+
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeD]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+		});
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesD").hide();
+		}
+	})
+
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeE]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+		});
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesE").hide();
+		}
+	})
+	
+	$(".sum").on("click", function (e) {
+		var checkBoxArr = [];
+		$("input:checkbox[name=typeF]:checked").each(function () {
+
+			checkBoxArr.push($(this).val());
+		});
+		console.log(checkBoxArr)
+		if (checkBoxArr.length != 0) {
+			$(".amenities").val(checkBoxArr);
+			$(".amenitiesF").hide();
+		}
+	})
+
+$(".calendar").on("click", function (e){
+		e.preventDefault();
+		buildCalendar();
+		$(".data").show();
+	})
+
+
+$(".calendarcheck").on("click", function (e) {
+		e.preventDefault();
+		const elements = $(".choiceDay");
+		let result = "";
+			const year = $("#calYear").text()
+			const month = $("#calMonth").html()
+			const startday = elements[0].innerHTML
+			const endday = elements[elements.length-1].innerText
+		result += year+"년"+month+"월"+startday+"일 ~ " + year+"년"+month+"월"+endday+"일";
+		console.log(result)
+		$(".calendars").val(result)
+		$(".data").hide();
+	})
+
+</script>
+</html>

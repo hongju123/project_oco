@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<title>견적요청</title>
+</head>
+<style>
+	header {
+		border: 1px solid black;
+		height: 200px;
+		margin: 0 auto;
+	}
+
+	ul li {
+		list-style: none;
+	}
+
+	li .list {
+		float: left;
+		width: 500px;
+		height: 400px;
+		flex-wrap: wrap;
+		margin-left: 30px;
+		margin-bottom: 50px;
+		border: 1px solid black;
+	}
+</style>
+<body>
+	<header>ㅋ</header>
+	<h1>내 견적서 조회</h1>
+	<div>
+		<a th:href="${'/reservation/reservationwrite'}">견적서 작성</a>
+		<input type="button" value="카테고리"> <input type="button" value="지역">
+	</div>
+	<table class="list">
+		<tr align="right" valign="middle">
+		</tr>
+		<tr align="center" valign="middle">
+			<th width="8%">카테고리</th>
+			<th>지역</th>
+			<th>유형</th>
+			<th width="15%">작성자</th>
+			<th width="17%">편의시설</th>
+			<th width="10%">인원(연료)</th>
+			<th width="10%">가격대</th>
+			<th width="17%">날짜</th>
+			<th width="10%">메모</th>
+		</tr>
+		<tr th:if="${list != null and list.size()>0}" th:each="reservation : ${list}" align="center" valign="middle">
+			<th:block th:if="${reservation.userid == session.loginUser}">
+				<td><a class="get" th:href="${reservation.requestnum}">[[${reservation.category}]]</a></td>
+				<td>[[${reservation.address}]]</td>
+				<td>[[${reservation.requesttype}]]</td>
+				<td>[[${reservation.userid}]]</td>
+				<td>[[${reservation.amenities}]]</td>
+				<td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
+				<td>[[${reservation.cost}]]</td>
+				<td>[[${reservation.regdate}]]</td>
+				<td>[[${reservation.memo}]]</td>
+			</td>
+			<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
+		</tr>
+		<th:block th:if="${list == null or list.size() == 0}">
+			<tr>
+				<td colspan="6" style="text-align: center; font-size: 20px;">등록된
+					게시글이 없습니다.</td>
+			</tr>
+		</th:block>
+	</table>
+	<a class="map" th:href="${'/reservation/map'}">지도</a>
+	<!-- 페이징 처리하는 테이블 -->
+	<table class="pagination">
+		<tr align="center" valign="middle">
+			<td>
+				<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+				<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+					<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+					<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+				</th:block>
+				<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+			</td>
+		</tr>
+	</table>
+	<form name="pageForm" id="pageForm" th:action="@{/reservation/reservationlist}">
+		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+		<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+	</form>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	const searchForm = $("#searchForm");
+	const pageForm = $("#pageForm");
+
+
+	$(".changePage").on("click", function (e) {
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
+	
+	$("#searchForm a").on("click",sendit);
+	function sendit(){
+		if(!$("input[name='keyword']").val()){
+			alert("키워드를 입력하세요!");
+			return false;
+		}
+		searchForm.submit();
+	}
+	
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let requestnum = $(this).attr("href");
+		let url=/*[[@{/reservation/reservationget}]]*/'';
+		pageForm.append("<input type='hidden' name='requestnum' value='"+requestnum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","reservationget");
+		pageForm.submit();
+	})
+	
+	
+</script>
+</html>
