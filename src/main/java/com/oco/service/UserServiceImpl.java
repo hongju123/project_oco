@@ -17,10 +17,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO login(String userId, String userPw) {
-		UserDTO user = um.findByUser(userId, userPw);
+	public UserDTO login(String userid, String userpw) {
+		UserDTO user = um.findByUser(userid, userpw);
 		if (user != null) {
-			if (user.getUserPassword().equals(userPw)) {
+			if (user.getUserPassword().equals(userpw)) {
 				return user;
 			}
 		}

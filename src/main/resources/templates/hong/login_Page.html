@@ -8,8 +8,6 @@
     <link rel="stylesheet" th:href="@{/hong/login_Page/css/background.css}">
     <link rel="stylesheet" th:href="@{/hong/login_Page/css/frame.css}">
     <link rel="stylesheet" th:href="@{/hong/login_Page/css/login.css}">
-
-
 </head>
 <body>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
@@ -17,19 +15,21 @@
     <script>
     Kakao.init('3a4e4dcb0e4a4dc4d9e2b151c05980dc'); // 사용하려는 앱의 JavaScript 키 입력
     </script>
-    
     <div class="container">
+		
+		<!--delete_inntext js 코드 넣을 예정. -->
         <div class="login">
 			<form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post">
                 <fieldset>
+                    <legend class="greeting hidden">hello</legend>
                     <div class="userid_div">
                         <span>👉</span>
-                        <input name="userId"  placeholder="id" class="userid_input">
+                        <input name="userid"  placeholder="id" class="userid_input">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
                     <div class="userpw_div">
                         <span>👉</span>
-                        <input name="userPw" type="password" class="userpw_input" placeholder="password">
+                        <input name="userpw" type="password" class="userpw_input" placeholder="password">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
                 </fieldset>

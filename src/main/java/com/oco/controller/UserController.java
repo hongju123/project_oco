@@ -63,7 +63,7 @@ public class UserController {
 		return "hong/join_Page";
 	}
 	@PostMapping("join")
-	public String join(@ModelAttribute UserDTO userDto, HttpServletRequest req) {
+	public String join(UserDTO userDto, HttpServletRequest req) {
 		System.out.println(userDto);
 		
 		if (user.join(userDto)) {
@@ -105,15 +105,13 @@ public class UserController {
 	public String login() {
 		return "hong/login_Page";
 	}
-	
-	//로그인 했을때 로직
+
 	@PostMapping("checklogin") // id 비밀번호 확인
-	public String checklogin(String userId, String userPw, HttpServletRequest req, HttpServletResponse res) {
-		System.out.println(userId + userPw);
-		UserDTO loginUser = user.login(userId, userPw);
+	public String checklogin(String userid, String userpw, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println(userid + userpw);
+		UserDTO loginUser = user.login(userid, userpw);
 
 		if (loginUser != null) {
-
 			req.getSession().setAttribute("loginUser", loginUser.getUserId());
 			return "redirect:/";
 		} else {
@@ -141,7 +139,7 @@ public class UserController {
 	public String onlyFindUserID(HttpServletResponse res, @ModelAttribute UserDTO userDto) {
 		UserDTO findUser = user.findByEmail(userDto.getUserEmail());
 		if (findUser != null) {
-			Cookie cookie = new Cookie("userId", findUser.getUserId());
+			Cookie cookie = new Cookie("userid", findUser.getUserId());
 			Cookie alert = new Cookie("onlyFindUserID", findUser.getUserId());
 			cookie.setMaxAge(1);
 			alert.setMaxAge(1);
