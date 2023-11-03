@@ -32,15 +32,15 @@
 			<th width="10%">메모</th>
 		</tr>
 		<tr th:if="${list != null and list.size()>0}" th:each="reservation : ${list}" align="center" valign="middle">
-			<th:block th:if="${reservation.userid == session.loginUser}">
-				<td><a class="get" th:href="${reservation.requestnum}">[[${reservation.category}]]</a></td>
+			<th:block th:if="${reservation.userId == session.loginUser}">
+				<td><a class="get" th:href="${reservation.requestNum}">[[${reservation.category}]]</a></td>
 				<td>[[${reservation.address}]]</td>
-				<td>[[${reservation.requesttype}]]</td>
-				<td>[[${reservation.userid}]]</td>
+				<td>[[${reservation.requestType}]]</td>
+				<td>[[${reservation.userId}]]</td>
 				<td>[[${reservation.amenities}]]</td>
 				<td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
 				<td>[[${reservation.cost}]]</td>
-				<td>[[${reservation.regdate}]]</td>
+				<td>[[${reservation.regDate}]]</td>
 				<td>[[${reservation.memo}]]</td>
 			</td>
 			<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
@@ -52,26 +52,9 @@
 			</tr>
 		</th:block>
 	</table>
-	<a class="map" th:href="${'/reservation/map'}">지도</a>
-	<!-- 페이징 처리하는 테이블 -->
-	<table class="pagination">
-		<tr align="center" valign="middle">
-			<td>
-				<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-				<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-					<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-					<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-				</th:block>
-				<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-			</td>
-		</tr>
-	</table>
-	<form name="pageForm" id="pageForm" th:action="@{/reservation/reservationlist}">
-		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
-		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-		<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
-		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+	<form name="getForm" id="getForm" th:action="@{/reservation/reservationlist}">
 	</form>
+	<a class="map" th:href="${'/reservation/map'}">지도</a>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
@@ -84,37 +67,17 @@
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
-	const searchForm = $("#searchForm");
-	const pageForm = $("#pageForm");
-
-
-	$(".changePage").on("click", function (e) {
-		//e(이벤트)의 기본 작동 막기
-		e.preventDefault();
-		let pagenum = $(this).attr("href");
-		pageForm.find("input[name='pagenum']").val(pagenum);
-		pageForm.submit();
-	});
 	
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		searchForm.submit();
-	}
-	
+	const getForm = $("#getForm");
 	$(".get").on("click",function(e){
-		e.preventDefault();
-		let requestnum = $(this).attr("href");
+		e.preventDefault()
+		let requestNum = $(this).attr("href");
 		let url=/*[[@{/reservation/reservationget}]]*/'';
-		pageForm.append("<input type='hidden' name='requestnum' value='"+requestnum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","reservationget");
-		pageForm.submit();
+		getForm.append("<input type='hidden' name='requestNum' value='"+requestNum+"'>")
+		getForm.attr("action",url);
+		getForm.attr("method","get");
+		getForm.submit();
 	})
 	
 	

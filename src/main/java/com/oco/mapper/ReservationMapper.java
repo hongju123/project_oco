@@ -10,18 +10,24 @@ import com.oco.domain.dto.ScheduleDTO;
 
 @Mapper
 public interface ReservationMapper {
-	
-	//insert
+
+	// insert
 	int insertReservation(ReservationDTO reservation);
-	//일정추가
+
+	// 일정추가
 	int insertschedule(ScheduleDTO schedule);
-	
-	//select
-	List<ReservationDTO> getReservationList(Criteria cri);
-	Long getTotal(Criteria cri);
 
+	// update
+	int updatereservation(ReservationDTO reservation);
 
-	ReservationDTO findByNum(Long requestnum);
+	// delete
+	int deletereservation(Long requestNum);
 
+	// select
+	List<ReservationDTO> getReservationList();
+
+	Long getTotal();
+
+	ReservationDTO findByNum(Long requestNum);
 
 }
