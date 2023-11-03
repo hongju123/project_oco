@@ -24,9 +24,14 @@
  
         </ul>
         <ul class="util">
-			<li><a href="#">로그인</a></li>
-            <li><a th:href="@{/user/join.html}">회원가입</a></li>
-            <li><a href="#">사업자가입</a></li>
+			<th:block th:if="${session.loginUser ==null}">
+				<li><a th:href="@{/user/login}">로그인</a></li>
+            	<li><a th:href="@{/user/join.html}">회원가입</a></li>
+            	<li><a th:href="@{/user/join_business_Page}">사업자가입</a></li>
+            </th:block>
+            <th:block th:if="${session.loginUser != null}">
+  				<li><a th:href="@{/user/logout}">로그아웃</a></li>
+            </th:block>
 		</ul>
       </div>
     </div>
