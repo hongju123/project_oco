@@ -8,5 +8,6 @@ import com.oco.domain.dto.BusinessDTO;
 public interface BusinessMapper {
 	boolean insertParentUser(BusinessDTO businessDto);
 	boolean insertUser(BusinessDTO businessDto);
+	BusinessDTO findById(String businessId);
 }
 

@@ -29,6 +29,7 @@
             	<li><a th:href="@{/user/join}">회원가입</a></li>
             	<li><a th:href="@{/user/join_business_Page}">사업자가입</a></li>
             </th:block>
+            
             <th:block th:if="${session.loginUser != null}">
   				<li><a th:href="@{/user/logout}">로그아웃</a></li>
             </th:block>

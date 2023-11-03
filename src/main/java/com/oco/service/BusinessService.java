@@ -4,5 +4,6 @@ import com.oco.domain.dto.BusinessDTO;
 
 public interface BusinessService {
 	public boolean insert(BusinessDTO businessDto);
+	public boolean findById(String businessUsers);
 	 
 }

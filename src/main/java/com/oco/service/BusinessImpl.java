@@ -16,5 +16,10 @@ public class BusinessImpl implements BusinessService {
 		if (bm.insertParentUser(businessDto) && bm.insertUser(businessDto)) return true;
 		return false;
 	}
+	@Override
+	public boolean findById(String businessUsers) {
+//		만약 없다면 false
+		return bm.findById(businessUsers)!=null;
+	}
 
 }
