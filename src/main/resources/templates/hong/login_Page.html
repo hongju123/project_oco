@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" th:href="@{/hong/login_Page/css/reset.css}">
-    <link rel="stylesheet" th:href="@{/hong/login_Page/css/background.css}">
-    <link rel="stylesheet" th:href="@{/hong/login_Page/css/frame.css}">
-    <link rel="stylesheet" th:href="@{/hong/login_Page/css/login.css}">
+    <title>로그인페이지</title>
+
+    	<!-- header,footer -->
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+
+    <link rel="stylesheet" th:href="@{/hong/login_Page/css/login_frame.css}">
+
+
 </head>
 <body>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
@@ -15,16 +18,15 @@
     <script>
     Kakao.init('3a4e4dcb0e4a4dc4d9e2b151c05980dc'); // 사용하려는 앱의 JavaScript 키 입력
     </script>
-    <div class="container">
-		
-		<!--delete_inntext js 코드 넣을 예정. -->
-        <div class="login">
-			<form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post">
-                <fieldset>
-                    <legend class="greeting hidden">hello</legend>
+
+    <th:block th:replace="~{layout/header::header}"></th:block>
+    <div class="wrap">
+        <section class="first_section">
+            <div class="login_area">
+		        <form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post">
                     <div class="userid_div">
                         <span>👉</span>
-                        <input name="userid"  placeholder="id" class="userid_input">
+                        <input type="text" name="userid"  placeholder="id" class="userid_input">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
                     <div class="userpw_div">
@@ -32,28 +34,28 @@
                         <input name="userpw" type="password" class="userpw_input" placeholder="password">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
-                </fieldset>
+                </form>
                 <button class="login_button">로그인</button>
-            </form>
-            <div>   
-                <a id="kakao-login-btn" href="javascript:loginWithKakao()" width="100%" height="100%">
-                    <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="100%" height="80%"
-                      alt="카카오 로그인 버튼" />
-                </a>
-                <p id="token-result"></p>
+                <div>   
+                    <a id="kakao-login-btn" href="javascript:loginWithKakao()" width="100%" height="100%">
+                        <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="100%" height="80%"
+                          alt="카카오 로그인 버튼" />
+                    </a>
+                    <p id="token-result"></p>
+                </div>
+                
+                <div class="bottom_navi">
+                    <a th:href="@{/user/join}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 회원가입</a>
+                    <a th:href="@{/user/join_business_Page}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 사업자회원가입</a>
+                    <a href="javascript:loginWithKakao()"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 카카오회원가입</a>
+                    <br>
+                    <a th:href="@{/user/finduser_Page}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 아이디/비밀번호찾기</a>
+                </div>
             </div>
-            
-            <div class="bottom_navi">
-                <a th:href="@{/user/join_Page}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 회원가입</a>
-                <a th:href="@{/user/join_business_Page}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 사업자회원가입</a>
-                <a href="javascript:loginWithKakao()"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 카카오회원가입</a>
-                <br>
-                <a th:href="@{/user/finduser_Page}"><img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 아이디/비밀번호찾기</a>
-            </div>
-        </div>
-        <!--<div th:replace="hong/background :: background"></div>-->
+        </section>
     </div>
-    
+    <th:block th:replace="~{layout/footer::footer}"></th:block>
+
     <script th:src="@{/hong/login_Page/js/kakaologin.js}"></script>
     <script th:src="@{/hong/login_Page/js/check_cookies.js}"></script>
     <script th:src="@{/hong/login_Page/js/deleteValue.js}"></script>

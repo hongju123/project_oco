@@ -58,7 +58,7 @@ public class UserController {
 			return "/hong/login_Page"; 
 		}
 	}
-	@GetMapping("join_Page")
+	@GetMapping("join")
 	public String joinPage() {
 		return "hong/join_Page";
 	}
