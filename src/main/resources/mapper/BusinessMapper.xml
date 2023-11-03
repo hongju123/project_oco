@@ -12,5 +12,10 @@
 		values(#{businessId},#{businessPassword},#{businessName},#{businessNumber},#{businessZipCode},#{businessAddress},#{businessAddressDetail},#{businessAdditionalInfo},#{businessPhoneNumber},#{businessEmail},#{businessStoreName});
 	</insert>
 	<!---->
+	<!--비지니스 유저 맞는지 체크-->
+	    <!--ajax로 아이디 중복확인-->
+    <select id="findById">
+        select * from business_users where business_id=#{businessId}
+    </select> 
 </mapper>
 
