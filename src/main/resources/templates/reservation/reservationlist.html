@@ -4,29 +4,14 @@
 <meta charset="UTF-8">
 	<title>견적요청</title>
 </head>
-<style>
-	header {
-		border: 1px solid black;
-		height: 200px;
-		margin: 0 auto;
-	}
-
-	ul li {
-		list-style: none;
-	}
-
-	li .list {
-		float: left;
-		width: 500px;
-		height: 400px;
-		flex-wrap: wrap;
-		margin-left: 30px;
-		margin-bottom: 50px;
-		border: 1px solid black;
-	}
-</style>
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
 <body>
-	<header>ㅋ</header>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="main02-inner">
 	<h1>내 견적서 조회</h1>
 	<div>
 		<a th:href="${'/reservation/reservationwrite'}">견적서 작성</a>
@@ -87,7 +72,18 @@
 		<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
 		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 	</form>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script th:src="@{/reservation/js/write.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");

@@ -36,39 +36,59 @@ const areaDate = {
 function f2() {
 	const area = document.getElementById("area")
 	const areaA = document.getElementById("areaA")
-	if (area.children.length === 0) {
+	const modal = document.getElementById("modal")
+
+	const category_list = document.createElement("ul")
+	while (area.lastChild) {
+		area.removeChild(area.lastChild)
+	}
+	category_list.className = "category_list"
+	area.appendChild(category_list)
+
+	if (category_list.children.length === 0) {
 		for (let key in areaDate) {
-			const ul_2 = document.createElement('ul')
-			ul_2.innerHTML = key
-			ul_2.className = "category_2"
-			area.appendChild(ul_2);
-			ul_2.addEventListener("click", function() {
-				if (ul_2.children.length == 0) {
+			const ul_1 = document.createElement('ul')
+			ul_1.innerHTML = key
+			ul_1.className = "category_2"
+			category_list.appendChild(ul_1)
+
+			ul_1.addEventListener("click", function() {
+				if (ul_1.children.length == 0) {
 					for (let detail of areaDate[key]) {
 						const li_2 = document.createElement("li")
 						li_2.innerHTML = detail
-						li_2.className = "area_2_detail"
-						ul_2.appendChild(li_2)
+						li_2.className = "category_2_detail"
+						ul_1.appendChild(li_2)
 						li_2.addEventListener("click", function() {
-							areaA.value = key + "," + detail
+							areaA.setAttribute("value", key + "/" + detail)
+							modal.style.display = "none"
+							while (category_list.lastChild) {
+								category_list.removeChild(category_list.lastChild);
+							}
 							while (area.lastChild) {
 								area.removeChild(area.lastChild)
+								category_list_on = null
 							}
 						})
 					}
 				}
-				else while (ul_2.lastChild && ul_2.lastChild !== ul_2.firstChild) {
-					ul_2.removeChild(ul_2.lastChild)
+				else {
+					while (ul_1.lastChild && ul_1.lastChild !== ul_1.firstChild) {
+						ul_1.removeChild(ul_1.lastChild);
+					}
 				}
+
 			})
 		}
 	}
 	else {
-		while (area.lastChild) {
-			area.removeChild(area.lastChild)
+		while (category_list.lastChild) {
+			category_list.removeChild(category_list.lastChild)
 		}
 	}
 }
+
+
 
 
 let nowMonth = new Date();  // 현재 달을 페이지를 로드한 날의 달로 초기화
@@ -123,11 +143,11 @@ function buildCalendar() {
 }
 // 날짜 선택
 function choiceDate(newDIV) {
-	if(newDIV.classList.contains("choiceDay")){
+	if (newDIV.classList.contains("choiceDay")) {
 		newDIV.classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
 	}
-	else{
-		newDIV.classList.add("choiceDay"); 
+	else {
+		newDIV.classList.add("choiceDay");
 	}
 }
 
@@ -153,18 +173,18 @@ function leftPad(value) {
 
 
 
-function selectAll(data,callback){
-		let boardnum = data.boardnum;
-		let pagenum = data.pagenum;
-		
-		$.getJSON(
-			"/reply/pages/"+boardnum+"/"+pagenum,
-			function(data){
-				//data : {replyCnt:댓글개수, list:[....]}
-				callback(data.replyCnt, data.list);
-			}
-		)
-	}
+function selectAll(data, callback) {
+	let boardnum = data.boardnum;
+	let pagenum = data.pagenum;
+
+	$.getJSON(
+		"/reply/pages/" + boardnum + "/" + pagenum,
+		function(data) {
+			//data : {replyCnt:댓글개수, list:[....]}
+			callback(data.replyCnt, data.list);
+		}
+	)
+}
 
 
 
