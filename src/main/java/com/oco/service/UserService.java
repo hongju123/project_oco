@@ -6,7 +6,7 @@ public interface UserService {
 //	ajax로 유저 아이디 확인 
 	public boolean findById(String userid);
 //	로그인시 아이디 비밀번호
-	UserDTO login(String userid, String userpw);	
+	UserDTO login(String userId, String userPassword);	
 //	아이디를 이메일로 찾기
 	public UserDTO findByEmail(String email);
 //	아이디와 이메일로 비밀번호 찾기

@@ -107,9 +107,9 @@ public class UserController {
 	}
 
 	@PostMapping("checklogin") // id 비밀번호 확인
-	public String checklogin(String userid, String userpw, HttpServletRequest req, HttpServletResponse res) {
-		System.out.println(userid + userpw);
-		UserDTO loginUser = user.login(userid, userpw);
+	public String checklogin(String userId, String userPassword, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println(userId + userPassword);
+		UserDTO loginUser = user.login(userId, userPassword);
 
 		if (loginUser != null) {
 			req.getSession().setAttribute("loginUser", loginUser.getUserId());

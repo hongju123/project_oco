@@ -1,5 +1,5 @@
 const alarmingSpans = document.querySelectorAll('.alarming');
-const functionCheck = [false,false,false,false,false,false]; 
+const functionCheck = [false,false,false,false,false]; 
 
 for (let index = 0; index < functionCheck.length; index++) {
    console.log( functionCheck[index]);
@@ -183,12 +183,6 @@ userphonenumber.addEventListener("change",function(e){
 })
 
 //성별 체크 시작
-const usergender = document.querySelectorAll(".usergender")
-
-usergender.forEach( data => data.addEventListener("click",function(e){
-    functionCheck[5]=true;
-}))
-
 // 성별 체크 끝
 // 취미 체크 
 // const userhobby = document.querySelector(".userhobby")

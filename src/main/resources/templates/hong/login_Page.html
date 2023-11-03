@@ -26,12 +26,12 @@
 		        <form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post">
                     <div class="userid_div">
                         <span>👉</span>
-                        <input type="text" name="userid"  placeholder="id" class="userid_input">
+                        <input type="text" name="userId"  placeholder="id" class="userid_input">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
                     <div class="userpw_div">
                         <span>👉</span>
-                        <input name="userpw" type="password" class="userpw_input" placeholder="password">
+                        <input name="userPassword" type="password" class="userpw_input" placeholder="password">
                         <a href="#" class="delete_innerText">❌</a>
                     </div>
                 </form>
@@ -56,9 +56,6 @@
     </div>
     <th:block th:replace="~{layout/footer::footer}"></th:block>
 
-    <script th:src="@{/hong/login_Page/js/kakaologin.js}"></script>
-    <script th:src="@{/hong/login_Page/js/check_cookies.js}"></script>
-    <script th:src="@{/hong/login_Page/js/deleteValue.js}"></script>
-
+    <script th:src="@{/hong/login_Page/js/login.js}"></script>
 </body>
 </html>
