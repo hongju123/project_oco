@@ -18,7 +18,8 @@ public class BusinessImpl implements BusinessService {
 	}
 	@Override
 	public boolean findById(String businessUsers) {
-		return bm.findById(businessUsers);
+//		만약 없다면 false
+		return bm.findById(businessUsers)!=null;
 	}
 
 }

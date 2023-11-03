@@ -16,6 +16,6 @@
 	    <!--ajax로 아이디 중복확인-->
     <select id="findById">
         select * from business_users where business_id=#{businessId}
-    </select> 
+     </select>
 </mapper>
 
