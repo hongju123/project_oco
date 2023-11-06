@@ -51,11 +51,11 @@ public class UserController {
 		
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
 			req.getSession().setAttribute("businessUser", "X");
-			return "index";
+			return "redirect:/";
 		} else if(kakaoUser.insert(kakaoUserDto)) {
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
 			req.getSession().setAttribute("businessUser", "X");
-			return "index";
+			return "redirect:/";
 		} else {
 			System.out.println("오류@@@@@@@@@@@");
 			return "/hong/login_Page"; 
@@ -71,7 +71,7 @@ public class UserController {
 		
 		if (user.join(userDto)) {
 			req.getSession().setAttribute("loginUser", userDto.getUserId());
-			return "index";
+			return "redirect:/";
 		} else {
 			return "hong/join_Page";
 		}
