@@ -12,7 +12,7 @@ select#category {
 	border-radius: 5px;
 	padding: 5px;
 	appearance: none;
-	width: 150px;
+	width: 170px;
 }
 
 select#category option:checked {
