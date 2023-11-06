@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 import com.oco.service.ReservationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,7 +57,7 @@ public class ReservationController {
 	public String modify(ReservationDTO reservation) throws Exception {
 		System.out.println(reservation);
 		if(service.reservationmodify(reservation)) {
-			return "redirect:/reservation/reservationget"+"&requestNum="+reservation.getRequestNum();
+			return "redirect:/reservation/reservationget?"+"&requestNum="+reservation.getRequestNum();
 		}
 		else {
 			return "redirect:/reservation/reservationlist";
@@ -72,21 +72,10 @@ public class ReservationController {
 			return "redirect:/reservation/reservationlist";
 		}
 		else {
-			return "redirect:/reservation/reservationget"+"&requestNum="+requestNum;
+			return "redirect:/reservation/reservationget?"+"&requestNum="+requestNum;
 		}
 	}
 	
 	
-	@GetMapping("map")
-	public void map() {
-	}
-	@PostMapping("map")
-	public String map(ScheduleDTO schedule)  throws Exception{
-		if(service.schedulewrite(schedule)) {
-			return "redirect:/reservation/reservationlist";
-		}else {
-			return "redirect:/reservation/reservationlist";
-		}
-	}
 
 }

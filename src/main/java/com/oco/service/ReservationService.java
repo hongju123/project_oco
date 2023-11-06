@@ -5,13 +5,12 @@ import java.util.List;
 
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 
 
 public interface ReservationService {
 	//insert
 	boolean regists(ReservationDTO reservation);
-	boolean schedulewrite(ScheduleDTO schedule);
 	
 	//update
 	public boolean reservationmodify(ReservationDTO reservation);

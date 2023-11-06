@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 
 @Mapper
 public interface ReservationMapper {
@@ -14,8 +14,6 @@ public interface ReservationMapper {
 	// insert
 	int insertReservation(ReservationDTO reservation);
 
-	// 일정추가
-	int insertschedule(ScheduleDTO schedule);
 
 	// update
 	int updatereservation(ReservationDTO reservation);

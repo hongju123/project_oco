@@ -9,12 +9,6 @@
 	</insert>
 	
 	
-	<insert id="insertschedule">
-		insert into schedule (schedule_date,storename,addr,memo)
-		values(#{scheduleDate},#{storename},#{addr},#{memo})
-	</insert>
-	
-	
 	<update id="updatereservation">
 		update user_requests set category=#{category}, address=#{address}, request_type=#{requestType},
 		reg_date=#{regDate}, personnel=#{personnel}, fuel=#{fuel}, cost=#{cost}, amenities=#{amenities}, memo=#{memo}

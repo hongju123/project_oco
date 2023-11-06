@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 import com.oco.mapper.ReservationMapper;
 
 
@@ -38,15 +38,6 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public ReservationDTO getDetail(Long requestNum) {
 		return remapper.findByNum(requestNum);
-	}
-
-	@Override
-	public boolean schedulewrite(ScheduleDTO schedule) {
-		int row = remapper.insertschedule(schedule);
-		if(row != 1) {
-			return false;
-		}
-			return true;
 	}
 
 	@Override
