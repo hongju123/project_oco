@@ -13,32 +13,55 @@
 			width: 1200px;
 			height: 1000px;
 		}
+		.total_section{
+			border: 1px solid black;
+			box-sizing: border-box;
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+		}
+		.main_section{
+			border: 1px solid black;
+			width: 850px;
+			height: 500px;
+		}
+		.sub_section{
+			border: 1px solid black;
+			width: 320px;
+			height: 500px;
+		}
 	</style>
 </head>
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="wrap">
-		<form class="main_info" method="post" >
-			<div class="title_section">
-
+			<div class="total_section">
+				<div class="main_section">
+					<div class="title_section">
+						[[${userboard.businessId}]]
+						[[${userboard.businessAddress}]]
+						[[${userboard.businessCategory}]]
+						[[${userboard.businessStoreName}]]
+					</div>
+					<div class="shot_info">
+					</div>
+					<div class="main content">
+						<textarea readonly></textarea>
+					</div>
+					<div class="free_service">
+						
+					</div>
+					<div class="photo_zone">
+					</div>
+					<div class="reply">
+						
+					</div>
+				</div>
+				<div class="sub_section">
+					<a class="" th:href="@{/Bboard/modify}"> 수정하기 </a>
+				</div>
 			</div>
-			<div class="shot_info">
-
-			</div>
-			<div class="main content">
-
-			</div>
-			<div class="free_service">
-
-			</div>
-			<div class="photo_zone">
-
-			</div>
-			<div class="reply">
-
-			</div>
-		</form>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>

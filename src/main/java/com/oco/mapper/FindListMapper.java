@@ -15,4 +15,11 @@ public interface FindListMapper {
 	List<BusinessDTO> getMainList(String main1, String main2, String addr1, String addr2);
 	
 	List<BusinessInfoDTO> getinfo();
+
+	BusinessDTO userDetail(String loginUser);
+
+	BusinessInfoDTO infoDetail(String loginUser);
+
+	void modify(BusinessInfoDTO info);
+
 }

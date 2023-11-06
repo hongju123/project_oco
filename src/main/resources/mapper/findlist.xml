@@ -1,11 +1,25 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.oco.mapper.FindListMapper">
+	  <!-- 카테고리별 select -->
 	  <select id="getMainList">
 	  select * from business_users where business_category like('${main1}%${main2}%') having business_address like ('${addr1}%${addr2}%');
 	  </select>
+	  <!-- 별점높은순 -->
 	  <select id="getinfo">
 		  select * from business_info order by overall_grade desc;
 	  </select>
+	  <!-- 상세페이지 유저 정보 -->
+	  <select id="userDetail">
+		  select * from business_users where business_id = #{loginUser}
+	  </select>
+	  <!-- 상세페이지 유저 게시판 정보 -->
+	  <select id="infoDetail">
+		  select * from business_info where business_id = #{loginUser}
+	  </select>
+	  <!-- 상세페이지 수정 -->
+	  <update id="modify">
+		  update business_info set use_time = #{useTime}, content = #{content}, amenities = #{amenities} business_id = #{businessId}
+	  </update>
   </mapper>
  

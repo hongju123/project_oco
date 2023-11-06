@@ -171,6 +171,9 @@
 				</div>
 			</swiper-slide>
 		  </swiper-container>
+		  <form id="pageForm">
+
+			</form>
 		
 		  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
@@ -190,5 +193,18 @@
   <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
   
+  <script th:inline="javascript">
+	  
+  	const pageForm = document.getElementById('pageForm');
+  	
+  	$(".myPage").on("click",function(e){
+		  e.preventDefault();
+		  let url =/*[[@{/Bboard/write}]]*/'';
+		  pageForm.setAttribute("action",url);
+		  pageForm.setAttribute("method","get");
+		  pageForm.submit();
+	  })
+	
+  </script>
 
 </html>
