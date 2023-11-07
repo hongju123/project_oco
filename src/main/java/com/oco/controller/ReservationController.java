@@ -45,7 +45,7 @@ public class ReservationController {
 	}
 
 	@GetMapping(value = { "reservationget", "reservationmodify" })
-	public String get( Long requestNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+	public String get(Long requestNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		HttpSession session = req.getSession();
 		ReservationDTO reservation = service.getDetail(requestNum);
 		model.addAttribute("reservation", reservation);
@@ -53,29 +53,46 @@ public class ReservationController {
 		String requestURI = req.getRequestURI();
 		return requestURI;
 	}
+
 	@PostMapping("reservationmodify")
 	public String modify(ReservationDTO reservation) throws Exception {
 		System.out.println(reservation);
-		if(service.reservationmodify(reservation)) {
-			return "redirect:/reservation/reservationget?"+"&requestNum="+reservation.getRequestNum();
-		}
-		else {
+		if (service.reservationmodify(reservation)) {
+			return "redirect:/reservation/reservationget?" + "&requestNum=" + reservation.getRequestNum();
+		} else {
 			return "redirect:/reservation/reservationlist";
 		}
 	}
-	
+
 	@PostMapping("reservationremove")
 	public String remove(Long requestNum, HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
-		if(service.remove(loginUser, requestNum)) {
+		String loginUser = (String) session.getAttribute("loginUser");
+		if (service.remove(loginUser, requestNum)) {
 			return "redirect:/reservation/reservationlist";
-		}
-		else {
-			return "redirect:/reservation/reservationget?"+"&requestNum="+requestNum;
+		} else {
+			return "redirect:/reservation/reservationget?" + "&requestNum=" + requestNum;
 		}
 	}
-	
-	
 
+	@PostMapping("proposal")
+	public String proposal(Long requestNum, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String loginUser = (String) session.getAttribute("loginUser");
+		ReservationDTO reservation = service.getDetail(requestNum);
+		System.out.println(reservation);
+		if(reservation.getBusinessId() != null) {
+			String bid = reservation.getBusinessId();
+			loginUser += ","+bid;
+			if (service.proposal(loginUser, requestNum)) {
+				return "redirect:/reservation/reservationlist";
+			}
+		}
+		else{
+			if (service.proposal(loginUser, requestNum)) {
+				return "redirect:/reservation/reservationlist";
+			}
+		}
+		return "redirect:/reservation/reservationlist";
+	}
 }

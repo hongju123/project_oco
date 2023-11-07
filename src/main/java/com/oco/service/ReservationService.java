@@ -14,6 +14,7 @@ public interface ReservationService {
 	
 	//update
 	public boolean reservationmodify(ReservationDTO reservation);
+	public boolean proposal(String loginUser, Long requestNum);
 	
 	//delete
 	public boolean remove(String loginUser, Long requestNum);
@@ -23,4 +24,6 @@ public interface ReservationService {
 	List<ReservationDTO> getReservationList();
 	ReservationDTO getDetail(Long requestNum);
 	
+	//유저 요청에 유저 찾는 로직
+	public List<ReservationDTO> getUser(String userId);
 }

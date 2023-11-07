@@ -60,5 +60,18 @@ public class ReservationServiceImpl implements ReservationService{
 		return false;
 	}
 
+	@Override
+	public boolean proposal(String loginUser, Long requestNum) {
+		int row = remapper.proposal(loginUser,requestNum);
+		if(row != 1) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	public List<ReservationDTO> getUser(String userId) {
+		return remapper.findByUser(userId);
+	}
 
 }

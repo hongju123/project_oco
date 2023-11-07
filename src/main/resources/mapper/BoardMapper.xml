@@ -29,7 +29,7 @@
 	<!--updateBoard-->
 	<update id="updateReadCount">
 		update boards set board_title=#{board_title},board_contents=#{board_contents},update_date=now()
-		where board_num=#{}
+		where board_num=#{boardNum}
 	</update>
 	<!--selectBoard-->
 	<select id="getList">

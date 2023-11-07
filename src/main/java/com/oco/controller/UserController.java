@@ -37,7 +37,8 @@ public class UserController {
 	
 
 	@GetMapping("")
-	public String Test() {
+	public String Test(HttpServletRequest req) {
+
 		return "hong/login_Page.html";
 	}
 
