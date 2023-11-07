@@ -20,6 +20,6 @@ public interface FindListMapper {
 
 	BusinessInfoDTO infoDetail(String loginUser);
 
-	void modify(BusinessInfoDTO info);
+	int modify(BusinessInfoDTO info);
 
 }

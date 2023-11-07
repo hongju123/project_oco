@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<style>
+		#wrap {
+			margin: 150px auto;
+			border: 1px solid black;
+			width: 1200px;
+			height: 1000px;
+		}
+
+		.total_section {
+			border: 1px solid black;
+			box-sizing: border-box;
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.main_section {
+			border: 1px solid black;
+			width: 850px;
+			height: 500px;
+		}
+
+		.sub_section {
+			border: 1px solid black;
+			width: 320px;
+			height: 500px;
+		}
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div id="wrap">
+		<div class="total_section">
+			<div class="main_section">
+				<div class="title_section">
+				</div>
+				<form th:action="@{/Bboard/modify}" method="post" name="boardForm" if="boardForm"
+					enctype="multipart/form-data">
+					<div class="shot_info">
+						<select name="maa1">
+							<option>오전&nbsp;</option>
+							<option>오후&nbsp;</option>
+						</select>
+						<select name="open_time" class="time">
+							<option value="시작">시작 시간</option>
+						</select>
+						<select name="maa2">
+							<option>오전&nbsp;</option>
+							<option>오후&nbsp;</option>
+						</select>
+						<select name="close_time" class="time">
+							<option value="마감">마감 시간</option>
+						</select>
+					</div>
+					<div class="main content">
+						<textarea name="content"></textarea>
+					</div>
+					<div class="free_service">
+						<input type="checkbox">
+						<input type="checkbox">
+						<input type="checkbox">
+						<input type="checkbox">
+						<input type="checkbox">
+						<input type="checkbox">
+					</div>
+					<table class="photo_zone" border="">
+						<tr class="r0 at">
+							<td class="file0_cont">
+								<div>
+									<input type="file" name="files" id="file0">
+<!--									<span id="file0name">선택된 파일 없음</span>-->
+								</div>
+<!--								<div>
+									<a href="javascript:upload('file0')">파일 선택 /</a>
+									<a href="javascript:cancelfile('file0')">첨부 삭제</a>
+								</div>-->
+							</td>
+						</tr>
+					</table>
+			</div>
+			<div class="sub_section">
+				<input type="submit">
+			</div>
+			</form>
+		</div>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
+	const time = document.getElementsByClassName("time")
+
+	for (let i of time) {
+		for (let key of date) {
+			let option = document.createElement('option');
+			option.value = key
+			option.innerHTML = key
+			i.appendChild(option);
+		}
+	}
+
+	/*let i = 0;
+	function upload(name) {
+		$("#" + name).click();
+	}
+
+	$("[type='file']").change(function (e) {
+		const file = e.target.files[0];
+		const fileTag = e.target;
+
+		if (file == undefined) {
+			cancelFile(fileTag.id);
+		}
+		else {
+			let ext = file.name.split(".").pop();
+			if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+				$("." + fileTag.id + "_cont .thumbnail").remove();
+				const reader = new FileReader();
+
+				reader.onload = function (ie) {
+					const img = document.createElenet("img");
+					img.setAttribute("src", ie.target.result)
+					img.setAttribute("class", "thumbnail");
+					document.querySelector("." + fileTag.id + "_cont").appendChild(img);
+				}
+				reader.readasDataURL(file);
+			}
+			else {
+				const temp = $("." + fileTag.id + "_cont >thummbnail");
+				if (temp != null) {
+					temp.remove();
+				}
+			}
+				if (fileTag.id.split("e")[1] == i) {
+				const cloneElement = $(".r" + i).clone(true);
+				i++;
+				cloneElement.appendTo("#boarForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
+
+				lastElement.attr("class", "r" + i + " at");
+				lastElement.children("td").attr("class", "file" + i + "_cont");
+
+				lastElement.find("inputptype='file']").attr("name", "files");
+				lastElement.find("inputptype='file']").attr("id", "file" + i);
+				lastElement.find("inputptype='file']").val("");
+
+				lastElement.find("span").attr("di", "file" + i + "name");
+				lastElement.find("span").text("선택된 파일 없음");
+
+				lastElement.find("a")[0].href = "javascript:upload(file" + i + "')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "')";
+			}
+		}
+
+	})
+
+	function cancelfile(name) {
+		if (name.split("e")[1] == i) {return;}
+
+		if (i != 0) {
+			let temp = Number(name.split("e")[1]);
+
+			$(".r" + temp).remove();
+
+			for (let j = temp + 1; j <= i; j++) {
+				const el = $("#boardForm tbody").find(".r" + j);
+				el.attr("class", "r" + (j - 1) + " at");
+
+				el.children('th').text("파일 첨부" + j);
+
+				el.children('td').attr("class", "file" + (j - 1) + "_cont");
+
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name", "file" + (j - 1));
+				filetag.attr("id", "file" + (j - 1));
+
+				el.find("span").attr("id", "file" + (j - 1) + "name");
+
+				el.find("a")[0].href = "javascript:uplad('file" + (j - 1) + "')"
+				el.find("a")[1].href = "javascript:cancelfile('file" + (j - 1) + "')"
+			}
+			i--;
+		}
+	}*/
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
