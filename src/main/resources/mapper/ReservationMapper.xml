@@ -2,51 +2,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oco.mapper.ReservationMapper">
 	
-	<sql id="cri">
-		<if test="keyword != '' and type != ''">
-			<trim prefixOverrides="or" prefix="(" suffix=") and">
-				<foreach collection="typeArr" item="type">
-					or 
-					<choose>
-						<when test="type == 'C'.toString()">
-							(category like('%${keyword}%'))
-						</when>
-						<when test="type == 'W'.toString()">
-							(userid like('%${keyword}%'))
-						</when>
-					</choose>
-				</foreach>
-			</trim>
-		</if> 
-	</sql>
-	
-	
 	
 	<insert id="insertReservation">
-		insert into user_requests (category,address,requesttype,regdate,personnel,fuel,cost,amenities,memo,userid,businessid)
-		values(#{category},#{address},#{requesttype},#{regdate},#{personnel},#{fuel},#{cost},#{amenities},#{memo},#{userid},#{businessid})
+		insert into user_requests (category,address,request_type,reg_date,personnel,fuel,cost,amenities,memo,user_id,business_id)
+		values(#{category},#{address},#{requestType},#{regDate},#{personnel},#{fuel},#{cost},#{amenities},#{memo},#{userId},#{businessId})
 	</insert>
 	
 	
-	<insert id="insertschedule">
-		insert into schedule (schedule_date,storename,addr,memo)
-		values(#{schedule_date},#{storename},#{addr},#{memo})
-	</insert>
+	<update id="updatereservation">
+		update user_requests set category=#{category}, address=#{address}, request_type=#{requestType},
+		reg_date=#{regDate}, personnel=#{personnel}, fuel=#{fuel}, cost=#{cost}, amenities=#{amenities}, memo=#{memo}
+		where request_num=#{requestNum}
+	</update>
+	
+	<delete id="deletereservation">
+		delete from user_requests where request_num=#{requestNum}
+	</delete>
 	
 	<select id="getReservationList">
-		select * from user_requests where
-		<include refid="cri"></include>
-		<![CDATA[ 
-			0 < requestnum order by requestnum desc limit #{startrow},#{amount}
-		]]>
+		select * from user_requests
 	</select>
 	
 	<select id="getTotal">
-		select count(*) from user_requests where
-		<include refid="cri"></include> requestnum > 0
+		select count(*) from user_requests where request_num > 0
 	</select>
 	
 	<select id="findByNum">
-		select * from user_requests where requestnum=#{requestnum}
+		select * from user_requests where request_num=#{requestNum}
 	</select>
 </mapper>

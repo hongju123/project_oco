@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>내 견적서 상세조회</title>
+</head>
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="main02-inner">
+		<h2>상세조회</h2>
+		<table>
+			<tr>
+				<th>날짜</th>
+				<td>
+					<input type="text" name="scheduleDate" size="50" maxlength="50" th:value="${planner.scheduleDate}"
+						readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>상호명</th>
+				<td>
+					<input type="text" name="storeName" size="50" maxlength="50" th:value="${planner.storeName}"
+						readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>주소</th>
+				<td>
+					<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
+						readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>메모</th>
+				<td>
+					<input type="text" name="memo" size="50" maxlength="50" th:value="${planner.memo}" readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td>
+					<input type="text" name="userid" size="50" maxlength="50" th:value="${planner.userId}" readonly>
+				</td>
+			</tr>
+		</table>
+		<!-- 이미지 지도를 표시할 div 입니다 -->
+		<div id="map" style="width:100%;height:350px;"></div>
+
+		<form name="plannerForm" method="post" th:action="@{/planner/plannerremove}">
+			<input name="scheduleNum" th:value="${planner.scheduleNum}" type="hidden">
+			<a href="javascript:document.plannerForm.submit()">삭제</a>
+		</form>
+		<a th:href="${'/planner/plannerlist'}">목록</a>
+		<input type="button" value="지도" onclick="f()">
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6a441b4c0d02c9d68eb709c125831254&libraries=services,clusterer,drawing"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script th:inline="javascript">
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	const addr = $(".addr").val();
+	console.log(addr)
+	const addrs = addr.split(",")
+	const latng = [];
+	const linePath = [];
+	for (var i = 0; i < addrs.length; i++) {
+		add(i)
+	}
+	function add(i) {
+
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(addrs[i], function (result, status) {
+
+			// 정상적으로 검색이 완료됐으면 
+			if (status === kakao.maps.services.Status.OK) {
+
+				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				latng.push(coords)
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+					mapOption = {
+						center: latng[0], // 지도의 중심좌표
+						level: 2 // 지도의 확대 레벨
+					};
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				// 마커를 표시할 위치와 title 객체 배열입니다 
+				// 마커 이미지의 이미지 주소입니다
+				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+				for (var i = 0; i < latng.length; i++) {
+
+					// 마커 이미지의 이미지 크기 입니다
+					var imageSize = new kakao.maps.Size(24, 35);
+
+					// 마커 이미지를 생성합니다    
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+					// 마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+						map: map, // 마커를 표시할 지도
+						position: latng[i], // 마커를 표시할 위치
+						image: markerImage // 마커 이미지 
+					});
+				}
+				linePath.push(marker.getPosition())
+				var polyline = new kakao.maps.Polyline({
+					path: linePath, // 선을 구성하는 좌표배열 입니다
+					strokeWeight: 5, // 선의 두께 입니다
+					strokeColor: '#FFAE00', // 선의 색깔입니다
+					strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+					strokeStyle: 'solid' // 선의 스타일입니다
+				});
+				// 지도에 선을 표시합니다 
+				polyline.setMap(map);
+			}
+		});
+	}
+</script>
+
+</html>

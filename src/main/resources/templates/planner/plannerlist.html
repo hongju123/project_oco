@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-	<title>견적요청</title>
+	<title>플래너 리스트</title>
 </head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/slick.css}">
@@ -12,36 +12,22 @@
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="main02-inner">
-	<h1>내 견적서 조회</h1>
-	<div>
-		<a th:href="${'/reservation/reservationwrite'}">견적서 작성</a>
-		<input type="button" value="카테고리"> <input type="button" value="지역">
-	</div>
+	<a th:href="${'/planner/map'}">플래너 작성</a>
 	<table class="list">
 		<tr align="right" valign="middle">
 		</tr>
 		<tr align="center" valign="middle">
-			<th width="8%">카테고리</th>
-			<th>지역</th>
-			<th>유형</th>
-			<th width="15%">작성자</th>
-			<th width="17%">편의시설</th>
-			<th width="10%">인원(연료)</th>
-			<th width="10%">가격대</th>
-			<th width="17%">날짜</th>
-			<th width="10%">메모</th>
+			<th width="8%">날짜</th>
+			<th>가게명</th>
+			<th>주소</th>
+			<th width="15%">메모</th>
 		</tr>
-		<tr th:if="${list != null and list.size()>0}" th:each="reservation : ${list}" align="center" valign="middle">
-			<th:block th:if="${reservation.userId == session.loginUser}">
-				<td><a class="get" th:href="${reservation.requestNum}">[[${reservation.category}]]</a></td>
-				<td>[[${reservation.address}]]</td>
-				<td>[[${reservation.requestType}]]</td>
-				<td>[[${reservation.userId}]]</td>
-				<td>[[${reservation.amenities}]]</td>
-				<td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
-				<td>[[${reservation.cost}]]</td>
-				<td>[[${reservation.regDate}]]</td>
-				<td>[[${reservation.memo}]]</td>
+		<tr th:if="${list != null and list.size()>0}" th:each="planner : ${list}" align="center" valign="middle">
+			<th:block th:if="${planner.userId == session.loginUser}">
+				<td><a class="get" th:href="${planner.scheduleNum}">[[${planner.scheduleDate}]]</a></td>
+				<td>[[${planner.storeName}]]</td>
+				<td>[[${planner.addr}]]</td>
+				<td>[[${planner.memo}]]</td>
 			</td>
 			<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
 		</tr>
@@ -52,9 +38,7 @@
 			</tr>
 		</th:block>
 	</table>
-	<form name="getForm" id="getForm" th:action="@{/reservation/reservationlist}">
-	</form>
-	<a class="map" th:href="${'/reservation/map'}">지도</a>
+	<form name="getForm" id="getForm" th:action="@{/planner/plannerlist}"></form>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
@@ -72,14 +56,13 @@
 	const getForm = $("#getForm");
 	$(".get").on("click",function(e){
 		e.preventDefault()
-		let requestNum = $(this).attr("href");
-		let url=/*[[@{/reservation/reservationget}]]*/'';
-		getForm.append("<input type='hidden' name='requestNum' value='"+requestNum+"'>")
+		let scheduleNum = $(this).attr("href");
+		let url=/*[[@{/planner/plannerget}]]*/'';
+		getForm.append("<input type='hidden' name='scheduleNum' value='"+scheduleNum+"'>")
 		getForm.attr("action",url);
 		getForm.attr("method","get");
 		getForm.submit();
 	})
-	
 	
 </script>
 </html>

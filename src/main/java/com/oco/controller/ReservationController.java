@@ -3,20 +3,16 @@ package com.oco.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.oco.domain.dto.Criteria;
-import com.oco.domain.dto.PageDTO;
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 import com.oco.service.ReservationService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -29,11 +25,10 @@ public class ReservationController {
 	private ReservationService service;
 
 	@GetMapping("reservationlist")
-	public void list(Criteria cri, Model model) {
-		System.out.println(cri);
-		List<ReservationDTO> list = service.getReservationList(cri);
+	public void list(Model model) {
+		List<ReservationDTO> list = service.getReservationList();
 		model.addAttribute("list", list);
-		model.addAttribute("pageMaker", new PageDTO(service.getTotal(cri), cri));
+		System.out.println(list);
 	}
 
 	@GetMapping("reservationwrite")
@@ -49,28 +44,38 @@ public class ReservationController {
 		}
 	}
 
-	@GetMapping(value = { "reservationget", "modify" })
-	public String get(Criteria cri, Long requestnum, HttpServletRequest req, HttpServletResponse resp, Model model) {
-		model.addAttribute("cri", cri);
+	@GetMapping(value = { "reservationget", "reservationmodify" })
+	public String get( Long requestNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		HttpSession session = req.getSession();
-		ReservationDTO reservation = service.getDetail(requestnum);
+		ReservationDTO reservation = service.getDetail(requestNum);
 		model.addAttribute("reservation", reservation);
-		// model.addAttribute("files",service.getFileList(boardnum));
 		String loginUser = (String) session.getAttribute("loginUser");
 		String requestURI = req.getRequestURI();
 		return requestURI;
 	}
-	
-	@GetMapping("map")
-	public void map() {
-	}
-	@PostMapping("map")
-	public String map(ScheduleDTO schedule)  throws Exception{
-		if(service.schedulewrite(schedule)) {
-			return "redirect:/reservation/reservationlist";
-		}else {
+	@PostMapping("reservationmodify")
+	public String modify(ReservationDTO reservation) throws Exception {
+		System.out.println(reservation);
+		if(service.reservationmodify(reservation)) {
+			return "redirect:/reservation/reservationget?"+"&requestNum="+reservation.getRequestNum();
+		}
+		else {
 			return "redirect:/reservation/reservationlist";
 		}
 	}
+	
+	@PostMapping("reservationremove")
+	public String remove(Long requestNum, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		if(service.remove(loginUser, requestNum)) {
+			return "redirect:/reservation/reservationlist";
+		}
+		else {
+			return "redirect:/reservation/reservationget?"+"&requestNum="+requestNum;
+		}
+	}
+	
+	
 
 }

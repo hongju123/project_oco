@@ -48,11 +48,14 @@ public class UserController {
 		KakaoUserDTO  kakaoUserDto= new KakaoLoginService().login(code);
 		
 		if (kakaoUser.findKakao(kakaoUserDto.getKakaoIdx())) {
+		
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
-			return "index";
+			req.getSession().setAttribute("businessUser", "X");
+			return "redirect:/";
 		} else if(kakaoUser.insert(kakaoUserDto)) {
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
-			return "index";
+			req.getSession().setAttribute("businessUser", "X");
+			return "redirect:/";
 		} else {
 			System.out.println("오류@@@@@@@@@@@");
 			return "/hong/login_Page"; 
@@ -68,7 +71,7 @@ public class UserController {
 		
 		if (user.join(userDto)) {
 			req.getSession().setAttribute("loginUser", userDto.getUserId());
-			return "index";
+			return "redirect:/";
 		} else {
 			return "hong/join_Page";
 		}
@@ -110,10 +113,17 @@ public class UserController {
 	public String checklogin(String userId, String userPassword, HttpServletRequest req, HttpServletResponse res) {
 		System.out.println(userId + userPassword);
 		UserDTO loginUser = user.login(userId, userPassword);
-
 		if (loginUser != null) {
-			req.getSession().setAttribute("loginUser", loginUser.getUserId());
-			return "redirect:/";
+// user가 있는 것을 확인 했으니 여기서 business user에 아이디 값이 있는지 확인
+			if (buser.findById(loginUser.getUserId())) {
+				req.getSession().setAttribute("loginUser", loginUser.getUserId());
+				req.getSession().setAttribute("businessUser", "O");
+				return "redirect:/";
+			} else {
+				req.getSession().setAttribute("loginUser", loginUser.getUserId());
+				req.getSession().setAttribute("businessUser", "X");
+				return "redirect:/";
+			}
 		} else {
 			Cookie cookie = new Cookie("login", "fail");
 			cookie.setMaxAge(1);

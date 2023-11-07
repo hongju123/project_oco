@@ -1,16 +1,24 @@
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oco.mapper.BusinessMapper">
 	<!--insertParent-->
 	<insert id="insertParentUser">
 		INSERT INTO users (user_id, user_password,user_email)
-    	VALUES (#{businessId},#{businessPassword},#{businessEmail});
+		VALUES (#{businessId},#{businessPassword},#{businessEmail});
 	</insert>
 	<!--비지니스 유저 회원가입-->
 	<insert id="insertUser">
-		insert into business_users (business_id,business_password,business_name,business_number,business_zip_code,business_address,business_address_detail,business_additional_info,business_phone_number,business_email,business_store_name)
+		insert into business_users
+		(business_id,business_password,business_name,business_number,business_zip_code,business_address,business_address_detail,business_additional_info,business_phone_number,business_email,business_store_name)
 		values(#{businessId},#{businessPassword},#{businessName},#{businessNumber},#{businessZipCode},#{businessAddress},#{businessAddressDetail},#{businessAdditionalInfo},#{businessPhoneNumber},#{businessEmail},#{businessStoreName});
 	</insert>
-	<!---->
+	<!-- 비지니스 유저 상세 페이지 구현위해 아이디만 생성 -->
+	<insert id="insertinfo">
+		insert into business_info (business_id) value (#{businessId});
+	</insert>
+	<!--비지니스 유저 맞는지 체크-->
+	<!--ajax로 아이디 중복확인-->
+	<select id="findById">
+		select * from business_users where business_id=#{businessId}
+	</select>
 </mapper>
 

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oco.domain.dto.AllListDTO;
+import com.oco.domain.dto.BusinessDTO;
+import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.mapper.FindListMapper;
 
 @Service
@@ -36,5 +38,20 @@ public class FindListServiceImpl implements FindListService {
 			}
 		}
 		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo());
+	}
+
+	@Override
+	public BusinessDTO userDetail(String loginUser) {
+		return fmapper.userDetail(loginUser);
+	}
+
+	@Override
+	public BusinessInfoDTO infoDetail(String loginUser) {
+		return fmapper.infoDetail(loginUser);
+	}
+
+	@Override
+	public void modify(BusinessInfoDTO info) {
+		fmapper.modify(info);
 	}
 }

@@ -9,7 +9,6 @@
 	<!-- header,footer -->
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 
-
 	<link rel="stylesheet" th:href="@{/hong/join_Page/css/css.css}">
 </head>
 <body>
@@ -17,20 +16,21 @@
 	<div class="wrap">
 		<section class="first_section">
 			<div class="form_area">
-				
 				<form class="join_form" method="post" th:action="@{/user/join}">
 					<label for="userid">아이디</label>
 					<br>
 					<input type="text" value="" class="userid" id="userid" name="userId" placeholder="">
 					<input type="button" class="userid_button" value="중복확인">
 					<br>
-					<span class="alarming hidden">존재하는 아이디입니다.</span>
+					<span class="alarming hidden">*존재하는 아이디입니다.</span>
+					<span class="alarming hidden">*영문자로 시작하는 6~20자의 숫자 또는 영어를 입력해주세요</span>
 					<br>
 					<label for="userpw">비밀번호</label>
 					<br>
 					<input type="password" value="" id="userpw" class="userpw" name="userPassword">
 					<br>
 					<span class="alarming hidden">영문, 숫자, 특수문자 포함 8~15자의 문자를 입력해주세요</span>
+					<br>
 					<span class="alarming hidden">비밀번호를 입력해주세요</span>
 					<br>
 					<label for="check_userpw">비밀번호 확인</label>
@@ -80,16 +80,15 @@
 					<input type="text" id="hobby" name="userhobby" class="userhobby">
 					<br>
 					<button id="submitButton" type="button">제출</button>
-			</form>
+				</form>
 			</div>
 		</section>
 	</div>
-
-
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
-	<!--<div th:replace="hong/background :: background"></div>-->
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script th:src="@{/hong/join_Page/js/check_join.js}"></script>
 </body>
 </html>

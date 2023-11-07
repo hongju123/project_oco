@@ -12,7 +12,7 @@ select#category {
 	border-radius: 5px;
 	padding: 5px;
 	appearance: none;
-	width: 150px;
+	width: 170px;
 }
 
 select#category option:checked {
@@ -25,14 +25,6 @@ select option:hover {
 }
 
 
-input[type=checkbox] {
-	cursor: pointer;
-}
-
-input[type=checkbox] {
-	vertical-align: middle;
-	padding-left: 5px;
-}
 
 /*달력 시작*/
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
@@ -108,8 +100,8 @@ td {
 	font-weight: 600;
 	cursor: pointer;
 }
-
 /*달력 끝*/
+
 /* 지역 모달 창 시작 */
 #modal.modal-overlay {
 	width: 100%;
@@ -121,19 +113,20 @@ td {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background: rgba(255, 255, 255, 0.25);
+	background: rgba(0,0,0,0.5) !important;
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(1.5px);
 	-webkit-backdrop-filter: blur(1.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
 	display: none;
+	overflow-y: initial !important
 }
 
 
 #modal .modal-window {
-	background: rgba(69, 139, 197, 0.70);
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	background:#FFFFFF;
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 	backdrop-filter: blur(13.5px);
 	-webkit-backdrop-filter: blur(13.5px);
 	border-radius: 10px;
@@ -143,6 +136,8 @@ td {
 	position: relative;
 	top: -100px;
 	padding: 10px;
+	height: 500px;
+	overflow-y: auto;
 }
 
 #modal .title {
@@ -172,8 +167,18 @@ td {
 	text-shadow: 1px 1px 2px gray;
 	color: white;
 }
+
 /* 지역 모달 끝*/
+
 /*편의시설 체크박스*/
+input[type=checkbox] {
+	cursor: pointer;
+}
+
+input[type=checkbox] {
+	vertical-align: middle;
+	padding-left: 5px;
+}
 /* label:before에 체크하기 전 상태 CSS */
 input[type=checkbox] {
 	content: "";

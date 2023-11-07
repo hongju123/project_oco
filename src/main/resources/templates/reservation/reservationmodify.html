@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>내 견적서 상세조회</title>
+</head>
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="main02-inner">
+		<h2>상세조회</h2>
+		<form name="reservationForm" id="reservationForm"  method="post" th:action="@{/reservation/reservationmodify}">
+			<input type="hidden" th:value="${reservation.requestNum}" name="requestNum">
+			<table>
+				<tr>
+					<th>카테고리</th>
+					<td>
+						<select id="category" onchange="f()" name="category">
+							<option value="" selected disabled>[[${reservation.category}]]</option>
+							<option class="categoryA" value="숙소">숙소</option>
+							<option class="categoryB" value="식당">식당</option>
+							<option class="categoryC" value="카페">카페</option>
+							<option class="categoryD" value="렌터카">렌터카</option>
+							<option class="categoryE" value="기타">기타</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>지역</th>
+					<td>
+						<li><input type="text" th:value="${reservation.address}" class="areaA" id="areaA" name="address"
+								onclick="f2()">
+							<div id="modal" class="modal-overlay">
+								<div class="modal-window">
+									<div>
+										<h2>지역</h2>
+									</div>
+									<div class="close-area">X</div>
+									<ul id="area">
+
+									</ul>
+								</div>
+							</div>
+						</li>
+					</td>
+				</tr>
+				<tr>
+					<th>유형</th>
+					<td>
+						<input type="text" class="type" name="requestType" id="requestType"
+							th:value="${reservation.requestType}" readonly>
+						<div class="types">
+							<div class="typeA">
+								<ul>
+									<li><a href="#" class="typeAA">모텔</a></li>
+									<li><a href="#" class="typeAB">호텔</a></li>
+									<li><a href="#" class="typeAC">펜션</a></li>
+									<li><a href="#" class="typeAD">에어비엔비</a></li>
+									<li><a href="#" class="typeAE">캠핑장</a></li>
+								</ul>
+							</div>
+							<div class="typeB">
+								<ul>
+									<li><a href="#" class="typeBA">한식</a></li>
+									<li><a href="#" class="typeBB">일식</a></li>
+									<li><a href="#" class="typeBC">중식</a></li>
+									<li><a href="#" class="typeBD">분식</a></li>
+									<li><a href="#" class="typeBE">야식</a></li>
+								</ul>
+							</div>
+							<div class="typeC">
+								<ul>
+									<li><a href="#" class="typeCA">개인</a></li>
+									<li><a href="#" class="typeCB">프랜차이즈</a></li>
+									<li><a href="#" class="typeCC">베이커리</a></li>
+									<li><a href="#" class="typeCD">디저트</a></li>
+								</ul>
+							</div>
+							<div class="typeD">
+								<ul>
+									<li><a href="#" class="typeDA">경형/소형</a></li>
+									<li><a href="#" class="typeDB">중형/대형</a></li>
+									<li><a href="#" class="typeDC">SUV/승합</a></li>
+								</ul>
+							</div>
+							<div class="typeE">
+								<ul>
+									<li><a href="#" class="typeEA">회의실</a></li>
+									<li><a href="#" class="typeEB">파티룸</a></li>
+								</ul>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>
+						<input type="text" name="userid" size="50" maxlength="50" th:value="${reservation.userId}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>편의시설</th>
+					<td>
+						<li>
+							<input type="text" class="amenities" name="amenities" id="amenities"
+								th:value="${reservation.amenities}" readonly>
+							<div class="amenitiess">
+								<div class="amenitiesA">
+									<ul>
+										<li><input type="checkbox" value="와이파이" name="typeA" id="check_btn">와이파이</li>
+										<li><input type="checkbox" value="스파" name="typeA" id="check_btn">스파</li>
+										<li><input type="checkbox" value="욕조" name="typeA" id="check_btn">욕조</li>
+										<li><input type="checkbox" value="드라이기" name="typeA" id="check_btn">드라이기</li>
+										<li><input type="checkbox" value="다리미" name="typeA" id="check_btn">다리미</li>
+										<li><input type="checkbox" value="픽업" name="typeA" id="check_btn">픽업</li>
+										<li><input type="checkbox" value="주차" name="typeA" id="check_btn">주차</li>
+										<li><input type="checkbox" value="취사" name="typeA" id="check_btn">취사</li>
+										<li><input type="checkbox" value="반려견동반" name="typeA" id="check_btn">반려견동반</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeA" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<div class="amenitiesB">
+									<ul>
+										<li><input type="checkbox" value="단체룸" name="typeB" id="check_btn">단체룸</li>
+										<li><input type="checkbox" value="주차" name="typeB" id="check_btn">주차</li>
+										<li><input type="checkbox" value="발렛" name="typeB" id="check_btn">발렛</li>
+										<li><input type="checkbox" value="유아 동반" name="typeB" id="check_btn">유아 동반</li>
+										<li><input type="checkbox" value="반려견 동반" name="typeB" id="check_btn">반려견 동반
+										</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeB" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<div class="amenitiesC">
+									<ul>
+										<li><input type="checkbox" value="단체룸" name="typeC" id="check_btn">단체룸</li>
+										<li><input type="checkbox" value="와이파이" name="typeC" id="check_btn">와이파이</li>
+										<li><input type="checkbox" value="충전가능" name="typeC" id="check_btn">충전가능</li>
+										<li><input type="checkbox" value="프린트" name="typeC" id="check_btn">프린트</li>
+										<li><input type="checkbox" value="주차" name="typeC" id="check_btn">주차</li>
+										<li><input type="checkbox" value="발렛" name="typeC" id="check_btn">발렛</li>
+										<li><input type="checkbox" value="유아 동반" name="typeC" id="check_btn">유아 동반</li>
+										<li><input type="checkbox" value="반려견 동반" name="typeC" id="check_btn">반려견 동반
+										</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeC" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<div class="amenitiesD">
+									<ul>
+										<li><input type="checkbox" value="후방카메라" name="typeD" id="check_btn">후방카메라</li>
+										<li><input type="checkbox" value="블루투스" name="typeD" id="check_btn">블루투스</li>
+										<li><input type="checkbox" value="내비게이션" name="typeD" id="check_btn">내비게이션</li>
+										<li><input type="checkbox" value="카시트" name="typeD" id="check_btn">카시트</li>
+										<li><input type="checkbox" value="유모차" name="typeD" id="check_btn">유모차</li>
+										<li><input type="checkbox" value="유아 동반" name="typeD" id="check_btn">유아 동반</li>
+										<li><input type="checkbox" value="반려견 동반" name="typeD" id="check_btn">반려견 동반
+										</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeD" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<div class="amenitiesE">
+									<ul>
+										<li><input type="checkbox" value="빔 프로젝트" name="typeE" id="check_btn">빔 프로젝트
+										</li>
+										<li><input type="checkbox" value="사무용품" name="typeE" id="check_btn">사무용품</li>
+										<li><input type="checkbox" value="프린트" name="typeE" id="check_btn">프린트</li>
+										<li><input type="checkbox" value="주차" name="typeE" id="check_btn">주차</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeE" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<div class="amenitiesF">
+									<ul>
+										<li><input type="checkbox" value="생일파티" name="typeF" id="check_btn">생일파티</li>
+										<li><input type="checkbox" value="기념일 이벤트" name="typeF" id="check_btn">기념일 이벤트
+										</li>
+										<li><input type="checkbox" value="브라이덜 샤워" name="typeF" id="check_btn">브라이덜 샤워
+										</li>
+										<li><input type="checkbox" value="웨딩/돌잔치" name="typeF" id="check_btn">웨딩/돌잔치
+										</li>
+										<li><input type="checkbox" value="주차" name="typeF" id="check_btn">주차</li>
+										<li><input type="checkbox" value="유아 동반" name="typeF" id="check_btn">유아 동반</li>
+										<li><input type="checkbox" value="반려견 동반" name="typeF" id="check_btn">반려견 동반
+										</li>
+										<li><input type="checkbox" value="장애인 편의시설" name="typeF" id="check_btn">장애인 편의시설
+										</li>
+									</ul>
+								</div>
+								<a href="#" class="sum">확인</a>
+							</div>
+						</li>
+					</td>
+				</tr>
+				<tr>
+					<th>인원(연료)</th>
+					<td>
+						<select class="fuel" name="fuel">
+							<option value="" selected disabled>[[${reservation.fuel}]]</option>
+							<option>전기</option>
+							<option>하이브리드</option>
+							<option>가솔린</option>
+							<option>디젤</option>
+							<option>LPG</option>
+						</select>
+						<select class="personnel" name="personnel">
+							<option value="" selected disabled>[[${reservation.personnel}]]명</option>
+							<option value="1">1명</option>
+							<option value="2">2명</option>
+							<option value="3">3명</option>
+							<option value="4">4명</option>
+							<option value="5">5명</option>
+							<option value="6">6명</option>
+							<option value="7">7명</option>
+							<option value="8">8명</option>
+							<option value="9">9명</option>
+							<option value="10">10명</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>가격대</th>
+					<td>
+						<select class="money" name="cost">
+							<option value="" selected disabled>[[${reservation.cost}]]</option>
+							<option value="5">5만원~</option>
+							<option value="10">10만원~</option>
+							<option value="15">15만원</option>
+							<option value="30">30만원~</option>
+							<option value="40">40만원~</option>
+							<option value="50">50만원~</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>날짜</th>
+					<td>
+						<a href="#" class="calendar" name="regDate"></a>
+						<input type="text" class="calendars" name="regDate"  th:value="${reservation.regDate}" readonly>
+						<div class="data">
+							<table class="Calendar">
+								<thead>
+									<tr>
+										<td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+										<td colspan="5">
+											<span id="calYear"></span>년
+											<span id="calMonth"></span>월
+										</td>
+										<td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+									</tr>
+									<tr>
+										<td>일</td>
+										<td>월</td>
+										<td>화</td>
+										<td>수</td>
+										<td>목</td>
+										<td>금</td>
+										<td>토</td>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+							<a href="#" class="calendarcheck">선택완료</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td>
+						<textarea placeholder="요청사항을 적어주세요!" class="memo" name="memo" id="memo"
+							style="width: 200px; height: 100px; resize: none;">[[${reservation.memo}]]</textarea>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<a href="javascript:document.reservationForm.submit()">수정완료</a>
+		<a th:href="${'/reservation/reservationlist'}">목록</a>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script th:src="@{/reservation/js/write.js}"></script>
+<script th:src="@{/reservation/js/modify.js}"></script>
+<script th:inline="javascript">
+</script>
+
+</html>

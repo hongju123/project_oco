@@ -20,10 +20,10 @@ public class KakaoLoginService {
     String kakaoTokenUrl = "https://kauth.kakao.com/oauth/token";
     String idx;
     String nickname;
-    
+    String YOUR_LOGOUT_REDIRECT_URI = "";
+    String logoutUrl="https://kauth.kakao.com/oauth/logout?client_id="+rest_key+"&logout_redirect_uri="+YOUR_LOGOUT_REDIRECT_URI;
 
-    
-     public KakaoUserDTO login(String code) {
+    public KakaoUserDTO login(String code) {
      // 요청 헤더 설정
      HttpHeaders headers = new HttpHeaders();
      headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -106,5 +106,10 @@ public class KakaoLoginService {
     
     return kakaoDto;
     
+    }
+
+    public boolean kakaoLogout(String ACCESS_TOKEN){
+//        구현할 예정
+        return false;
     }
 }

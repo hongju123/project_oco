@@ -6,22 +6,26 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.ScheduleDTO;
+import com.oco.domain.dto.PlannerDTO;
 
 @Mapper
 public interface ReservationMapper {
-	
-	//insert
+
+	// insert
 	int insertReservation(ReservationDTO reservation);
-	//일정추가
-	int insertschedule(ScheduleDTO schedule);
-	
-	//select
-	List<ReservationDTO> getReservationList(Criteria cri);
-	Long getTotal(Criteria cri);
 
 
-	ReservationDTO findByNum(Long requestnum);
+	// update
+	int updatereservation(ReservationDTO reservation);
 
+	// delete
+	int deletereservation(Long requestNum);
+
+	// select
+	List<ReservationDTO> getReservationList();
+
+	Long getTotal();
+
+	ReservationDTO findByNum(Long requestNum);
 
 }
