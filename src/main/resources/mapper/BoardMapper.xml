@@ -33,12 +33,13 @@
 	</update>
 	<!--selectBoard-->
 	<select id="getList">
-		select * from boards where
-		<include refid="cri"></include>
-		<![CDATA[ 
-			0 < board_num order by  desc limit #{startRow},#{amount}
-		]]>
-	</select>	
+	    select * from boards where
+	    <include refid="cri"></include>
+	    <![CDATA[ 
+	        board_num > 0 ORDER BY board_num DESC LIMIT #{startRow}, #{amount}
+	    ]]>
+	</select>
+
 	<select id="getTotal">
 		select count(*) from boards where
 		<include refid="cri"></include> board_num > 0
