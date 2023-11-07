@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
@@ -28,7 +29,7 @@ public class BboardController {
 
 	@GetMapping("getlist")
 	public String getlist() {
-		return "business/list/listindex.html";
+		return "Bboard/listindex.html";
 	}
 
 	// 찾아보기 리스트 가져오기
@@ -49,45 +50,41 @@ public class BboardController {
 	// 맵 가져오기
 	@GetMapping("findmap")
 	public String getmap() {
-		return "business/map/findmap.html";
+		return "Bboard/findmap.html";
 	}
-
+	
 	// 사업자 소개 페이지
-
-	@GetMapping("write")
-	public String write(HttpServletRequest req, HttpServletResponse resp, Model model) {
+	
+	// 사업자 소개 페이지 구별
+	@GetMapping(value ={"get","modify"})
+	public String get(HttpServletRequest req, HttpServletResponse resp, Model model) {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
 		BusinessDTO userboard = service.userDetail(loginUser);
 		BusinessInfoDTO infoboard = service.infoDetail(loginUser);
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
-		return "business/write/write.html";
+		String requsetURI = req.getRequestURI();
+		return requsetURI;
 	}
-
+	
 	// 사업자 수정 페이지
-
-	@GetMapping("modify")
-	public String modify(Model model, HttpServletRequest req, HttpServletResponse resp) {
+	@PostMapping("modify")
+	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
 		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
-		BusinessDTO userboard = service.userDetail(loginUser);
-		BusinessInfoDTO infoboard = service.infoDetail(loginUser);
-		model.addAttribute("userboard", userboard);
-		model.addAttribute("infoboard", infoboard);
-		return "business/write/modify.html";
-	}
-
-	@PostMapping("modifyOk")
-	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
+		String loginUser = (String)session.getAttribute("loginUser");
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
+		System.out.println(Time);
 		info.setUseTime(Time);
-		service.modify(info);
-		return null;
+		info.setBusinessId(loginUser);
+		
+		if(service.modify(info) && service.regist(files,info)) {
+			return "redirect:/Bboard/get";
+		}else {
+			return null;
+		}
 	}
 
 }

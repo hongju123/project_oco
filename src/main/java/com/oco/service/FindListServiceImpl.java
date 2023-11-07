@@ -2,6 +2,7 @@ package com.oco.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
@@ -51,7 +52,65 @@ public class FindListServiceImpl implements FindListService {
 	}
 
 	@Override
-	public void modify(BusinessInfoDTO info) {
-		fmapper.modify(info);
+	public boolean modify(BusinessInfoDTO info) {
+		int row = fmapper.modify(info);
+		if(row != 1) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean regist(MultipartFile[] files, BusinessInfoDTO info) {
+		
+		return false;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

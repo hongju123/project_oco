@@ -19,7 +19,7 @@
 	  </select>
 	  <!-- 상세페이지 수정 -->
 	  <update id="modify">
-		  update business_info set use_time = #{useTime}, content = #{content}, amenities = #{amenities} business_id = #{businessId}
+		  update business_info set use_time = #{useTime}, content = #{content}, amenities = #{amenities}
 	  </update>
   </mapper>
  
