@@ -19,7 +19,7 @@
 			<ul class="depth1">
 				<li><a th:href="@{/reservation/reservationwrite}">요청하기</a></li>
 				<li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
-				<li><a href="#">커뮤니티</a></li>
+				<li><a href="@{/Cboard/list}">커뮤니티</a></li>
 				<li><a th:href="@{/planner/map}">플래너</a></li>
 			</ul>
 			<ul class="util">
@@ -32,7 +32,7 @@
 				<th:block th:if="${session.loginUser != null}">
 					<li><a th:href="@{/user/logout}">로그아웃</a></li>
 					<th:block th:if="${session.businessUser == 'O'}">
-						<li><a th:href="${session.loginUser}" class="myPage">내 상세 페이지 보기</a></li>
+						<li><a th:href="@{/Bboard/get}" class="myPage">내 상세 페이지 보기</a></li>
 					</th:block>
 				</th:block>
 			</ul>
