@@ -41,7 +41,6 @@
 						<td>[[${reservation.cost}]]</td>
 						<td>[[${reservation.regDate}]]</td>
 						<td>[[${reservation.memo}]]</td>
-					</td>
 					<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
@@ -53,7 +52,6 @@
 			</table>
 			<form name="getForm" id="getForm" th:action="@{/reservation/reservationlist}">
 			</form>
-			<a class="map" th:href="${'/reservation/map'}">지도</a>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>

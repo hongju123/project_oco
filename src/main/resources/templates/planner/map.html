@@ -9,6 +9,7 @@
 <link rel="stylesheet" th:href="@{/main/css/slick.css}">
 <link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 <link rel="stylesheet" th:href="@{/main/css/main.css}">
+<link rel="stylesheet" th:href="@{/planner/css/map.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <script th:src="@{/reservation/js/map.js}"></script>
 <style>
@@ -271,7 +272,6 @@
 		cursor: pointer;
 	}
 </style>
-
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
@@ -330,10 +330,9 @@
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6a441b4c0d02c9d68eb709c125831254&libraries=services,clusterer,drawing"></script>
 <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6a441b4c0d02c9d68eb709c125831254&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
@@ -341,8 +340,9 @@
 <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script th:src="@{/planner/js/map.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
-<script>
+<script type="text/javascript">
 	$(document).ready(function () {
 		$(".Calendars").hide()
 	})
