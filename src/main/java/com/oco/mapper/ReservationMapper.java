@@ -27,5 +27,8 @@ public interface ReservationMapper {
 	Long getTotal();
 
 	ReservationDTO findByNum(Long requestNum);
+	
+	List<ReservationDTO> findByUser(String userId);
+	
 
 }

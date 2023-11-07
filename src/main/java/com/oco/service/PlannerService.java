@@ -15,4 +15,6 @@ public interface PlannerService {
 	List<PlannerDTO> getplannerList();
 
 	PlannerDTO getDetail(Long scheduleNum);
+
+	
 }

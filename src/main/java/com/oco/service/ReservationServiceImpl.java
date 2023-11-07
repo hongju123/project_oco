@@ -60,5 +60,9 @@ public class ReservationServiceImpl implements ReservationService{
 		return false;
 	}
 
+	@Override
+	public List<ReservationDTO> getUser(String userId) {
+		return remapper.findByUser(userId);
+	}
 
 }

@@ -16,5 +16,8 @@ public interface PlannerMapper {
 	PlannerDTO findByNum(Long scheduleNum);
 
 	int deletereservation(Long scheduleNum);
+	
+	PlannerDTO findByUser(String userId);
+	
 
 }

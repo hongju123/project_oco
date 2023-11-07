@@ -30,4 +30,9 @@
 	<select id="findByNum">
 		select * from user_requests where request_num=#{requestNum}
 	</select>
+
+	<select id="findByUser" resultType="PlannerDTO">
+    select * from user_requests where user_id=#{userId}
+	</select>
+
 </mapper>
