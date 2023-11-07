@@ -14,6 +14,7 @@ public interface ReservationService {
 	
 	//update
 	public boolean reservationmodify(ReservationDTO reservation);
+	public boolean proposal(String loginUser, Long requestNum,String bid);
 	
 	//delete
 	public boolean remove(String loginUser, Long requestNum);

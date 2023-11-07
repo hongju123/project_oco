@@ -75,7 +75,17 @@ public class ReservationController {
 			return "redirect:/reservation/reservationget?"+"&requestNum="+requestNum;
 		}
 	}
-	
+	@GetMapping("proposal")
+	public String proposal(Long requestNum, HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		ReservationDTO reservation = service.getDetail(requestNum);
+		String bid = reservation.getBusinessId();
+		if(service.proposal(loginUser,requestNum,bid)) {
+			
+		}
+		return "redirect:/reservation/reservationlist";
+	}
 	
 
 }

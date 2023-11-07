@@ -60,5 +60,19 @@ public class ReservationServiceImpl implements ReservationService{
 		return false;
 	}
 
+	@Override
+	public boolean proposal(String loginUser, Long requestNum, String bid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*Override
+	public boolean proposal(String loginUser, Long requestNum, String bid) {
+		String result = "";
+		result 
+		int row = remapper.proposal()
+		return false;
+	}*/
+
 
 }
