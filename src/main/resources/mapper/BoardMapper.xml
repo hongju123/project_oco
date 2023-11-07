@@ -36,7 +36,7 @@
 		select * from boards where
 		<include refid="cri"></include>
 		<![CDATA[ 
-			0 < board_num order by  desc limit #{startRow},#{amount}
+			0 < board_num order by desc limit #{startRow},#{amount}
 		]]>
 	</select>	
 	<select id="getTotal">
