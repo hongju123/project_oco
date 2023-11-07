@@ -5,88 +5,88 @@
 	<title>내 견적서 상세조회</title>
 </head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
-
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div class="main02-inner">
-		<h2>상세조회</h2>
-		<table>
-			<tr>
-				<th>카테고리</th>
-				<td>
-					<input type="text" name="category" size="50" maxlength="50" th:value="${reservation.category}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>지역</th>
-				<td>
-					<input type="text" name="area" size="50" maxlength="50" th:value="${reservation.address}" readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>유형</th>
-				<td>
-					<input type="text" name="type" size="50" maxlength="50" th:value="${reservation.requestType}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>
-					<input type="text" name="userid" size="50" maxlength="50" th:value="${reservation.userId}" readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>편의시설</th>
-				<td>
-					<input type="text" name="amenities" size="50" maxlength="50" th:value="${reservation.amenities}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>인원(연료)</th>
-				<td>
-					<th:block th:if="${reservation.category == '렌터카'}">
-						<input type="text" name="fuel" size="50" maxlength="50" th:value="${reservation.fuel}" readonly>
-
-					</th:block>
-					<th:block
-						th:if="${reservation.category == '숙소' || reservation.category == '식당' || reservation.category == '카페' ||reservation.category == '기타'}">
-						<input type="text" name="personnel" size="50" maxlength="50" th:value="${reservation.personnel}"
+	<div class="wrap">
+		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+		<div class="sub-inner">
+			<h2>상세조회</h2>
+			<table>
+				<tr>
+					<th>카테고리</th>
+					<td>
+						<input type="text" name="category" size="50" maxlength="50" th:value="${reservation.category}"
 							readonly>
-					</th:block>
-				</td>
-			</tr>
-			<tr>
-				<th>가격대</th>
-				<td>
-					<input type="text" name="money" size="50" maxlength="50" th:value="${reservation.cost}" readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>날짜</th>
-				<td>
-					<input type="text" name="date" size="50" maxlength="50" th:value="${reservation.regDate}" readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>메모</th>
-				<td>
-					<input type="text" name="memo" size="50" maxlength="50" th:value="${reservation.memo}" readonly>
-				</td>
-			</tr>
-		</table>
-		<form name="reservationForm" method="post" th:action="@{/reservation/reservationremove}">
-			<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
-			<a href="javascript:modify()">수정</a>
-			<a href="javascript:document.reservationForm.submit()">삭제</a>
-		</form>
-		<a th:href="${'/reservation/reservationlist'}">목록</a>
-	</div>
+					</td>
+				</tr>
+				<tr>
+					<th>지역</th>
+					<td>
+						<input type="text" name="area" size="50" maxlength="50" th:value="${reservation.address}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>유형</th>
+					<td>
+						<input type="text" name="type" size="50" maxlength="50" th:value="${reservation.requestType}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>
+						<input type="text" name="userid" size="50" maxlength="50" th:value="${reservation.userId}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>편의시설</th>
+					<td>
+						<input type="text" name="amenities" size="50" maxlength="50" th:value="${reservation.amenities}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>인원(연료)</th>
+					<td>
+						<th:block th:if="${reservation.category == '렌터카'}">
+							<input type="text" name="fuel" size="50" maxlength="50" th:value="${reservation.fuel}" readonly>
+	
+						</th:block>
+						<th:block
+							th:if="${reservation.category == '숙소' || reservation.category == '식당' || reservation.category == '카페' ||reservation.category == '기타'}">
+							<input type="text" name="personnel" size="50" maxlength="50" th:value="${reservation.personnel}"
+								readonly>
+						</th:block>
+					</td>
+				</tr>
+				<tr>
+					<th>가격대</th>
+					<td>
+						<input type="text" name="money" size="50" maxlength="50" th:value="${reservation.cost}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>날짜</th>
+					<td>
+						<input type="text" name="date" size="50" maxlength="50" th:value="${reservation.regDate}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td>
+						<input type="text" name="memo" size="50" maxlength="50" th:value="${reservation.memo}" readonly>
+					</td>
+				</tr>
+			</table>
+			<form name="reservationForm" method="post" th:action="@{/reservation/reservationremove}">
+				<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
+				<a href="javascript:modify()">수정</a>
+				<a href="javascript:document.reservationForm.submit()">삭제</a>
+			</form>
+			<a th:href="${'/reservation/reservationlist'}">목록</a>
+		</div><!--.sub-inner-->
+	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

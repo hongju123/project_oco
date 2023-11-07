@@ -15,5 +15,5 @@ public class BoardDTO {
 	private int readCount;
 	private String userId;
 	private int replyCount;
-	private String boardCategory; /*카테고리값 저장컬럼*/
+	private boolean secret;     // 비밀글 여부
 }

@@ -176,7 +176,6 @@ input:focus {
 #header .header-inner {
   position: relative;
   width: 100%;
-  max-width: 1200px;
   height: 100%;
   margin: 0 auto;
   padding-left: 285px;
@@ -356,6 +355,12 @@ input:focus {
   color: #222;
 }
 
+
+#header.slide-open .util li a,
+#header.slide-open .util li + li:before{
+  color: #2b2b2b;
+}
+
 #header.slide-open .header-inner .logo {
   background-position: top;
 }
@@ -514,7 +519,6 @@ input:focus {
 
 #footer {
   width: 100%;
-  margin-top: 96px;
   background-color: #3182f6;
 }
 

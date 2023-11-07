@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
 		#wrap {
 			margin: 150px auto;
@@ -35,7 +36,9 @@
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="wrap">
+	<div class="wrap">
+		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+		<div class="sub-inner">
 			<div class="total_section">
 				<div class="main_section">
 					<div class="title_section">
@@ -62,6 +65,7 @@
 					<a class="" th:href="@{/Bboard/modify}"> 수정하기 </a>
 				</div>
 			</div>
+		</div>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>

@@ -8,56 +8,59 @@
 <link rel="stylesheet" th:href="@{/main/css/slick.css}">
 <link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 <link rel="stylesheet" th:href="@{/main/css/main.css}">
-
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div class="main02-inner">
-		<h2>상세조회</h2>
-		<table>
-			<tr>
-				<th>날짜</th>
-				<td>
-					<input type="text" name="scheduleDate" size="50" maxlength="50" th:value="${planner.scheduleDate}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>상호명</th>
-				<td>
-					<input type="text" name="storeName" size="50" maxlength="50" th:value="${planner.storeName}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>주소</th>
-				<td>
-					<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
-						readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>메모</th>
-				<td>
-					<input type="text" name="memo" size="50" maxlength="50" th:value="${planner.memo}" readonly>
-				</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>
-					<input type="text" name="userid" size="50" maxlength="50" th:value="${planner.userId}" readonly>
-				</td>
-			</tr>
-		</table>
-		<!-- 이미지 지도를 표시할 div 입니다 -->
-		<div id="map" style="width:100%;height:350px;"></div>
-
-		<form name="plannerForm" method="post" th:action="@{/planner/plannerremove}">
-			<input name="scheduleNum" th:value="${planner.scheduleNum}" type="hidden">
-			<a href="javascript:document.plannerForm.submit()">삭제</a>
-		</form>
-		<a th:href="${'/planner/plannerlist'}">목록</a>
-		<input type="button" value="지도" onclick="f()">
-	</div>
+	<div class="wrap">
+		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+		<div class="sub-inner">
+			<h2>상세조회</h2>
+			<table>
+				<tr>
+					<th>날짜</th>
+					<td>
+						<input type="text" name="scheduleDate" size="50" maxlength="50" th:value="${planner.scheduleDate}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>상호명</th>
+					<td>
+						<input type="text" name="storeName" size="50" maxlength="50" th:value="${planner.storeName}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td>
+						<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
+							readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td>
+						<input type="text" name="memo" size="50" maxlength="50" th:value="${planner.memo}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>
+						<input type="text" name="userid" size="50" maxlength="50" th:value="${planner.userId}" readonly>
+					</td>
+				</tr>
+			</table>
+			<!-- 이미지 지도를 표시할 div 입니다 -->
+			<div id="map" style="width:100%;height:350px;"></div>
+	
+			<form name="plannerForm" method="post" th:action="@{/planner/plannerremove}">
+				<input name="scheduleNum" th:value="${planner.scheduleNum}" type="hidden">
+				<a href="javascript:document.plannerForm.submit()">삭제</a>
+			</form>
+			<a th:href="${'/planner/plannerlist'}">목록</a>
+			<input type="button" value="지도" onclick="f()">
+		</div><!--.sub-inner-->
+	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script type="text/javascript"
