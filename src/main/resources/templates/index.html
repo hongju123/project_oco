@@ -269,19 +269,6 @@
 	  AOS.init({
 		duration: 1500,
 	  });
-	  
-  	const pageForm = document.getElementById('pageForm');
-  	
-  	$(".myPage").on("click",function(e){
-		  e.preventDefault();
-		  let businessId = $(this).attr('href');
-		  let url =/*[[@{/Bboard/get}]]*/'';
-		  pageForm.append("<input type='hidden' name='businessId' value='"+businessId+"'>")
-		  pageForm.setAttribute("action",url);
-		  pageForm.setAttribute("method","get");
-		  pageForm.submit();
-	  })
-	
   </script>
 
 </html>
