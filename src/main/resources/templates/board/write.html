@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ComuWrite</title>
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+</head>
+<body>
+	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+	<div id="wrap">
+		<form id="boardForm" method="post" name="boardForm" th:action="@{/board/write}" enctype="multipart/form-data">
+			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+			<input type="hidden" th:value="${cri.amount}" name="amount">
+			<input type="hidden" th:value="${cri.type}" name="type">
+			<input type="hidden" th:value="${cri.keyword}" name="keyword">
+			<table style="border-collapse: collapse;" border="1">
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">제목</th>
+					<td>
+						<input type="text" name="boardtitle" size="50" maxlength="50" placeholder="제목을 입력하세요">
+					</td>
+				</tr>
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">작성자</th>
+					<td>
+						<input type="text" name="userid" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+					</td>
+				</tr>
+				<tr style="height:300px;">
+					<th style="text-align: center; width: 150px;">
+						<td>
+							<select name="category">
+								<option value="QnA">궁금해요</option>
+								<option value="price">얼마에요</option>
+								<option value="join">함께해요</option>
+							</select>	
+						</td>
+					</th>
+				</tr>
+				<tr style="height:300px;">
+					<th style="text-align:center; width:150px;">내 용</th>
+					<td>
+						<textarea name="boardcontents" style="width:700px;height:290px;resize:none;"></textarea>
+					</td>
+				</tr>
+				<tr class="r0 at">
+					<th>파일 첨부1</th>
+					<td class="file0_cont">
+						<div style="float:left;">
+							<input type="file" name="files" id="file0" style="display:none">
+							<span id="file0name">선택된 파일 없음</span>
+						</div>
+						<div style="float:right; margin-right: 100px;">
+							<a href="javascript:upload('file0')">파일 선택</a>
+							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<table class="btn_area">
+			<tr align="right" valign="middle">
+				<td>
+					<a href="javascript:sendit()">등록</a>
+					<a th:href="${'/board/list'+cri.listLink}">목록</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	let i = 0;
+	function upload(name){
+		$("#"+name).click();
+	}
+	$("[type='file']").change(function(e){
+
+		const file = e.target.files[0];
+		const fileTag = e.target;
+		
+		if(file == undefined){
+			cancelFile(fileTag.id);
+		}
+		else{
+			$("#"+fileTag.id+"name").text(file.name);
+
+			let ext = file.name.split(".").pop();
+			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+				$("."+fileTag.id+"_cont .thumbnail").remove();
+				const reader = new FileReader();
+				
+				reader.onload = function(ie){
+					const img = document.createElement("img");
+					img.setAttribute("src",ie.target.result)
+					img.setAttribute("class","thumbnail");
+					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
+				}
+				reader.readAsDataURL(file);
+			}
+			else{
+				const temp = $("."+fileTag.id+"_cont .thumbnail");
+				if(temp != null){
+					temp.remove();
+				}
+			}
+
+			if(fileTag.id.split("e")[1] == i){
+				const cloneElement = $(".r"+i).clone(true);
+				i++;
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
+				
+				lastElement.attr("class","r"+i+" at");
+				lastElement.children("th").text("파일 첨부"+(i+1));
+				lastElement.children("td").attr("class","file"+i+"_cont");
+				
+				lastElement.find("input[type='file']").attr("name","files");
+				lastElement.find("input[type='file']").attr("id","file"+i);
+				lastElement.find("input[type='file']").val("");
+				
+				lastElement.find("span").attr("id","file"+i+"name");
+				lastElement.find("span").text("선택된 파일 없음");
+				
+				lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
+			}
+			
+		}
+	})
+
+	function cancelFile(name){
+
+		if(name.split("e")[1] == i){ return; }
+
+		if(i != 0){
+		
+			let temp = Number(name.split("e")[1]);
+		
+			$(".r"+temp).remove();
+	
+			for(let j=temp+1;j<=i;j++){
+				const el = $("#boardForm tbody").find(".r"+j);
+				el.attr("class","r"+(j-1)+" at");
+				
+				el.children('th').text("파일 첨부"+j);
+				
+				el.children('td').attr("class","file"+(j-1)+"_cont");
+				
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name","file"+(j-1));
+				fileTag.attr("id","file"+(j-1));
+				
+				el.find("span").attr("id","file"+(j-1)+"name");
+				
+				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+				el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
+				
+			}
+			i--;
+		}
+	}
+	
+	function sendit(){
+		const boardForm = document.boardForm;
+		
+		const boardtitle = boardForm.boardtitle;
+		if(boardtitle.value == ""){
+			alert("제목을 입력하세요.");
+			boardtitle.focus();
+			return false;
+		}
+		
+		const boardcontents = boardForm.boardcontents;
+		if(boardcontents.value == ""){
+			alert("내용을 입력하세요.");
+			boardcontents.focus();
+			return false;
+		}
+		
+		boardForm.submit();
+	}
+</script>
+</html>

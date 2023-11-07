@@ -14,7 +14,6 @@ public class ReplyDTO {
 	private String replyId;
 	private int userId;
 	private String boardId;
-	
-	
+	private Long boardNum;
 	
 }
