@@ -22,14 +22,7 @@
 				<th width="10%">조회수</th>
 			</tr>
 			<tr>
-				<td>
-					<select class="cateSelect">
-						<option value="QnA">궁금해요</option>
-						<option value="price">얼마에요</option>
-						<option value="join">함께해요</option>
-					</select> 
-				</td>
-				<td><span th:text="${board.category}"></span></td>
+
 			</tr>
 			
 			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
