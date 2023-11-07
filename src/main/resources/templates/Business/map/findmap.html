@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
 		#wrap {
 			margin: 150px auto;
@@ -136,20 +137,23 @@
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="wrap">
-		<div class="select_map">
-			<div class="select_category_section">
-				<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
-				<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
-				<div id="category_select_section">
-
+	<div class="wrap">
+		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+		<div class="sub-inner">
+			<div class="select_map">
+				<div class="select_category_section">
+					<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
+					<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+					<div id="category_select_section">
+	
+					</div>
+				</div>
+				<div id="map">
+	
 				</div>
 			</div>
-			<div id="map">
-
-			</div>
-		</div>
-	</div>
+		</div><!--.sub-inner-->
+	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

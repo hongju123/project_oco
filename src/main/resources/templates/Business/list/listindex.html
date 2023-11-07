@@ -5,47 +5,28 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>findList</title>
-	
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
-
-	
-	<style>
-		.wrap {
-			width: 1200px;
-			border: 1px solid black;
-			box-sizing: border-box;
-			padding: 10px;
-			margin: 150px auto;
-		}
-		
-		.main_section{
-			
-			border: 1px solid black;
-		}
-
-
-	</style>
+	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 </head>
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
-		<section class="main_section">
-			<div class="inner">
-				<div class="category_section">
-					<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
-					<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
-					<div id="category_select_section">
+		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+		<div class="sub-inner">
+			<div class="category_section">
+				<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
+				<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+				<div id="category_select_section">
 
-					</div>
-				</div>
-				<a th:href="@{/Bboard/findmap}">맵으로 보기</a>
-				<a th:href="@{/Bboard/write}">글쓰기</a>
-				<div id="find_list_section">
 				</div>
 			</div>
-		</section>
-	</div>
+			<a th:href="@{/Bboard/findmap}">맵으로 보기</a>
+			<a th:href="@{/Bboard/write}">글쓰기</a>
+			<div id="find_list_section">
+			</div>
+		</div><!--.sub-inner-->
+	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
