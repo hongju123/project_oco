@@ -3,14 +3,14 @@
   <mapper namespace="com.oco.mapper.FileMapper">
 	  <!--insertFile-->	 
 	  <insert id="insertFile">
-		  insert into file values(#{systemName},#{orgName},#{boardNum})
+		  insert into file values(#{system_name},#{org_name},#{board_num})
 	  </insert>
 	  
 	 <select id="getFiles">
-		 select * from files where boardNum=#{boardNum}
+		 select * from files where board_num=#{board_num}
 	 </select>
 	 
 	 <delete id="deleteBySystemname">
-		 delete from files where systemName=#{sysyemName}
+		 delete from files where system_name=#{sysyem_name}
 	 </delete>
   </mapper>

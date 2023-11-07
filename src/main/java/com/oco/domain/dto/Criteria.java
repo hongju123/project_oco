@@ -1,16 +1,18 @@
 package com.oco.domain.dto;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
 
+@Component
 @Data
 public class Criteria {
 	private int pagenum;
 	private int amount;
 	private String type;
 	private String keyword;
-	private int startrow;
+	private int startRow;
 	
 	public Criteria() {
 		this(1,10);
@@ -19,12 +21,12 @@ public class Criteria {
 	public Criteria(int pagenum, int amount) {
 		this.pagenum = pagenum;
 		this.amount = amount;
-		this.startrow = (this.pagenum - 1) * this.amount;
+		this.startRow = (this.pagenum - 1) * this.amount;
 	}
 	
 	public void setPagenum(int pagenum) {
 		this.pagenum = pagenum;
-		this.startrow = (this.pagenum - 1) * this.amount;
+		this.startRow = (this.pagenum - 1) * this.amount;
 	}
 	
 //	MyBatis에서 #{typeArr} 로 사용 가능

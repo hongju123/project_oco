@@ -31,14 +31,14 @@ public class CBoardController {
 	
 	@GetMapping("list")
 	public String list(Criteria cri, Model model) throws Exception {
-//		System.out.println(cri);
-//		List<BoardDTO> list = service.getBoardList(cri);
-//		model.addAttribute("list",list);
-//		model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
-//		model.addAttribute("newly_board",service.getNewlyBoardList(list));
-//		model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
-//		model.addAttribute("recent_reply",service.getRecentReplyList(list));
-//		
+		System.out.println(cri);
+		List<BoardDTO> list = service.getBoardList(cri);
+		model.addAttribute("list",list);
+		model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
+		model.addAttribute("newly_board",service.getNewlyBoardList(list));
+		model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
+		model.addAttribute("recent_reply",service.getRecentReplyList(list));
+		
 		return "board/list";
 		}
 
@@ -52,4 +52,7 @@ public class CBoardController {
 //	 /*카테고리메세지*/
 //	 @NotBlank(message = "카테고리 선택은 필수항목입니다.")
 //	 private String category;
+	
+	
+	
 }

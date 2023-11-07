@@ -23,27 +23,27 @@
 	</sql>
 	<!--insertBoard-->
 	<insert id="insertBoard">
-		insert into boards (boardTitle,boardContents,userId)
-		values(#{boardTitle},{#boarContents},#{userId})
+		insert into boards (board_title,board_contents,user_id)
+		values(#{board_title},{#board_contents},#{user_id})
 	</insert>
 	<!--updateBoard-->
 	<update id="updateReadCount">
-		update boards set boardTitle=#{boardTitle},boardContents=#{boardContents},updateDate=now()
-		where boardNum=#{boardNum}
+		update boards set board_title=#{board_title},board_contents=#{board_contents},update_date=now()
+		where board_num=#{}
 	</update>
 	<!--selectBoard-->
 	<select id="getList">
 		select * from boards where
 		<include refid="cri"></include>
 		<![CDATA[ 
-			0 < boardNum order by boardNum desc limit #{startRow},#{amount}
+			0 < board_num order by  desc limit #{startRow},#{amount}
 		]]>
 	</select>	
 	<select id="getTotal">
 		select count(*) from boards where
-		<include refid="cri"></include> boardNum > 0
+		<include refid="cri"></include> board_num > 0
 	</select>
 	<select id="getLastNum">
-		select max(boardNum) from boards where userId=#{userId}
+		select max() from boards where user_id=#{user_id}
 	</select>
 </mapper>
