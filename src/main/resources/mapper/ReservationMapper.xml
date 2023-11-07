@@ -15,6 +15,10 @@
 		where request_num=#{requestNum}
 	</update>
 	
+	<update id="proposal">
+		update user_requests set business_id=#{loginUser} where request_num=#{requestNum}
+	</update>
+	
 	<delete id="deletereservation">
 		delete from user_requests where request_num=#{requestNum}
 	</delete>

@@ -17,6 +17,7 @@ public interface ReservationMapper {
 
 	// update
 	int updatereservation(ReservationDTO reservation);
+	int proposal(String loginUser,Long requestNum);
 
 	// delete
 	int deletereservation(Long requestNum);

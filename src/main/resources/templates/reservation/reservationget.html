@@ -86,7 +86,8 @@
 				<a href="javascript:document.reservationForm.submit()">삭제</a>
 				</th:block>
 				<th:block th:if="${session.businessUser == 'O'}">
-					<a th:href="@{/reservation/proposal}">제안하기</a>
+					<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
+					<a href="javascript:proposal()">제안하기</a>
 				</th:block>
 			</form>
 			<a th:href="${'/reservation/reservationlist'}">목록</a>
@@ -107,6 +108,12 @@
 		const reservationForm = document.reservationForm;
 		reservationForm.setAttribute("action",/*[[@{/reservation/reservationmodify}]]*/'');
 		reservationForm.setAttribute("method", "get");
+		reservationForm.submit();
+	}
+	function proposal() {
+		const reservationForm = document.reservationForm;
+		reservationForm.setAttribute("action",/*[[@{/reservation/proposal}]]*/'');
+		reservationForm.setAttribute("method", "post");
 		reservationForm.submit();
 	}
 </script>
