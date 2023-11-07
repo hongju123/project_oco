@@ -29,7 +29,11 @@
 	<!--updateBoard-->
 	<update id="updateReadCount">
 		update boards set board_title=#{board_title},board_contents=#{board_contents},update_date=now()
+<<<<<<< HEAD
 		where board_num=#{board_num}
+=======
+		where board_num=#{boardNum}
+>>>>>>> ba6df98497948defdd81ad6b344cafd4b7d387df
 	</update>
 	<!--selectBoard-->
 	<select id="getList">

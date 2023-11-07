@@ -10,4 +10,5 @@ public class PlannerDTO {
 	private String addr;
 	private String memo;
 	private String userId;
+	private String businessId;
 }

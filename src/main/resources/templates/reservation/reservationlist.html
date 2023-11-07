@@ -41,6 +41,7 @@
 						<td>[[${reservation.cost}]]</td>
 						<td>[[${reservation.regDate}]]</td>
 						<td>[[${reservation.memo}]]</td>
+<<<<<<< HEAD
 					</th:block>
 					<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
 					<th:block th:if="${session.businessUser == 'O'}">
@@ -54,6 +55,22 @@
 						<td>[[${reservation.regDate}]]</td>
 						<td>[[${reservation.memo}]]</td>
 					</th:block>
+=======
+					</td>
+					<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
+					<!--여기부분 나와야함 -->
+					<th:block th:if="${session.businessUser == 'O'}">
+	                  <td><a class="get" th:href="${reservation.requestNum}">[[${reservation.category}]]</a></td>
+	                  <td>[[${reservation.address}]]</td>
+	                  <td>[[${reservation.requestType}]]</td>
+	                  <td>[[${reservation.userId}]]</td>
+	                  <td>[[${reservation.amenities}]]</td>
+	                  <td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
+	                  <td>[[${reservation.cost}]]</td>
+	                  <td>[[${reservation.regDate}]]</td>
+	                  <td>[[${reservation.memo}]]</td>
+               </th:block>
+>>>>>>> ba6df98497948defdd81ad6b344cafd4b7d387df
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>

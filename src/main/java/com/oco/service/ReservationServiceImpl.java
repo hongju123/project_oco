@@ -61,6 +61,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public boolean proposal(String loginUser, Long requestNum) {
 		int row = remapper.proposal(loginUser,requestNum);
 		if(row != 1) {
@@ -73,5 +74,10 @@ public class ReservationServiceImpl implements ReservationService{
 
 
 
+=======
+	public List<ReservationDTO> getUser(String userId) {
+		return remapper.findByUser(userId);
+	}
+>>>>>>> ba6df98497948defdd81ad6b344cafd4b7d387df
 
 }
