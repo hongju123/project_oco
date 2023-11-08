@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.FileDTO;
 
 public interface FindListService {
 	
@@ -16,7 +17,8 @@ public interface FindListService {
 	BusinessDTO userDetail(String loginUser);
 	BusinessInfoDTO infoDetail(String loginUser);
 	boolean modify(BusinessInfoDTO info);
-	boolean regist(MultipartFile[] files, BusinessInfoDTO info);
+	boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception;
+	List<FileDTO> getFileList(String loginUser);
 	
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
