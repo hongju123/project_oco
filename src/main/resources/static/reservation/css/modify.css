@@ -1,0 +1,166 @@
+/* 지역 모달 창 시작 */
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0,0,0,0.5) !important;
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	display: none;
+	overflow-y: initial !important
+}
+#modal .modal-window {
+	background:#FFFFFF;
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	top: -100px;
+	padding: 10px;
+	height: 500px;
+	overflow-y: auto;
+}
+#modal .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+
+}
+#modal .title h2 {
+	display: inline;
+}
+#modal .close-area {
+	display: inline;
+	float: right;
+	padding-right: 10px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+/* 지역 모달 끝*/
+/*편의시설 체크박스*/
+input[type=checkbox] {
+	cursor: pointer;
+}
+
+input[type=checkbox] {
+	vertical-align: middle;
+	padding-left: 5px;
+}
+/* label:before에 체크하기 전 상태 CSS */
+input[type=checkbox] {
+	content: "";
+	display: inline-block;
+	width: 17px;
+	height: 17px;
+	border: 2px solid #3182f6;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+/* label:before에 체크 된 상태 CSS */
+input#check_btn:checked {
+	content: "";
+	background-color: #3182f6;
+	border-color: #3182f6;
+	background-image: url('check_btn.png');
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
+
+/*편의시설 체크박스 끝*/
+/*달력 시작*/
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
+
+div .data {
+	background-color: white;
+	height: auto;
+	width: 400px;
+	margin: 0px;
+	padding: 20px;
+	margin: 0 auto;
+	border-radius: 5px;
+	box-shadow: 0px 40px 30px -20px rgba(0, 0, 0, 0.3);
+}
+
+td {
+	width: 50px;
+	height: 50px;
+}
+
+.Calendar {
+	text-align: center;
+}
+
+.Calendar>thead>tr:first-child>td {
+	font-family: 'Questrial', sans-serif;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.Calendar>thead>tr:last-child>td {
+	font-family: 'Questrial', sans-serif;
+	font-weight: 600;
+}
+
+.Calendar>tbody>tr>td>p {
+	font-family: 'Montserrat', sans-serif;
+	height: 45px;
+	width: 45px;
+	border-radius: 45px;
+	transition-duration: .2s;
+	line-height: 45px;
+	margin: 2.5px;
+	display: block;
+	text-align: center;
+}
+
+.pastDay {
+	color: lightgray;
+}
+
+.today {
+	background-color: #F5D042;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.futureDay {
+	background-color: #FFFFFF;
+	cursor: pointer;
+}
+
+.futureDay:hover {
+	background: #eee;
+}
+
+.futureDay.choiceDay,
+.today.choiceDay {
+	background: #0A174E;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+/*달력 끝*/
