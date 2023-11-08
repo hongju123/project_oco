@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.FileDTO;
 
 @Mapper
 public interface FindListMapper {
@@ -25,4 +26,12 @@ public interface FindListMapper {
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
+
+	Long getnum(String businessId);
+
+	int insertFile(FileDTO fdto);
+
+	List<FileDTO> getFiles(String loginUser);
+
+
 }

@@ -3,7 +3,6 @@ package com.oco.service;
 import java.util.List;
 
 import com.oco.domain.dto.PlannerDTO;
-import com.oco.domain.dto.ReservationDTO;
 
 public interface PlannerService {
 

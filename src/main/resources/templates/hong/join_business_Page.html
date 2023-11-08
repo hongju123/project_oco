@@ -86,10 +86,45 @@
 					<input type="text" name="businessAddressDetail" id="sample6_detailAddress" placeholder="상세주소" class="useraddressdetail">
 					<input type="text" name="businessAdditionalInfo" id="sample6_extraAddress"  readonly class="useradditionalinfo">
 					<br>
-					<label for="hobby">취미</label>
+					<label for="businessCategory">사업자분류</label>
 					<br>
-					<input type="text" id="hobby" name="userhobby" class="userhobby">
-					<br>
+					<select name="businessCategory" class="businessCategory" id="">
+						<option value="숙소">숙소</option>
+						<option value="식당">식당</option>
+						<option value="카페">카페</option>
+						<option value="렌터카">렌터카</option>
+						<option value="기타">기타</option>
+					</select>
+					<select name="businessCategory" class="hidden house" id="">
+						<option value="모텔">모텔</option>
+						<option value="호텔">호텔</option>
+						<option value="펜션">펜션</option>
+						<option value="에어비엔비">에어비엔비</option>
+						<option value="캠핑">캠핑</option>
+					</select>
+					<select name="businessCategory" class="hidden food" id="">
+						<option value="한식">한식</option>
+						<option value="일식">일식</option>
+						<option value="중식">중식</option>
+						<option value="분식">분식</option>
+						<option value="야식">야식</option>
+					</select>
+					<select name="businessCategory" class="hidden bakery" id="">
+						<option value="개인">개인</option>
+						<option value="프랜차이즈">프랜차이즈</option>
+						<option value="베이커리">베이커리</option>
+						<option value="디저트">디저트</option>
+					</select>
+					<select name="businessCategory" class="hidden car" id="">
+						<option value="경형/소형">경형/소형</option>
+						<option value="중형/대형">중형/대형</option>
+						<option value="SUV/승합">SUV/승합</option>
+					</select>		
+					<select name="businessCategory" class="hidden another" id="">
+						<option value="회의실">회의실</option>
+						<option value="파티룸">파티룸</option>
+					</select>
+					<br>		
 					<button id="submitButton" type="button">제출</button>
 				</form>
 			</div>

@@ -85,6 +85,8 @@ public class UserController {
 	@PostMapping("join_business")
 	public String joinBusiness(@ModelAttribute BusinessDTO businessDto, HttpServletResponse res) {
 		System.out.println(businessDto);
+		businessDto.setBusinessCategory(businessDto.getBusinessCategory().replace(",", "/"));
+		System.out.println("현재 비지니스 카테고리:"+businessDto.getBusinessCategory());
 		if (buser.insert(businessDto)) {
 			System.out.println(businessDto.getBusinessId());
 			Cookie cookie = new Cookie("userId", businessDto.getBusinessId());

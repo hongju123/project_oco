@@ -1,5 +1,7 @@
 package com.oco.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.FileDTO;
 import com.oco.service.FindListService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,20 +54,18 @@ public class BboardController {
 	public String getmap() {
 		return "Bboard/findmap.html";
 	}
-	
+
 	// 사업자 소개 페이지
-	
+
 	// 사업자 소개 페이지 구별
 	@GetMapping(value ={"get","modify"})
 	public String get(HttpServletRequest req, HttpServletResponse resp, Model model, String businessId) {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
+		
 		if(businessId != null) {
 			if(loginUser != businessId) {
-				System.out.println("일반");
-				System.err.println(businessId);
 				loginUser = businessId;
-				System.out.println(loginUser);
 				BusinessDTO userboard = service.userDetail(loginUser);
 				BusinessInfoDTO infoboard = service.infoDetail(loginUser);
 				model.addAttribute("userboard", userboard);
@@ -72,7 +73,6 @@ public class BboardController {
 			}
 		}
 		else {
-			System.out.println("사업자");
 			BusinessDTO userboard = service.userDetail(loginUser);
 			BusinessInfoDTO infoboard = service.infoDetail(loginUser);
 			model.addAttribute("userboard", userboard);
@@ -81,22 +81,24 @@ public class BboardController {
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
-	
+
 	// 사업자 수정 페이지
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
 		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
+		String loginUser = (String) session.getAttribute("loginUser");
+		
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
-		System.out.println(Time);
+		
 		info.setUseTime(Time);
 		info.setBusinessId(loginUser);
-		
-		if(service.modify(info) && service.regist(files,info)) {
+		System.out.println(files.length);
+
+		if (service.modify(info) && service.regist(files, info)) {
 			return "redirect:/Bboard/get";
-		}else {
+		} else {
 			return null;
 		}
 	}
