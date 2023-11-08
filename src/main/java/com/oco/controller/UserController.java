@@ -1,6 +1,7 @@
 package com.oco.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -188,6 +189,17 @@ public class UserController {
 //    		else시 없는 것이기때문에 홈페이지 이동하지 않고 다시 제자리
 			return "user/finduser_Page";
 		}
+	}
+// 	회원탈퇴 로직 
+	@GetMapping("withdraw")
+	public String withdrow(String userId,HttpServletRequest req){
+		if (req.getSession().getAttribute("businessUser")!="O") {
+			user.withdrawBusinessUser(userId);
+		}else {
+			user.withdrawUser(userId);
+			
+		}
+		return "redirect:/";
 	}
 
 }
