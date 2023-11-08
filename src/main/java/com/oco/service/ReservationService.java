@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.PlannerDTO;
 
 
 public interface ReservationService {

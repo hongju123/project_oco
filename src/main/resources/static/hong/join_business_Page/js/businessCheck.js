@@ -33,7 +33,8 @@ function onCheck(){
       contentType: "application/json",
       success: function(result) {
           console.log(result);
-      },
+          console.log(result.data)
+        },
       error: function(result) {
           console.log(result.responseText);
       }
