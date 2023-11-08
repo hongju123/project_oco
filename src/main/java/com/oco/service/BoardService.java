@@ -15,7 +15,7 @@ import com.oco.domain.dto.FileDTO;
 public interface BoardService {
 
 	//insert
-	boolean regist(BoardDTO board, MultipartFile[] files, String Category) throws Exception;
+	boolean regist(BoardDTO board, MultipartFile[] files) throws Exception;
 	
 	//update
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
@@ -35,4 +35,5 @@ public interface BoardService {
 	List<FileDTO> getFileList(Long boardNum);
 	
 	ResponseEntity<Resource> getThumbnailResource(String systemName) throws Exception;
+
 }
