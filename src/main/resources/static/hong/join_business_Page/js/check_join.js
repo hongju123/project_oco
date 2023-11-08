@@ -284,6 +284,9 @@ usergender.forEach( data => data.addEventListener("click",function(e){
 // 마무리 체크
 
 const submitButton = document.querySelector("#submitButton");
+const zipcode = document.querySelector(".zipcode");
+const useraddress = document.querySelector(".useraddress");
+const useraddressdetail = document.querySelector(".useraddressdetail");
 
 submitButton.addEventListener("click",function(){
     if (checkFinal(functionCheck)) {
@@ -296,11 +299,9 @@ submitButton.addEventListener("click",function(){
 
 
 function checkFinal(arr){
-    
-    const zipcode = document.querySelector(".zipcode");
-    const useraddress = document.querySelector(".useraddress");
-    const useraddressdetail = document.querySelector(".useraddressdetail");
+    const check_business = document.querySelector(".check_business")
 
+    //여기 주석처리 해서 다 true 가 되서 그냥 넘어가짐!
     // for (let index = 0; index < arr.length; index++) {
     //     const element = arr[index];
     //     console.log(index+ ":"+element);
@@ -316,6 +317,10 @@ function checkFinal(arr){
     // if (useraddressdetail.value=="") {
     //     console.log("useraddressdetail 누락");
     //     return false;
+    // }
+    // 비지니스 체크 됐는지 확인.
+    // if (check_business.value!="✅") {
+    //     return false
     // }
     
     return true;
@@ -371,6 +376,10 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+const postcodeCheckBox = document.querySelector(".postcodeCheckBox")
+zipcode.addEventListener("click",function(){
+    postcodeCheckBox.classList.add("falseAction")
+})
 //Kakao address API 끝
 //비지니스 유저 카테고리
 
@@ -458,3 +467,4 @@ businessCategory.addEventListener("change",function(e){
         default : break;   
     }
 })
+//비지니스 끝 

@@ -77,10 +77,13 @@
 					<input type="text" name="businessdate" id="" class="business_date" value="20150319">
 					<input type="button" class="check_business" value="확인" onclick="onCheck()">
 					<br>
+					<span class="alarming hidden businessAlarming">잘못된 입력입니다</span>
+					<br>
 					<label for="sample6_postcode">우편번호</label>
 					<br>
 					<input type="text" name="businessZipCode" id="sample6_postcode" placeholder="우편번호" readonly class="zipcode">
-					<input type="button" onclick="sample6_execDaumPostcode()" value="주소찾기"><br>
+					<input type="button" class="postcodeCheckBox" onclick="sample6_execDaumPostcode()" value="주소찾기">
+					<br>
 				
 					<input type="text" name="businessAddress" id="sample6_address" placeholder="주소" class="useraddress" readonly><br>
 					<input type="text" name="businessAddressDetail" id="sample6_detailAddress" placeholder="상세주소" class="useraddressdetail">
@@ -88,39 +91,39 @@
 					<br>
 					<label for="businessCategory">사업자분류</label>
 					<br>
-					<select name="businessCategory" class="businessCategory" id="">
+					<select name="businessCategory" class="businessCategory">
 						<option value="숙소">숙소</option>
 						<option value="식당">식당</option>
 						<option value="카페">카페</option>
 						<option value="렌터카">렌터카</option>
 						<option value="기타">기타</option>
 					</select>
-					<select name="businessCategory" class="hidden house" id="">
+					<select name="businessCategory" class="hidden house">
 						<option value="모텔">모텔</option>
 						<option value="호텔">호텔</option>
 						<option value="펜션">펜션</option>
 						<option value="에어비엔비">에어비엔비</option>
 						<option value="캠핑">캠핑</option>
 					</select>
-					<select name="businessCategory" class="hidden food" id="">
+					<select name="businessCategory" class="hidden food">
 						<option value="한식">한식</option>
 						<option value="일식">일식</option>
 						<option value="중식">중식</option>
 						<option value="분식">분식</option>
 						<option value="야식">야식</option>
 					</select>
-					<select name="businessCategory" class="hidden bakery" id="">
+					<select name="businessCategory" class="hidden bakery">
 						<option value="개인">개인</option>
 						<option value="프랜차이즈">프랜차이즈</option>
 						<option value="베이커리">베이커리</option>
 						<option value="디저트">디저트</option>
 					</select>
-					<select name="businessCategory" class="hidden car" id="">
+					<select name="businessCategory" class="hidden car">
 						<option value="경형/소형">경형/소형</option>
 						<option value="중형/대형">중형/대형</option>
 						<option value="SUV/승합">SUV/승합</option>
 					</select>		
-					<select name="businessCategory" class="hidden another" id="">
+					<select name="businessCategory" class="hidden another">
 						<option value="회의실">회의실</option>
 						<option value="파티룸">파티룸</option>
 					</select>
@@ -134,6 +137,15 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script>AOS.init({		duration: 1500,	  });</script>
 
 <script th:src="@{/hong/join_business_Page/js/businessCheck.js}"></script>
 <script th:src="@{/hong/join_business_Page/js/check_join.js}"></script>
