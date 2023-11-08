@@ -46,9 +46,9 @@ function onCheck(e){
             },1000)
           } else{
             check_business.value = "✅";
-            business_represent.setAttribute("disabled","disabled")
-            business_date.setAttribute("disabled","disabled")
-            check_business_num.setAttribute("disabled","disabled")
+            business_represent.setAttribute("readonly","readonly")
+            business_date.setAttribute("readonly","readonly")
+            check_business_num.setAttribute("readonly","readonly")
             check_business.classList.add("checkBox");
             check_business.classList.add("ani");
             businessAlarming.classList.add("hidden");
