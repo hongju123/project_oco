@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@RequestMapping("Bboard/*")
+@RequestMapping("/Bboard/*")
 @Controller
 public class BboardController {
 	@Autowired
@@ -55,29 +55,20 @@ public class BboardController {
 		return "Bboard/findmap.html";
 	}
 
-	// 사업자 소개 페이지
+	// 아이디로 번호값 가져오기
+	@GetMapping("getpage")
+	public String getpage(String businessId, HttpServletRequest req) {
+		Long businessIdx = service.getIndexNum(businessId);
+		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
+	}
 
 	// 사업자 소개 페이지 구별
-	@GetMapping(value ={"get","modify"})
-	public String get(HttpServletRequest req, HttpServletResponse resp, Model model, String businessId) {
-		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
-		
-		if(businessId != null) {
-			if(loginUser != businessId) {
-				loginUser = businessId;
-				BusinessDTO userboard = service.userDetail(loginUser);
-				BusinessInfoDTO infoboard = service.infoDetail(loginUser);
-				model.addAttribute("userboard", userboard);
-				model.addAttribute("infoboard", infoboard);
-			}
-		}
-		else {
-			BusinessDTO userboard = service.userDetail(loginUser);
-			BusinessInfoDTO infoboard = service.infoDetail(loginUser);
-			model.addAttribute("userboard", userboard);
-			model.addAttribute("infoboard", infoboard);
-		}
+	@GetMapping(value = { "get", "modify" })
+	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
+		BusinessDTO userboard = service.userDetail(businessIdx);
+		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
+		model.addAttribute("userboard", userboard);
+		model.addAttribute("infoboard", infoboard);
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -87,11 +78,11 @@ public class BboardController {
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
-		
+
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
-		
+
 		info.setUseTime(Time);
 		info.setBusinessId(loginUser);
 		System.out.println(files.length);

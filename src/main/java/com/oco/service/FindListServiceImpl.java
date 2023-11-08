@@ -52,13 +52,13 @@ public class FindListServiceImpl implements FindListService {
 	}
 
 	@Override
-	public BusinessDTO userDetail(String loginUser) {
-		return fmapper.userDetail(loginUser);
+	public BusinessDTO userDetail(Long businessIdx) {
+		return fmapper.userDetail(businessIdx);
 	}
 
 	@Override
-	public BusinessInfoDTO infoDetail(String loginUser) {
-		return fmapper.infoDetail(loginUser);
+	public BusinessInfoDTO infoDetail(Long businessIdx) {
+		return fmapper.infoDetail(businessIdx);
 	}
 
 	@Override
@@ -69,6 +69,11 @@ public class FindListServiceImpl implements FindListService {
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public Long getIndexNum(String businessId) {
+		return fmapper.getnum(businessId);
 	}
 
 	@Override
@@ -132,4 +137,5 @@ public class FindListServiceImpl implements FindListService {
 	public List<BusinessDTO> BusinessList() {
 		return fmapper.BusinessList();
 	}
+
 }

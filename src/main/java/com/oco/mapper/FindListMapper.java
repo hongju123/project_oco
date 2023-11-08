@@ -18,9 +18,9 @@ public interface FindListMapper {
 	
 	List<BusinessInfoDTO> getinfo();
 
-	BusinessDTO userDetail(String loginUser);
+	BusinessDTO userDetail(Long businessIdx);
 
-	BusinessInfoDTO infoDetail(String loginUser);
+	BusinessInfoDTO infoDetail(Long businessIdx);
 
 	int modify(BusinessInfoDTO info);
 	//김민준
