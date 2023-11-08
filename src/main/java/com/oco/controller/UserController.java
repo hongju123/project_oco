@@ -1,6 +1,7 @@
 package com.oco.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +22,9 @@ import com.oco.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
@@ -58,7 +61,7 @@ public class UserController {
 			req.getSession().setAttribute("businessUser", "X");
 			return "redirect:/";
 		} else {
-			System.out.println("오류@@@@@@@@@@@");
+			log.info("오류@@@@@@@@@@@");
 			return "/hong/login_Page"; 
 		}
 	}
@@ -84,9 +87,9 @@ public class UserController {
 	}
 	@PostMapping("join_business")
 	public String joinBusiness(@ModelAttribute BusinessDTO businessDto, HttpServletResponse res) {
-		System.out.println(businessDto);
+		log.info("{}",businessDto);
 		businessDto.setBusinessCategory(businessDto.getBusinessCategory().replace(",", "/"));
-		System.out.println("현재 비지니스 카테고리:"+businessDto.getBusinessCategory());
+		log.info("현재 비지니스 카테고리:"+businessDto.getBusinessCategory());
 		if (buser.insert(businessDto)) {
 			System.out.println(businessDto.getBusinessId());
 			Cookie cookie = new Cookie("userId", businessDto.getBusinessId());
@@ -186,6 +189,20 @@ public class UserController {
 //    		else시 없는 것이기때문에 홈페이지 이동하지 않고 다시 제자리
 			return "user/finduser_Page";
 		}
+	}
+// 	회원탈퇴 로직 
+	@GetMapping("withdraw")
+	public String withdrow(HttpServletRequest req){
+		log.info("{}", req.getSession().getAttribute("loginUser"));
+		String userId = (String)req.getSession().getAttribute("loginUser");
+		
+		if (req.getSession().getAttribute("businessUser")!="O") {
+			user.withdrawBusinessUser(userId);
+		}else {
+			user.withdrawUser(userId);
+			
+		}
+		return "redirect:/user/logout";
 	}
 
 }

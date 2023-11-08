@@ -14,10 +14,16 @@ public interface FindListService {
 	// 카테고리별 select
 	AllListDTO getMainList(String main, String city);
 	//상세 페이지 select
-	BusinessDTO userDetail(String loginUser);
-	BusinessInfoDTO infoDetail(String loginUser);
+	Long getIndexNum(String businessId);
+	
+	BusinessDTO userDetail(Long businessIdx);
+	
+	BusinessInfoDTO infoDetail(Long businessIdx);
+	
 	boolean modify(BusinessInfoDTO info);
+	
 	boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception;
+	
 	List<FileDTO> getFileList(String loginUser);
 	
 	//김민준

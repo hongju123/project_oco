@@ -34,7 +34,6 @@ public class ReservationController {
 	public void list(Model model) {
 		List<ReservationDTO> list = service.getReservationList();
 		model.addAttribute("list", list);
-		System.out.println(list);
 	}
 
 	@GetMapping("reservationwrite")
@@ -62,7 +61,6 @@ public class ReservationController {
 
 	@PostMapping("reservationmodify")
 	public String modify(ReservationDTO reservation) throws Exception {
-		System.out.println(reservation);
 		if (service.reservationmodify(reservation)) {
 			return "redirect:/reservation/reservationget?" + "&requestNum=" + reservation.getRequestNum();
 		} else {
@@ -86,7 +84,6 @@ public class ReservationController {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
 		ReservationDTO reservation = service.getDetail(requestNum);
-		System.out.println(reservation);
 		if (reservation.getBusinessId() != null) {
 			String bid = reservation.getBusinessId();
 			loginUser += "/" + bid;
@@ -115,10 +112,8 @@ public class ReservationController {
 			model.addAttribute("list", service.getUser((String) req.getSession().getAttribute("loginUser")));
 			model.addAttribute("blist", blist);
 			model.addAttribute("binfolist", binfolist);
-			System.out.println(blist);
-			System.out.println(binfolist);
+			model.addAttribute("reservation", reservation);
 		}
-		System.out.println(req.getSession().getAttribute("loginUser"));
 		return "reservation/proposal";
 	}
 

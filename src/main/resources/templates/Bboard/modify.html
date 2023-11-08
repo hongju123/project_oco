@@ -39,10 +39,9 @@
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="wrap">
-		<div class="total_section">
-			<div class="main_section">
-				<form th:action="@{/Bboard/modify}" method="post" name="boardForm" if="boardForm"
-					enctype="multipart/form-data">
+		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" if="boardForm" enctype="multipart/form-data">
+			<div class="total_section">
+				<div class="main_section">
 					<div class="title_section">
 					</div>
 					<div class="shot_info">
@@ -63,7 +62,6 @@
 					</div>
 					<div class="main content">
 						<textarea name="content"></textarea>
-						<input type="submit">
 					</div>
 					<div class="free_service">
 						<input type="checkbox">
@@ -88,11 +86,12 @@
 							</td>
 						</tr>
 					</table>
-				</form>
+				</div>
+				<div class="sub_section">
+					<input type="submit">
+				</div>
 			</div>
-			<div class="sub_section">
-			</div>
-		</div>
+		</form>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
