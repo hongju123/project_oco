@@ -58,7 +58,6 @@
 				<a href="javascript:document.plannerForm.submit()">삭제</a>
 			</form>
 			<a th:href="${'/planner/plannerlist'}">목록</a>
-			<input type="button" value="지도" onclick="f()">
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
@@ -97,7 +96,7 @@
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 					mapOption = {
 						center: latng[0], // 지도의 중심좌표
-						level: 2 // 지도의 확대 레벨
+						level: 5 // 지도의 확대 레벨
 					};
 				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 				// 마커를 표시할 위치와 title 객체 배열입니다 
@@ -122,7 +121,7 @@
 					path: linePath, // 선을 구성하는 좌표배열 입니다
 					strokeWeight: 5, // 선의 두께 입니다
 					strokeColor: '#FFAE00', // 선의 색깔입니다
-					strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+					strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
 					strokeStyle: 'solid' // 선의 스타일입니다
 				});
 				// 지도에 선을 표시합니다 
