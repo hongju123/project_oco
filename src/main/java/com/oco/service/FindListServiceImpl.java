@@ -1,5 +1,7 @@
 package com.oco.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,6 +67,16 @@ public class FindListServiceImpl implements FindListService {
 	public boolean regist(MultipartFile[] files, BusinessInfoDTO info) {
 		
 		return false;
+	}
+	//모든 정보 가져오기
+	@Override
+	public List<BusinessInfoDTO> BusinessinfoList() {
+		return fmapper.BusinessinfoList();
+	}
+
+	@Override
+	public List<BusinessDTO> BusinessList() {
+		return fmapper.BusinessList();
 	}
 }
 

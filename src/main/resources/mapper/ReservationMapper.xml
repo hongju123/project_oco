@@ -35,7 +35,7 @@
 		select * from user_requests where request_num=#{requestNum}
 	</select>
 
-	<select id="findByUser" resultType="PlannerDTO">
+	<select id="findByUser" resultType="ReservationDTO">
     select * from user_requests where user_id=#{userId}
 	</select>
 

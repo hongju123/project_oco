@@ -21,5 +21,13 @@
 	  <update id="modify">
 		  update business_info set use_time = #{useTime}, content = #{content}, amenities = #{amenities}
 	  </update>
+	  
+	  <!-- 모든 정보 가져오기 -->
+	  <select id="BusinessinfoList">
+		  select * from business_info 
+	  </select>
+	  <select id="BusinessList">
+		  select * from business_users 
+	  </select>
   </mapper>
  
