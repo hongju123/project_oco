@@ -33,7 +33,6 @@ public class BboardController {
 	}
 
 	// 찾아보기 리스트 가져오기
-
 	@ResponseBody
 	@GetMapping(value = "findlist", consumes = "application/json")
 	public ResponseEntity<AllListDTO> findlist(@RequestParam String main, @RequestParam String city) {
@@ -57,15 +56,33 @@ public class BboardController {
 	
 	// 사업자 소개 페이지 구별
 	@GetMapping(value ={"get","modify"})
-	public String get(HttpServletRequest req, HttpServletResponse resp, Model model) {
+	public String get(HttpServletRequest req, HttpServletResponse resp, Model model, String businessId) {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
-		BusinessDTO userboard = service.userDetail(loginUser);
-		BusinessInfoDTO infoboard = service.infoDetail(loginUser);
-		model.addAttribute("userboard", userboard);
-		model.addAttribute("infoboard", infoboard);
-		String requsetURI = req.getRequestURI();
-		return requsetURI;
+		if(businessId != null) {
+			if(loginUser != businessId) {
+				System.out.println("일반");
+				System.err.println(businessId);
+				loginUser = businessId;
+				System.out.println(loginUser);
+				BusinessDTO userboard = service.userDetail(loginUser);
+				BusinessInfoDTO infoboard = service.infoDetail(loginUser);
+				model.addAttribute("userboard", userboard);
+				model.addAttribute("infoboard", infoboard);
+				String requsetURI = req.getRequestURI();
+				return requsetURI;
+			}
+		}
+		else {
+			System.out.println("사업자");
+			BusinessDTO userboard = service.userDetail(loginUser);
+			BusinessInfoDTO infoboard = service.infoDetail(loginUser);
+			model.addAttribute("userboard", userboard);
+			model.addAttribute("infoboard", infoboard);
+			String requsetURI = req.getRequestURI();
+			return requsetURI;
+		}
+		return null;
 	}
 	
 	// 사업자 수정 페이지

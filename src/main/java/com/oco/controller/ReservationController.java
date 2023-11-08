@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.oco.domain.dto.ReservationDTO;
+import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.service.FindListService;
@@ -25,7 +26,7 @@ public class ReservationController {
 
 	@Autowired
 	private ReservationService service;
-	
+
 	@Autowired
 	private FindListService fservice;
 
@@ -86,36 +87,66 @@ public class ReservationController {
 		String loginUser = (String) session.getAttribute("loginUser");
 		ReservationDTO reservation = service.getDetail(requestNum);
 		System.out.println(reservation);
-		if(reservation.getBusinessId() != null) {
+		if (reservation.getBusinessId() != null) {
 			String bid = reservation.getBusinessId();
-			loginUser += ","+bid;
+			loginUser += "/" + bid;
 			if (service.proposal(loginUser, requestNum)) {
 				return "redirect:/reservation/reservationlist";
 			}
-		}
-		else{
+		} else {
 			if (service.proposal(loginUser, requestNum)) {
 				return "redirect:/reservation/reservationlist";
 			}
 		}
 		return "redirect:/reservation/reservationlist";
 	}
-	
+
 	@GetMapping("/proposal")
-	public String proposal(HttpServletRequest req,Model model) {
-		if (req.getSession().getAttribute("loginUser")!=null&&service.getUser((String)req.getSession().getAttribute("loginUser"))!=null) {
+	public String proposal(HttpServletRequest req, Model model) {
+		if (req.getSession().getAttribute("loginUser") != null
+				&& service.getUser((String) req.getSession().getAttribute("loginUser")) != null) {
 			String userId = (String) req.getSession().getAttribute("loginUser");
-			//System.out.println("현재 유저 아이디 : "+req.getSession().getAttribute("loginUser"));
-			//System.out.println("GetUser :"+service.getUser(userId));
+			// System.out.println("현재 유저 아이디 :
+			// "+req.getSession().getAttribute("loginUser"));
+			// System.out.println("GetUser :"+service.getUser(userId));
 			List<ReservationDTO> reservation = service.getUser(userId);
 			List<BusinessDTO> blist = fservice.BusinessList();
 			List<BusinessInfoDTO> binfolist = fservice.BusinessinfoList();
-			model.addAttribute("list",service.getUser((String)req.getSession().getAttribute("loginUser")));
-			model.addAttribute("blist",blist);
-			model.addAttribute("binfolist",binfolist);
+			model.addAttribute("list", service.getUser((String) req.getSession().getAttribute("loginUser")));
+			model.addAttribute("blist", blist);
+			model.addAttribute("binfolist", binfolist);
+			System.out.println(blist);
+			System.out.println(binfolist);
 		}
 		System.out.println(req.getSession().getAttribute("loginUser"));
 		return "reservation/proposal";
 	}
-	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

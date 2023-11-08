@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 
@@ -21,7 +22,7 @@ public interface FindListMapper {
 	BusinessInfoDTO infoDetail(String loginUser);
 
 	int modify(BusinessInfoDTO info);
-	
+	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
 }

@@ -17,7 +17,8 @@ public interface FindListService {
 	BusinessInfoDTO infoDetail(String loginUser);
 	boolean modify(BusinessInfoDTO info);
 	boolean regist(MultipartFile[] files, BusinessInfoDTO info);
-	//모든 정보 가져오기
+	
+	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
 }
