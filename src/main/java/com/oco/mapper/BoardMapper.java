@@ -17,13 +17,13 @@ public interface BoardMapper {
 	int updateReadCount(Long board_num);
 	
 	//delete
-	int deleteBoard(Long board_num);
+	int deleteBoard(Long boardNum);
 	
 	//select
 	List<BoardDTO> getList(Criteria cri);
 	Long getTotal(Criteria cri);
-	Long getLastNum(String user_id);
-	BoardDTO findByNum(Long board_num);
+	Long getLastNum(String userId);
+	BoardDTO findByNum(Long boardNum);
 	
 	
 

@@ -25,27 +25,37 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/Cboard/*")
-@Setter
-@Getter
 public class CBoardController {
-	@Autowired @Qualifier("boardServiceImpl")
+	@Autowired
 	private BoardService service;
 	
 	@GetMapping("list")
 	public String list(Criteria cri, Model model) throws Exception {
 		System.out.println(cri);
 		List<BoardDTO> list = service.getBoardList(cri);
+		
 		model.addAttribute("list",list);
+		log.info("list : {}",list);
 		model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
+		log.info("pageMaker: {}",new PageDTO(service.getTotal(cri), cri));
+		
 		model.addAttribute("newly_board",service.getNewlyBoardList(list));
+		log.info("newly_board:{}",service.getNewlyBoardList(list));
+//		오류뜨는 부분들 테스트중 
 		model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
+		log.info("reply_cnt_list: {}",service.getReplyCntList(list));
 		model.addAttribute("recent_reply",service.getRecentReplyList(list));
 		
-		return "board/list";
+		
+		log.info("recent_reply: {}",service.getRecentReplyList(list));
+		System.out.println("??????????????????????????????????????????????????????????????????");
+		
+		return "Cboard/list";
 		
 	}
 	
@@ -56,23 +66,24 @@ public class CBoardController {
 	
 	@PostMapping("write")
 	public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
-		Long boardnum = 0l;
+		Long boardNum = 0l;
+		
 		if(service.regist(board, files)) {
-			boardnum = service.getLastNum(board.getUserId());
-			return "redirect:/board/get"+cri.getListLink()+"&boardnum="+boardnum;
+			boardNum = service.getLastNum(board.getUserId());
+			return "redirect:/Cboard/get"+cri.getListLink()+"&boardNum="+boardNum;
 		}
 		else {
-			return "redirect:/board/list"+cri.getListLink();
+			return "redirect:/Cboard/list"+cri.getListLink();
 		}
 	}
 	
 	@GetMapping(value = {"get","modify"})
-	public String get(Criteria cri, Long boardnum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+	public String get(Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		model.addAttribute("cri",cri);
 		HttpSession session = req.getSession();
-		BoardDTO board = service.getDetail(boardnum);
+		BoardDTO board = service.getDetail(boardNum);
 		model.addAttribute("board",board);
-		model.addAttribute("files",service.getFileList(boardnum));
+		model.addAttribute("files",service.getFileList(boardNum));
 		String loginUser = (String)session.getAttribute("loginUser");
 		String requestURI = req.getRequestURI();
 		if(requestURI.contains("/get")) {
@@ -84,7 +95,7 @@ public class CBoardController {
 				if(cookies != null) {
 					for(Cookie cookie : cookies) {
 						//ex) 1번 게시글을 조회하고자 클릭했을 때에는 "read_board1" 쿠키를 찾음
-						if(cookie.getName().equals("read_board"+boardnum)) {
+						if(cookie.getName().equals("read_board"+boardNum)) {
 							read_board = cookie;
 							break;
 						}
@@ -94,9 +105,9 @@ public class CBoardController {
 				//첫 조회거나 조회한지 1시간이 지난 후
 				if(read_board == null) {
 					//조회수 증가
-					service.updateReadCount(boardnum);
+					service.updateReadCount(boardNum);
 					//read_board1 이름의 쿠키(유효기간 : 3600초)를 생성해서 클라이언트 컴퓨터에 저장
-					Cookie cookie = new Cookie("read_board"+boardnum, "r");
+					Cookie cookie = new Cookie("read_board"+boardNum, "r");
 					cookie.setMaxAge(3600);
 					resp.addCookie(cookie);
 				}
@@ -104,29 +115,29 @@ public class CBoardController {
 		}
 		return requestURI;
 	}
-	@PostMapping("modify")
-	public String modify(BoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model) throws Exception {
-		if(files != null){
-			for (int i = 0; i < files.length; i++) {
-				System.out.println("controller : "+files[i].getOriginalFilename());
-			}
-		}
-		System.out.println("controller : "+updateCnt);
-		if(service.modify(board, files, updateCnt)) {
-			return "redirect:/board/get"+cri.getListLink()+"&boardnum="+board.getBoardNum();
-		}
-		else {
-			return "redirect:/board/list"+cri.getListLink();
-		}
-	}
+//	@PostMapping("modify")
+//	public String modify(BoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model) throws Exception {
+//		if(files != null){
+//			for (int i = 0; i < files.length; i++) {
+//				System.out.println("controller : "+files[i].getOriginalFilename());
+//			}
+//		}
+//		System.out.println("controller : "+updateCnt);
+//		if(service.modify(board, files, updateCnt)) {
+//			return "redirect:/board/get"+cri.getListLink()+"&boardNum="+board.getboardNum();
+//		}
+//		else {
+//			return "redirect:/board/list"+cri.getListLink();
+//		}
+//	}
 	
-	@GetMapping("thumbnail")
-	public ResponseEntity<Resource> thumbnail(String systemname) throws Exception{
-		return service.getThumbnailResource(systemname);
-	}
-	
-	public void checkBoardId(HttpServletRequest req, HttpServletResponse res){
-		req.getSession().getAttribute("loginUser");
-		req.getSession().getAttribute("businessUser");
-	}
+//	@GetMapping("thumbnail")
+//	public ResponseEntity<Resource> thumbnail(String systemname) throws Exception{
+//		return service.getThumbnailResource(systemname);
+//	}
+//	
+//	public void checkBoardId(HttpServletRequest req, HttpServletResponse res){
+//		req.getSession().getAttribute("loginUser");
+//		req.getSession().getAttribute("businessUser");
+//	}
 }

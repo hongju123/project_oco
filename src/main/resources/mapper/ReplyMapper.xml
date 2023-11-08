@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	<select id="getRecentReply">
 		<![CDATA[ 
-			select count(*) from replies where board_num=#{boardNum} and timestampdiff(HOUR,regDate,now())<1 
+			select count(*) from replies where board_num=#{boardNum} and timestampdiff(HOUR,reg_date,now())<1 
 		]]>
 	</select>
 </mapper>
