@@ -192,14 +192,17 @@ public class UserController {
 	}
 // 	회원탈퇴 로직 
 	@GetMapping("withdraw")
-	public String withdrow(String userId,HttpServletRequest req){
+	public String withdrow(HttpServletRequest req){
+		log.info("{}", req.getSession().getAttribute("loginUser"));
+		String userId = (String)req.getSession().getAttribute("loginUser");
+		
 		if (req.getSession().getAttribute("businessUser")!="O") {
 			user.withdrawBusinessUser(userId);
 		}else {
 			user.withdrawUser(userId);
 			
 		}
-		return "redirect:/";
+		return "redirect:/user/logout";
 	}
 
 }
