@@ -14,9 +14,11 @@ import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.PageDTO;
 import com.oco.service.BoardService;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.mail.Session;
+import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,19 +42,15 @@ public class CBoardController {
 		model.addAttribute("recent_reply",service.getRecentReplyList(list));
 		
 		return "board/list";
-		}
-
-//	@NotEmpty(message = "제목은 필수항목입니다.") 
-//	@Size(max=200)
-//	private String subject;
-//
-//	@NotEmpty(message = "내용은 필수항목입니다.")
-//	 private String content;
-//	    
-//	 /*카테고리메세지*/
-//	 @NotBlank(message = "카테고리 선택은 필수항목입니다.")
-//	 private String category;
+		
+	}
 	
+	public void checkBoardId(HttpServletRequest req, HttpServletResponse res){
+		req.getSession().getAttribute("loginUser");
+		req.getSession().getAttribute("businessUser");
+	}
+
+
 // 아래 참고
 // https://rebornbb.tistory.com/entry/StringBoot-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8%EA%B2%8C%EC%8B%9C%ED%8C%90-%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC-%E2%9C%94%EC%A0%95%EB%A6%AC29	
 	

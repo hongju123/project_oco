@@ -100,6 +100,18 @@
 		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 	</form>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
+	
+	<!-- 비밀글 -->
+    <th:block th:if="${session.loginUser == board.userId}">
+        <a class="get" th:href="@{'/board/' + ${board.boardnum}}">
+        	<span th:text="${board.boardTitle}"></span>
+        	<span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
+        </a>
+    </th:block>
+    <th:block th:if="${session.loginUser != board.userId}">
+        <!-- 다른 작업 수행 -->
+    </th:block>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
