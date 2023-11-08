@@ -115,6 +115,7 @@ public class ReservationController {
 			model.addAttribute("list", service.getUser((String) req.getSession().getAttribute("loginUser")));
 			model.addAttribute("blist", blist);
 			model.addAttribute("binfolist", binfolist);
+			model.addAttribute("reservation", reservation);
 			System.out.println(blist);
 			System.out.println(binfolist);
 		}

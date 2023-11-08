@@ -69,8 +69,6 @@ public class BboardController {
 				BusinessInfoDTO infoboard = service.infoDetail(loginUser);
 				model.addAttribute("userboard", userboard);
 				model.addAttribute("infoboard", infoboard);
-				String requsetURI = req.getRequestURI();
-				return requsetURI;
 			}
 		}
 		else {
@@ -79,10 +77,9 @@ public class BboardController {
 			BusinessInfoDTO infoboard = service.infoDetail(loginUser);
 			model.addAttribute("userboard", userboard);
 			model.addAttribute("infoboard", infoboard);
-			String requsetURI = req.getRequestURI();
-			return requsetURI;
 		}
-		return null;
+		String requsetURI = req.getRequestURI();
+		return requsetURI;
 	}
 	
 	// 사업자 수정 페이지
