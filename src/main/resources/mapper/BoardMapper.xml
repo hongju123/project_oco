@@ -24,11 +24,11 @@
 	<!--insertBoard-->
 	<insert id="insertBoard">
 		insert into boards (board_title,board_contents,user_id)
-		values(#{board_title},{#board_contents},#{user_id})
+		values(#{boardTitle},{#boardContents},#{userId})
 	</insert>
 	<!--updateBoard-->
 	<update id="updateReadCount">
-		update boards set board_title=#{board_title},board_contents=#{board_contents},update_date=now()
+		update boards set board_title=#{boardTitle},board_contents=#{boardContents},update_date=now()
 		where board_num=#{boardNum}
 	</update>
 	<!--selectBoard-->
@@ -45,6 +45,6 @@
 		<include refid="cri"></include> board_num > 0
 	</select>
 	<select id="getLastNum">
-		select max() from boards where user_id=#{user_id}
+		select max() from boards where user_id=#{userId}
 	</select>
 </mapper>
