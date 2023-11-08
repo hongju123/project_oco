@@ -27,6 +27,7 @@
 			
 			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 				<td>[[${board.boardNum}]]</td>
+				
 				<td>
 					<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
 					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
@@ -37,7 +38,19 @@
 						<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 					</a>
 				</td>
-				<td>[[${board.userId}]]</td>
+				<td>[[${board.userId}]]
+				<!-- 비밀글 -->
+    			<th:block th:if="${session.loginUser == board.userId}">
+        		<a class="get" th:href="@{'/board/' + ${board.boardNum}}">
+        		<span th:text="${board.boardTitle}"></span>
+        		<span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
+        		</a>
+    			</th:block>
+    <th:block th:if="${session.loginUser != board.userId}">
+        <!-- 다른 작업 수행 -->
+    </th:block>
+					
+				</td>
 				<td>
 					[[${board.regDate}]]
 					<th:block th:if="${board.regdate != board.updatedate}">
