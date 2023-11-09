@@ -21,10 +21,6 @@
 				<th width="17%">날짜</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<tr>
-
-			</tr>
-			
 			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 				<td>[[${board.boardNum}]]</td>
 				<td>
@@ -32,10 +28,15 @@
 					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
 				</td>
 				<td>
-					<a class="get" th:href="${board.boardnum}">
-						[[${board.boardTitle}]]
-						<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
-					</a>
+               <th:block th:if="${session.loginUser == board.userId}">
+                   <a class="get" th:href="@{'/board/' + ${board.boardnum}}">
+                       <span th:text="${board.boardTitle}"></span>
+                       <span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
+                   </a>
+               </th:block>
+               <th:block th:if="${session.loginUser != board.userId}">
+                   <span>비밀글입니다</span>
+               </th:block>
 				</td>
 				<td>[[${board.userId}]]</td>
 				<td>
