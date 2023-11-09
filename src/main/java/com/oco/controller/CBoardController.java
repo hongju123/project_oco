@@ -80,9 +80,9 @@ public class CBoardController {
 	public String get(Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		model.addAttribute("cri",cri);
 		HttpSession session = req.getSession();
-		System.out.println(boardNum);
+		log.info("boardNum : {}",boardNum);
 		BoardDTO board = service.getDetail(boardNum);
-		System.out.println(board);
+		log.info("boardNum : {} Ok",board);
 		model.addAttribute("board",board);
 		model.addAttribute("files",service.getFileList(boardNum));
 		String loginUser = (String)session.getAttribute("loginUser");
