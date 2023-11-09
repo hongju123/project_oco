@@ -15,9 +15,8 @@
 <th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
+		
 		<table class="list">
-			<tr align="right" valign="middle">
-			</tr>
 			<tr align="center" valign="middle">
 				<th width="8%">번호</th>
 				<th>제목</th>
@@ -25,41 +24,32 @@
 				<th width="17%">날짜</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<tr>
-			</tr>
 			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-				<td>[[${board.boardNum}]]</td>
-				
 				<td>
-					<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
+					[[${board.boardNum}]]
 				</td>
+				
 				<td>
 					<a class="get" th:href="${board.boardNum}">
 						[[${board.boardTitle}]]
 						<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 					</a>
+					<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
+					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
 				</td>
-				<td>[[${board.userId}]]
-				<!-- 비밀글 -->
-    			<th:block th:if="${session.loginUser == board.userId}">
-        		<a class="get" th:href="@{'/board/' + ${board.boardNum}}">
-        		<span th:text="${board.boardTitle}"></span>
-        		<span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
-        		</a>
-    			</th:block>
-    			<th:blo th:if="${session.loginUser != board.userId}">
-        			<!-- 다른 작업 수행 -->
-    			</th:block>
-					
+				
+				<td>
+					[[${board.userId}]]
 				</td>
+				
 				<td>
 					[[${board.regDate}]]
-					<th:block th:if="${board.regDate != board.updateDate}">
-					(수정됨)
-					</th:block>
 				</td>
-				<td>[[${board.readCount}]]</td>
+				
+				<td>
+					[[${board.readCount}]]
+				</td>
+				
 			</tr>
 			<th:block th:if="${list == null or list.size() == 0}">
 				<tr>
@@ -148,7 +138,7 @@
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
-		let url=/*[[@{/board/get}]]*/'';
+		let url=/*[[@{/Cboard/get}]]*/'';
 		pageForm.append("<input type='hidden' name='boardnum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");
