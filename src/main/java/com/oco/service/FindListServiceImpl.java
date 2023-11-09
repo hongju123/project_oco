@@ -1,6 +1,9 @@
 package com.oco.service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -8,6 +11,11 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +66,7 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public BusinessInfoDTO infoDetail(Long businessIdx) {
+		System.out.println(fmapper.infoDetail(businessIdx) + "매퍼");
 		return fmapper.infoDetail(businessIdx);
 	}
 
@@ -123,8 +132,22 @@ public class FindListServiceImpl implements FindListService {
 	}
 
 	@Override
-	public List<FileDTO> getFileList(String loginUser) {
-		return fmapper.getFiles(loginUser);
+	public List<FileDTO> getFileList(Long businessInfoIdex) {
+		return fmapper.getFiles(businessInfoIdex);
+	}
+	
+	@Override
+	public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception {
+		System.out.println(systemname);
+		Path path = Paths.get(saveFolder+systemname);
+		
+		String contenttype = Files.probeContentType(path);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contenttype);
+		
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
 	}
 
 	// 모든 정보 가져오기
@@ -137,5 +160,6 @@ public class FindListServiceImpl implements FindListService {
 	public List<BusinessDTO> BusinessList() {
 		return fmapper.BusinessList();
 	}
+
 
 }

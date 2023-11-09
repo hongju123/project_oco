@@ -3,6 +3,7 @@ package com.oco.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -59,19 +60,20 @@ public class BboardController {
 	@GetMapping("getpage")
 	public String getpage(String businessId) {
 		Long businessIdx = service.getIndexNum(businessId);
-		System.out.println(businessIdx);
-		System.out.println(businessId);
 		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
 	}
 
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
-		System.out.println("확인");
+		Long businessInfoIdx = businessIdx;
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
+		model.addAttribute("files",service.getFileList(businessInfoIdx));
+		System.out.println(service.getFileList(businessInfoIdx));
+		System.out.println("상세페이지 가기전");
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -79,22 +81,23 @@ public class BboardController {
 	// 사업자 수정 페이지
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
-		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
-
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
-
 		info.setUseTime(Time);
-		info.setBusinessId(loginUser);
-		System.out.println(files.length);
-
+		System.out.println(info);
 		if (service.modify(info) && service.regist(files, info)) {
-			return "redirect:/Bboard/get";
+			System.out.println("리다이렉트 직전");
+			System.out.println(info.getBusinessInfoIdx());
+			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;
 		}
+	}
+	@GetMapping("thumbnail")
+	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception{
+		System.out.println(systemName);
+		return service.getThumbnailResource(systemName);
 	}
 
 }
