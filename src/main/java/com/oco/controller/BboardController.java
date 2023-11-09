@@ -66,12 +66,13 @@ public class BboardController {
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
+		Long businessInfoIdx = businessIdx;
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
-		model.addAttribute("files",service.getFileList(businessInfoIdex));
-		System.out.println(service.getFileList(businessInfoIdex));
+		model.addAttribute("files",service.getFileList(businessInfoIdx));
+		System.out.println(service.getFileList(businessInfoIdx));
 		System.out.println("상세페이지 가기전");
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
