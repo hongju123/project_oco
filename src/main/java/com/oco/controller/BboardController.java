@@ -59,15 +59,12 @@ public class BboardController {
 	@GetMapping("getpage")
 	public String getpage(String businessId) {
 		Long businessIdx = service.getIndexNum(businessId);
-		System.out.println(businessIdx);
-		System.out.println(businessId);
 		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
 	}
 
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
-		System.out.println("확인");
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
