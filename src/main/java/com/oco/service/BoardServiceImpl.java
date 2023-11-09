@@ -24,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oco.controller.CBoardController;
 import com.oco.domain.dto.BoardDTO;
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
