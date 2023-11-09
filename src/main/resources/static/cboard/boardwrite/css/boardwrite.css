@@ -19,6 +19,9 @@ table{
 	margin-top: 170px;
     border:1px solid black;
 }
-th{
+th,tr{
     border : 1px solid black;
+}
+.hidden{
+    display: none;
 }
