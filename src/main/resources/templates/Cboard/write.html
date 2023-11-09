@@ -12,27 +12,33 @@
 </head>
 <body>
 <th:block th:replace="~{layout/header::header}"></th:block>
+<th:blocked th:if="${session.loginUser==null}">
+	<!-- <script>
+		alert("회원만 이용 가능합니다. 로그인후 이용하세요");
+		location.replace("/Cboard/list");
+	</script> -->
+</th:blocked>
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
 			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
 			<input type="hidden" th:value="${cri.amount}" name="amount">
 			<input type="hidden" th:value="${cri.type}" name="type">
 			<input type="hidden" th:value="${cri.keyword}" name="keyword">
-			<table style="border-collapse: collapse;" border="1">
+			<table style="border-collapse: collapse;">
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">제목</th>
+					<th>제목</th>
 					<td>
-						<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요">
+						<input type="text" name="boardTitle" placeholder="제목을 입력하세요">
 					</td>
 				</tr>
 				<tr style="height:30px;">
 					<th style="text-align:center; width:150px;">작성자</th>
 					<td>
-						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+						<input type="text" name="userId" th:value="${session.loginUser}" readonly>
 					</td>
 				</tr>
-				<tr style="height:300px;">
-					<th style="text-align: center; width: 150px;">
+				<tr >
+					<th>
 						<td>
 							<select name="category">
 								<option value="QnA">궁금해요</option>
@@ -42,20 +48,20 @@
 						</td>
 					</th>
 				</tr>
-				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;">내 용</th>
+				<tr >
+					<th>내 용</th>
 					<td>
-						<textarea name="boardContents" style="width:700px;height:290px;resize:none;"></textarea>
+						<textarea name="boardContents"></textarea>
 					</td>
 				</tr>
 				<tr class="r0 at">
 					<th>파일 첨부1</th>
 					<td class="file0_cont">
-						<div style="float:left;">
+						<div>
 							<input type="file" name="files" id="file0" style="display:none">
 							<span id="file0name">선택된 파일 없음</span>
 						</div>
-						<div style="float:right; margin-right: 100px;">
+						<div>
 							<a href="javascript:upload('file0')">파일 선택</a>
 							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
 						</div>

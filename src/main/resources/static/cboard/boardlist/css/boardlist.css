@@ -19,6 +19,7 @@ body{
 table{
     border:1px solid black;
 }
-th{
+th,tr,td
+{
     border : 1px solid black;
 }
