@@ -7,8 +7,12 @@
 <link rel="stylesheet" th:href="@{/main/css/slick.css}">
 <link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 <link rel="stylesheet" th:href="@{/main/css/main.css}">
+
+
+<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
 </head>
 <body>
+<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
 		<table class="list">
@@ -21,27 +25,37 @@
 				<th width="17%">날짜</th>
 				<th width="10%">조회수</th>
 			</tr>
+			<tr>
+			</tr>
 			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 				<td>[[${board.boardNum}]]</td>
+				
 				<td>
 					<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
 					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
 				</td>
 				<td>
-               <th:block th:if="${session.loginUser == board.userId}">
-                   <a class="get" th:href="@{'/board/' + ${board.boardnum}}">
-                       <span th:text="${board.boardTitle}"></span>
-                       <span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
-                   </a>
-               </th:block>
-               <th:block th:if="${session.loginUser != board.userId}">
-                   <span>비밀글입니다</span>
-               </th:block>
+					<a class="get" th:href="${board.boardNum}">
+						[[${board.boardTitle}]]
+						<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
+					</a>
 				</td>
-				<td>[[${board.userId}]]</td>
+				<td>[[${board.userId}]]
+				<!-- 비밀글 -->
+    			<th:block th:if="${session.loginUser == board.userId}">
+        		<a class="get" th:href="@{'/board/' + ${board.boardNum}}">
+        		<span th:text="${board.boardTitle}"></span>
+        		<span class="reply_cnt" th:text="'[' + ${reply_cnt_list[boardStat.index]} + ']'"></span>
+        		</a>
+    			</th:block>
+    			<th:blo th:if="${session.loginUser != board.userId}">
+        			<!-- 다른 작업 수행 -->
+    			</th:block>
+					
+				</td>
 				<td>
 					[[${board.regDate}]]
-					<th:block th:if="${board.regdate != board.updatedate}">
+					<th:block th:if="${board.regDate != board.updateDate}">
 					(수정됨)
 					</th:block>
 				</td>
@@ -72,7 +86,7 @@
 		<table>
 			<tr align="right" valign="middle">
 				<td>
-					<a class="write" th:href="${'board/write'+pageMaker.cri.listLink}">글쓰기</a>
+					<a class="write" th:href="${'/Cboard/write'+pageMaker.cri.listLink}">글쓰기</a>
 				</td>
 			</tr>
 		</table>
@@ -118,9 +132,9 @@
 	});
 	$(".get").on("click",function(e){
 		e.preventDefault();
-		let boardnum = $(this).attr("href");
+		let boardNum = $(this).attr("href");
 		let url=/*[[@{/board/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
+		pageForm.append("<input type='hidden' name='boardnum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");
 		pageForm.submit();

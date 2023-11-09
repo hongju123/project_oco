@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Modify</title>
-<style>
-	
-</style>
+
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+<link rel="stylesheet" th:href="@{/main/css/main.css}">
+
+<link rel="stylesheet" th:href="@{/cboard/boardmodify/css/boardmodify.css}">
 </head>
 <body>
-	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/board/modify}" enctype="multipart/form-data">
 			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
@@ -82,7 +86,7 @@
 			</tr>
 		</table>
 	</div>
-	<th:block th:replace="~{layout/footer::footer}"></th:block>
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">

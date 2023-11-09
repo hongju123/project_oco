@@ -1,6 +1,7 @@
 package com.oco.service;
 
 import java.io.File;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oco.controller.CBoardController;
 import com.oco.domain.dto.BoardDTO;
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
@@ -30,6 +32,11 @@ import com.oco.mapper.BoardMapper;
 import com.oco.mapper.FileMapper;
 import com.oco.mapper.ReplyMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
@@ -42,8 +49,10 @@ public class BoardServiceImpl implements BoardService {
 	private String saveFolder;
 	
 	@Override
-	public boolean regist(BoardDTO board, MultipartFile[] files, String Category) throws Exception {
+	public boolean regist(BoardDTO board, MultipartFile[] files) throws Exception {
+		log.info("BoardDTO : {}",board);
 		int row = bmapper.insertBoard(board);
+	
 		if(row != 1) {
 			return false;
 		}
@@ -53,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
 		else {
 			//방금 등록한 게시글 번호
 			Long boardNum = bmapper.getLastNum(board.getUserId());
+		
 			boolean flag = false;
 			for(int i=0;i<files.length-1;i++) {
 				MultipartFile file = files[i];
@@ -185,8 +195,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardDTO getDetail(Long board_num) {
-		return bmapper.findByNum(board_num);
+	public BoardDTO getDetail(Long boardNum) {
+		return bmapper.findByNum(boardNum);
 	}
 
 	@Override
@@ -253,5 +263,7 @@ public class BoardServiceImpl implements BoardService {
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
 	}
+
+
 
 }
