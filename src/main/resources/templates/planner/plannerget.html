@@ -36,7 +36,6 @@
 					<td>
 						<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
 							readonly>
-						<input type="hidden" class="coords" name="coords" th:value="${planner.coords}">
 					</td>
 				</tr>
 				<tr>
@@ -76,7 +75,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
 
-	const addr = $(".addr").val();
+const addr = $(".addr").val();
 	const addrs = addr.split(",")
 	const linePath = [];
 	const latng = [];
@@ -99,8 +98,8 @@
 				console.log(i)
 				let mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 					mapOption = {
-						center: coords, // 지도의 중심좌표
-						level: 4 // 지도의 확대 레벨
+						center: latng[0], // 지도의 중심좌표
+						level: 5 // 지도의 확대 레벨
 					};
 				let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 				// 마커를 표시할 위치와 title 객체 배열입니다 
