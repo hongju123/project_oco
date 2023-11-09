@@ -40,6 +40,7 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="wrap">
 		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" if="boardForm" enctype="multipart/form-data">
+			<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
 			<div class="total_section">
 				<div class="main_section">
 					<div class="title_section">
