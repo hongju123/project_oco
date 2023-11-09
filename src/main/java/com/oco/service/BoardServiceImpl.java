@@ -104,17 +104,20 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception {
 		int row = bmapper.updateBoard(board);
+		System.out.println(board);
 		if(row != 1) {
+			System.out.println(row);
 			return false;
 		}
 		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum());
 		if(org_file_list.size()==0 && (files == null || files.length == 0)) {
+			System.out.println("2");
 			return true;
 		}
 		else {
 			if(files != null) {
 				boolean flag = false;
-				
+				System.out.println("3");
 				ArrayList<String> sysnames = new ArrayList<>();
 				System.out.println("service : "+files.length);
 				for(int i=0;i<files.length-1;i++) {
@@ -168,6 +171,7 @@ public class BoardServiceImpl implements BoardService {
 					fmapper.deleteBySystemname(deleteNames[i]);
 				}
 			}
+			System.out.println("4");
 			return true;
 		}
 	}
@@ -179,7 +183,18 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean remove(String loginUser, Long boardNum) {
-		// TODO Auto-generated method stub
+		BoardDTO board = bmapper.findByNum(boardNum);
+		if(board.getUserId().equals(loginUser)) {
+			List<FileDTO> files = fmapper.getFiles(boardNum);
+			for(FileDTO fdto : files) {
+				File file = new File(saveFolder,fdto.getSystemName());
+				if(file.exists()) {
+					file.delete();
+					fmapper.deleteBySystemname(fdto.getSystemName());
+				}
+			}
+			return bmapper.deleteBoard(boardNum) == 1;
+		}
 		return false;
 	}
 
