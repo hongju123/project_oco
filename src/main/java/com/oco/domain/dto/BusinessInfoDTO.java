@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BusinessInfoDTO {
-	private Long businessInfoIdex;
+	private Long businessInfoIdx;
     private int visitCount;
     private String useTime;
     private String content;

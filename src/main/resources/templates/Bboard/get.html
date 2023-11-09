@@ -61,12 +61,12 @@
 					</div>
 					<div class="photo_zone">
 						<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-							<th:block th:with="sar=${file.orgname.split('[.]')}">
-								<th:block th:with="ext=${sar[sar.length-1]}">
-									<ul th:if="${ext == 'jpg' or ext =='jpeg' or ext == 'png' or ext == 'fig' or ext == 'webp'}">
-										<li><img th:src="@{Bboard/thumbnail (systemname=${file.systemname})}"></li>
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:bolck th:with="ext=${sar[sar.length-1]}">
+									<ul	th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<li><img style="width: 100%;" th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"></li>
 									</ul>
-								</th:block>
+								</th:bolck>
 							</th:block>
 						</th:block>
 					</div>
@@ -74,7 +74,7 @@
 					</div>
 				</div>
 				<div class="sub_section">
-					<a class="" th:href="@{/Bboard/modify}"> 수정하기 </a>
+					<a class="" th:href="@{/Bboard/modify (businessIdx=${userboard.businessIdx})}"> 수정하기 </a>
 				</div>
 			</div>
 		</div>
