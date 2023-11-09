@@ -31,7 +31,7 @@ public interface FindListMapper {
 
 	int insertFile(FileDTO fdto);
 
-	List<FileDTO> getFiles(Long businessInfoIdex);
+	List<FileDTO> getFiles(Long businessInfoIdx);
 
 
 }

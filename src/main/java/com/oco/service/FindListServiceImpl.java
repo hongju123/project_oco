@@ -66,7 +66,6 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public BusinessInfoDTO infoDetail(Long businessIdx) {
-		System.out.println(fmapper.infoDetail(businessIdx) + "매퍼");
 		return fmapper.infoDetail(businessIdx);
 	}
 
@@ -87,13 +86,14 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception {
-
+			System.out.println(info);
 		if (files == null || files.length == 0) {
 			System.out.println("빠른종료");
 			return true;
 		} else {
 			System.out.println("파일있는거 확인후 코드 진행");
 			Long infonum = fmapper.getnum(info.getBusinessId());
+			System.out.println(infonum);
 			boolean flag = false;
 			for (int i = 0; i < files.length - 1; i++) {
 
@@ -117,7 +117,6 @@ public class FindListServiceImpl implements FindListService {
 				fdto.setBoardNum(infonum);
 				fdto.setSystemName(systemname);
 				fdto.setOrgName(orgname);
-				System.out.println(fdto);
 
 				file.transferTo(new File(path));
 
@@ -132,13 +131,13 @@ public class FindListServiceImpl implements FindListService {
 	}
 
 	@Override
-	public List<FileDTO> getFileList(Long businessInfoIdex) {
-		return fmapper.getFiles(businessInfoIdex);
+	public List<FileDTO> getFileList(Long businessInfoIdx) {
+		
+		return fmapper.getFiles(businessInfoIdx);
 	}
 	
 	@Override
 	public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception {
-		System.out.println(systemname);
 		Path path = Paths.get(saveFolder+systemname);
 		
 		String contenttype = Files.probeContentType(path);

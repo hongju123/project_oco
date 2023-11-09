@@ -27,7 +27,7 @@ public interface FindListService {
 	boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception;
 	
 	//파일 관련
-	List<FileDTO> getFileList(Long businessInfoIdex);
+	List<FileDTO> getFileList(Long businessInfoIdx);
 	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 	
 	//김민준

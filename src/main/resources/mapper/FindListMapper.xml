@@ -22,7 +22,7 @@
 	</select>
 	<!-- 파일 구해오기 -->
 	<select id="getFiles">
-		select * from files where board_num = #{businessInfoIdex}
+		select * from files where board_num = #{businessInfoIdx}
 	</select>
 	<!-- 개인 파일 넣기 -->
 	<insert id="insertFile">

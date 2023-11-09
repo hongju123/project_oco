@@ -73,7 +73,6 @@ public class BboardController {
 		model.addAttribute("infoboard", infoboard);
 		model.addAttribute("files",service.getFileList(businessInfoIdx));
 		System.out.println(service.getFileList(businessInfoIdx));
-		System.out.println("상세페이지 가기전");
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -81,14 +80,14 @@ public class BboardController {
 	// 사업자 수정 페이지
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
+		HttpSession session = req.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		info.setBusinessId(loginUser);
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
 		info.setUseTime(Time);
-		System.out.println(info);
 		if (service.modify(info) && service.regist(files, info)) {
-			System.out.println("리다이렉트 직전");
-			System.out.println(info.getBusinessInfoIdx());
 			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;
@@ -96,7 +95,6 @@ public class BboardController {
 	}
 	@GetMapping("thumbnail")
 	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception{
-		System.out.println(systemName);
 		return service.getThumbnailResource(systemName);
 	}
 
