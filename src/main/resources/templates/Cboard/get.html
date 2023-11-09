@@ -50,7 +50,6 @@
 						</tr>
 						<th:block th:with="ext=${sar[sar.length-1]}">
 							<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-								<td></td>
 								<td>
 									<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
 								</td>
@@ -92,7 +91,7 @@
 				</div>
 				<div style="width:65%">
 					<h4>내 용</h4>
-					<textarea name="replycontents" placeholder="Contents" style="resize:none;"></textarea>
+					<textarea name="replyContents" placeholder="Contents" style="resize:none;"></textarea>
 				</div>
 				<div style="width:15%">
 					<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
@@ -105,9 +104,15 @@
 	</div>
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/cboard/boardget/js/reply.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
+	const loginUser = /*[[${session.loginUser}]]*/'';
+	const boardNum = /*[[${board.boardNum}]]*/'';
+	const replies = $(".replies")
+	const page = $(".page")
+	
+	let nowpage = 0;
 	function modify(){
 		const boardForm = document.boardForm;
 		boardForm.setAttribute("action",/*[[@{/Cboard/modify}]]*/'');
@@ -128,10 +133,10 @@
 	})
 	$(".finish").on("click",function(e){
 		e.preventDefault();
-		let replycontents = $("[name='replycontents']").val();
-		
+		let replycontents = $("[name='replyContents']").val();
+		console.log("옴?")
 		replyService.add(
-			{"boardnum":boardnum,"userid":loginUser, "replycontents":replycontents},
+			{"boardNum":boardNum,"userId":loginUser, "replyContents":replycontents},
 			function(result){
 				alert("등록!");
 				$(".replyForm").hide();
@@ -145,7 +150,7 @@
 	
 	function showList(pagenum){
 		replyService.getList(
-			{boardnum:boardnum, pagenum:pagenum||1},
+			{boardNum:boardNum, pagenum:pagenum||1},
 			function(replyCnt, list){
 				let str = "";
 				if(list == null || list.length == 0){
@@ -156,19 +161,19 @@
 				
 				for(let i=0;i<list.length;i++){
 					//<li style="clear:both;" class="li3">
-					str += '<li style="clear:both;" class="li'+list[i].replynum+'">';
+					str += '<li style="clear:both;" class="li'+list[i].replyNum+'">';
 					str += '<div style="display:inline; float:left; width:80%;">';
 					//<strong class="userid3">apple</strong>
-					str += '<strong class="userid'+list[i].replynum+'">'+list[i].userid+'</strong>';
+					str += '<strong class="userid'+list[i].replyNum+'">'+list[i].userId+'</strong>';
 					//<p class="reply3">댓글내용</p>
-					str += '<p class="reply'+list[i].replynum+'">'+list[i].replycontents+'</p>';
+					str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContents+'</p>';
 					str += '</div><div style="text-align:right;">'
 					str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
-					if(list[i].userid == loginUser){
+					if(list[i].userId == loginUser){
 						//<a href="3" class="modify">수정</a>
-						str += '<a href="'+list[i].replynum+'" class="modify">수정</a>';
-						str += '<a href="'+list[i].replynum+'" class="mfinish" style="display:none;">수정 완료</a>';
-						str += '<a href="'+list[i].replynum+'" class="remove">삭제</a>';
+						str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
+						str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정 완료</a>';
+						str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
 					}
 					str += '</div></li>';
 				}
@@ -256,22 +261,28 @@
 		e.preventDefault();
 		replyFlag = false;
 		
-		let replynum = $(this).attr("href");
-		let replycontents = $("."+replynum).val();
+		let replyNum = $(this).attr("href");
+		let replyContents = $("."+replyNum).val();
 		
-		if(replycontents == ""){
+		if(replyContents == ""){
 			alert("수정할 댓글 내용을 입력하세요!");
 			return;
 		}
 		replyService.modify(
-			{replynum:replynum, replycontents:replycontents, boardnum:boardnum, userid:loginUser},
+			{replyNum:replyNum, replyContents:replyContents, boardNum:boardNum, userId:loginUser},
 			function(result){
 				if(result == "success"){
-					alert(replynum+"번 댓글 수정 완료!");
+					alert(replyNum+"번 댓글 수정 완료!");
 					showList(nowpage);
 				}
 			}
 		)
 	}
+	$(".cancel").on("click",function(e){
+		e.preventDefault();
+		$(".replyForm").hide();
+		$(".regist").show();
+		$("[name='replycontents']").val("");
+	})
 </script>
 </html>

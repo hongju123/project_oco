@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.ReplyDTO;
 
 
@@ -18,6 +19,6 @@ int insertReply(ReplyDTO reply);
 	
 	Long getLastNum(String userId);
 	int getTotal(Long boardNum);
-	List<ReplyDTO> getList();
+	List<ReplyDTO> getList(Criteria cri, Long boardNum);
 	int getRecentReply(Long boardNum);
 }
