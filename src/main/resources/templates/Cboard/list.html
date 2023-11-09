@@ -95,7 +95,7 @@
 				</td>
 			</tr>
 		</table>
-		<form id="searchForm" th:action="@{/board/list}">
+		<form id="searchForm" th:action="@{/Cboard/list}">
 			<div class="search_area">
 				<select name="type">
 					<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
@@ -139,7 +139,7 @@
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
 		let url=/*[[@{/Cboard/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardNum+"'>")
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");
 		pageForm.submit();

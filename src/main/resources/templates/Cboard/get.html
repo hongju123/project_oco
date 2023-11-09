@@ -41,18 +41,18 @@
 					</td>
 				</tr>
 				<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-					<th:block th:with="sar=${file.orgname.split('[.]')}">
+					<th:block th:with="sar=${file.orgName.split('[.]')}">
 						<tr>
 							<th>첨부파일[[${fileStat.index+1}]]</th>
 							<td>
-								<a href="#">[[${file.orgname}]]</a>
+								<a href="#">[[${file.orgName}]]</a>
 							</td>
 						</tr>
 						<th:block th:with="ext=${sar[sar.length-1]}">
 							<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 								<td></td>
 								<td>
-									<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemname=${file.systemname})}">
+									<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
 								</td>
 							</tr>
 						</th:block>
@@ -76,7 +76,7 @@
 							<input name="type" th:value="${cri.type}" type="hidden">
 							<input name="keyword" th:value="${cri.keyword}" type="hidden">
 							<a href="javascript:modify()">수정</a>
-							<a href="">삭제</a>
+							<a href="javascript:document.boardForm.submit()">삭제</a>
 						</form>
 					</th:block>
 					<a th:href="${'/Cboard/list'+cri.listLink}">목록</a>
@@ -106,12 +106,172 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/cboard/boardget/js/reply.js}"></script>
 <script th:inline="javascript">
 	function modify(){
 		const boardForm = document.boardForm;
 		boardForm.setAttribute("action",/*[[@{/Cboard/modify}]]*/'');
 		boardForm.setAttribute("method","get");
 		boardForm.submit();
+	}
+	
+	//댓글 등록
+	$(document).ready(function(){
+		$(".replyForm").hide();
+		nowpage = 1;
+		showList(1);
+	})
+	$(".regist").on("click",function(e){
+		e.preventDefault();
+		$(".replyForm").show();
+		$(this).hide();
+	})
+	$(".finish").on("click",function(e){
+		e.preventDefault();
+		let replycontents = $("[name='replycontents']").val();
+		
+		replyService.add(
+			{"boardnum":boardnum,"userid":loginUser, "replycontents":replycontents},
+			function(result){
+				alert("등록!");
+				$(".replyForm").hide();
+				$(".regist").show();
+				showList(1);
+			}
+		)
+		$("[name='replycontents']").val("");
+		
+	})
+	
+	function showList(pagenum){
+		replyService.getList(
+			{boardnum:boardnum, pagenum:pagenum||1},
+			function(replyCnt, list){
+				let str = "";
+				if(list == null || list.length == 0){
+					str += '<li class="noreply" style="clear:both;">등록된 댓글이 없습니다.</li>';
+					replies.html(str);
+					return;
+				}
+				
+				for(let i=0;i<list.length;i++){
+					//<li style="clear:both;" class="li3">
+					str += '<li style="clear:both;" class="li'+list[i].replynum+'">';
+					str += '<div style="display:inline; float:left; width:80%;">';
+					//<strong class="userid3">apple</strong>
+					str += '<strong class="userid'+list[i].replynum+'">'+list[i].userid+'</strong>';
+					//<p class="reply3">댓글내용</p>
+					str += '<p class="reply'+list[i].replynum+'">'+list[i].replycontents+'</p>';
+					str += '</div><div style="text-align:right;">'
+					str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
+					if(list[i].userid == loginUser){
+						//<a href="3" class="modify">수정</a>
+						str += '<a href="'+list[i].replynum+'" class="modify">수정</a>';
+						str += '<a href="'+list[i].replynum+'" class="mfinish" style="display:none;">수정 완료</a>';
+						str += '<a href="'+list[i].replynum+'" class="remove">삭제</a>';
+					}
+					str += '</div></li>';
+				}
+				replies.html(str);
+				
+				$(".remove").on("click",deleteReply);
+				$(".modify").on("click",modifyReply);
+				$(".mfinish").on("click",modifyReplyOk);
+				
+				showReplyPage(replyCnt, pagenum);
+			}
+		)
+	}
+	
+	function showReplyPage(replyCnt, pagenum){
+		let endPage = Math.ceil(pagenum/5)*5;
+		let startPage = endPage - 4;
+		
+		let prev = startPage != 1;
+		endPage = (endPage-1)*5 >= replyCnt ? Math.ceil(replyCnt/5) : endPage;
+		let next = endPage*5 < replyCnt ? true : false;
+		
+		let str = "";
+		if(prev){
+			//<a class="changePage" href="5"><code>&lt;</code></a>
+			str += '<a class="changePage" href="'+(startPage-1)+'"><code>&lt;</code></a>';
+		}
+		for(let i=startPage;i<=endPage;i++){
+			if(i == pagenum){
+				//<code class="nowPage">7</code>
+				str += '<code class="nowPage">'+i+'</code>';
+			}
+			else{
+				//<a class="changePage" href="9"><code>9</code></a>
+				str += '<a class="changePage" href="'+i+'"><code>'+i+'</code></a>';
+			}
+		}
+		if(next){
+			str += '<a class="changePage" href="'+(endPage+1)+'"><code>&gt;</code></a>';
+		}
+		
+		page.html(str);
+		
+		$(".changePage").on("click",function(e){
+			e.preventDefault();
+			let target = $(this).attr("href");
+			nowpage = parseInt(target);
+			showList(nowpage);
+			window.setTimeout(function(){
+				window.scrollTo(0,document.body.scrollHeight)
+			},10)
+		})
+	}
+	
+	function deleteReply(e){
+		e.preventDefault();
+		let replynum = $(this).attr("href");
+		replyService.remove(
+			replynum,
+			function(result){
+				if(result == "success"){
+					alert(replynum+"번 댓글 삭제 완료!");
+					showList(nowpage);
+				}
+			}
+		)
+	}
+	let replyFlag = false;
+	function modifyReply(e){
+		e.preventDefault();
+		if(!replyFlag){
+			replyFlag = true;
+			let replynum = $(this).attr("href");
+			const replyTag = $(".reply"+replynum);
+			//<textarea class="3 mdf">댓글내용</textarea> 
+			replyTag.html('<textarea class="'+replynum+' mdf">'+replyTag.text()+'</textarea>')
+			$(this).hide();
+			$(this).next().show();
+		}
+		else{
+			alert("수정중인 댓글이 있습니다!");
+		}
+	}
+	function modifyReplyOk(e){
+		e.preventDefault();
+		replyFlag = false;
+		
+		let replynum = $(this).attr("href");
+		let replycontents = $("."+replynum).val();
+		
+		if(replycontents == ""){
+			alert("수정할 댓글 내용을 입력하세요!");
+			return;
+		}
+		replyService.modify(
+			{replynum:replynum, replycontents:replycontents, boardnum:boardnum, userid:loginUser},
+			function(result){
+				if(result == "success"){
+					alert(replynum+"번 댓글 수정 완료!");
+					showList(nowpage);
+				}
+			}
+		)
 	}
 </script>
 </html>

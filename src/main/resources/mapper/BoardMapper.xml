@@ -26,7 +26,17 @@
 		insert into boards (board_title,board_contents,user_id)
 		values(#{boardTitle},#{boardContents},#{userId})
 	</insert>
+	
+	<delete id="deleteBoard">
+		delete from boards where board_num=#{boardNum}
+	</delete>
+	
 	<!--updateBoard-->
+	<update id="updateBoard">
+		update boards set board_title=#{boardTitle}, board_contents=#{boardContents},update_date=now()
+		where board_num=#{boardNum}
+	</update>
+	
 	<update id="updateReadCount">
 		update boards set board_title=#{boardTitle},board_contents=#{boardContents},update_date=now()
 		where board_num=#{boardNum}

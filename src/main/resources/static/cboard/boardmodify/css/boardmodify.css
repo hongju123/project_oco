@@ -16,3 +16,6 @@ body{
     justify-content: center;
     flex-direction: column;
 }
+form{
+	margin-top: 170px;
+}
