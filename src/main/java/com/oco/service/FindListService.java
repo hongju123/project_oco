@@ -9,7 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ReplyDTO;
+import com.oco.domain.dto.ReplyPageDTO;
 
 public interface FindListService {
 	
@@ -29,6 +32,15 @@ public interface FindListService {
 	//파일 관련
 	List<FileDTO> getFileList(Long businessInfoIdx);
 	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
+	
+	//리뷰 파트
+	boolean riplyRegist(ReplyDTO reply);
+	Long getLastNum(String userId);
+	ReplyPageDTO getList(Criteria cri, Long boardNum);
+	boolean remove(Long replynum);
+	boolean replyModify(ReplyDTO reply);
+	
+	
 	
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();

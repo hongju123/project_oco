@@ -26,7 +26,8 @@ public interface BoardService {
 	
 	//select
 	Long getTotal();
-	List<BoardDTO> getBoardList(Long amount, Long startRow, String topic);
+	List<BoardDTO> getBoardList(Long 
+	amount, Long startRow, String topic);
 	BoardDTO getDetail(Long boardNum);
 	Long getLastNum(String userId);
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;
