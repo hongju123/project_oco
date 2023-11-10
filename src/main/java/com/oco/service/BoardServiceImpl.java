@@ -199,16 +199,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Long getTotal(Criteria cri) {
-		return bmapper.getTotal(cri);
+	public Long getTotal() {
+		return bmapper.getTotal();
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList(Long amount, Long startRow, String topic) {
-		log.info("getBoardList");
-		log.info("amountgetboard:{}",amount);
-		log.info("amountgetboard:{}",startRow);
-		return bmapper.getList(amount,startRow);
+	public List<BoardDTO> getBoardAllList(Long amount, Long startRow) {
+		return bmapper.getAllList(amount,startRow);
+	}
+	@Override
+    public List<BoardDTO> getBoardList(Long amount, Long startRow, String topic) {
+        log.info("getBoardList");
+        log.info("amountgetboard:{}",amount);
+        log.info("amountgetboard:{}",startRow);
+        return bmapper.getList(amount,startRow,topic);
 	}
 
 	@Override
@@ -280,6 +284,7 @@ public class BoardServiceImpl implements BoardService {
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
 	}
+
 
 
 

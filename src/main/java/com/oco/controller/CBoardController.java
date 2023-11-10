@@ -37,23 +37,31 @@ public class CBoardController {
 
 	@ResponseBody
 	@GetMapping("addList")
-	public List<BoardDTO> test(Long amount, Long startRow, String topic) {
-		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+	public List<BoardDTO> addList(Long amount, Long startRow, String topic) {
+		if(topic != "전체") {
+			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+			return list;
+		}
+		else {
+			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+			return list;
+		}
+	}
+	
+	@ResponseBody
+	@GetMapping("list")
+	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
 		log.info("startRow:{}",startRow);
 		log.info("amount:{}",amount);
 		log.info("topic:{}", topic);
-		return list;
-	}
-	
-	
-	@GetMapping("list")
-	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
-		
 		amount = (amount != null && amount > 10L) ? amount : 10L;
 		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
-		
-		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+		if(topic != "전체") {
+			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+			model.addAttribute("list", list);
+		}
 
+		List<BoardDTO> list = service.getBoardAllList(amount,startRow);
 		model.addAttribute("list", list);
 		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
 		//log.info("pageMaker: {}", new PageDTO(service.getTotal()));
