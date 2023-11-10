@@ -64,8 +64,9 @@ public class CBoardController {
 
 	@PostMapping("write")
 	public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception {
-		Long boardNum = 0l;
-
+		//Long boardNum = 0l;
+		//수정사항
+		Long boardNum = board.getBoardNum();
 		if (service.regist(board, files)) {
 			boardNum = service.getLastNum(board.getUserId());
 			return "redirect:/Cboard/get" + cri.getListLink() + "&boardNum=" + boardNum;
