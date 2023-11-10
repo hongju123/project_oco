@@ -36,34 +36,32 @@ public class CBoardController {
 	private BoardService service;
 
 	@ResponseBody
-	@GetMapping("test")
-	public void test(String amount, String startRow, String topic) {
+	@GetMapping("addList")
+	public List<BoardDTO> test(Long amount, Long startRow, String topic) {
+		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
 		log.info("startRow:{}",startRow);
 		log.info("amount:{}",amount);
 		log.info("topic:{}", topic);
-	
+		return list;
 	}
 	
 	
-
 	@GetMapping("list")
-	public String list(Model model,Criteria cri) throws Exception {
-		List<BoardDTO> list = service.getBoardList(cri);
+	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
+		
+		amount = (amount != null && amount > 10L) ? amount : 10L;
+		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
+		
+		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
 
 		model.addAttribute("list", list);
-		log.info("list : {}", list);
-		log.info("cri : {}", cri);
-		model.addAttribute("pageMaker", new PageDTO(service.getTotal(cri),cri));
+		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
 		//log.info("pageMaker: {}", new PageDTO(service.getTotal()));
 
 		model.addAttribute("newly_board", service.getNewlyBoardList(list));
-		log.info("newly_board:{}", service.getNewlyBoardList(list));
-		
 		model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
-		log.info("reply_cnt_list: {}", service.getReplyCntList(list));
 		model.addAttribute("recent_reply", service.getRecentReplyList(list));
 
-		log.info("recent_reply: {}", service.getRecentReplyList(list));
 
 		return "Cboard/list";
 
