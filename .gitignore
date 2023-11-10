@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-application.log/spring.log
+application.log/*
