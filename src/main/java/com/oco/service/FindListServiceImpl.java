@@ -22,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ReplyDTO;
+import com.oco.domain.dto.ReplyPageDTO;
 import com.oco.mapper.FindListMapper;
 
 @Service
@@ -158,6 +161,31 @@ public class FindListServiceImpl implements FindListService {
 	@Override
 	public List<BusinessDTO> BusinessList() {
 		return fmapper.BusinessList();
+	}
+
+	@Override
+	public boolean riplyRegist(ReplyDTO reply) {
+		return fmapper.insertReply(reply) == 1;
+	}
+
+	@Override
+	public Long getLastNum(String userId) {
+		return fmapper.getLastNumber(userId);
+	}
+
+	@Override
+	public ReplyPageDTO getList(Criteria cri, Long boardNum) {
+		return new ReplyPageDTO(fmapper.getTotal(boardNum), fmapper.getList(cri, boardNum));
+	}
+
+	@Override
+	public boolean remove(Long replynum) {
+		return fmapper.deleteReply(replynum) == 1;
+	}
+
+	@Override
+	public boolean replyModify(ReplyDTO reply) {
+		return fmapper.updateReply(reply) == 1;
 	}
 
 

@@ -128,7 +128,6 @@
 		searchForm.submit();
 	}
 
-
 let cnt = 0;
 let startRow = 10;
 let amount = 20;
@@ -155,7 +154,6 @@ document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",
 		//ajax 호출 
 		getList()
 	}
-		
 	console.log(e.target.innerText);
 }))
 
@@ -186,6 +184,7 @@ let observe = new IntersectionObserver(
     });
   }
 );
+
 
 
 observe.observe(document.querySelector(".test"))
