@@ -150,8 +150,8 @@
 // 복수면
 
 let cnt = 1;
-let startRow = 0;
-let amount = 10;
+let startRow = 10;
+let amount = 20;
 
 
 let observe = new IntersectionObserver(
@@ -160,7 +160,7 @@ let observe = new IntersectionObserver(
       if (entry.isIntersecting) {
         console.log("감지완료");
 		console.log("startRow : "+startRow+","+"amount :"+ amount+","+"cnt : "+cnt)
-        getListURL = "/Cboard/test";
+        getListURL = "/Cboard/list";
 		cnt += 1;
 		startRow = cnt==1?0:startRow+=10;
 		amount = 10*cnt;
