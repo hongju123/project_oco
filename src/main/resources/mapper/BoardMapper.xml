@@ -23,8 +23,8 @@
 	</sql>
 	<!--insertBoard-->
 	<insert id="insertBoard">
-		insert into boards (board_title,board_contents,user_id)
-		values(#{boardTitle},#{boardContents},#{userId})
+		insert into boards (board_title,board_contents,user_id,topic,category)
+		values(#{boardTitle},#{boardContents},#{userId},#{topic},#{category})
 	</insert>
 	
 	<delete id="deleteBoard">
