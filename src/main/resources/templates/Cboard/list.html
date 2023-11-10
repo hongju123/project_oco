@@ -26,7 +26,7 @@
 				<th width="17%">날짜</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
 				<td>
 					[[${board.boardNum}]]
 				</td>
@@ -78,10 +78,10 @@
 			</tr>
 		</table>
 	</div>
-	<form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
+	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-	</form>
+	</form> -->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<div class="test">감지<div>
@@ -149,27 +149,32 @@
 // });
 // 복수면
 
-let cnt = 1;
+let cnt = 0;
 let startRow = 10;
 let amount = 20;
+
 
 
 let observe = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        console.log("감지완료");
-		console.log("startRow : "+startRow+","+"amount :"+ amount+","+"cnt : "+cnt)
-        getListURL = "/Cboard/list";
+        
+		console.log("감지완료");
+        getListURL = "/Cboard/addList";
 		cnt += 1;
-		startRow = cnt==1?0:startRow+=10;
-		amount = 10*cnt;
+		startRow = 10*cnt;
+		amount = 20*cnt;
+		console.log("startRow : "+startRow+","+"amount :"+ amount+","+"cnt : "+cnt)
         $.ajax({
           url: getListURL,
           type: "get",
           data: { "startRow": startRow,"amount":amount,"topic":"somthing" },
           success: function (result) {
-            console.log(result);
+			if (result!=null) {
+				appendDataToTable(result);
+				
+			}
           },
           error: function (result
 		  ) {
@@ -188,7 +193,39 @@ let observe = new IntersectionObserver(
 // 하나면
 observe.observe(document.querySelector(".test"))
 // select * from boards where board_num > 0 ORDER BY board_num DESC LIMIT #{startRow}, #{amount}
+function appendDataToTable(data) {
+    let table = $(".list"); // 테이블을 나타내는 클래스를 선택
 
+    data.forEach(item => {
+        let newRow = $("<tr>");
+
+        // 데이터를 테이블 행에 추가
+        newRow.append("<td>" + item.boardNum + "</td>");
+        newRow.append("<td><a class='get' th:href='@{/Cboard/get/{boardNum}(boardNum=${item.boardNum})}'>" + item.boardTitle + "</a></td>");
+        newRow.append("<td>" + item.userId + "</td>");
+        newRow.append("<td>" + item.topic + "</td>");
+        newRow.append("<td>" + item.category + "</td>");
+        newRow.append("<td>" + item.regDate + "</td>");
+        newRow.append("<td>" + item.readCount + "</td>");
+
+        // 테이블에 행 추가
+        table.append(newRow);
+
+        // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
+        // ...
+
+        // 예를 들어, 클릭 이벤트에 대한 처리
+        newRow.find(".get").on("click", function (e) {
+            e.preventDefault();
+            let boardNum = $(this).attr("href");
+            let url = /*[[@{/Cboard/get}]]*/ '';
+            pageForm.append("<input type='hidden' name='boardNum' value='" + boardNum + "'>");
+            pageForm.attr("action", url);
+            pageForm.attr("method", "get");
+            pageForm.submit();
+        });
+    });
+}
 
 </script>
 </html>

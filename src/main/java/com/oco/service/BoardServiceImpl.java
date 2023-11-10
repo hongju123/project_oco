@@ -204,8 +204,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList(String amount, String startRow, String topic) {
-		return bmapper.getList(amount,startRow,topic);
+	public List<BoardDTO> getBoardList(Long amount, Long startRow, String topic) {
+		log.info("getBoardList");
+		log.info("amountgetboard:{}",amount);
+		log.info("amountgetboard:{}",startRow);
+		return bmapper.getList(amount,startRow);
 	}
 
 	@Override

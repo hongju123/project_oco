@@ -20,8 +20,9 @@ public interface BoardMapper {
 	int deleteBoard(Long boardNum);
 	
 	//select
-	List<BoardDTO> getList(String amount, String startRow, String topic);
+	List<BoardDTO> getList(Long amount, Long startRow);
 	Long getTotal();
+
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
 	
