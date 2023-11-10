@@ -38,17 +38,19 @@ public class CBoardController {
 	@ResponseBody
 	@GetMapping("addList")
 	public List<BoardDTO> addList(Long amount, Long startRow, String topic) {
-		if(topic != "전체") {
+		if(!topic.equals("전체")) {
 			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+			log.info("topic: 노 전체{}", topic);
 			return list;
 		}
 		else {
 			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+			log.info("topic: 전체{}", topic);
 			return list;
 		}
 	}
 	
-	@ResponseBody
+	
 	@GetMapping("list")
 	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
 		log.info("startRow:{}",startRow);
