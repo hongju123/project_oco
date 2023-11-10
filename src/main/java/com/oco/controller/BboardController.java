@@ -5,25 +5,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ReplyDTO;
+import com.oco.domain.dto.ReplyPageDTO;
 import com.oco.service.FindListService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Setter;
 
 @RequestMapping("/Bboard/*")
 @Controller
@@ -76,8 +85,7 @@ public class BboardController {
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
-		model.addAttribute("files",service.getFileList(businessInfoIdx));
-		System.out.println(service.getFileList(businessInfoIdx));
+		model.addAttribute("files", service.getFileList(businessInfoIdx));
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -86,7 +94,7 @@ public class BboardController {
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
 		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
+		String loginUser = (String) session.getAttribute("loginUser");
 		info.setBusinessId(loginUser);
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
@@ -98,9 +106,46 @@ public class BboardController {
 			return null;
 		}
 	}
+
 	@GetMapping("thumbnail")
-	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception{
+	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception {
 		return service.getThumbnailResource(systemName);
+	}
+
+	// 리뷰
+	@ResponseBody
+	@PostMapping(value = "insertReply", consumes = "application/json;charset=utf-8")
+	public ResponseEntity<String> insertReply(@RequestBody ReplyDTO reply) {
+		System.out.println(reply.getReplyContents());
+		System.out.println(reply);
+		boolean check = service.riplyRegist(reply);
+		Long replynum = service.getLastNum(reply.getUserId());
+		return check ? new ResponseEntity<String>(replynum + "", HttpStatus.OK)
+				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ResponseBody
+	@GetMapping(value = "replyPages")
+	public ResponseEntity<ReplyPageDTO> getList(@RequestParam("boardNum") Long boardNum,
+			@RequestParam("pagenum") int pagenum) {
+		Criteria cri = new Criteria(pagenum, 5);
+		return new ResponseEntity<ReplyPageDTO>(service.getList(cri, boardNum), HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@GetMapping("deletereply")
+	public ResponseEntity<String> remove(@RequestParam("replynum") Long replynum) {
+		System.out.println(replynum);
+		return service.remove(replynum) ? new ResponseEntity<String>("success", HttpStatus.OK)
+				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ResponseBody
+	@PostMapping(value = "replyUpdate", consumes = "application/json;charset=utf-8")
+	public ResponseEntity<String> modify(@RequestBody ReplyDTO reply) {
+		System.out.println(reply + "컨트롤러");
+		service.replyModify(reply);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 }
