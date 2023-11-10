@@ -193,29 +193,31 @@ let observe = new IntersectionObserver(
 // 하나면
 observe.observe(document.querySelector(".test"))
 // select * from boards where board_num > 0 ORDER BY board_num DESC LIMIT #{startRow}, #{amount}
+
+
 function appendDataToTable(data) {
     let table = $(".list"); // 테이블을 나타내는 클래스를 선택
 
     data.forEach(item => {
-        let newRow = $("<tr>");
+        // 데이터를 기반으로 동적으로 HTML 형성
+        let newRowHtml = "<tr>" +
+            "<td>" + item.boardNum + "</td>" +
+            "<td><a class='get' href='" + item.boardNum + "'>" + item.boardTitle + "</a></td>" +
+            "<td>" + item.userId + "</td>" +
+            "<td>" + item.topic + "</td>" +
+            "<td>" + item.category + "</td>" +
+            "<td>" + item.regDate + "</td>" +
+            "<td>" + item.readCount + "</td>" +
+            "</tr>";
 
-        // 데이터를 테이블 행에 추가
-        newRow.append("<td>" + item.boardNum + "</td>");
-        newRow.append("<td><a class='get' th:href='@{/Cboard/get/{boardNum}(boardNum=${item.boardNum})}'>" + item.boardTitle + "</a></td>");
-        newRow.append("<td>" + item.userId + "</td>");
-        newRow.append("<td>" + item.topic + "</td>");
-        newRow.append("<td>" + item.category + "</td>");
-        newRow.append("<td>" + item.regDate + "</td>");
-        newRow.append("<td>" + item.readCount + "</td>");
-
-        // 테이블에 행 추가
-        table.append(newRow);
+        // 동적으로 형성된 HTML을 테이블에 삽입
+        table.append(newRowHtml);
 
         // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
         // ...
 
         // 예를 들어, 클릭 이벤트에 대한 처리
-        newRow.find(".get").on("click", function (e) {
+        $(".get:last").on("click", function (e) {
             e.preventDefault();
             let boardNum = $(this).attr("href");
             let url = /*[[@{/Cboard/get}]]*/ '';
@@ -226,6 +228,7 @@ function appendDataToTable(data) {
         });
     });
 }
+
 
 </script>
 </html>
