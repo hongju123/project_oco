@@ -1,7 +1,5 @@
 package com.oco.domain.dto;
 
-import java.security.Timestamp;
-import java.sql.Date;
 
 import lombok.Data;
 
@@ -9,12 +7,8 @@ import lombok.Data;
 public class ReplyDTO {
 	private Long replyNum;
 	private String replyContents;
-	private Date regDate;
-	private Timestamp updateDate;
-	private String replyId;
-	private int userId;
-	private String boardId;
-	
-	
-	
+	private String regDate;
+	private String updateDate;
+	private String userId;
+	private Long boardNum;
 }

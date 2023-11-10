@@ -9,7 +9,7 @@ public class BoardDTO {
 	private String boardId;
 	private String boardTitle;
 	private String boardContents;
-	private Timestamp updateDate;
+	private String updateDate;
 	private String regDate;
 	private Long boardNum;
 	private int readCount;

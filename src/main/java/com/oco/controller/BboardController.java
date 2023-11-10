@@ -3,6 +3,7 @@ package com.oco.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,20 +59,24 @@ public class BboardController {
 	// 아이디로 번호값 가져오기
 	@GetMapping("getpage")
 	public String getpage(String businessId) {
-		Long businessIdx = service.getIndexNum(businessId);
-		System.out.println(businessIdx);
 		System.out.println(businessId);
+		Long businessIdx = service.getIndexNum(businessId);
 		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
 	}
 
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
-		System.out.println("확인");
+		
+		System.out.println("businessIdx :" + businessIdx);
+		Long businessInfoIdx = businessIdx;
+		System.out.println("businessInfoIdx :" + businessInfoIdx);
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
+		model.addAttribute("files",service.getFileList(businessInfoIdx));
+		System.out.println(service.getFileList(businessInfoIdx));
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -80,21 +85,21 @@ public class BboardController {
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
 		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
-
+		String loginUser = (String)session.getAttribute("loginUser");
+		info.setBusinessId(loginUser);
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
-
 		info.setUseTime(Time);
-		info.setBusinessId(loginUser);
-		System.out.println(files.length);
-
 		if (service.modify(info) && service.regist(files, info)) {
-			return "redirect:/Bboard/get";
+			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;
 		}
+	}
+	@GetMapping("thumbnail")
+	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception{
+		return service.getThumbnailResource(systemName);
 	}
 
 }

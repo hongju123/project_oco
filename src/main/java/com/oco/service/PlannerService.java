@@ -6,7 +6,7 @@ import com.oco.domain.dto.PlannerDTO;
 
 public interface PlannerService {
 
-	boolean plannerwrite(PlannerDTO schedule);
+	boolean plannerwrite(PlannerDTO planner);
 
 	// delete
 	public boolean remove(String loginUser, Long scheduleNum);

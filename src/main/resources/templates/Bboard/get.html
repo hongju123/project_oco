@@ -7,34 +7,7 @@
 	<title>Document</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
-	<style>
-		#wrap {
-			margin: 150px auto;
-			border: 1px solid black;
-			width: 1200px;
-			height: 1000px;
-		}
-
-		.total_section {
-			border: 1px solid black;
-			box-sizing: border-box;
-			padding: 10px;
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.main_section {
-			border: 1px solid black;
-			width: 850px;
-			height: 500px;
-		}
-
-		.sub_section {
-			border: 1px solid black;
-			width: 320px;
-			height: 500px;
-		}
-	</style>
+	
 </head>
 
 <body>
@@ -45,6 +18,7 @@
 			<div class="total_section">
 				<div class="main_section">
 					<div class="title_section">
+						[[${userboard.businessIdx}]]
 						[[${userboard.businessId}]]
 						[[${userboard.businessAddress}]]
 						[[${userboard.businessCategory}]]
@@ -61,25 +35,112 @@
 					</div>
 					<div class="photo_zone">
 						<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-							<th:block th:with="sar=${file.orgname.split('[.]')}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
-									<ul th:if="${ext == 'jpg' or ext =='jpeg' or ext == 'png' or ext == 'fig' or ext == 'webp'}">
-										<li><img th:src="@{Bboard/thumbnail (systemname=${file.systemname})}"></li>
-									</ul>
+									<th:block
+										th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<ul style="float: left;">
+											<li><img style="width: 50px;"
+													th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"></li>
+										</ul>
+									</th:block>
 								</th:block>
 							</th:block>
 						</th:block>
 					</div>
 					<div class="reply">
+						<a hre"#" class="regist">댓글 등록</a>
+						<div class="replyForm row">
+							<div style="width: 400px;">
+								<h4>작성자</h4>
+									<input type="txt" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
+							</div>
+							<div style="width: 65%;">
+								<h4>내용</h4>
+								<textarea name="replycontents" placeholder="Contents" style="resize:none;"></textarea>
+							</div>
+							<div style="width:15%">
+								<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
+								<a href="#" class="button cancel">취소</a>
+							</div>
+						</div>
+						<ul class="replies"></ul>
+						<div class="page"></div>
 					</div>
 				</div>
 				<div class="sub_section">
-					<a class="" th:href="@{/Bboard/modify}"> 수정하기 </a>
+					<th:block th:if="${userboard.businessId == session.loginUser}">
+						<a class="" th:href="@{/Bboard/modify (businessIdx=${userboard.businessIdx})}"> 수정하기 </a>
+					</th:block>
 				</div>
 			</div>
 		</div>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-
+<script th:inline="javascript">
+	const loginUser = /*$[[${session.loginUser}]]*/'';
+	const userIdx = /*[[${userboard.businessIdx}]]*/'';
+	const replies = $(".replies")
+	const page = $(".page")
+	let nowpage = 0;
+	
+	$(document).ready(function(){
+		$(".replyForm").hide();
+		nowpage = 1;
+		showList(1);
+	})
+	
+	$(".regist").on("click",function(e){
+		e.preventDefault();
+		$(".replyForm").show();
+		$(this).hide();
+	})
+	
+	$(".finish").on("click",function(e){
+		e.preventDefault();
+		let replycontents = $("[name='replycontents']").val();
+		
+		replyService.add(
+			{"businessIdx":userIdx, "userId":loginUser, "replyContents":replyContentss}
+		)
+	})
+	
+	
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

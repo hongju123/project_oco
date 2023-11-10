@@ -323,6 +323,7 @@
 			</div>
 			<div class="list">
 			</div>
+			<input type="hidden" class="coordss" name="coords">
 			<textarea placeholder="메모장" class="memo" name="memo" id="memo"></textarea>
 			<input type="hidden" th:value="${session.loginUser}" name="userId">
 		</form>
@@ -578,6 +579,7 @@
 		polyline.setMap(map);
 	}
 	const str = [];
+	let yx = "";
 	function f1(num) {
 		var jibun = $(".jibun" + num).html();
 		console.log(jibun)
@@ -616,6 +618,9 @@
 				//"<div class='drag' >" + store + "</div>";
 				strr += "<input type='text' value='" + store + "' class='storename' name='storeName' id='storename'>";
 				strr += "<input type='hidden' value='" + jibun + "' class='jibun" + num + "' name='addr' id='addr'>";
+				yx += coords+"/";
+				console.log(yx)
+				$(".coordss").val(yx)
 				str.push(strr);
 				list.html(str)
 			}

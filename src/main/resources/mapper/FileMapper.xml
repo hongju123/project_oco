@@ -3,7 +3,7 @@
   <mapper namespace="com.oco.mapper.FileMapper">
 	  <!--insertFile-->	 
 	  <insert id="insertFile">
-		  insert into file values(#{systemName},#{orgName},#{boardNum})
+		  insert into files values(#{systemName},#{orgName},#{boardNum})
 	  </insert>
 	  
 	 <select id="getFiles">

@@ -2,6 +2,8 @@ package com.oco.service;
 
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.AllListDTO;
@@ -24,7 +26,9 @@ public interface FindListService {
 	
 	boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception;
 	
-	List<FileDTO> getFileList(String loginUser);
+	//파일 관련
+	List<FileDTO> getFileList(Long businessInfoIdx);
+	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 	
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();

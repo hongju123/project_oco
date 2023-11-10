@@ -1,6 +1,7 @@
 package com.oco.service;
 
 import java.io.File;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,6 +31,11 @@ import com.oco.mapper.BoardMapper;
 import com.oco.mapper.FileMapper;
 import com.oco.mapper.ReplyMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
@@ -42,8 +48,10 @@ public class BoardServiceImpl implements BoardService {
 	private String saveFolder;
 	
 	@Override
-	public boolean regist(BoardDTO board, MultipartFile[] files, String Category) throws Exception {
+	public boolean regist(BoardDTO board, MultipartFile[] files) throws Exception {
+		log.info("BoardDTO : {}",board);
 		int row = bmapper.insertBoard(board);
+	
 		if(row != 1) {
 			return false;
 		}
@@ -53,6 +61,7 @@ public class BoardServiceImpl implements BoardService {
 		else {
 			//방금 등록한 게시글 번호
 			Long boardNum = bmapper.getLastNum(board.getUserId());
+		
 			boolean flag = false;
 			for(int i=0;i<files.length-1;i++) {
 				MultipartFile file = files[i];
@@ -95,17 +104,20 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception {
 		int row = bmapper.updateBoard(board);
+		System.out.println(board);
 		if(row != 1) {
+			System.out.println(row);
 			return false;
 		}
 		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum());
 		if(org_file_list.size()==0 && (files == null || files.length == 0)) {
+			System.out.println("2");
 			return true;
 		}
 		else {
 			if(files != null) {
 				boolean flag = false;
-				
+				System.out.println("3");
 				ArrayList<String> sysnames = new ArrayList<>();
 				System.out.println("service : "+files.length);
 				for(int i=0;i<files.length-1;i++) {
@@ -159,6 +171,7 @@ public class BoardServiceImpl implements BoardService {
 					fmapper.deleteBySystemname(deleteNames[i]);
 				}
 			}
+			System.out.println("4");
 			return true;
 		}
 	}
@@ -170,7 +183,18 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public boolean remove(String loginUser, Long boardNum) {
-		// TODO Auto-generated method stub
+		BoardDTO board = bmapper.findByNum(boardNum);
+		if(board.getUserId().equals(loginUser)) {
+			List<FileDTO> files = fmapper.getFiles(boardNum);
+			for(FileDTO fdto : files) {
+				File file = new File(saveFolder,fdto.getSystemName());
+				if(file.exists()) {
+					file.delete();
+					fmapper.deleteBySystemname(fdto.getSystemName());
+				}
+			}
+			return bmapper.deleteBoard(boardNum) == 1;
+		}
 		return false;
 	}
 
@@ -185,8 +209,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardDTO getDetail(Long board_num) {
-		return bmapper.findByNum(board_num);
+	public BoardDTO getDetail(Long boardNum) {
+		return bmapper.findByNum(boardNum);
 	}
 
 	@Override
@@ -253,5 +277,7 @@ public class BoardServiceImpl implements BoardService {
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
 	}
+
+
 
 }
