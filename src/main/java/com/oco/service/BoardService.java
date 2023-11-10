@@ -25,8 +25,8 @@ public interface BoardService {
 	public boolean remove(String loginUser, Long boardNum);
 	
 	//select
-	Long getTotal(Criteria cri);
-	List<BoardDTO> getBoardList(Criteria cri);
+	Long getTotal();
+	List<BoardDTO> getBoardList(Long amount, Long startRow, String topic);
 	BoardDTO getDetail(Long boardNum);
 	Long getLastNum(String userId);
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;

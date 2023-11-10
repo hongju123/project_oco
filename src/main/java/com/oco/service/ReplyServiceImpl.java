@@ -35,7 +35,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public Long getLastNum(String userid) {
-		return rmapper.getLastNum(userid);
+	public Long getLastNum(String userId) {
+		return rmapper.getLastNum(userId);
 	}
 }
+

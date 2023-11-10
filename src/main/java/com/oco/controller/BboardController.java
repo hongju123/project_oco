@@ -46,6 +46,7 @@ public class BboardController {
 		}
 		if (!city.contains("/")) {
 			city = "";
+			
 		}
 		return new ResponseEntity<AllListDTO>(service.getMainList(main, city), HttpStatus.OK);
 	}

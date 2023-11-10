@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>ComuList</title>
-<link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
+	<meta charset="UTF-8">
+	<title>ComuList</title>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+	<link rel="stylesheet" th:href="@{/main/css/main.css}">
 
 
-<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
+	<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
 </head>
+
 <body>
-<th:block th:replace="~{layout/header::header}"></th:block>
+	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
-		
+
 		<table class="list">
 			<tr align="center" valign="middle">
 				<th width="8%">번호</th>
@@ -26,11 +28,11 @@
 				<th width="17%">날짜</th>
 				<th width="10%">조회수</th>
 			</tr>
-			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
 				<td>
 					[[${board.boardNum}]]
 				</td>
-				
+
 				<td>
 					<a class="get" th:href="${board.boardNum}">
 						[[${board.boardTitle}]]
@@ -44,7 +46,7 @@
 				<td>[[${board.category}]]</td>
 				<td>[[${board.regDate}]]</td>
 				<td>[[${board.readCount}]]</td>
-				
+
 			</tr>
 			<th:block th:if="${list == null or list.size() == 0}">
 				<tr>
@@ -54,23 +56,10 @@
 			</th:block>
 		</table>
 		<br>
-		<!-- 페이징 처리하는 테이블 -->
-		<table class="pagination">
-			<tr align="center" valign="middle">
-				<td>
-					<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-					<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-						<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-						<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-					</th:block>
-					<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-				</td>
-			</tr>
-		</table>
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<table>
 			<tr align="right" valign="middle">
-				<span class="hidden takeMeJs" th:text="${session.loginUser}" >글쓰기</span>
+				<span class="hidden takeMeJs" th:text="${session.loginUser}">글쓰기</span>
 				<td>
 
 					<script>
@@ -92,68 +81,224 @@
 				</td>
 			</tr>
 		</table>
-		<form id="searchForm" th:action="@{/Cboard/list}">
-			<div class="search_area">
-				<select name="type">
-					<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
-					<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
-					<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
-					<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
-					<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
-					<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
-					<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
-				</select>
-				<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-				<a href="#" class="button primary">검색</a>
-			</div>
-			<input type="hidden" value="1" name="pagenum">
-			<input type="hidden" value="10" name="amount">
-		</form>
 	</div>
-	<form name="pageForm" id="pageForm" th:action="@{/board/list}">
+	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-		<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
-		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
-	</form>
+	</form> -->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
-	
-
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<div class="test">감지<div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
-	
-	$(".changePage").on("click",function(e){
+
+	$(".changePage").on("click", function (e) {
 		//e(이벤트)의 기본 작동 막기
 		e.preventDefault();
 		let pagenum = $(this).attr("href");
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
-	$(".get").on("click",function(e){
+	$(".get").on("click", function (e) {
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
-		let url=/*[[@{/Cboard/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","get");
+		let url =/*[[@{/Cboard/get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='" + boardNum + "'>")
+		pageForm.attr("action", url);
+		pageForm.attr("method", "get");
 		pageForm.submit();
 	})
-	
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
+
+	$("#searchForm a").on("click", sendit);
+	function sendit() {
+		if (!searchForm.find("option:selected").val()) {
 			alert("검색 기준을 선택하세요.");
 			return false;
 		}
-		if(!$("input[name='keyword']").val()){
+		if (!$("input[name='keyword']").val()) {
 			alert("검색 키워드를 입력하세요.");
 			return false;
 		}
 		searchForm.submit();
 	}
 
+
+	//
+	// 관찰할놈 하나면 
+	// let observe = new IntersectionObserver( data => {
+	//     data.forEach(
+	//         e => {
+	//             // 여기에 만약 원하는 데이터가 감지되면! if문 실행
+	//             if (e.isIntersecting) {
+	//                 cnt+=1;
+	//                 console.log(e.target.innerText);
+	//                 let getListURL = "/Cboard/list" ; 
+	//                     $.ajax({
+	//                     url: getListURL,
+	//                     type: "get",
+	//                     data: {"startRow":startRow, "amount":amount},
+	//                     success: function(result) {
+	//                         console.log(result);
+	//                     },
+	//                     error: function(result) {
+	//                     }
+	//                 });
+	//
+	//             }
+	//         }
+	//     )
+	// });
+	// 복수면
+
+	//let cnt = 1;
+	//let startRow = 0;
+	//let amount = 10;
+
+	let cnt = $(".cnt").val()
+	let startRow = $(".startRow").val()
+	let amount = $(".amount").val()
+	
+<<<<<<< HEAD
+	let observe = new IntersectionObserver(
+		entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					console.log("감지완료");
+					console.log("startRow : " + startRow + "," + "amount :" + amount + "," + "cnt : " + cnt)
+					getListURL = "/Cboard/list";
+					cnt += 1;
+					startRow = cnt == 1 ? 10 : startRow += 10;
+					amount = 10 * cnt;
+					$.ajax({
+						url: getListURL,
+						type: "get",
+						data: {"startRow": startRow, "amount": amount, "topic": "somthing"},
+						success: function (result) {
+							console.log(result);
+						},
+						error: function (result
+						) {
+							// 에러 처리 코드 추가
+						},
+					});
+				}
+			});
+		}
+	);
+=======
+
+//
+// 관찰할놈 하나면 
+// let observe = new IntersectionObserver( data => {
+//     data.forEach(
+//         e => {
+//             // 여기에 만약 원하는 데이터가 감지되면! if문 실행
+//             if (e.isIntersecting) {
+//                 cnt+=1;
+//                 console.log(e.target.innerText);
+//                 let getListURL = "/Cboard/list" ; 
+//                     $.ajax({
+//                     url: getListURL,
+//                     type: "get",
+//                     data: {"startRow":startRow, "amount":amount},
+//                     success: function(result) {
+//                         console.log(result);
+//                     },
+//                     error: function(result) {
+//                     }
+//                 });
+//
+//             }
+//         }
+//     )
+// });
+// 복수면
+
+let cnt = 0;
+let startRow = 10;
+let amount = 20;
+
+
+
+let observe = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        
+		console.log("감지완료");
+        getListURL = "/Cboard/addList";
+		cnt += 1;
+		startRow = 10*cnt;
+		amount = 20*cnt;
+		console.log("startRow : "+startRow+","+"amount :"+ amount+","+"cnt : "+cnt)
+        $.ajax({
+          url: getListURL,
+          type: "get",
+          data: { "startRow": startRow,"amount":amount,"topic":"somthing" },
+          success: function (result) {
+			if (result!=null) {
+				appendDataToTable(result);
+				
+			}
+          },
+          error: function (result
+		  ) {
+            // 에러 처리 코드 추가
+          },
+        });
+      }
+    });
+  }
+);
+>>>>>>> 572baf535f70252c1fd00953d64f464c6e8220e8
+
+
+
+	// 관찰할 대상이 여러개일경우
+	//document.querySelectorAll("section").forEach(data=>observe.observe(data));
+	// 하나면
+	observe.observe(document.querySelector(".test"))
+// select * from boards where board_num > 0 ORDER BY board_num DESC LIMIT #{startRow}, #{amount}
+
+
+function appendDataToTable(data) {
+    let table = $(".list"); // 테이블을 나타내는 클래스를 선택
+
+    data.forEach(item => {
+        // 데이터를 기반으로 동적으로 HTML 형성
+        let newRowHtml = "<tr>" +
+            "<td>" + item.boardNum + "</td>" +
+            "<td><a class='get' href='" + item.boardNum + "'>" + item.boardTitle + "</a></td>" +
+            "<td>" + item.userId + "</td>" +
+            "<td>" + item.topic + "</td>" +
+            "<td>" + item.category + "</td>" +
+            "<td>" + item.regDate + "</td>" +
+            "<td>" + item.readCount + "</td>" +
+            "</tr>";
+
+        // 동적으로 형성된 HTML을 테이블에 삽입
+        table.append(newRowHtml);
+
+        // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
+        // ...
+
+        // 예를 들어, 클릭 이벤트에 대한 처리
+        $(".get:last").on("click", function (e) {
+            e.preventDefault();
+            let boardNum = $(this).attr("href");
+            let url = /*[[@{/Cboard/get}]]*/ '';
+            pageForm.append("<input type='hidden' name='boardNum' value='" + boardNum + "'>");
+            pageForm.attr("action", url);
+            pageForm.attr("method", "get");
+            pageForm.submit();
+        });
+    });
+}
+
+
 </script>
+
 </html>

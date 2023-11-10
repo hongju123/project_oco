@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.BoardDTO;
@@ -34,50 +35,58 @@ public class CBoardController {
 	@Autowired
 	private BoardService service;
 
+	@ResponseBody
+	@GetMapping("addList")
+	public List<BoardDTO> test(Long amount, Long startRow, String topic) {
+		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+		log.info("startRow:{}",startRow);
+		log.info("amount:{}",amount);
+		log.info("topic:{}", topic);
+		return list;
+	}
+	
+	
 	@GetMapping("list")
-	public String list(Criteria cri, Model model) throws Exception {
-		System.out.println(cri);
-		List<BoardDTO> list = service.getBoardList(cri);
+	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
+		
+		amount = (amount != null && amount > 10L) ? amount : 10L;
+		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
+		
+		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
 
 		model.addAttribute("list", list);
-		log.info("list : {}", list);
-		model.addAttribute("pageMaker", new PageDTO(service.getTotal(cri), cri));
-		log.info("pageMaker: {}", new PageDTO(service.getTotal(cri), cri));
+		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
+		//log.info("pageMaker: {}", new PageDTO(service.getTotal()));
 
 		model.addAttribute("newly_board", service.getNewlyBoardList(list));
-		log.info("newly_board:{}", service.getNewlyBoardList(list));
-//		오류뜨는 부분들 테스트중 
 		model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
-		log.info("reply_cnt_list: {}", service.getReplyCntList(list));
 		model.addAttribute("recent_reply", service.getRecentReplyList(list));
 
-		log.info("recent_reply: {}", service.getRecentReplyList(list));
 
 		return "Cboard/list";
 
 	}
 
 	@GetMapping("write")
-	public void write(@ModelAttribute("cri") Criteria cri, Model model) {
-		System.out.println(cri);
+	public void write(Model model) {
 	}
 
 	@PostMapping("write")
-	public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception {
+	public String write(BoardDTO board, MultipartFile[] files) throws Exception {
 		//Long boardNum = 0l;
 		//수정사항
 		Long boardNum = board.getBoardNum();
 		if (service.regist(board, files)) {
 			boardNum = service.getLastNum(board.getUserId());
-			return "redirect:/Cboard/get" + cri.getListLink() + "&boardNum=" + boardNum;
+			return "redirect:/Cboard/get?boardNum=" + boardNum;
 		} else {
-			return "redirect:/Cboard/list" + cri.getListLink();
+			return "redirect:/Cboard/list";
 		}
 	}
 
 	@GetMapping(value = { "get", "modify" })
-	public String get(Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
-		model.addAttribute("cri", cri);
+	public String get( Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+		//model.addAttribute("cri", cri);
 		HttpSession session = req.getSession();
 		log.info("boardNum : {}",boardNum);
 		BoardDTO board = service.getDetail(boardNum);
@@ -117,7 +126,7 @@ public class CBoardController {
 	}
 
 	@PostMapping("modify")
-	public String modify(BoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model)
+	public String modify(BoardDTO board, MultipartFile[] files, String updateCnt, Model model)
 			throws Exception {
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
@@ -126,9 +135,9 @@ public class CBoardController {
 		}
 		System.out.println("controller : " + updateCnt);
 		if (service.modify(board, files, updateCnt)) {
-			return "redirect:/Cboard/get" + cri.getListLink() + "&boardNum=" + board.getBoardNum();
+			return "redirect:/Cboard/get?boardNum=" + board.getBoardNum();
 		} else {
-			return "redirect:/Cboard/list" + cri.getListLink();
+			return "redirect:/Cboard/list";
 		}
 	}
 
@@ -146,10 +155,10 @@ public class CBoardController {
 		HttpSession session = req.getSession();
 		String loginUser = (String)session.getAttribute("loginUser");
 		if(service.remove(loginUser, boardNum)) {
-			return "redirect:/Cboard/list"+cri.getListLink();
+			return "redirect:/Cboard/list";
 		}
 		else {
-			return "redirect:/Cboard/get"+cri.getListLink()+"&boardNum="+boardNum;
+			return "redirect:/Cboard/get?boardNum="+boardNum;
 		}
 	}
 	
