@@ -59,6 +59,7 @@ public class BboardController {
 	// 아이디로 번호값 가져오기
 	@GetMapping("getpage")
 	public String getpage(String businessId) {
+		System.out.println(businessId);
 		Long businessIdx = service.getIndexNum(businessId);
 		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
 	}
@@ -66,7 +67,10 @@ public class BboardController {
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
+		
+		System.out.println("businessIdx :" + businessIdx);
 		Long businessInfoIdx = businessIdx;
+		System.out.println("businessInfoIdx :" + businessInfoIdx);
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);

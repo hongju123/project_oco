@@ -19,7 +19,7 @@ public interface BoardService {
 	
 	//update
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
-	public void updateReadCount (Long boardNum);
+	public void updateReadCount(Long boardNum);
 	
 	//delete
 	public boolean remove(String loginUser, Long boardNum);

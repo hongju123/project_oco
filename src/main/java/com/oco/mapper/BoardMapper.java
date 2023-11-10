@@ -14,7 +14,7 @@ public interface BoardMapper {
 	
 	//update
 	int updateBoard(BoardDTO board);
-	int updateReadCount(Long board_num);
+	int updateReadCount(Long boardNum);
 	
 	//delete
 	int deleteBoard(Long boardNum);
