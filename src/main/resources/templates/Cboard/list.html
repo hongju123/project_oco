@@ -15,9 +15,14 @@
 <th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
-		
+		<div class="topic_area">
+		<div name="topic" class="topic">전체</div>
+		<div name="topic" class="topic">궁금해요</div>
+		<div name="topic" class="topic">얼마에요</div>
+		<div name="topic" class="topic">함께해요</div>
+		</div>
 		<table class="list">
-			<tr align="center" valign="middle">
+			<tr align="center" valign="middle" id="excludeRow">
 				<th width="8%">번호</th>
 				<th>제목</th>
 				<th width="15%">작성자</th>
@@ -152,28 +157,49 @@
 let cnt = 0;
 let startRow = 10;
 let amount = 20;
+let topic = "전체";
+const getListURL = "/Cboard/addList";
+//토픽 클릭시 
 
 
+document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",function(e){
+	//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.
+	if (topic == e.target.innerText) {
+		console.log("토픽 값이 같습니다 " + topic);
+		return ;
+	} else{
+		//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
+		
+		$("tr:not(#excludeRow)").remove();
+		topic = e.target.innerText;
+		
+		//값이 달라져서 다시 카운트 
+		cnt = 0;
+		startRow = 10;
+		amount = 20;
+		//ajax 호출 
+		getList()
+	}
+		
+	console.log(e.target.innerText);
+}))
 
 let observe = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        
 		console.log("감지완료");
-        getListURL = "/Cboard/addList";
 		cnt += 1;
 		startRow = 10*cnt;
 		amount = 20*cnt;
-		console.log("startRow : "+startRow+","+"amount :"+ amount+","+"cnt : "+cnt)
+		console.log("startRow : "+startRow+","+"amount :"+ amount+", cnt : "+cnt+", topic : "+topic)
         $.ajax({
           url: getListURL,
           type: "get",
-          data: { "startRow": startRow,"amount":amount,"topic":"somthing" },
+          data: { "startRow": startRow,"amount":amount,"topic": topic },
           success: function (result) {
 			if (result!=null) {
 				appendDataToTable(result);
-				
 			}
           },
           error: function (result
@@ -197,24 +223,23 @@ observe.observe(document.querySelector(".test"))
 
 function appendDataToTable(data) {
     let table = $(".list"); // 테이블을 나타내는 클래스를 선택
-
     data.forEach(item => {
         // 데이터를 기반으로 동적으로 HTML 형성
         let newRowHtml = "<tr>" +
             "<td>" + item.boardNum + "</td>" +
-            "<td><a class='get' href='" + item.boardNum + "'>" + item.boardTitle + "</a></td>" +
+            "<td><a class='get' href='" + item.boardNum + "'  id='"+item.boardNum+"'>" + item.boardTitle + "</a></td>" +
             "<td>" + item.userId + "</td>" +
             "<td>" + item.topic + "</td>" +
             "<td>" + item.category + "</td>" +
             "<td>" + item.regDate + "</td>" +
             "<td>" + item.readCount + "</td>" +
             "</tr>";
-
+			boardNum=item.boardNum;
         // 동적으로 형성된 HTML을 테이블에 삽입
+
         table.append(newRowHtml);
 
         // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
-        // ...
 
         // 예를 들어, 클릭 이벤트에 대한 처리
         $(".get:last").on("click", function (e) {
@@ -226,7 +251,28 @@ function appendDataToTable(data) {
             pageForm.attr("method", "get");
             pageForm.submit();
         });
+
     });
+
+}
+
+//토픽값 변경시 초기 기본값 호출
+//데이터는 기본값 0~9
+function getList(){
+	$.ajax({
+          url: getListURL,
+          type: "get",
+          data: { "startRow": 0,"amount":9,"topic": topic},
+          success: function (result) {
+			if (result!=null) {
+				appendDataToTable(result);
+			}
+          },
+          error: function (result
+		  ) {
+            // 에러 처리 코드 추가
+          },
+        });
 }
 
 

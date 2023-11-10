@@ -21,10 +21,9 @@
 		update boards set read_count = read_count+1 where board_num = #{boardNum}
 	</update>
 	<!--selectBoard-->
-<select id="getList">
-    select * from boards order by board_num desc limit #{startRow, jdbcType=INTEGER}, #{amount, jdbcType=INTEGER}
-</select>
-
+	<select id="getList">
+	    select * from boards where board_num order by board_num desc limit #{startRow},#{amount}
+	</select>
 
 	<select id="getTotal">
 	
