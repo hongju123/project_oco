@@ -199,13 +199,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Long getTotal() {
-		return bmapper.getTotal();
+	public Long getTotal(Criteria cri) {
+		return bmapper.getTotal(cri);
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList(String amount, String startRow, String topic) {
-		return bmapper.getList(amount,startRow,topic);
+	public List<BoardDTO> getBoardList(Criteria cri) {
+		return bmapper.getList(cri);
 	}
 
 	@Override

@@ -45,20 +45,15 @@ public class CBoardController {
 	}
 	
 	
-	@ResponseBody
+
 	@GetMapping("list")
-	public String list(Model model,String amount, String startRow, String topic) throws Exception {
-		if(amount==null) {
-			amount = "10";
-			startRow = "0";
-			
-			
-		}
-		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+	public String list(Model model,Criteria cri) throws Exception {
+		List<BoardDTO> list = service.getBoardList(cri);
 
 		model.addAttribute("list", list);
 		log.info("list : {}", list);
-		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
+		log.info("cri : {}", cri);
+		model.addAttribute("pageMaker", new PageDTO(service.getTotal(cri),cri));
 		//log.info("pageMaker: {}", new PageDTO(service.getTotal()));
 
 		model.addAttribute("newly_board", service.getNewlyBoardList(list));
