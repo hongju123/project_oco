@@ -22,10 +22,6 @@
 	</th:blocked>
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
-			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
-			<input type="hidden" th:value="${cri.amount}" name="amount">
-			<input type="hidden" th:value="${cri.type}" name="type">
-			<input type="hidden" th:value="${cri.keyword}" name="keyword">
 			<table style="border-collapse: collapse;">
 				<tr style="height:30px;">
 					<th>제목</th>
@@ -117,7 +113,7 @@
 			<tr align="right" valign="middle">
 				<td>
 					<a onclick="boardForm.submit()">등록</a>
-					<a th:href="${'/Cboard/list'+cri.listLink}">목록</a>
+					<a th:href="${'/Cboard/list'}">목록</a>
 				</td>
 			</tr>
 		</table>

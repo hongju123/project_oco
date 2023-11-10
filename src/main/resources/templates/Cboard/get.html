@@ -70,15 +70,11 @@
 					<th:block th:if="${board.userId == session.loginUser}">
 						<form name="boardForm" method="post" th:action="@{/Cboard/remove}">
 							<input name="boardNum" th:value="${board.boardNum}" type="hidden">
-							<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
-							<input name="amount" th:value="${cri.amount}" type="hidden">
-							<input name="type" th:value="${cri.type}" type="hidden">
-							<input name="keyword" th:value="${cri.keyword}" type="hidden">
 							<a href="javascript:modify()">수정</a>
 							<a href="javascript:document.boardForm.submit()">삭제</a>
 						</form>
 					</th:block>
-					<a th:href="${'/Cboard/list'+cri.listLink}">목록</a>
+					<a th:href="${'/Cboard/list'}">목록</a>
 				</td>
 			</tr>
 		</table>
