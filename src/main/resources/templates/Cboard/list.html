@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -225,12 +226,12 @@ function appendDataToTable(data) {
 }
 
 //토픽값 변경시 초기 기본값 호출
-//데이터는 기본값 0~9
+//데이터는 기본값 0~10
 function getList(){
 	$.ajax({
           url: getListURL,
           type: "get",
-          data: { "startRow": 0,"amount":9,"topic": topic},
+          data: { "startRow": 0,"amount":10,"topic": topic},
           success: function (result) {
 			if (result!=null) {
 				appendDataToTable(result);
