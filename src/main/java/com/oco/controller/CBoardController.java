@@ -37,7 +37,7 @@ public class CBoardController {
 
 	@ResponseBody
 	@GetMapping("addList")
-	public List<BoardDTO> test(Long amount, Long startRow, String topic) {
+	public List<BoardDTO> addList(Long amount, Long startRow, String topic) {
 		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
 		log.info("startRow:{}",startRow);
 		log.info("amount:{}",amount);
