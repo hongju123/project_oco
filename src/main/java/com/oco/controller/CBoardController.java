@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.BoardDTO;
@@ -34,6 +35,17 @@ public class CBoardController {
 	@Autowired
 	private BoardService service;
 
+	@ResponseBody
+	@GetMapping("test")
+	public void test(String amount, String startRow, String topic) {
+		log.info("startRow:{}",startRow);
+		log.info("amount:{}",amount);
+		log.info("topic:{}", topic);
+	
+	}
+	
+	
+
 	@GetMapping("list")
 	public String list(Criteria cri, Model model) throws Exception {
 		System.out.println(cri);
@@ -46,7 +58,7 @@ public class CBoardController {
 
 		model.addAttribute("newly_board", service.getNewlyBoardList(list));
 		log.info("newly_board:{}", service.getNewlyBoardList(list));
-//		오류뜨는 부분들 테스트중 
+		
 		model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 		log.info("reply_cnt_list: {}", service.getReplyCntList(list));
 		model.addAttribute("recent_reply", service.getRecentReplyList(list));
@@ -62,18 +74,19 @@ public class CBoardController {
 		System.out.println(cri);
 	}
 
-	@PostMapping("write")
-	public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception {
-		//Long boardNum = 0l;
-		//수정사항
-		Long boardNum = board.getBoardNum();
-		if (service.regist(board, files)) {
-			boardNum = service.getLastNum(board.getUserId());
-			return "redirect:/Cboard/get" + cri.getListLink() + "&boardNum=" + boardNum;
-		} else {
-			return "redirect:/Cboard/list" + cri.getListLink();
-		}
-	}
+	// @PostMapping("write")
+	// public String write(BoardDTO board, MultipartFile[] files, Crit
+	// eria cri) throws Exception {
+	// 	//Long boardNum = 0l;
+	// 	//수정사항
+	// 	Long boardNum = board.getBoardNum();
+	// 	if (service.regist(board, files)) {
+	// 		boardNum = service.getLastNum(board.getUserId());
+	// 		return "redirect:/Cboard/get" + cri.getListLink() + "&boardNum=" + boardNum;
+	// 	} else {
+	// 		return "redirect:/Cboard/list" + cri.getListLink();
+	// 	}
+	// }
 
 	@GetMapping(value = { "get", "modify" })
 	public String get(Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
