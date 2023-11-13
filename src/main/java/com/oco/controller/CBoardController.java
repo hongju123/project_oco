@@ -40,12 +40,12 @@ public class CBoardController {
 	public List<BoardDTO> addList(Long amount, Long startRow, String topic) {
 		if(!topic.equals("전체")) {
 			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
-			log.info("topic: 노 전체{}", topic);
+			log.info("topic NOT ALL: TOPIC{}", topic);
 			return list;
 		}
 		else {
 			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
-			log.info("topic: 전체{}", topic);
+			log.info("topic: TOPIC{}", topic);
 			return list;
 		}
 	}
@@ -53,25 +53,32 @@ public class CBoardController {
 	
 	@GetMapping("list")
 	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
+		amount = (amount != null && amount > 10L) ? amount : 10L;
+		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
+		topic = topic==null ? "전체" : topic;
+		log.info("topic:{}" + topic);
 		log.info("startRow:{}",startRow);
 		log.info("amount:{}",amount);
 		log.info("topic:{}", topic);
-		amount = (amount != null && amount > 10L) ? amount : 10L;
-		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
-		if(topic != "전체") {
-			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+			
+		if(topic.equals("전체")) {
+			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
 			model.addAttribute("list", list);
-		}
-
-		List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+			model.addAttribute("newly_board", service.getNewlyBoardList(list));
+			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
+			model.addAttribute("recent_reply", service.getRecentReplyList(list));
+		} else{
+		
+		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
 		model.addAttribute("list", list);
+		log.info("list : {}", service.getBoardList(amount,startRow,topic));
 		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
-		//log.info("pageMaker: {}", new PageDTO(service.getTotal()));
 
 		model.addAttribute("newly_board", service.getNewlyBoardList(list));
 		model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
+		log.info("{}",service.getReplyCntList(list));
 		model.addAttribute("recent_reply", service.getRecentReplyList(list));
-
+		}
 
 		return "Cboard/list";
 

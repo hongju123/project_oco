@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oco.domain.dto.BoardDTO;
-import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
 import com.oco.mapper.BoardMapper;
 import com.oco.mapper.FileMapper;
@@ -61,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
 		else {
 			//방금 등록한 게시글 번호
 			Long boardNum = bmapper.getLastNum(board.getUserId());
-		
+			log.info("{}",boardNum);
 			boolean flag = false;
 			for(int i=0;i<files.length-1;i++) {
 				MultipartFile file = files[i];

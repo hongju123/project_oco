@@ -11,6 +11,10 @@
 		delete from boards where board_num=#{boardNum}
 	</delete>
 	
+	<select id="getAllList">
+        select * from boards order by board_num desc limit #{startRow},#{amount}
+    </select>    
+	
 	<!--updateBoard-->
 	<update id="updateBoard">
 		update boards set board_title=#{boardTitle}, board_contents=#{boardContents},update_date=now()
@@ -22,7 +26,7 @@
 	</update>
 	<!--selectBoard-->
 	<select id="getList">
-	    select * from boards where board_num order by board_num desc limit #{startRow},#{amount}
+	        select * from boards where topic like ('%${topic}%') order by board_num desc limit #{startRow},#{amount}
 	</select>
 
 	<select id="getTotal">

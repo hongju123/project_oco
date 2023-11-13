@@ -179,14 +179,16 @@ email.addEventListener("change",function(e){
        get_code.value = "인증번호";
     }
 })
-get_code.addEventListener("click",function(){
+get_code.addEventListener("click",function(e){
+    e.target.value = "로딩중..";
     console.log(email.value);
+    
     $.ajax({
         url: "/mail/getEmailcode",
         type: "POST",
         data: {"address" : email.value},
         success: function(result) {
-            console.log("엥?:"+ result);
+            console.log(result);
             if (result!=null) {
                 get_code.value = "✅";
                 get_code.classList.add("checkBox");
