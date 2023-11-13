@@ -6,6 +6,7 @@ const check_code_button = document.querySelectorAll(".check_code_button");
 let emailInput = "null"
 get_code.forEach(data => {
     data.addEventListener("click", function(e) {
+        e.target.value = "로딩중..."
 		 emailInput = e.target.previousElementSibling.value;
         $.ajax({
             url: "/mail/getEmailcode",
