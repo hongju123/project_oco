@@ -15,23 +15,13 @@ body{
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(
-        to top,
-        rgba(1, 109, 174,0.0) 10%,
-        rgba(1, 109, 174,0.0) 20%,
-        rgba(1, 109, 174,0.0) 30%,
-        rgba(1, 109, 174,0.0) 40%,
-        rgba(1, 109, 174,0.0) 50%,
-        rgba(1, 109, 174,0.1) 60%,
-        rgba(1, 109, 174,0.2) 70%,
-        rgba(1, 109, 174,0.3) 80%,
-        rgba(1, 109, 174,0.9) 100%
-    ), url(../img/ocean.jpg);
+    background: url(../img/main_visual02.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 .login_area{
+    margin-top: 400px;
     position: relative;
     bottom: 250px;
     margin-bottom: 50px;
