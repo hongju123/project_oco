@@ -14,6 +14,13 @@
 			<div class="sub-tit">
 				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
 			</div><!--.sub-tit-->
+			<div class="depth2-wrap" data-aos="fade-up">
+			  <ul class="depth2 sub-nav">
+			    <li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
+	            <li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
+	            <li><a th:href="@{/reservation/proposal}">제안서</a></li>
+			  </ul>
+			</div>
 			<form id="Form" method="post" name="Fsorm" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
 				<div class="sec-half">
@@ -281,34 +288,33 @@ else {
 if (hours>12){
 	hours = hours - 12;
 }
-else if (hours===0){
-	hours = 12;	
-}
-
-//Put 0 in front of single digit minutes and seconds
-
-if (minutes<10){
-	minutes = "0" + minutes;
-}
-else {
-	minutes = minutes;
-}
-
-if (seconds<10){
-	seconds = "0" + seconds;
-}
-else {
-	seconds = seconds;
-}
-
-
-document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
-
-}
-
-
-setInterval('clock()', 1000);
+	else if (hours===0){
+		hours = 12;	
+	}
 	
+	//Put 0 in front of single digit minutes and seconds
+	
+	if (minutes<10){
+		minutes = "0" + minutes;
+	}
+	else {
+		minutes = minutes;
+	}
+	
+	if (seconds<10){
+		seconds = "0" + seconds;
+	}
+	else {
+		seconds = seconds;
+	}
+	
+	
+	document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
+	
+	}
+	
+	
+	setInterval('clock()', 1000);
 	
 	AOS.init({
 		duration: 1500,

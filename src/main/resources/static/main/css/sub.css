@@ -23,9 +23,6 @@
 	padding: 200px 0;
 	
 }
-.sub-tit{
-	margin-bottom: 50px;
-}
 .sub-inner h2{
 	font-size: 50px;
 	line-height: 60px;
@@ -33,4 +30,127 @@
 }
 .sub-inner strong{
 	color:#3182f6;
+}
+
+
+
+
+
+
+.depth2-wrap {
+  margin:50px 0;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  z-index: 5000;
+}
+
+@media (max-width: 768px) {
+  .depth2-wrap {
+    padding-top: 24px;
+    position: relative;
+    overflow-x: visible;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 768px) {
+  .depth2-wrap .depth2 {
+    display: none;
+    width: calc(100% - 50px);
+    max-height: 203px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #909090;
+    border-top: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5000;
+  }
+}
+
+@media (min-width: 769px) {
+  .depth2-wrap {
+    position: sticky;
+    top: 0;
+    background-color: rgba(255,255,255,0.96);
+  }
+
+  .depth2-wrap.down {
+    border-bottom: 1px solid #f4f4f4;
+  }
+}
+
+@media (min-width: 769px) {
+  .depth2-wrap .depth2 {
+    display: block!important;
+    height: auto!important;
+  }
+}
+
+.depth2-wrap .depth2 li {
+  display: inline-block;
+}
+
+.depth2-wrap .depth2 li + li {
+  margin-left: 32px;
+}
+
+.depth2-wrap .depth2 li a {
+  display: block;
+  font-weight: 700;
+  letter-spacing: 0;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.depth2-wrap .depth2 li a:after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #3182f6;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width .3s ease;
+}
+
+.depth2-wrap .depth2 li.active a,
+.depth2-wrap .depth2 li:hover a {
+  color: #3182f6;
+}
+
+.depth2-wrap .depth2 li:hover a:after ,
+.depth2-wrap .depth2 li.active a:after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .depth2-wrap .depth2 li {
+    display: block;
+  }
+
+
+  .depth2-wrap .depth2 li + li {
+    margin-left: 0;
+  }
+
+  .depth2-wrap .depth2 li a {
+    font-size: 16px;
+    padding-bottom: 0;
+    display: block;
+    padding: 16px 24px;
+  }
+
+  .depth2-wrap .depth2 li a:after {
+    display: none;
+  }
+
+  .depth2-wrap .depth2 li:hover,
+  .depth2-wrap .depth2 li.active {
+    background-color: #F1EDEA;
+  }
+
 }
