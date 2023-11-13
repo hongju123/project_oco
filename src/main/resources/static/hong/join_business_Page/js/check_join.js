@@ -179,14 +179,16 @@ email.addEventListener("change",function(e){
        get_code.value = "인증번호";
     }
 })
-get_code.addEventListener("click",function(){
+get_code.addEventListener("click",function(e){
+    e.target.value = "로딩중..";
     console.log(email.value);
+    
     $.ajax({
         url: "/mail/getEmailcode",
         type: "POST",
         data: {"address" : email.value},
         success: function(result) {
-            console.log("엥?:"+ result);
+            console.log(result);
             if (result!=null) {
                 get_code.value = "✅";
                 get_code.classList.add("checkBox");
@@ -284,6 +286,9 @@ usergender.forEach( data => data.addEventListener("click",function(e){
 // 마무리 체크
 
 const submitButton = document.querySelector("#submitButton");
+const zipcode = document.querySelector(".zipcode");
+const useraddress = document.querySelector(".useraddress");
+const useraddressdetail = document.querySelector(".useraddressdetail");
 
 submitButton.addEventListener("click",function(){
     if (checkFinal(functionCheck)) {
@@ -296,27 +301,30 @@ submitButton.addEventListener("click",function(){
 
 
 function checkFinal(arr){
-    
-    const zipcode = document.querySelector(".zipcode");
-    const useraddress = document.querySelector(".useraddress");
-    const useraddressdetail = document.querySelector(".useraddressdetail");
+    const check_business = document.querySelector(".check_business")
 
-    for (let index = 0; index < arr.length; index++) {
-        const element = arr[index];
-        console.log(index+ ":"+element);
-        if (element!==true) {
-            return false;
-        }
-    }
-    if (zipcode.value=="") {
-        console.log(zipcode.value);
-        console.log("zip_code 누락");
-        return false;
-    }
-    if (useraddressdetail.value=="") {
-        console.log("useraddressdetail 누락");
-        return false;
-    }
+    //여기 주석처리 해서 다 true 가 되서 그냥 넘어가짐!
+    // for (let index = 0; index < arr.length; index++) {
+    //     const element = arr[index];
+    //     console.log(index+ ":"+element);
+    //     if (element!==true) {
+    //         return false;
+    //     }
+    // }
+    // if (zipcode.value=="") {
+    //     console.log(zipcode.value);
+    //     console.log("zip_code 누락");
+    //     return false;
+    // }
+    // if (useraddressdetail.value=="") {
+    //     console.log("useraddressdetail 누락");
+    //     return false;
+    // }
+    // 비지니스 체크 됐는지 확인.
+    // if (check_business.value!="✅") {
+    //     return false
+    // }
+    
     return true;
 }
 
@@ -370,5 +378,95 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+const postcodeCheckBox = document.querySelector(".postcodeCheckBox")
+zipcode.addEventListener("click",function(){
+    postcodeCheckBox.classList.add("falseAction")
+})
 //Kakao address API 끝
- 
+//비지니스 유저 카테고리
+
+const businessCategory = document.querySelector(".businessCategory");
+const house = document.querySelector(".house");
+const food = document.querySelector(".food");
+const bakery = document.querySelector(".bakery");
+const car = document.querySelector(".car");
+const another = document.querySelector(".another");
+businessCategory.addEventListener("change",function(e){
+    
+    switch (e.target.value) {
+        case "숙소":
+            console.log(e.target.value);
+            console.log(house.value);
+            house.classList.remove("hidden");
+            food.classList.add("hidden");
+            bakery.classList.add("hidden");
+            car.classList.add("hidden");
+            another.classList.add("hidden");
+            house.removeAttribute("disabled");
+
+            food.setAttribute("disabled","disabled");
+            bakery.setAttribute("disabled","disabled");
+            car.setAttribute("disabled","disabled");
+            another.setAttribute("disabled","disabled");
+            break;
+            case "식당":
+            console.log(e.target.value);
+            house.classList.add("hidden");
+            food.classList.remove("hidden");
+            bakery.classList.add("hidden");
+            car.classList.add("hidden");
+            another.classList.add("hidden");
+            food.removeAttribute("disabled");
+
+            house.setAttribute("disabled","disabled");
+            bakery.setAttribute("disabled","disabled");
+            car.setAttribute("disabled","disabled");
+            another.setAttribute("disabled","disabled");
+
+            break;
+            case "카페":
+            console.log(e.target.value);
+            house.classList.add("hidden");
+            food.classList.add("hidden");
+            bakery.classList.remove("hidden");
+            car.classList.add("hidden");
+            another.classList.add("hidden");
+            bakery.removeAttribute("disabled");
+
+            house.setAttribute("disabled","disabled");
+            food.setAttribute("disabled","disabled");
+            car.setAttribute("disabled","disabled");
+            another.setAttribute("disabled","disabled");
+            break;
+        case "렌터카":
+            console.log(e.target.value);
+            house.classList.add("hidden");
+            food.classList.add("hidden");
+            bakery.classList.add("hidden");
+            car.classList.remove("hidden");
+            another.classList.add("hidden");
+            car.removeAttribute("disabled");
+
+            house.setAttribute("disabled","disabled");
+            food.setAttribute("disabled","disabled");
+            bakery.setAttribute("disabled","disabled");
+            another.setAttribute("disabled","disabled");
+            break;
+        case "기타":
+            console.log(e.target.value);
+            house.classList.add("hidden");
+            food.classList.add("hidden");
+            bakery.classList.add("hidden");
+            car.classList.add("hidden");
+            another.classList.remove("hidden");
+            another.removeAttribute("disabled");
+
+            house.setAttribute("disabled","disabled");
+            food.setAttribute("disabled","disabled");
+            bakery.setAttribute("disabled","disabled");
+            car.setAttribute("disabled","disabled");
+            break;
+        default : break;   
+    }
+})
+//비지니스 끝 

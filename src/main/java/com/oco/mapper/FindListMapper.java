@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.Criteria;
+import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ReplyDTO;
 
 @Mapper
 public interface FindListMapper {
@@ -16,12 +20,35 @@ public interface FindListMapper {
 	
 	List<BusinessInfoDTO> getinfo();
 
-	BusinessDTO userDetail(String loginUser);
+	BusinessDTO userDetail(Long businessIdx);
 
-	BusinessInfoDTO infoDetail(String loginUser);
+	BusinessInfoDTO infoDetail(Long businessIdx);
 
 	int modify(BusinessInfoDTO info);
-	
+	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
+
+	Long getnum(String businessId);
+
+	int insertFile(FileDTO fdto);
+
+	List<FileDTO> getFiles(Long businessInfoIdx);
+
+	
+	//리뷰 관련
+	int insertReply(ReplyDTO reply);
+
+	Long getLastNumber(String userId);
+
+	int getTotal(Long boardNum);
+
+	List<ReplyDTO> getList(Criteria cri, Long boardNum);
+
+	int deleteReply(Long replynum);
+
+	int updateReply(ReplyDTO reply);
+	
+
+
 }

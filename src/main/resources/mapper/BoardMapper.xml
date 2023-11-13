@@ -1,50 +1,41 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oco.mapper.BoardMapper">
-	<sql id="cri">
-		<if test="keyword !='' and type !=''">
-			<trim prefixOverrides="or" prefix="(" suffix=") and">
-				<foreach collection="typeArr" item="type">
-					or 
-					<choose>
-						<when test="type == 'T'.toString()">
-							(board_title like('%${keyword}%'))
-						</when>
-						<when test="type == 'C'.toString()">
-							(board_contents like('%${keyword}%'))
-						</when>
-						<when test="type == 'W'.toString()">
-							(user_id like('%${keyword}%'))
-						</when>
-					</choose>
-				</foreach>
-			</trim>
-		</if>
-	</sql>
 	<!--insertBoard-->
 	<insert id="insertBoard">
-		insert into boards (board_title,board_contents,user_id)
-		values(#{boardTitle},{#boardContents},#{userId})
+		insert into boards (board_title,board_contents,user_id,topic,category)
+		values(#{boardTitle},#{boardContents},#{userId},#{topic},#{category})
 	</insert>
+	
+	<delete id="deleteBoard">
+		delete from boards where board_num=#{boardNum}
+	</delete>
+	
+	<select id="getAllList">
+        select * from boards order by board_num desc limit #{startRow},#{amount}
+    </select>    
+	
 	<!--updateBoard-->
-	<update id="updateReadCount">
-		update boards set board_title=#{boardTitle},board_contents=#{boardContents},update_date=now()
+	<update id="updateBoard">
+		update boards set board_title=#{boardTitle}, board_contents=#{boardContents},update_date=now()
 		where board_num=#{boardNum}
+	</update>
+	
+	<update id="updateReadCount">
+		update boards set read_count = read_count+1 where board_num = #{boardNum}
 	</update>
 	<!--selectBoard-->
 	<select id="getList">
-	    select * from boards where
-	    <include refid="cri"></include>
-	    <![CDATA[ 
-	        board_num > 0 ORDER BY board_num DESC LIMIT #{startRow}, #{amount}
-	    ]]>
+	        select * from boards where topic like ('%${topic}%') order by board_num desc limit #{startRow},#{amount}
 	</select>
 
 	<select id="getTotal">
-		select count(*) from boards where
-		<include refid="cri"></include> board_num > 0
+	
 	</select>
 	<select id="getLastNum">
-		select max() from boards where user_id=#{userId}
+		select max(board_num) from boards where user_id=#{userId}
+	</select>
+	<select id="findByNum">
+		select * from boards where board_num=#{boardNum}
 	</select>
 </mapper>

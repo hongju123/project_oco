@@ -1,33 +1,85 @@
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.oco.mapper.FindListMapper">
-	  <!-- 카테고리별 select -->
-	  <select id="getMainList">
-	  select * from business_users where business_category like('${main1}%${main2}%') having business_address like ('${addr1}%${addr2}%');
-	  </select>
-	  <!-- 별점높은순 -->
-	  <select id="getinfo">
-		  select * from business_info order by overall_grade desc;
-	  </select>
-	  <!-- 상세페이지 유저 정보 -->
-	  <select id="userDetail">
-		  select * from business_users where business_id = #{loginUser}
-	  </select>
-	  <!-- 상세페이지 유저 게시판 정보 -->
-	  <select id="infoDetail">
-		  select * from business_info where business_id = #{loginUser}
-	  </select>
-	  <!-- 상세페이지 수정 -->
-	  <update id="modify">
-		  update business_info set use_time = #{useTime}, content = #{content}, amenities = #{amenities}
-	  </update>
-	  
-	  <!-- 모든 정보 가져오기 -->
-	  <select id="BusinessinfoList">
-		  select * from business_info 
-	  </select>
-	  <select id="BusinessList">
-		  select * from business_users 
-	  </select>
-  </mapper>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oco.mapper.FindListMapper">
+	<!-- 카테고리별 select -->
+	<select id="getMainList">
+		select * from business_users where business_category like
+		('${main1}%${main2}%') having business_address like
+		('${addr1}%${addr2}%');
+	</select>
+
+	<!-- 별점높은순 -->
+	<select id="getinfo">
+		select * from business_info order by overall_grade desc;
+	</select>
+
+	<!-- 상세페이지 유저 정보 -->
+	<select id="userDetail">
+		select * from business_users where business_idx = #{businessIdx}
+	</select>
+
+	<!-- 상세페이지 유저 게시판 정보 -->
+	<select id="infoDetail">
+		select * from business_info where business_info_idx = #{businessIdx}
+	</select>
+
+	<!-- 상세 페이지 번호 추출 -->
+	<select id="getnum">
+		select business_info_idx from business_info where business_id =
+		#{businessId}
+	</select>
+
+	<!-- 파일 구해오기 -->
+	<select id="getFiles">
+		select * from files where board_num = #{businessInfoIdx}
+	</select>
+
+	<!-- 개인 파일 넣기 -->
+	<insert id="insertFile">
+		insert into files(system_name,org_name,board_num) values
+		(#{systemName},#{orgName},#{boardNum})
+	</insert>
+
+	<!-- 상세페이지 수정 -->
+	<update id="modify">
+		update business_info set use_time = #{useTime}, content = #{content},
+		amenities = #{amenities}
+	</update>
+
+	<!-- 리뷰 저장 -->
+	<insert id="insertReply">
+		insert into replies(reply_contents, user_id, board_num)
+		values(#{replyContents},#{userId},#{boardNum})
+	</insert>
+
+	<select id="getLastNumber">
+		select max(reply_num) from replies where user_id=#{userId}
+	</select>
+
+	<select id="getTotal">
+		select count(*) from replies where board_num=#{boardNum}
+	</select>
+
+	<select id="getList">
+		select * from replies where board_num=#{boardNum}
+		limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<update id="updateReply">
+		update replies set reply_contents=#{replyContents}, update_date=now()
+		where reply_num=#{replyNum}
+	</update>
+
+	<delete id="deleteReply">
+		delete from replies where reply_num=#{replynum}
+	</delete>
+
+
+	<!-- 모든 정보 가져오기 -->
+	<select id="BusinessinfoList">
+		select * from business_info
+	</select>
+	<select id="BusinessList">
+		select * from business_users
+	</select>
+</mapper>
  

@@ -22,21 +22,29 @@
 					<th width="15%">상호명</th>
 					<th width="10%">사업자</th>
 				</tr>
-				<tr th:if="${blist !=null}" th:each="blist : ${blist}" align="center" valign="middle">
-						<td>[[${blist.businessCategory}]]</td>
-						<td>[[${blist.businessAddress}]]</td>
-						<td>[[${blist.businessStoreName}]]</td>
-						<!--businessinfo 정보는 넣을지 말지 정해야함 -->
-						<td><a class="get" href="여기에 business인포 링크">[[${blist.businessId}]]</a></td>
-					</th:block>
-				</tr>
+				<th:block th:if="${session.businessUser == 'X'}">
+					<tr th:if="${blist !=null}" th:each="blist : ${blist}" align="center" valign="middle">
+						<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+							<th:block th:each="boardId : ${#strings.arraySplit(board.businessId, '/')}">
+								<th:block th:if="${blist.businessId == boardId}">
+									<td>[[${blist.businessCategory}]]</td>
+									<td>[[${blist.businessAddress}]]</td>
+									<td>[[${blist.businessStoreName}]]</td>
+									<!-- businessinfo 정보는 넣을지 말지 정해야함 -->
+									<td><a class="get" th:href="${blist.businessId}">[[${blist.businessId}]]</a>
+									</td>
+								</th:block>
+							</th:block>
+						</th:block>
+					</tr>
+				</th:block>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
+						<td colspan="6" style="text-align: center; font-size: 20px;">등록된 게시글이 없습니다.</td>
 					</tr>
 				</th:block>
 			</table>
+			<form name="getForm" id="getForm" th:action="@{/Bboard/getpage}"></form>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
@@ -51,6 +59,14 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
 <script th:inline="javascript">
+	const getForm = $("#getForm");
+	$(".get").on("click", function (e) {
+		e.preventDefault()
+		let businessId = $(this).attr("href");
+		getForm.find("input[name='businessId']").remove();
+		getForm.append("<input type='hidden' name='businessId' value='" + businessId + "'>")
+		getForm.submit();
+	})
 </script>
 
 </html>

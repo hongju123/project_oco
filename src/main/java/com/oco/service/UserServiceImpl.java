@@ -46,4 +46,15 @@ public class UserServiceImpl implements UserService {
 	public boolean join(UserDTO user) {
 		return um.insertUser(user) == 1;
 	}
+
+	@Override
+	public boolean withdrawUser(String userId) {
+		return um.withdrawUser(userId);
+	}
+
+	@Override
+	public boolean withdrawBusinessUser(String userId) {
+		return um.withdrawBusinessUser(userId)&&um.withdrawUser(userId);
+		
+	}
 }

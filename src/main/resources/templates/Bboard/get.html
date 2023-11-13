@@ -8,28 +8,50 @@
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
-		#wrap {
-			margin: 150px auto;
-			border: 1px solid black;
-			width: 1200px;
-			height: 1000px;
+		@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+		.rate {
+			display: inline-block;
+			border: 0;
+			margin-right: 15px;
 		}
-		.total_section{
-			border: 1px solid black;
-			box-sizing: border-box;
-			padding: 10px;
-			display: flex;
-			justify-content: space-between;
+
+		.rate>input {
+			display: none;
 		}
-		.main_section{
-			border: 1px solid black;
-			width: 850px;
-			height: 500px;
+
+		.rate>label {
+			float: right;
+			color: #ddd
 		}
-		.sub_section{
-			border: 1px solid black;
-			width: 320px;
-			height: 500px;
+
+		.rate>label:before {
+			display: inline-block;
+			font-size: 1rem;
+			padding: .3rem .2rem;
+			margin: 0;
+			cursor: pointer;
+			font-family: FontAwesome;
+			content: "\f005 ";
+		}
+
+		.rate .half:before {
+			content: "\f089 ";
+			position: absolute;
+			padding-right: 0;
+		}
+
+		.rate input:checked~label,
+		.rate label:hover,
+		.rate label:hover~label {
+			color: #f73c32 !important;
+		}
+
+		.rate input:checked+.rate label:hover,
+		.rate input input:checked~label:hover,
+		.rate input:checked~.rate label:hover~label,
+		.rate label:hover~input:checked~label {
+			color: #f73c32 !important;
 		}
 	</style>
 </head>
@@ -39,9 +61,10 @@
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<div class="total_section">
+			<div class="total_section" style="display: flex; justify-content: space-between;">
 				<div class="main_section">
 					<div class="title_section">
+						[[${userboard.businessIdx}]]
 						[[${userboard.businessId}]]
 						[[${userboard.businessAddress}]]
 						[[${userboard.businessCategory}]]
@@ -54,21 +77,271 @@
 						<textarea>[[${infoboard.content}]]</textarea>
 					</div>
 					<div class="free_service">
-						
+
 					</div>
 					<div class="photo_zone">
+						<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<th:block
+										th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<ul style="float: left;">
+											<li><img style="width: 50px;"
+													th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"></li>
+										</ul>
+									</th:block>
+								</th:block>
+							</th:block>
+						</th:block>
 					</div>
 					<div class="reply">
-						
+						<div class="replyForm row">
+							<div style="width: 400px;">
+								<h4>작성자</h4>
+								<input type="txt" name="userId" th:value="${session.loginUser}" readonly
+									style="text-align: center;">
+							</div>
+							<div style="width: 65%;">
+								<h4>내용</h4>
+								<textarea name="replyContents" placeholder="Contents" style="resize:none;" value=""></textarea>
+								<fieldset class="rate">
+								</fieldset>
+							</div>
+							<div style="width:15%">
+								<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
+								<a href="#" class="button cancel">취소</a>
+							</div>
+						</div>
+						<ul class="replies"></ul>
+						<div class="page"></div>
 					</div>
 				</div>
 				<div class="sub_section">
-					<a class="" th:href="@{/Bboard/modify}"> 수정하기 </a>
+					<th:block th:if="${userboard.businessId == session.loginUser}">
+						<a class="" th:href="@{/Bboard/modify (businessIdx=${userboard.businessIdx})}"> 수정하기 </a>
+					</th:block>
 				</div>
 			</div>
 		</div>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
+<script th:src="@{reply/js/reply.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	const loginUser = /*[[${session.loginUser}]]*/'';
+	const boardnum = /*[[${userboard.businessIdx}]]*/'';
+	const replies = $(".replies")
+	const page = $(".page")
+	const rate = $(".rate")
+	let nowpage = 0;
+
+	$(document).ready(function () {
+		nowpage = 1;
+		showList(1);
+		let txt = ""
+		for (let i = 10; i >= 1; i--) {
+			txt += '<input type="radio" id="rating' + i + '" name="rating" class="star" value="' + i + '">'; 
+			
+			i % 2 == 0 ? txt += '<label for="rating' + i + '" title="' + i / 2 + '점"></label>' :
+						 txt += '<label class="half" for="rating' + i + '" title="' + i / 2 + '점"></label>'
+		}	
+		
+		rate.html(txt);
+	})
+
+	$(".finish").on("click", function (e) {
+		e.preventDefault();
+		let replyContents = $("[name='replyContents']").val();
+		
+		let grade = $("[name='rating']:checked").val();
+		replyService.add(
+			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents },
+			function (resut) {
+				alert("등록");
+				$("[name='replyContents']").val("");
+				showList(1);
+			}
+		)
+	})
+	function showList(pagenum) {
+		replyService.getList(
+			{"boardNum": boardnum, "pagenum": pagenum || 1},
+			function (replyCnt, list) {
+				let str = "";
+				if (list == null || list.length == 0) {
+					str += '<li class="noreply" style="clear:both;">등록된 댓글이 없습니다.</li>';
+					replies.html(str);
+					return;
+				}
+
+				for (let i = 0; i < list.length; i++) {
+					
+					console.log(list[i].replyContents)
+					
+					str += '<li style=clear:both;" class="li' + list[i].relyNum + '">';
+
+					str += '<div style="display:inline; float:left; width:80%;">';
+
+					str += '<strong class="userid' + list[i].replyNum + '">' + list[i].userId + '</strong>';
+
+					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents  + '</p>';
+
+					str += '</div><div style="text-align:right;">'
+
+					str += '<strong>' + replyService.displayTime(list[i]) + '</strong>'
+
+					if (list[i].userId == loginUser) {
+						str += '<a href = "' + list[i].replyNum + '" class ="modify">수정</a>';
+						str += '<a href = "' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
+						str += '<a href = "' + list[i].replyNum + '"class="remove">삭제</a>';
+					}
+					str += '</div></li>';
+				}
+				replies.html(str);
+
+				$(".remove").on("click", deleteReply);
+				$(".modify").on("click", modifyReply);
+				$(".mfinish").on("click", modifyReplyOK);
+
+				showReplyPage(replyCnt, pagenum);
+			}
+		)
+	}
+
+	function showReplyPage(replyCnt, pagenum) {
+		let endPage = Math.ceil(pagenum / 5) * 5;
+		let startPage = endPage - 4;
+
+		let prev = startPage != 1;
+		endPage = (endPage - 1) * 5 >= replyCnt ? Math.ceil(replyCnt / 5) : endPage;
+		let next = endPage * 5 < replyCnt ? true : false;
+
+		let str = "";
+		if (prev) {
+			str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
+		}
+		for (let i = startPage; i <= endPage; i++) {
+			if (i == pagenum) {
+				str += '<code class = "nowPage">' + i + '</code>';
+			}
+			else {
+				str += '<a class="changePage" href="' + i + '"><code>' + i + '</code></a>';
+			}
+		}
+		if (next) {
+			str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
+		}
+		page.html(str);
+
+		$(".changePage").on("click", function (e) {
+			console.log(e)
+			e.preventDefault();
+			let target = $(this).attr("href");
+			nowpage = parseInt(target);
+			showList(nowpage);
+			window.setTimeout(function () {
+				window.scrollTo(0, document.body.scrollheight)
+			}, 10)
+		})
+	}
+
+	function deleteReply(e) {
+		e.preventDefault();
+		let replynum = $(this).attr("href");
+		replyService.remove(replynum,
+			function (result) {
+				if (result == "success") {
+					alert(replynum + "번 댓글 삭제 완료!");
+					showList(nowpage);
+				}
+			}
+		)
+	}
+
+	let replyFlag = false;
+	function modifyReply(e) {
+		e.preventDefault();
+		if (!replyFlag) {
+			replyFlag = true;
+			let replynum = $(this).attr("href");
+			const replyTag = $(".reply" + replynum);
+
+			replyTag.html('<textarea class="' + replynum + ' mdf">' + replyTag.text() + '</textarea>')
+			$(this).hide();
+			$(this).next().show();
+		}
+		else {
+			alert("수정중인 댓글이 있습니다!")
+		}
+	}
+	function modifyReplyOK(e) {
+		e.preventDefault();
+		replyFlag = false;
+
+		let replynum = $(this).attr("href");
+		let replyContents = $("." + replynum).val();
+
+		if (replycontents == "") {
+			alert("수정할 댓글 내용을 입력하세요!");
+			return;
+		}
+		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
+			function (result) {
+				if (result == "success") {
+					alert(replynum + "번 댓글 수정 완료!");
+					$(".rplyForm").hide();
+					showList(nowpage);
+				}
+			}
+		)
+
+	}
+	$(".cancel").on("click", function (e) {
+		e.preventDefault();
+		$("[name='replyContents']").val("");
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 
 </html>

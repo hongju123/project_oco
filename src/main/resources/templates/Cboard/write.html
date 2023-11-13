@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ComuWrite</title>
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
+	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
+	<link rel="stylesheet" th:href="@{/main/css/main.css}">
+
+	<link rel="stylesheet" th:href="@{/cboard/boardwrite/css/boardwrite.css}">
+</head>
+
+<body>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<th:blocked th:if="${session.loginUser==null}">
+		<!-- <script>
+		alert("회원만 이용 가능합니다. 로그인후 이용하세요");
+		location.replace("/Cboard/list");
+	</script> -->
+	</th:blocked>
+	<div id="wrap">
+		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
+			<table style="border-collapse: collapse;">
+				<tr style="height:30px;">
+					<th>제목</th>
+					<td>
+						<input type="text" name="boardTitle" placeholder="제목을 입력하세요">
+					</td>
+				</tr>
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">작성자</th>
+					<td>
+						<input type="text" name="userId" th:value="${session.loginUser}" readonly>
+					</td>
+				</tr>
+				<tr>
+					<th>주제</th>
+					<td>
+						<select name="topic">
+							<option value="" selected disabled>주제</option>
+							<option value="궁금해요">궁금해요</option>
+							<option value="얼마에요">얼마에요</option>
+							<option value="함께해요">함께해요</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>카테고리</th>
+					<td>
+						<select name="category" class="category">
+							<option value="" selected disabled>카테고리</option>
+							<option value="숙소">숙소</option>
+							<option value="식당">식당</option>
+							<option value="카페">카페</option>
+							<option value="렌터카">렌터카</option>
+							<option value="기타">기타</option>
+						</select>
+						<select name="category" class="hidden house">
+							<option value="모텔">모텔</option>
+							<option value="호텔">호텔</option>
+							<option value="펜션">펜션</option>
+							<option value="에어비엔비">에어비엔비</option>
+							<option value="캠핑">캠핑</option>
+						</select>
+						<select name="category" class="hidden food">
+							<option value="한식">한식</option>
+							<option value="일식">일식</option>
+							<option value="중식">중식</option>
+							<option value="분식">분식</option>
+							<option value="야식">야식</option>
+						</select>
+						<select name="category" class="hidden bakery">
+							<option value="개인">개인</option>
+							<option value="프랜차이즈">프랜차이즈</option>
+							<option value="베이커리">베이커리</option>
+							<option value="디저트">디저트</option>
+						</select>
+						<select name="category" class="hidden car">
+							<option value="경형/소형">경형/소형</option>
+							<option value="중형/대형">중형/대형</option>
+							<option value="SUV/승합">SUV/승합</option>
+						</select>
+						<select name="category" class="hidden another">
+							<option value="회의실">회의실</option>
+							<option value="파티룸">파티룸</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>내 용</th>
+					<td>
+						<textarea name="boardContents"></textarea>
+					</td>
+				</tr>
+				<tr class="r0 at">
+					<th>파일 첨부1</th>
+					<td class="file0_cont">
+						<div>
+							<input type="file" name="files" id="file0" style="display:none">
+							<span id="file0name">선택된 파일 없음</span>
+						</div>
+						<div>
+							<a href="javascript:upload('file0')">파일 선택</a>
+							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<table class="btn_area">
+			<tr align="right" valign="middle">
+				<td>
+					<a onclick="boardForm.submit()">등록</a>
+					<a th:href="${'/Cboard/list'}">목록</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/cboard/boardwrite/js/write.js}"></script>
+<script>
+	let i = 0;
+	function upload(name) {
+		$("#" + name).click();
+	}
+	$("[type='file']").change(function (e) {
+
+		const file = e.target.files[0];
+		const fileTag = e.target;
+
+		if (file == undefined) {
+			cancelFile(fileTag.id);
+		}
+		else {
+			$("#" + fileTag.id + "name").text(file.name);
+
+			let ext = file.name.split(".").pop();
+			if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+				$("." + fileTag.id + "_cont .thumbnail").remove();
+				const reader = new FileReader();
+
+				reader.onload = function (ie) {
+					const img = document.createElement("img");
+					img.setAttribute("src", ie.target.result)
+					img.setAttribute("class", "thumbnail");
+					document.querySelector("." + fileTag.id + "_cont").appendChild(img);
+				}
+				reader.readAsDataURL(file);
+			}
+			else {
+				const temp = $("." + fileTag.id + "_cont .thumbnail");
+				if (temp != null) {
+					temp.remove();
+				}
+			}
+
+			if (fileTag.id.split("e")[1] == i) {
+				const cloneElement = $(".r" + i).clone(true);
+				i++;
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
+
+				lastElement.attr("class", "r" + i + " at");
+				lastElement.children("th").text("파일 첨부" + (i + 1));
+				lastElement.children("td").attr("class", "file" + i + "_cont");
+
+				lastElement.find("input[type='file']").attr("name", "files");
+				lastElement.find("input[type='file']").attr("id", "file" + i);
+				lastElement.find("input[type='file']").val("");
+
+				lastElement.find("span").attr("id", "file" + i + "name");
+				lastElement.find("span").text("선택된 파일 없음");
+
+				lastElement.find("a")[0].href = "javascript:upload('file" + i + "')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "')"
+			}
+
+		}
+	})
+
+	function cancelFile(name) {
+
+		if (name.split("e")[1] == i) {return;}
+
+		if (i != 0) {
+
+			let temp = Number(name.split("e")[1]);
+
+			$(".r" + temp).remove();
+
+			for (let j = temp + 1; j <= i; j++) {
+				const el = $("#boardForm tbody").find(".r" + j);
+				el.attr("class", "r" + (j - 1) + " at");
+
+				el.children('th').text("파일 첨부" + j);
+
+				el.children('td').attr("class", "file" + (j - 1) + "_cont");
+
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name", "file" + (j - 1));
+				fileTag.attr("id", "file" + (j - 1));
+
+				el.find("span").attr("id", "file" + (j - 1) + "name");
+
+				el.find("a")[0].href = "javascript:upload('file" + (j - 1) + "')"
+				el.find("a")[1].href = "javascript:cancelFile('file" + (j - 1) + "')"
+
+			}
+			i--;
+		}
+	}
+
+	function sendit() {
+
+
+		const boardForm = document.boardForm;
+		const boardtitle = boardForm.boardtitle;
+		if (boardtitle.value == "") {
+			alert("제목을 입력하세요.");
+			boardtitle.focus();
+			return false;
+		}
+
+		const boardcontents = boardForm.boardcontents;
+		if (boardcontents.value == "") {
+			alert("내용을 입력하세요.");
+			boardcontents.focus();
+			return false;
+		}
+
+
+		boardForm.submit();
+	}
+</script>
+
+</html>

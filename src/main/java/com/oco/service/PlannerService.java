@@ -3,11 +3,10 @@ package com.oco.service;
 import java.util.List;
 
 import com.oco.domain.dto.PlannerDTO;
-import com.oco.domain.dto.ReservationDTO;
 
 public interface PlannerService {
 
-	boolean plannerwrite(PlannerDTO schedule);
+	boolean plannerwrite(PlannerDTO planner);
 
 	// delete
 	public boolean remove(String loginUser, Long scheduleNum);

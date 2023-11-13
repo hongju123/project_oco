@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.PlannerDTO;
 import com.oco.mapper.ReservationMapper;
 
 

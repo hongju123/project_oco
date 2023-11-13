@@ -13,4 +13,8 @@ public interface UserService {
 	public UserDTO findByUserInfo(UserDTO user);
 //	가입할때 
 	boolean join(UserDTO user);
+//	회원탈퇴
+	boolean withdrawUser(String userId);
+//  비지니스 회원 탈퇴 
+	boolean withdrawBusinessUser(String userId);
 }

@@ -14,16 +14,18 @@ public interface BoardMapper {
 	
 	//update
 	int updateBoard(BoardDTO board);
-	int updateReadCount(Long board_num);
+	int updateReadCount(Long boardNum);
 	
 	//delete
-	int deleteBoard(Long board_num);
+	int deleteBoard(Long boardNum);
 	
 	//select
-	List<BoardDTO> getList(Criteria cri);
-	Long getTotal(Criteria cri);
-	Long getLastNum(String user_id);
-	BoardDTO findByNum(Long board_num);
+	List<BoardDTO> getList(Long amount, Long startRow,String topic);
+	List<BoardDTO> getAllList(Long amount, Long startRow);
+	Long getTotal();
+
+	Long getLastNum(String userId);
+	BoardDTO findByNum(Long boardNum);
 	
 	
 

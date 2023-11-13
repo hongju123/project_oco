@@ -15,18 +15,19 @@ import com.oco.domain.dto.FileDTO;
 public interface BoardService {
 
 	//insert
-	boolean regist(BoardDTO board, MultipartFile[] files, String Category) throws Exception;
+	boolean regist(BoardDTO board, MultipartFile[] files) throws Exception;
 	
 	//update
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
-	public void updateReadCount (Long boardNum);
+	public void updateReadCount(Long boardNum);
 	
 	//delete
 	public boolean remove(String loginUser, Long boardNum);
 	
 	//select
-	Long getTotal(Criteria cri);
-	List<BoardDTO> getBoardList(Criteria cri);
+	Long getTotal();
+	List<BoardDTO> getBoardList(Long amount, Long startRow, String topic);
+	List<BoardDTO> getBoardAllList(Long amount, Long startRow);
 	BoardDTO getDetail(Long boardNum);
 	Long getLastNum(String userId);
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;
@@ -35,4 +36,5 @@ public interface BoardService {
 	List<FileDTO> getFileList(Long boardNum);
 	
 	ResponseEntity<Resource> getThumbnailResource(String systemName) throws Exception;
+
 }
