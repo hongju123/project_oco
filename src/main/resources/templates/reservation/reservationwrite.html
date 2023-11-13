@@ -4,7 +4,6 @@
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/reservation/css/write.css}">
-
 <script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
 <body>
@@ -13,7 +12,7 @@
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
 			<div class="sub-tit">
-				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</s</h2>
+				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
 			</div><!--.sub-tit-->
 			<form id="Form" method="post" name="Fsorm" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
@@ -319,10 +318,6 @@ setInterval('clock()', 1000);
 		const Form = document.Form;
 		Form.submit();
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 5e9547ba0c6e472b324c47e86d4ae910152f2869
 	$(document).ready(function () {
 		$(".city").hide();
 		$(".data").hide();
