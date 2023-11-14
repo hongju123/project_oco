@@ -107,6 +107,7 @@
 								</tbody>
 							</table>
 							<a href="#" class="calendarcheck">선택완료</a>
+							<a href="#" class="calendarcancel">닫기</a>
 						</div>
 					</li>
 					<li><select class="personnel" name="personnel">
@@ -260,7 +261,9 @@
 	const category = $("#category");
 	function f() {
 		const val = $("#category option:selected").val();
-		console.log(val);
+		$(".type").val("유형");
+		$(".amenities").val("편의시설");
+		$("input:checkbox").prop("checked", false);
 		if (val == "렌터카") {
 			$(".personnel").hide();
 			$(".fuel").show();
@@ -483,6 +486,7 @@
 		}
 	})
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeA]:checked").each(function () {
 
@@ -495,9 +499,11 @@
 			$(".amenitiesA").hide();
 
 		}
+		$(".amenitiesA").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeB]:checked").each(function () {
 
@@ -508,9 +514,11 @@
 			$(".amenities").val(checkBoxArr);
 			$(".amenitiesB").hide();
 		}
+		$(".amenitiesB").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeC]:checked").each(function () {
 
@@ -522,9 +530,11 @@
 			$(".amenities").val(checkBoxArr);
 			$(".amenitiesC").hide();
 		}
+		$(".amenitiesC").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeD]:checked").each(function () {
 
@@ -535,9 +545,11 @@
 			$(".amenities").val(checkBoxArr);
 			$(".amenitiesD").hide();
 		}
+		$(".amenitiesD").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeE]:checked").each(function () {
 
@@ -548,9 +560,11 @@
 			$(".amenities").val(checkBoxArr);
 			$(".amenitiesE").hide();
 		}
+		$(".amenitiesE").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeF]:checked").each(function () {
 
@@ -561,6 +575,7 @@
 			$(".amenities").val(checkBoxArr);
 			$(".amenitiesF").hide();
 		}
+		$(".amenitiesF").hide();
 	})
 
 	$(".calendar").on("click", function (e) {
@@ -581,6 +596,10 @@
 		result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
 		console.log(result)
 		$(".calendars").val(result)
+		$(".data").hide();
+	})
+	$(".calendarcancel").on("click",function (e){
+		e.preventDefault();
 		$(".data").hide();
 	})
 	/*지역 클릭시 모달창띄우기*/

@@ -24,7 +24,7 @@
 	<!--insertBoard-->
 	<insert id="insertBoard">
 		insert into boards (board_title,board_contents,user_id)
-		values(#{board_title},{#board_contents},#{user_id})
+		values #{board_title},{#board_contents},#{user_id}
 	</insert>
 	<!--updateBoard-->
 	<update id="updateReadCount">
