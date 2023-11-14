@@ -30,7 +30,7 @@
 	</select>
 
 	<select id="getTotal">
-	
+		select count(*) from boards 
 	</select>
 	<select id="getLastNum">
 		select max(board_num) from boards where user_id=#{userId}

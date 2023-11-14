@@ -24,7 +24,7 @@
 			<form id="Form" method="post" name="Fsorm" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
 				<div class="sec-half">
-					<div class="sec-con left-sec" data-aos="fade-up">
+					<div class="sec-con left-sec">
 						<span class="sec-tit">카테고리</span>
 						<select id="category" onchange="f()" name="category">
 							<option value="" selected disabled>카테고리를 선택하세요</option>
@@ -35,7 +35,7 @@
 							<option class="categoryE" value="기타">기타</option>
 						</select>
 					</div><!--.category-sec-->
-					<div class="sec-con right-sec" data-aos="fade-up">
+					<div class="sec-con right-sec">
 						<span class="sec-tit">유형</span>
 						<!--<input type="text" class="type" name="requestType" id="requestType" value="유형" readonly >-->
 						<select class="typeA"  name="type">
@@ -75,7 +75,7 @@
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
 			
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con area-sec">
 					<span class="sec-tit">지역</span>
 					<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
 					<div id="modal" class="modal-overlay">
@@ -86,7 +86,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<a href="#" class="calendar sec-tit">날짜</a>
 					<input type="text" class="calendars" name="regDate" value="날짜" readonly>
 					<div class="data">
@@ -116,7 +116,7 @@
 						<a href="#" class="calendarcheck">선택완료</a>
 					</div>
 				</div>
-				<div class="sec-half" data-aos="fade-up">
+				<div class="sec-half">
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
 						<select name="personnel">
@@ -157,7 +157,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<span class="sec-tit">편의시설</span>
 					<!--<input type="text" class="amenities" name="amenities" id="amenities" value="선택" readonly>-->
 					<div class="amenities">
@@ -234,7 +234,7 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con"  data-aos="fade-up">
+				<div class="sec-con" >
 					<span class="sec-tit">요청사항</span>
 					<textarea placeholder="요청사항을 적어주세요!"></textarea>
 				</div>
@@ -318,7 +318,7 @@ if (hours>12){
 	setInterval('clock()', 1000);
 	
 	AOS.init({
-		duration: 1500,
+		duration: 1200,
 	  });
 	  
 	function sendit() {

@@ -32,16 +32,14 @@
 	color:#3182f6;
 }
 
-
-
-
-
-
 .depth2-wrap {
   margin:50px 0;
   max-width: 100%;
   white-space: nowrap;
   z-index: 5000;
+}
+.depth2-wrap .depth2 {
+	padding: 15px 0;
 }
 
 @media (max-width: 768px) {
