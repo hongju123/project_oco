@@ -24,7 +24,11 @@ public interface FindListMapper {
 
 	BusinessInfoDTO infoDetail(Long businessIdx);
 
-	int modify(BusinessInfoDTO info);
+	//파일관련
+	int updateinfo(BusinessInfoDTO info);
+	
+	void deleteBySystemname(String systemname);
+	
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
@@ -48,7 +52,13 @@ public interface FindListMapper {
 	int deleteReply(Long replynum);
 
 	int updateReply(ReplyDTO reply);
-	
 
+	boolean visit(Long businessInfoIdx);
+
+	double totalGrade(Long businessInfoIdx);
+
+	void setallGrade(double allGrade,Long businessInfoIdx);
+
+	boolean removeInfo(Long businessInfoIdx);
 
 }

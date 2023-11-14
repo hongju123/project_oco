@@ -1,5 +1,6 @@
 package com.oco.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,9 +79,7 @@ public class BboardController {
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
 		
-		System.out.println("businessIdx :" + businessIdx);
 		Long businessInfoIdx = businessIdx;
-		System.out.println("businessInfoIdx :" + businessInfoIdx);
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
 		model.addAttribute("userboard", userboard);
@@ -92,15 +91,22 @@ public class BboardController {
 
 	// 사업자 수정 페이지
 	@PostMapping("modify")
-	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files) throws Exception {
-		HttpSession session = req.getSession();
-		String loginUser = (String) session.getAttribute("loginUser");
-		info.setBusinessId(loginUser);
+	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files,String updateCnt) throws Exception {
+		//시간대 
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
 		info.setUseTime(Time);
-		if (service.modify(info) && service.regist(files, info)) {
+		//파일관련
+		System.out.println(files +"컨트롤러");
+		System.out.println(updateCnt + "컨트롤러");
+		if(files != null) {
+			for (int i = 0; i < files.length; i++) {
+				System.out.println(files[i].getOriginalFilename() + "컨트롤러");
+			}
+		}
+		
+		if (service.modify(info,files,updateCnt)) {
 			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;
@@ -116,10 +122,11 @@ public class BboardController {
 	@ResponseBody
 	@PostMapping(value = "insertReply", consumes = "application/json;charset=utf-8")
 	public ResponseEntity<String> insertReply(@RequestBody ReplyDTO reply) {
-		System.out.println(reply.getReplyContents());
-		System.out.println(reply);
-		boolean check = service.riplyRegist(reply);
+		Long businessInfoIdx = reply.getBoardNum();
+		boolean check = (service.riplyRegist(reply) && service.visit(businessInfoIdx));
 		Long replynum = service.getLastNum(reply.getUserId());
+		double allGrade = service.totalGrade(businessInfoIdx);
+		service.setallGrade(allGrade,businessInfoIdx);
 		return check ? new ResponseEntity<String>(replynum + "", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -134,16 +141,20 @@ public class BboardController {
 
 	@ResponseBody
 	@GetMapping("deletereply")
-	public ResponseEntity<String> remove(@RequestParam("replynum") Long replynum) {
-		System.out.println(replynum);
-		return service.remove(replynum) ? new ResponseEntity<String>("success", HttpStatus.OK)
-				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> remove(@RequestParam("replynum") Long replynum, @RequestParam("businessInfoIdx") Long businessInfoIdx) {
+		if(service.remove(replynum) && service.removeInfo(businessInfoIdx)) {
+			double allGrade = service.totalGrade(businessInfoIdx);
+			service.setallGrade(allGrade, businessInfoIdx);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@ResponseBody
 	@PostMapping(value = "replyUpdate", consumes = "application/json;charset=utf-8")
 	public ResponseEntity<String> modify(@RequestBody ReplyDTO reply) {
-		System.out.println(reply + "컨트롤러");
 		service.replyModify(reply);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}

@@ -39,16 +39,20 @@
 		(#{systemName},#{orgName},#{boardNum})
 	</insert>
 
+	<delete id="deleteBySystemname">
+		delete from files where system_name=#{systemname}
+	</delete>
+
 	<!-- 상세페이지 수정 -->
-	<update id="modify">
+	<update id="updateinfo">
 		update business_info set use_time = #{useTime}, content = #{content},
-		amenities = #{amenities}
+		amenities = #{amenities} where business_info_idx = #{businessInfoIdx}
 	</update>
 
 	<!-- 리뷰 저장 -->
 	<insert id="insertReply">
-		insert into replies(reply_contents, user_id, board_num)
-		values(#{replyContents},#{userId},#{boardNum})
+		insert into replies(reply_contents, user_id, board_num, grade)
+		values(#{replyContents},#{userId},#{boardNum}, #{grade})
 	</insert>
 
 	<select id="getLastNumber">
@@ -69,9 +73,30 @@
 		where reply_num=#{replyNum}
 	</update>
 
+	<!-- 리뷰생성시 평가인원 + 방문수 증가 -->
+	<update id="visit">
+		update business_info set visit_count = visit_count + '1' , grade_count =
+		grade_count + '1' where business_info_idx = #{businessInfoIdx}
+	</update>
+
 	<delete id="deleteReply">
 		delete from replies where reply_num=#{replynum}
 	</delete>
+	<update id="removeInfo">
+		update business_info set visit_count = visit_count - 1,grade_count =
+		grade_count - 1 where business_info_idx = #{businessInfoIdx}
+	</update>
+
+	<!-- 평점 추출 -->
+	<select id="totalGrade">
+		select ifnull(avg(grade),0) from replies where board_num =
+		${businessInfoIdx}
+	</select>
+	<!-- 평점 평균 등록 -->
+	<update id="setallGrade">
+		update business_info set overall_grade = #{allGrade} where
+		business_info_idx = #{businessInfoIdx};
+	</update>
 
 
 	<!-- 모든 정보 가져오기 -->
@@ -81,5 +106,7 @@
 	<select id="BusinessList">
 		select * from business_users
 	</select>
+
+
 </mapper>
  

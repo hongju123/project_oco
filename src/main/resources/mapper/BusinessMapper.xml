@@ -13,7 +13,7 @@
 	</insert>
 	<!-- 비지니스 유저 상세 페이지 구현위해 아이디만 생성 -->
 	<insert id="insertinfo">
-		insert into business_info (business_id) value (#{businessId});
+		insert into business_info (business_id,visit_count,grade_count) value (#{businessId},0,0);
 	</insert>
 	<!--비지니스 유저 맞는지 체크-->
 	<!--ajax로 아이디 중복확인-->
