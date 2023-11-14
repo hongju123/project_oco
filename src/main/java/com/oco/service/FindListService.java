@@ -25,13 +25,11 @@ public interface FindListService {
 	
 	BusinessInfoDTO infoDetail(Long businessIdx);
 	
-	boolean modify(BusinessInfoDTO info);
-	
-	boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception;
+	boolean modify(BusinessInfoDTO info, MultipartFile[] files, String updateCnt) throws Exception;
 	
 	//파일 관련
 	List<FileDTO> getFileList(Long businessInfoIdx);
-	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
+	ResponseEntity<Resource> getThumbnailResource(String systemName) throws Exception;
 	
 	//리뷰 파트
 	boolean riplyRegist(ReplyDTO reply);
@@ -39,6 +37,10 @@ public interface FindListService {
 	ReplyPageDTO getList(Criteria cri, Long boardNum);
 	boolean remove(Long replynum);
 	boolean replyModify(ReplyDTO reply);
+	boolean visit(Long businessInfoIdx);
+	double totalGrade(Long businessInfoIdx);
+	void setallGrade(double allGrade,Long businessInfoIdx);
+	boolean removeInfo(Long businessInfoIdx);
 	
 	
 	

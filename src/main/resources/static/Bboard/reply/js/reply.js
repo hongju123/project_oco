@@ -27,11 +27,11 @@ const replyService = (function() {
 		})
 	}
 
-	function drop(replynum, callback, error) {
+	function drop(replynum,businessInfoIdx, callback, error) {
 		$.ajax({
 			type: "GET",
 			url: "/Bboard/deletereply",
-			data: { "replynum": replynum },
+			data: { "replynum": replynum,"businessInfoIdx":businessInfoIdx },
 			success: function(result) {
 				callback(result)
 			},
