@@ -19,7 +19,7 @@
 
 .sub-inner {
 	margin: 0 auto;
-	max-width: 75%;
+	max-width: 70%;
 	padding: 200px 0 150px 0;
 	
 }
@@ -32,6 +32,9 @@
 	color:#3182f6;
 }
 
+
+
+/* 헤더 서브메뉴 css*/
 .depth2-wrap {
   margin:50px 0;
   max-width: 100%;
@@ -151,3 +154,5 @@
   }
 
 }
+
+/* 헤더 서브메뉴 css*/
