@@ -36,35 +36,41 @@
 		<form id="Form" method="post" name="Form" th:action="@{/planner/map}">
 			<input type="text" class="schedule_date" name="scheduleDate" id="schedule_date" value="날짜 선택"
 				onclick="calendar()" readonly>
-			<div class="Calendars">
-				<table class="Calendar">
-					<thead>
-						<tr>
-							<td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
-							<td colspan="5">
-								<span id="calYear"></span>년
-								<span id="calMonth"></span>월
-							</td>
-							<td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
-						</tr>
-						<tr>
-							<td>일</td>
-							<td>월</td>
-							<td>화</td>
-							<td>수</td>
-							<td>목</td>
-							<td>금</td>
-							<td>토</td>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
+				<div class="sec-con" data-aos="fade-up">
+					<input type="text" class="calendars" name="regDate" value="날짜" readonly>
+					<div class="data">
+						<table class="Calendar">
+							<thead>
+								<tr>
+									<td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
+									<td colspan="5">
+										<span id="calYear"></span>년
+										<span id="calMonth"></span>월
+									</td>
+									<td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
+								</tr>
+								<tr>
+									<td>일</td>
+									<td>월</td>
+									<td>화</td>
+									<td>수</td>
+									<td>목</td>
+									<td>금</td>
+									<td>토</td>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						<a href="#" class="calendarcheck">선택완료</a>
+					</div>
+				</div>
 			<div class="list">
+					
 			</div>
 			<input type="hidden" class="coordss" name="coords">
 			<textarea placeholder="메모장" class="memo" name="memo" id="memo"></textarea>
+			
 			<input type="hidden" th:value="${session.loginUser}" name="userId">
 		</form>
 		<a href="javascript:sendit()">일정등록</a>
@@ -84,9 +90,7 @@
 <script th:src="@{/planner/js/map.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script type="text/javascript">
-	$(document).ready(function () {
-		$(".Calendars").hide()
-	})
+
 	function sendit() {
 		const Form = document.Form;
 		Form.submit();
@@ -423,9 +427,29 @@
 		}
 		addLine(markers)
 	}
-	function calendar() {
-		$(".Calendars").show()
-	}
+
+	//캘린더
+	$(".calendars").on("click", function (e) {
+		e.preventDefault();
+		buildCalendar();
+		$(".data").show();
+	})
+
+
+	$(".calendarcheck").on("click", function (e) {
+		e.preventDefault();
+		const elements = $(".choiceDay");
+		let result = "";
+		const year = $("#calYear").text()
+		const month = $("#calMonth").html()
+		const startday = elements[0].innerHTML
+		const endday = elements[elements.length - 1].innerText
+		result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
+		console.log(result)
+		$(".calendars").val(result)
+		$(".data").hide();
+	})
+	//캘린더 끝 
 	/**$(function(){
 		$(".list").sortable({
 			stop:function(event,div){
