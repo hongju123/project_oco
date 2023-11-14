@@ -15,13 +15,13 @@
 				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
 			</div><!--.sub-tit-->
 			<div class="depth2-wrap" data-aos="fade-up">
-			  <ul class="depth2 sub-nav">
-			    <li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
-	            <li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
-	            <li><a th:href="@{/reservation/proposal}">제안서</a></li>
-			  </ul>
+				<ul class="depth2 sub-nav">
+					<li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
+					<li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
+					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+				</ul>
 			</div>
-			<form id="Form" method="post" name="Fsorm" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
+			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
 				<div class="sec-half">
 					<div class="sec-con left-sec" data-aos="fade-up">
@@ -37,44 +37,43 @@
 					</div><!--.category-sec-->
 					<div class="sec-con right-sec" data-aos="fade-up">
 						<span class="sec-tit">유형</span>
-						<!--<input type="text" class="type" name="requestType" id="requestType" value="유형" readonly >-->
-						<select class="typeA"  name="type">
+						<select class="typeA" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeAA" value="숙소">모텔</option>
-							<option class="typeAB" value="식당">호텔</option>
-							<option class="typeAC" value="카페">펜션</option>
-							<option class="typeAD" value="렌터카">에어비엔비</option>
-							<option class="typeAE" value="기타">캠핑장</option>
+							<option class="typeAA" value="모텔">모텔</option>
+							<option class="typeAB" value="호텔">호텔</option>
+							<option class="typeAC" value="펜션">펜션</option>
+							<option class="typeAD" value="에어비엔비">에어비엔비</option>
+							<option class="typeAE" value="캠핑장">캠핑장</option>
 						</select>
-						<select class="typeB"  name="type">
+						<select class="typeB" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeBA">한식</option>
-							<option class="typeBB">일식</option>
-							<option class="typeBC">중식</option>
-							<option class="typeBD">분식</option>
-							<option class="typeBE">야식</option>
+							<option class="typeBA" value="한식">한식</option>
+							<option class="typeBB" value="일식">일식</option>
+							<option class="typeBC" value="중식">중식</option>
+							<option class="typeBD" value="분식">분식</option>
+							<option class="typeBE" value="야식">야식</option>
 						</select>
-						<select class="typeC"  name="type">
+						<select class="typeC" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeCA" value="숙소">개인</option>
-							<option class="typeCB" value="식당">프랜차이즈</option>
-							<option class="typeCC" value="카페">베이커리</option>
-							<option class="typeCD" value="렌터카">디저트</option>
+							<option class="typeCA" value="개인">개인</option>
+							<option class="typeCB" value="프랜차이즈">프랜차이즈</option>
+							<option class="typeCC" value="베이커리">베이커리</option>
+							<option class="typeCD" value="디저트">디저트</option>
 						</select>
-						<select class="typeD"  name="type">
-							<option value="" selected disabled>카테고리를 선택하세요</option>
-							<option class="typeDA" value="숙소">경형/소형</option>
-							<option class="typeDB" value="식당">중형/대형</option>
-							<option class="typeDC" value="카페">SUV/승합</option>
-						</select>
-						<select class="typeE"  name="type">
+						<select class="typeD" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeEA" value="숙소">회의실</option>
-							<option class="typeEB" value="식당">파티룸</option>
+							<option class="typeDA" value="경형/소형">경형/소형</option>
+							<option class="typeDB" value="중형/대형">중형/대형</option>
+							<option class="typeDC" value="SUV/승합">SUV/승합</option>
+						</select>
+						<select class="typeE" name="requestType">
+							<option value="" selected disabled>유형을 선택하세요</option>
+							<option class="typeEA" value="회의실">회의실</option>
+							<option class="typeEB" value="파티룸">파티룸</option>
 						</select>
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
-			
+
 				<div class="sec-con" data-aos="fade-up">
 					<span class="sec-tit">지역</span>
 					<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
@@ -84,6 +83,7 @@
 							<ul id="area">
 							</ul>
 						</div>
+						</li>
 					</div>
 				</div>
 				<div class="sec-con" data-aos="fade-up">
@@ -114,6 +114,7 @@
 							</tbody>
 						</table>
 						<a href="#" class="calendarcheck">선택완료</a>
+						<a href="#" class="calendarcancel">닫기</a>
 					</div>
 				</div>
 				<div class="sec-half" data-aos="fade-up">
@@ -135,7 +136,7 @@
 					</div>
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
-						<select  name="fuel">
+						<select name="fuel">
 							<option value="" selected disabled>연료를 설정해주세요</option>
 							<option>전기</option>
 							<option>하이브리드</option>
@@ -144,7 +145,7 @@
 							<option>LPG</option>
 						</select>
 					</div>
-						<div class="sec-con right-sec">
+					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
 						<select class="money" name="cost">
 							<option value="" selected disabled>금액대를 설정해주세요</option>
@@ -160,6 +161,7 @@
 				<div class="sec-con" data-aos="fade-up">
 					<span class="sec-tit">편의시설</span>
 					<!--<input type="text" class="amenities" name="amenities" id="amenities" value="선택" readonly>-->
+					<input type="text" name="amenities" id="amenities" readonly>
 					<div class="amenities">
 						<div class="amenitiesA">
 							<ul>
@@ -234,22 +236,22 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con"  data-aos="fade-up">
+				<div class="sec-con" data-aos="fade-up">
 					<span class="sec-tit">요청사항</span>
-					<textarea placeholder="요청사항을 적어주세요!"></textarea>
+					<textarea placeholder="요청사항을 적어주세요!" name="memo"></textarea>
 				</div>
 			</form>
 			<div>
-				<a href="javascript:sendit()" class="submit-btn" >등록</a>
+				<a href="javascript:sendit()" class="submit-btn">등록</a>
 			</div>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
-	
+
 	<div id="clock_box">
 		<p id="clock_p">Time is going now.</p>
 		<div id="clock"></div>
 	</div>
-	
+
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -263,63 +265,63 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
 <script>
-	function clock(){
+	function clock() {
 
-//Save the times in variables
+		//Save the times in variables
 
-var today = new Date();
+		var today = new Date();
 
-var hours = today.getHours();
-var minutes = today.getMinutes();
-var seconds = today.getSeconds();
-
-
-//Set the AM or PM time
-
-if (hours >= 12){
-  meridiem = " pm";
-}
-else {
-  meridiem = " am";
-}
+		var hours = today.getHours();
+		var minutes = today.getMinutes();
+		var seconds = today.getSeconds();
 
 
-//convert hours to 12 hour format and put 0 in front
-if (hours>12){
-	hours = hours - 12;
-}
-	else if (hours===0){
-		hours = 12;	
+		//Set the AM or PM time
+
+		if (hours >= 12) {
+			meridiem = " pm";
+		}
+		else {
+			meridiem = " am";
+		}
+
+
+		//convert hours to 12 hour format and put 0 in front
+		if (hours > 12) {
+			hours = hours - 12;
+		}
+		else if (hours === 0) {
+			hours = 12;
+		}
+
+		//Put 0 in front of single digit minutes and seconds
+
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		else {
+			minutes = minutes;
+		}
+
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		else {
+			seconds = seconds;
+		}
+
+
+		document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
+
 	}
-	
-	//Put 0 in front of single digit minutes and seconds
-	
-	if (minutes<10){
-		minutes = "0" + minutes;
-	}
-	else {
-		minutes = minutes;
-	}
-	
-	if (seconds<10){
-		seconds = "0" + seconds;
-	}
-	else {
-		seconds = seconds;
-	}
-	
-	
-	document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
-	
-	}
-	
-	
+
+
 	setInterval('clock()', 1000);
-	
+
 	AOS.init({
 		duration: 1500,
-	  });
-	  
+	});
+
 	function sendit() {
 		const Form = document.Form;
 		Form.submit();
@@ -332,7 +334,7 @@ if (hours>12){
 		$(".typeC").hide();
 		$(".typeD").hide();
 		$(".typeE").hide();
- 		//$(".amenitiesA").hide();
+		//$(".amenitiesA").hide();
 		$(".amenitiesB").hide();
 		$(".amenitiesC").hide();
 		$(".amenitiesD").hide();
@@ -342,7 +344,8 @@ if (hours>12){
 	const category = $("#category");
 	function f() {
 		const val = $("#category option:selected").val();
-		console.log(val);
+		$(".type").val("유형");
+		$("input:checkbox").prop("checked", false);
 		if (val == "렌터카") {
 			$(".personnel").hide();
 			$(".fuel").show();
@@ -352,9 +355,9 @@ if (hours>12){
 			$(".personnel").show();
 		}
 	}
-	
 
-	
+
+
 	$("#category").on("change", function (e) {
 		e.preventDefault();
 		const val = $("#category option:selected").val();
@@ -394,127 +397,8 @@ if (hours>12){
 			$(".typeA").hide();
 		}
 	})
-	$(".area").on("click", function (e) {
-		e.preventDefault();
-		$(".city").show();
-	})
-	$(".typeAA").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("모텔");
-		$(".typeA").hide();
-	})
-	$(".typeAB").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("호텔");
-		$(".typeA").hide();
-	})
-	$(".typeAC").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("펜션");
-		$(".typeA").hide();
-	})
-	$(".typeAD").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("에어비엔비");
-		$(".typeA").hide();
-	})
-	$(".typeAE").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("캠핑장");
-		$(".typeA").hide();
-	})
-	$(".typeBA").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("한식");
-		$(".typeB").hide();
-	})
-	$(".typeBB").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("일식");
-		$(".typeB").hide();
-	})
-	$(".typeBC").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("중식");
-		$(".typeB").hide();
-	})
-	$(".typeBD").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("분식");
-		$(".typeB").hide();
-	})
-	$(".typeBE").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("야식");
-		$(".typeB").hide();
-	})
-	$(".typeCA").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("개인");
-		$(".typeC").hide();
-	})
-	$(".typeCB").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("프랜차이즈");
-		$(".typeC").hide();
-	})
-	$(".typeCC").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("베이커리");
-		$(".typeC").hide();
-	})
-	$(".typeCD").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("디저트");
-		$(".typeC").hide();
-	})
-	$(".typeDA").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("경형/소형");
-		$(".typeD").hide();
-	})
-	$(".typeDB").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("중형/대형");
-		$(".typeD").hide();
-	})
-	$(".typeDC").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("SUV/승합");
-		$(".typeD").hide();
-	})
-	$(".typeEA").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("회의실");
-		$(".typeE").hide();
-	})
-	$(".typeEB").on("click", function (e) {
-		e.preventDefault();
-		const num = $(".type");
-		num.val("파티룸");
-		$(".typeE").hide();
-	})
 
-	$("#category").on("change", function (e) {
-		e.preventDefault();
+	$("#amenities").on("click", function (e) {
 		const val = $("#category option:selected").val();
 		if (val == "숙소") {
 			$(".amenitiesA").show();
@@ -566,6 +450,7 @@ if (hours>12){
 		}
 	})
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeA]:checked").each(function () {
 
@@ -574,13 +459,15 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesA").hide();
 
 		}
+		$(".amenitiesA").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeB]:checked").each(function () {
 
@@ -588,12 +475,14 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesB").hide();
 		}
+		$(".amenitiesB").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeC]:checked").each(function () {
 
@@ -602,12 +491,14 @@ if (hours>12){
 
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesC").hide();
 		}
+		$(".amenitiesC").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeD]:checked").each(function () {
 
@@ -615,12 +506,14 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesD").hide();
 		}
+		$(".amenitiesD").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeE]:checked").each(function () {
 
@@ -628,12 +521,14 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesE").hide();
 		}
+		$(".amenitiesE").hide();
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeF]:checked").each(function () {
 
@@ -641,9 +536,10 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesF").hide();
 		}
+		$(".amenitiesF").hide();
 	})
 
 	$(".calendars").on("click", function (e) {
@@ -664,6 +560,10 @@ if (hours>12){
 		result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
 		console.log(result)
 		$(".calendars").val(result)
+		$(".data").hide();
+	})
+	$(".calendarcancel").on("click", function (e) {
+		e.preventDefault();
 		$(".data").hide();
 	})
 	/*지역 클릭시 모달창띄우기*/

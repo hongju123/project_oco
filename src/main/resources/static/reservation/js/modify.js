@@ -29,6 +29,9 @@ const category = $("#category");
 function f() {
 	const val = $("#category option:selected").text();
 	console.log(val);
+	$(".type").val("유형");
+	$(".amenities").val("편의시설");
+	$("input:checkbox").prop("checked", false);
 	if (val == "렌터카") {
 		console.log("렌터카")
 		$(".personnel").hide();
@@ -253,6 +256,7 @@ $(".amenities").on("click", function(e) {
 	}
 })
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeA]:checked").each(function() {
 
@@ -265,9 +269,11 @@ $(".sum").on("click", function(e) {
 		$(".amenitiesA").hide();
 
 	}
+	$(".amenitiesA").hide();
 })
 
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeB]:checked").each(function() {
 
@@ -278,9 +284,11 @@ $(".sum").on("click", function(e) {
 		$(".amenities").val(checkBoxArr);
 		$(".amenitiesB").hide();
 	}
+	$(".amenitiesB").hide();
 })
 
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeC]:checked").each(function() {
 
@@ -292,9 +300,11 @@ $(".sum").on("click", function(e) {
 		$(".amenities").val(checkBoxArr);
 		$(".amenitiesC").hide();
 	}
+	$(".amenitiesC").hide();
 })
 
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeD]:checked").each(function() {
 
@@ -305,9 +315,11 @@ $(".sum").on("click", function(e) {
 		$(".amenities").val(checkBoxArr);
 		$(".amenitiesD").hide();
 	}
+	$(".amenitiesD").hide();
 })
 
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeE]:checked").each(function() {
 
@@ -318,9 +330,11 @@ $(".sum").on("click", function(e) {
 		$(".amenities").val(checkBoxArr);
 		$(".amenitiesE").hide();
 	}
+	$(".amenitiesE").hide();
 })
 
 $(".sum").on("click", function(e) {
+	e.preventDefault();
 	var checkBoxArr = [];
 	$("input:checkbox[name=typeF]:checked").each(function() {
 
@@ -331,6 +345,7 @@ $(".sum").on("click", function(e) {
 		$(".amenities").val(checkBoxArr);
 		$(".amenitiesF").hide();
 	}
+	$(".amenitiesF").hide();
 })
 
 $(".calendars").on("click", function(e) {
