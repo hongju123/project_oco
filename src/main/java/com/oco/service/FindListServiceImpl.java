@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,83 +74,101 @@ public class FindListServiceImpl implements FindListService {
 	}
 
 	@Override
-	public boolean modify(BusinessInfoDTO info) {
-		int row = fmapper.modify(info);
-		if (row != 1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	@Override
 	public Long getIndexNum(String businessId) {
 		return fmapper.getnum(businessId);
 	}
 
 	@Override
-	public boolean regist(MultipartFile[] files, BusinessInfoDTO info) throws Exception {
-			System.out.println(info);
-		if (files == null || files.length == 0) {
-			System.out.println("빠른종료");
-			return true;
-		} else {
-			System.out.println("파일있는거 확인후 코드 진행");
-			Long infonum = fmapper.getnum(info.getBusinessId());
-			System.out.println(infonum);
-			boolean flag = false;
-			for (int i = 0; i < files.length - 1; i++) {
-
-				MultipartFile file = files[i];
-
-				String orgname = file.getOriginalFilename();
-
-				int lastIdx = orgname.lastIndexOf(".");
-
-				String extension = orgname.substring(lastIdx);
-
-				LocalDateTime now = LocalDateTime.now();
-
-				String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-
-				String systemname = time + UUID.randomUUID().toString() + extension;
-
-				String path = saveFolder + systemname;
-
-				FileDTO fdto = new FileDTO();
-				fdto.setBoardNum(infonum);
-				fdto.setSystemName(systemname);
-				fdto.setOrgName(orgname);
-
-				file.transferTo(new File(path));
-
-				flag = fmapper.insertFile(fdto) == 1;
-
-				if (!flag) {
-					return flag;
-				}
-			}
-		}
-		return true;
-	}
-
-	@Override
 	public List<FileDTO> getFileList(Long businessInfoIdx) {
-		
+
 		return fmapper.getFiles(businessInfoIdx);
 	}
-	
+
 	@Override
-	public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception {
-		Path path = Paths.get(saveFolder+systemname);
-		
+	public ResponseEntity<Resource> getThumbnailResource(String systemName) throws Exception {
+		Path path = Paths.get(saveFolder + systemName);
+
 		String contenttype = Files.probeContentType(path);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, contenttype);
-		
+
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
-		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+
+	@Override
+	public boolean modify(BusinessInfoDTO info, MultipartFile[] files, String updateCnt) throws Exception  {
+		int row = fmapper.updateinfo(info);
+		if (row != 1) {
+			return false;
+		}
+		List<FileDTO> org_file_list = fmapper.getFiles(info.getBusinessInfoIdx());
+		if (org_file_list.size() == 0 && (files == null || files.length == 0)) {
+			return true;
+		} else {
+			if (files != null) {
+				boolean flag = false;
+				// 후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
+				// 업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
+				ArrayList<String> sysnames = new ArrayList<>();
+				System.out.println("service : " + files.length);
+				for (int i = 0; i < files.length - 1; i++) {
+					MultipartFile file = files[i];
+					String orgname = file.getOriginalFilename();
+					// 수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
+					// 그런 경우의 file의 orgname은 null 이거나 "" 이다.
+					// 따라서 업로드가 될 필요가 없으므로 continue로 다음 파일로 넘어간다.
+					if (orgname == null || orgname.equals("")) {
+						continue;
+					}
+					int lastIdx = orgname.lastIndexOf(".");
+					String extension = orgname.substring(lastIdx);
+					LocalDateTime now = LocalDateTime.now();
+					String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+					String systemname = time + UUID.randomUUID().toString() + extension;
+					sysnames.add(systemname);
+
+					String path = saveFolder + systemname;
+
+					FileDTO fdto = new FileDTO();
+					fdto.setBoardNum(info.getBusinessInfoIdx());
+					fdto.setOrgName(orgname);
+					fdto.setSystemName(systemname);
+
+					file.transferTo(new File(path));
+
+					flag = fmapper.insertFile(fdto) == 1;
+					if (!flag) {
+						break;
+					}
+				}
+				// 강제탈출(실패)
+				if (!flag) {
+					// 아까 추가했던 systemname들(업로드 성공한 파일의 systemname)을 꺼내오면서
+					// 실제 파일이 존재한다면 삭제 진행
+					for (String systemname : sysnames) {
+						File file = new File(saveFolder, systemname);
+						if (file.exists()) {
+							file.delete();
+						}
+						fmapper.deleteBySystemname(systemname);
+					}
+				}
+			}
+			// 지워져야 할 파일(기존에 있었던 파일들 중 수정된 파일)들의 이름 추출
+			String[] deleteNames = updateCnt.split("\\\\");
+			for (int i = 1; i < deleteNames.length; i++) {
+				File file = new File(saveFolder, deleteNames[i]);
+				// 해당 파일 삭제
+				if (file.exists()) {
+					file.delete();
+					// DB상에서도 삭제
+					fmapper.deleteBySystemname(deleteNames[i]);
+				}
+			}
+			return true;
+		}
 	}
 
 	// 모든 정보 가져오기
@@ -188,5 +207,24 @@ public class FindListServiceImpl implements FindListService {
 		return fmapper.updateReply(reply) == 1;
 	}
 
+	@Override
+	public boolean visit(Long businessInfoIdx) {
+		return fmapper.visit(businessInfoIdx);
+	}
+
+	@Override
+	public double totalGrade(Long businessInfoIdx) {
+		return fmapper.totalGrade(businessInfoIdx);
+	}
+
+	@Override
+	public void setallGrade(double allGrade, Long businessInfoIdx) {
+		fmapper.setallGrade(allGrade, businessInfoIdx);
+	}
+
+	@Override
+	public boolean removeInfo(Long businessInfoIdx) {
+		return fmapper.removeInfo(businessInfoIdx);
+	}
 
 }

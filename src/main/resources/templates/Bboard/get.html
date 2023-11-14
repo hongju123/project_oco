@@ -64,12 +64,13 @@
 			<div class="total_section" style="display: flex; justify-content: space-between;">
 				<div class="main_section">
 					<div class="title_section">
-						[[${userboard.businessIdx}]]
-						[[${userboard.businessId}]]
-						[[${userboard.businessAddress}]]
-						[[${userboard.businessCategory}]]
-						[[${userboard.businessStoreName}]]
-						[[${infoboard.useTime}]]
+						유저 번호 : [[${userboard.businessIdx}]] <br>
+						유저 아이디 :[[${userboard.businessId}]] <br>
+						유저 주소 : [[${userboard.businessAddress}]] <br>
+						유저 카테고리 : [[${userboard.businessCategory}]] <br>
+						유저 상호이름 : [[${userboard.businessStoreName}]] <br>
+						유저 운영 시간 :[[${infoboard.useTime}]] <br>
+						유저 평점 : [[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]]) <br>
 					</div>
 					<div class="shot_info">
 					</div>
@@ -103,7 +104,8 @@
 							</div>
 							<div style="width: 65%;">
 								<h4>내용</h4>
-								<textarea name="replyContents" placeholder="Contents" style="resize:none;" value=""></textarea>
+								<textarea name="replyContents" placeholder="Contents" style="resize:none;"
+									value=""></textarea>
 								<fieldset class="rate">
 								</fieldset>
 							</div>
@@ -141,25 +143,26 @@
 		showList(1);
 		let txt = ""
 		for (let i = 10; i >= 1; i--) {
-			txt += '<input type="radio" id="rating' + i + '" name="rating" class="star" value="' + i + '">'; 
-			
+			txt += '<input type="radio" id="rating' + i + '" name="rating" class="star" value="' + i + '">';
+
 			i % 2 == 0 ? txt += '<label for="rating' + i + '" title="' + i / 2 + '점"></label>' :
-						 txt += '<label class="half" for="rating' + i + '" title="' + i / 2 + '점"></label>'
-		}	
-		
+				txt += '<label class="half" for="rating' + i + '" title="' + i / 2 + '점"></label>'
+		}
+
 		rate.html(txt);
 	})
 
 	$(".finish").on("click", function (e) {
 		e.preventDefault();
 		let replyContents = $("[name='replyContents']").val();
-		
-		let grade = $("[name='rating']:checked").val();
+		let grade = $("[name='rating']:checked").val() / 2;
+
 		replyService.add(
-			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents },
+			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade},
 			function (resut) {
 				alert("등록");
 				$("[name='replyContents']").val("");
+				$("[name='rating']").prop('checked', false);
 				showList(1);
 			}
 		)
@@ -176,16 +179,17 @@
 				}
 
 				for (let i = 0; i < list.length; i++) {
-					
-					console.log(list[i].replyContents)
-					
+
+
 					str += '<li style=clear:both;" class="li' + list[i].relyNum + '">';
 
 					str += '<div style="display:inline; float:left; width:80%;">';
 
 					str += '<strong class="userid' + list[i].replyNum + '">' + list[i].userId + '</strong>';
 
-					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents  + '</p>';
+					str += '<span>&nbsp' + list[i].grade.toFixed(1) + '<spand>'
+
+					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents + '</p>';
 
 					str += '</div><div style="text-align:right;">'
 
@@ -194,7 +198,7 @@
 					if (list[i].userId == loginUser) {
 						str += '<a href = "' + list[i].replyNum + '" class ="modify">수정</a>';
 						str += '<a href = "' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
-						str += '<a href = "' + list[i].replyNum + '"class="remove">삭제</a>';
+						str += '<a href = "' + list[i].replyNum +" "+ list[i].boardNum + '" class="remove">삭제</a>';
 					}
 					str += '</div></li>';
 				}
@@ -234,8 +238,7 @@
 		}
 		page.html(str);
 
-		$(".changePage").on("click", function (e) {
-			console.log(e)
+		$(".changePage").on("click", function (e) { 
 			e.preventDefault();
 			let target = $(this).attr("href");
 			nowpage = parseInt(target);
@@ -248,8 +251,10 @@
 
 	function deleteReply(e) {
 		e.preventDefault();
-		let replynum = $(this).attr("href");
-		replyService.remove(replynum,
+		let replynum = $(this).attr("href").split(" ")[0]
+		let businessInfoIdx = $(this).attr("href").split(" ")[1]
+		console.log(businessInfoIdx)
+		replyService.remove(replynum, businessInfoIdx,
 			function (result) {
 				if (result == "success") {
 					alert(replynum + "번 댓글 삭제 완료!");
@@ -282,10 +287,6 @@
 		let replynum = $(this).attr("href");
 		let replyContents = $("." + replynum).val();
 
-		if (replycontents == "") {
-			alert("수정할 댓글 내용을 입력하세요!");
-			return;
-		}
 		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
 			function (result) {
 				if (result == "success") {
