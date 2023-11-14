@@ -15,13 +15,13 @@
 				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
 			</div><!--.sub-tit-->
 			<div class="depth2-wrap" data-aos="fade-up">
-			  <ul class="depth2 sub-nav">
-			    <li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
-	            <li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
-	            <li><a th:href="@{/reservation/proposal}">제안서</a></li>
-			  </ul>
+				<ul class="depth2 sub-nav">
+					<li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
+					<li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
+					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+				</ul>
 			</div>
-			<form id="Form" method="post" name="Fsorm" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
+			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
 				<div class="sec-half">
 					<div class="sec-con left-sec">
@@ -38,7 +38,7 @@
 					<div class="sec-con right-sec">
 						<span class="sec-tit">유형</span>
 						<!--<input type="text" class="type" name="requestType" id="requestType" value="유형" readonly >-->
-						<select class="typeA"  name="type">
+						<select class="typeA" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
 							<option class="typeAA" value="숙소">모텔</option>
 							<option class="typeAB" value="식당">호텔</option>
@@ -46,7 +46,7 @@
 							<option class="typeAD" value="렌터카">에어비엔비</option>
 							<option class="typeAE" value="기타">캠핑장</option>
 						</select>
-						<select class="typeB"  name="type">
+						<select class="typeB" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
 							<option class="typeBA">한식</option>
 							<option class="typeBB">일식</option>
@@ -54,27 +54,27 @@
 							<option class="typeBD">분식</option>
 							<option class="typeBE">야식</option>
 						</select>
-						<select class="typeC"  name="type">
+						<select class="typeC" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
 							<option class="typeCA" value="숙소">개인</option>
 							<option class="typeCB" value="식당">프랜차이즈</option>
 							<option class="typeCC" value="카페">베이커리</option>
 							<option class="typeCD" value="렌터카">디저트</option>
 						</select>
-						<select class="typeD"  name="type">
+						<select class="typeD" name="requestType">
 							<option value="" selected disabled>카테고리를 선택하세요</option>
 							<option class="typeDA" value="숙소">경형/소형</option>
 							<option class="typeDB" value="식당">중형/대형</option>
 							<option class="typeDC" value="카페">SUV/승합</option>
 						</select>
-						<select class="typeE"  name="type">
+						<select class="typeE" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
 							<option class="typeEA" value="숙소">회의실</option>
 							<option class="typeEB" value="식당">파티룸</option>
 						</select>
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
-			
+
 				<div class="sec-con area-sec">
 					<span class="sec-tit">지역</span>
 					<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
@@ -114,6 +114,7 @@
 							</tbody>
 						</table>
 						<a href="#" class="calendarcheck">선택완료</a>
+						<a href="#" class="calendarcancel">닫기</a>
 					</div>
 				</div>
 				<div class="sec-half">
@@ -135,7 +136,7 @@
 					</div>
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
-						<select  name="fuel">
+						<select name="fuel">
 							<option value="" selected disabled>연료를 설정해주세요</option>
 							<option>전기</option>
 							<option>하이브리드</option>
@@ -144,7 +145,7 @@
 							<option>LPG</option>
 						</select>
 					</div>
-						<div class="sec-con right-sec">
+					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
 						<select class="money" name="cost">
 							<option value="" selected disabled>금액대를 설정해주세요</option>
@@ -160,6 +161,7 @@
 				<div class="sec-con">
 					<span class="sec-tit">편의시설</span>
 					<!--<input type="text" class="amenities" name="amenities" id="amenities" value="선택" readonly>-->
+					<input type="text" name="amenities" id="amenities" readonly>
 					<div class="amenities">
 						<div class="amenitiesA">
 							<ul>
@@ -234,23 +236,23 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con" >
+				<div class="sec-con">
 					<span class="sec-tit">요청사항</span>
-					<textarea placeholder="요청사항을 적어주세요!"></textarea>
+					<textarea placeholder="요청사항을 적어주세요!" name="memo"></textarea>
 				</div>
 			</form>
 			<div>
-				<a href="javascript:sendit()" class="submit-btn" >등록</a>
+				<a href="javascript:sendit()" class="submit-btn">등록</a>
 			</div>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
-	
+
 	<div id="clock_box">
 		<p id="clock_p">Time is going now.</p>
 		<div id="clock"></div>
 	</div>
 
-	
+
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -264,63 +266,63 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
 <script>
-	function clock(){
+	function clock() {
 
-//Save the times in variables
+		//Save the times in variables
 
-var today = new Date();
+		var today = new Date();
 
-var hours = today.getHours();
-var minutes = today.getMinutes();
-var seconds = today.getSeconds();
-
-
-//Set the AM or PM time
-
-if (hours >= 12){
-  meridiem = " pm";
-}
-else {
-  meridiem = " am";
-}
+		var hours = today.getHours();
+		var minutes = today.getMinutes();
+		var seconds = today.getSeconds();
 
 
-//convert hours to 12 hour format and put 0 in front
-if (hours>12){
-	hours = hours - 12;
-}
-	else if (hours===0){
-		hours = 12;	
+		//Set the AM or PM time
+
+		if (hours >= 12) {
+			meridiem = " pm";
+		}
+		else {
+			meridiem = " am";
+		}
+
+
+		//convert hours to 12 hour format and put 0 in front
+		if (hours > 12) {
+			hours = hours - 12;
+		}
+		else if (hours === 0) {
+			hours = 12;
+		}
+
+		//Put 0 in front of single digit minutes and seconds
+
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		else {
+			minutes = minutes;
+		}
+
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		else {
+			seconds = seconds;
+		}
+
+
+		document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
+
 	}
-	
-	//Put 0 in front of single digit minutes and seconds
-	
-	if (minutes<10){
-		minutes = "0" + minutes;
-	}
-	else {
-		minutes = minutes;
-	}
-	
-	if (seconds<10){
-		seconds = "0" + seconds;
-	}
-	else {
-		seconds = seconds;
-	}
-	
-	
-	document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
-	
-	}
-	
-	
+
+
 	setInterval('clock()', 1000);
-	
+
 	AOS.init({
 		duration: 1200,
-	  });
-	  
+	});
+
 	function sendit() {
 		const Form = document.Form;
 		Form.submit();
@@ -333,7 +335,7 @@ if (hours>12){
 		$(".typeC").hide();
 		$(".typeD").hide();
 		$(".typeE").hide();
- 		//$(".amenitiesA").hide();
+		//$(".amenitiesA").hide();
 		$(".amenitiesB").hide();
 		$(".amenitiesC").hide();
 		$(".amenitiesD").hide();
@@ -343,6 +345,9 @@ if (hours>12){
 	const category = $("#category");
 	function f() {
 		const val = $("#category option:selected").val();
+		$(".type").val("유형");
+		$("#amenities").val("");
+		$("input:checkbox").prop("checked", false);
 		console.log(val);
 		if (val == "렌터카") {
 			$(".personnel").hide();
@@ -353,9 +358,9 @@ if (hours>12){
 			$(".personnel").show();
 		}
 	}
-	
 
-	
+
+
 	$("#category").on("change", function (e) {
 		e.preventDefault();
 		const val = $("#category option:selected").val();
@@ -567,6 +572,7 @@ if (hours>12){
 		}
 	})
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeA]:checked").each(function () {
 
@@ -575,13 +581,14 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesA").hide();
 
 		}
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeB]:checked").each(function () {
 
@@ -589,12 +596,13 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesB").hide();
 		}
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeC]:checked").each(function () {
 
@@ -603,12 +611,13 @@ if (hours>12){
 
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesC").hide();
 		}
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeD]:checked").each(function () {
 
@@ -616,12 +625,13 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesD").hide();
 		}
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeE]:checked").each(function () {
 
@@ -629,12 +639,13 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesE").hide();
 		}
 	})
 
 	$(".sum").on("click", function (e) {
+		e.preventDefault();
 		var checkBoxArr = [];
 		$("input:checkbox[name=typeF]:checked").each(function () {
 
@@ -642,7 +653,7 @@ if (hours>12){
 		});
 		console.log(checkBoxArr)
 		if (checkBoxArr.length != 0) {
-			$(".amenities").val(checkBoxArr);
+			$("#amenities").val(checkBoxArr);
 			$(".amenitiesF").hide();
 		}
 	})
@@ -665,6 +676,10 @@ if (hours>12){
 		result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
 		console.log(result)
 		$(".calendars").val(result)
+		$(".data").hide();
+	})
+	$(".calendarcancel").on("click", function (e) {
+		e.preventDefault();
 		$(".data").hide();
 	})
 	/*지역 클릭시 모달창띄우기*/
