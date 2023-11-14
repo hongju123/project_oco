@@ -1,68 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>견적요청</title>
 </head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link rel="stylesheet" th:href="@{/reservation/css/list.css}">
+
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<h1>내 견적서 조회</h1>
+			<h1>견적서 조회</h1>
 			<div>
 				<a th:href="${'/reservation/reservationwrite'}">견적서 작성</a>
-				<input type="button" value="카테고리"> <input type="button" value="지역">
-			</div>
-			<table class="list">
-				<tr align="right" valign="middle">
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">카테고리</th>
-					<th>지역</th>
-					<th>유형</th>
-					<th width="15%">작성자</th>
-					<th width="17%">편의시설</th>
-					<th width="10%">인원(연료)</th>
-					<th width="10%">가격대</th>
-					<th width="17%">날짜</th>
-					<th width="10%">메모</th>
-				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="reservation : ${list}" align="center" valign="middle">
-					<th:block th:if="${reservation.userId == session.loginUser}">
-						<td><a class="get" th:href="${reservation.requestNum}">[[${reservation.category}]]</a></td>
-						<td>[[${reservation.address}]]</td>
-						<td>[[${reservation.requestType}]]</td>
-						<td>[[${reservation.userId}]]</td>
-						<td>[[${reservation.amenities}]]</td>
-						<td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
-						<td>[[${reservation.cost}]]</td>
-						<td>[[${reservation.regDate}]]</td>
-						<td>[[${reservation.memo}]]</td>
-					</th:block>
-					<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
-					<th:block th:if="${session.businessUser == 'O'}">
-						<td><a class="get" th:href="${reservation.requestNum}">[[${reservation.category}]]</a></td>
-						<td>[[${reservation.address}]]</td>
-						<td>[[${reservation.requestType}]]</td>
-						<td>[[${reservation.userId}]]</td>
-						<td>[[${reservation.amenities}]]</td>
-						<td>[[${reservation.fuel}]] [[${reservation.personnel}]]</td>
-						<td>[[${reservation.cost}]]</td>
-						<td>[[${reservation.regDate}]]</td>
-						<td>[[${reservation.memo}]]</td>
-					</th:block>
-               </th:block>
-				</tr>
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
-					</tr>
+				<th:block th:if="${session.businessUser == 'O'}">
+					<input type="button" value="카테고리"> <input type="button" value="지역">
 				</th:block>
-			</table>
+			</div>
+			<div>
+				<ul>
+					<li>
+						<th:block th:if="${list != null and list.size()>0}" th:each="reservation : ${list}">
+							<div class="request">
+								<h3>[[${reservation.category}]]</h3>
+								<p>[[${reservation.requestType}]]</p><br>
+								<span>[[${reservation.regDate}]]</span><br><span>[[${reservation.address}]]</span><br>
+								<p class="memo">[[${reservation.memo}]]</p><br>
+								<div class="sum">
+									<a th:href="${reservation.requestNum}" class="get">자세히</a>
+								</div>
+							</div>
+						</th:block>
+					</li>
+				</ul>
+			</div>
 			<form name="getForm" id="getForm" th:action="@{/reservation/reservationlist}">
 			</form>
 		</div><!--.sub-inner-->
@@ -79,18 +54,19 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
 <script th:inline="javascript">
-	
+
 	const getForm = $("#getForm");
-	$(".get").on("click",function(e){
+	$(".get").on("click", function (e) {
 		e.preventDefault()
 		let requestNum = $(this).attr("href");
-		let url=/*[[@{/reservation/reservationget}]]*/'';
-		getForm.append("<input type='hidden' name='requestNum' value='"+requestNum+"'>")
-		getForm.attr("action",url);
-		getForm.attr("method","get");
+		let url =/*[[@{/reservation/reservationget}]]*/'';
+		getForm.append("<input type='hidden' name='requestNum' value='" + requestNum + "'>")
+		getForm.attr("action", url);
+		getForm.attr("method", "get");
 		getForm.submit();
 	})
-	
-	
+
+
 </script>
+
 </html>
