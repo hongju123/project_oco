@@ -225,30 +225,14 @@
 				<p>궁금했던 모든 것을 물어보고 답해보세요.</p>	
 			</div>
 			<div class="main06-con" data-aos="fade-up">
+			<th:block th:each="board, iterStat : ${clist}" th:if="${iterStat.index < 6}">
 				<div class="main06-item">
-					<span>궁금해요</span>
-					<h5>혼술하기 좋은 곳 있을까요?</h5>
-					<p>친구랑 제주여행 중인데 친구가 일정때문에 먼저 빠져야해서 급하게 찾아..</p>
-			 		<span class="main06-bottom">제주시 애월읍</span>
+					<span>[[${board.topic}]]</span>
+					<h5>[[${board.boardTitle}]]</h5>
+					<p>[[${board.boardContents}]]</p>
+			 		<span class="main06-bottom">[[${board.category}]]</span>
 				</div>
-				<div class="main06-item">
-					<span>궁금해요</span>
-					<h5>혼술하기 좋은 곳 있을까요?</h5>
-					<p>친구랑 제주여행 중인데 친구가 일정때문에 먼저 빠져야해서 급하게 찾아..</p>
-			 		<span class="main06-bottom">제주시 애월읍</span>
-				</div>
-				<div class="main06-item">
-					<span>궁금해요</span>
-					<h5>혼술하기 좋은 곳 있을까요?</h5>
-					<p>친구랑 제주여행 중인데 친구가 일정때문에 먼저 빠져야해서 급하게 찾아..</p>
-			 		<span class="main06-bottom">제주시 애월읍</span>
-				</div>
-				<div class="main06-item">
-					<span>궁금해요</span>
-					<h5>혼술하기 좋은 곳 있을까요?</h5>
-					<p>친구랑 제주여행 중인데 친구가 일정때문에 먼저 빠져야해서 급하게 찾아..</p>
-			 		<span class="main06-bottom">제주시 애월읍</span>
-				</div>
+			</th:block>
 			</div>
 		</div>
 	</section>

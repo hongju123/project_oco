@@ -40,7 +40,7 @@
 			<div class="sec-con" data-aos="fade-up">
 				<a href="#" class="calendar sec-tit">날짜</a>
 				<br>
-				<input type="text" class="calendars" name="regDate" value="날짜 선택하기" readonly>
+				<input type="text" class="calendars" name="scheduleDate" value="날짜 선택하기" readonly>
 				<div class="data">
 					<table class="Calendar">
 						<thead>
@@ -65,7 +65,6 @@
 						<tbody>
 						</tbody>
 					</table>
-					<a href="#" class="calendarcheck">선택완료</a>
 					<a href="#" class="calendarcancel">닫기</a>
 				</div>
 			</div>
@@ -445,19 +444,6 @@
 	})
 
 
-	$(".calendarcheck").on("click", function (e) {
-		e.preventDefault();
-		const elements = $(".choiceDay");
-		let result = "";
-		const year = $("#calYear").text()
-		const month = $("#calMonth").html()
-		const startday = elements[0].innerHTML
-		const endday = elements[elements.length - 1].innerText
-		result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
-		console.log(result)
-		$(".calendars").val(result)
-		$(".data").hide();
-	})
 	$(".calendarcancel").on("click", function (e) {
 		e.preventDefault();
 		$(".data").hide();

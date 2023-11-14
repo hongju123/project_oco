@@ -59,8 +59,8 @@
 					const year = $("#calYear").text()
 					const month = $("#calMonth").html()
 					const day = $(this).html()
-					$("#schedule_date").val(year+"년"+month+"월"+day+"일")
-					$(".Calendars").hide()
+					$(".calendars").val(year+"년"+month+"월"+day+"일")
+					$(".data").hide()
 					}
             }
             newDIV.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
