@@ -4,10 +4,10 @@
    text-align: center;
 }
 
-.logo img{
+.logo_sub img{
 	width: 160px;
 }
-.logo p{
+.logo_sub p{
 	font-size: 18px;
 	margin-top: 20px;
 	font-weight: normal;
