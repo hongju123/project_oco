@@ -1,89 +1,80 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<title>내 견적서 상세조회</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
+<style>
+	#category {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		cursor: pointer;
+	}
+</style>
+
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div class="wrap">
+	<div class="wrap reserv_write">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<h2>상세조회</h2>
-			<table>
-				<tr>
-					<th>카테고리</th>
-					<td>
-						<input type="text" name="category" size="50" maxlength="50" th:value="${reservation.category}"
-							readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>지역</th>
-					<td>
-						<input type="text" name="area" size="50" maxlength="50" th:value="${reservation.address}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>유형</th>
-					<td>
-						<input type="text" name="type" size="50" maxlength="50" th:value="${reservation.requestType}"
-							readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>
-						<input type="text" name="userid" size="50" maxlength="50" th:value="${reservation.userId}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>편의시설</th>
-					<td>
-						<input type="text" name="amenities" size="50" maxlength="50" th:value="${reservation.amenities}"
-							readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>인원(연료)</th>
-					<td>
+			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
+				<input type="hidden" th:value="${session.loginUser}" name="userId">
+				<div class="sec-half">
+					<div class="sec-con left-sec" data-aos="fade-up">
+						<span class="sec-tit">카테고리</span>
+						<input type="text" th:value="${reservation.category}" readonly>
+					</div><!--.category-sec-->
+					<div class="sec-con right-sec" data-aos="fade-up">
+						<span class="sec-tit">유형</span>
+						<input type="text" th:value="${reservation.requestType}" readonly>
+					</div><!--.type-sec-->
+				</div><!--.sec-half-->
+
+				<div class="sec-con" data-aos="fade-up">
+					<span class="sec-tit">지역</span>
+					<input type="text" class="areaA" id="areaA" name="address" th:value="${reservation.address}"
+						readonly>
+				</div>
+				<div class="sec-con" data-aos="fade-up">
+					<a href="#" class="calendar sec-tit">날짜</a>
+					<input type="text" class="calendars" name="regDate" th:value="${reservation.regDate}" readonly>
+				</div>
+				<div class="sec-half" data-aos="fade-up">
+					<div class="sec-con left-sec personnel">
+						<span class="sec-tit">인원수(연료)</span>
 						<th:block th:if="${reservation.category == '렌터카'}">
-							<input type="text" name="fuel" size="50" maxlength="50" th:value="${reservation.fuel}" readonly>
-	
+							<input type="text" name="fuel" size="50" maxlength="50" th:value="${reservation.fuel}"
+								readonly>
+
 						</th:block>
 						<th:block
 							th:if="${reservation.category == '숙소' || reservation.category == '식당' || reservation.category == '카페' ||reservation.category == '기타'}">
-							<input type="text" name="personnel" size="50" maxlength="50" th:value="${reservation.personnel}"
-								readonly>
+							<input type="text" name="personnel" size="50" maxlength="50"
+								th:value="${reservation.personnel}+명" readonly>
 						</th:block>
-					</td>
-				</tr>
-				<tr>
-					<th>가격대</th>
-					<td>
-						<input type="text" name="money" size="50" maxlength="50" th:value="${reservation.cost}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>날짜</th>
-					<td>
-						<input type="text" name="date" size="50" maxlength="50" th:value="${reservation.regDate}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>메모</th>
-					<td>
-						<input type="text" name="memo" size="50" maxlength="50" th:value="${reservation.memo}" readonly>
-					</td>
-				</tr>
-			</table>
+					</div>
+					<div class="sec-con right-sec">
+						<span class="sec-tit">금액대</span>
+						<input type="text" th:value="${reservation.cost}+만원" readonly>
+					</div>
+				</div>
+				<div class="sec-con" data-aos="fade-up">
+					<span class="sec-tit">편의시설</span>
+					<!--<input type="text" class="amenities" name="amenities" id="amenities" value="선택" readonly>-->
+					<input type="text" name="amenities" id="amenities" th:value="${reservation.amenities}" readonly>
+				</div>
+				<div class="sec-con" data-aos="fade-up">
+					<span class="sec-tit">요청사항</span>
+					<textarea name="memo" readonly>[[${reservation.memo}]]</textarea>
+				</div>
+			</form>
 			<form name="reservationForm" method="post" th:action="@{/reservation/reservationremove}">
 				<th:block th:if="${reservation.userId == session.loginUser}">
-				<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
-				<a href="javascript:modify()">수정</a>
-				<a href="javascript:document.reservationForm.submit()">삭제</a>
+					<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
+					<a href="javascript:modify()">수정</a>
+					<a href="javascript:document.reservationForm.submit()">삭제</a>
 				</th:block>
 				<th:block th:if="${session.businessUser == 'O'}">
 					<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
@@ -93,6 +84,12 @@
 			<a th:href="${'/reservation/reservationlist'}">목록</a>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
+
+	<div id="clock_box">
+		<p id="clock_p">Time is going now.</p>
+		<div id="clock"></div>
+	</div>
+
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -102,6 +99,7 @@
 <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
 	function modify() {
@@ -116,6 +114,65 @@
 		reservationForm.setAttribute("method", "post");
 		reservationForm.submit();
 	}
+	
+	
+	function clock() {
+
+		//Save the times in variables
+
+		var today = new Date();
+
+		var hours = today.getHours();
+		var minutes = today.getMinutes();
+		var seconds = today.getSeconds();
+
+
+		//Set the AM or PM time
+
+		if (hours >= 12) {
+			meridiem = " pm";
+		}
+		else {
+			meridiem = " am";
+		}
+
+
+		//convert hours to 12 hour format and put 0 in front
+		if (hours > 12) {
+			hours = hours - 12;
+		}
+		else if (hours === 0) {
+			hours = 12;
+		}
+
+		//Put 0 in front of single digit minutes and seconds
+
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		else {
+			minutes = minutes;
+		}
+
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		else {
+			seconds = seconds;
+		}
+
+
+		document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
+
+	}
+
+
+	setInterval('clock()', 1000);
+
+	AOS.init({
+		duration: 1500,
+	});
+
 </script>
 
 </html>

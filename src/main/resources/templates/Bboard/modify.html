@@ -11,7 +11,7 @@
 			margin: 150px auto;
 			border: 1px solid black;
 			width: 1200px;
-			height: 1000px;
+			height: 100%
 		}
 
 		.total_section {
@@ -25,13 +25,13 @@
 		.main_section {
 			border: 1px solid black;
 			width: 850px;
-			height: 500px;
+			height: 100%
 		}
 
 		.sub_section {
 			border: 1px solid black;
 			width: 320px;
-			height: 500px;
+			height: 100%
 		}
 	</style>
 </head>
@@ -39,7 +39,8 @@
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="wrap">
-		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" if="boardForm" enctype="multipart/form-data">
+		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm" enctype="multipart/form-data"
+			onsubmit="return sandit()">
 			<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
 			<div class="total_section">
 				<div class="main_section">
@@ -51,18 +52,18 @@
 							<option>오후&nbsp;</option>
 						</select>
 						<select name="open_time" class="time">
-							<option value="시작">시작 시간</option>
+							<option value="">시작 시간</option>
 						</select>
 						<select name="maa2">
 							<option>오전&nbsp;</option>
 							<option>오후&nbsp;</option>
 						</select>
 						<select name="close_time" class="time">
-							<option value="마감">마감 시간</option>
+							<option value="">마감 시간</option>
 						</select>
 					</div>
 					<div class="main content">
-						<textarea name="content"></textarea>
+						<textarea name="content">[[${infoboard.Content}]]</textarea>
 					</div>
 					<div class="free_service">
 						<input type="checkbox">
@@ -73,31 +74,61 @@
 						<input type="checkbox">
 					</div>
 					<table class="photo_zone" style="border-collapse: collapse;" border="1">
-						<tr class="r0 at">
-							<th>파일 첨부1</th>
-							<td class="file0_cont">
+						<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
+							th:each="file : ${files}">
+							<th>파일 첨부[[${fileStat.index+1}]]</th>
+							<td th:class="${'file'+fileStat.index+'_cont'}">
 								<div style="float:left;">
-									<input type="file" name="files" id="file0" style="display:none">
-									<span id="file0name">선택된 파일 없음</span>
+									<input type="file" name="files" th:id="${'file'+fileStat.index}"
+										style="display:none">
+									<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
 								</div>
 								<div style="float:right; margin-right: 100px;">
-									<a href="javascript:upload('file0')">파일 선택</a>
-									<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+									<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
+									<a
+										th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
+										선택</a>
+									<a
+										th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
+										삭제</a>
+								</div>
+								<input type="hidden" name="orgName" th:value="${file.orgName}">
+								<th:block th:with="sar=${file.orgName.split('[.]')}">
+									<th:block th:with="ext=${sar[sar.length-1]}">
+										<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
+											th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
+											class="thumbnail">
+									</th:block>
+								</th:block>
+							</td>
+						</tr>
+						<tr th:class="${'r'+files.size()}">
+							<th>파일 첨부[[${files.size()+1}]]</th>
+							<td th:class="${'file'+files.size()+'_cont'}">
+								<div style="float:left;">
+									<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+									<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+								</div>
+								<div style="float:right; margin-right: 100px;">
+									<!-- <a href="javascript:upload('file9','')"> -->
+									<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
+									<!-- <a href="javascript:cancelFile('file9','')"> -->
+									<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
 								</div>
 							</td>
 						</tr>
+						<input type="hidden" value="" name="updateCnt" id="updateCnt">
 					</table>
 				</div>
 				<div class="sub_section">
 					<input type="submit">
 				</div>
-			</div>
 		</form>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+<script th:inline="javascript">
 	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")
 
@@ -109,25 +140,105 @@
 			i.appendChild(option);
 		}
 	}
+	
+	let i = /*[[${files.size()}]]*/'';
+	let orgSize = i;
 
-	let i = 0;
-	function upload(name) {
-		$("#" + name).click();
+	let updateCheck = false;
+	let uploadCheck = false;
+	const updateCnt = $("#updateCnt");
+
+	let num = 0;
+
+	const orgName = document.getElementsByName("orgName");
+	const org_thumbnail = {};
+	for (let j = 0; j < orgName.length; j++) {
+		org_thumbnail[orgName[j].value] = document.querySelector(".file" + j + "_cont .thumbnail")
 	}
-	//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
+	let sysname = "";
+	console.log(orgName);
+	console.log(org_thumbnail);
+	
+		console.log(updateCnt)
+		console.log(name)
+		
+	function cancelFile(name, systemname) {
+		
+		
+		updateCnt.val(updateCnt.val() + "\\" + systemname)
+		let num = name.split("e")[1];
+		if (num == i) {
+			return;
+		}
+		if (i != 0) {
+			//tr지우기
+			let temp = Number(name.split("e")[1]);
+			//해당 행 지우기
+			$(".r" + temp).remove();
+			//지워진 다음 행 부터 숫자 바꿔주기
+			for (let j = temp + 1; j <= i; j++) {
+				const el = $("#boardForm tbody").find(".r" + j);
+				el.attr("class", "r" + (j - 1) + " at");
+
+				el.children('th').text("파일 첨부" + j);
+
+				el.children('td').attr("class", "file" + (j - 1) + "_cont");
+
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name", "files");
+				fileTag.attr("id", "file" + (j - 1));
+
+				el.find("span").attr("id", "file" + (j - 1) + "name");
+
+				el.find("a")[0].href = "javascript:upload('file" + (j - 1) + "')"
+				//el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"','"+el.find("span").text()+"')"
+				el.find("a")[1].href = decodeURI(el.find("a")[1].href.replace("'file" + j + "'", "'file" + (j - 1) + "'"));
+
+			}
+			i--;
+		}
+	}
+	function upload(name, systemname) {
+		let temp = $("#" + name + "name").text();
+		num = Number(name.split("e")[1]);
+		if (temp == '선택된 파일 없음') {
+			$("#" + name).click();
+		}
+		else {
+			updateCnt.val(updateCnt.val() + "\\" + systemname)
+			sysname = systemname;
+			$("#" + name).click();
+		}
+	}
 	$("[type='file']").change(function (e) {
-		//e : 파일이 업로드된 상황 자체를 담고있는 객체
-		//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
-		//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
 		const file = e.target.files[0];
 		const fileTag = e.target;
 
 		if (file == undefined) {
-			//파일이 업로드 되었다가 없어진 경우
-			cancelFile(fileTag.id);
-			console.log("삭제할때만 들어옴")
+			if (!$("." + fileTag.id + "_cont [name='orgName']").val()) {
+				//비어있던 곳에 파일이 업로드 되었다가 취소한 경우
+				cancelFile(fileTag.id);
+			}
+			else {
+				let n = orgName[num].value;
+				let ext = n.split(".").pop();
+				updateCnt.val(updateCnt.val().replaceAll("\\" + sysname, ""));
+				console.log(num);
+				$("#file" + num + "name").text(n);
+				if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+					$("." + fileTag.id + "_cont .thumbnail").remove();
+					document.querySelector("." + fileTag.id + "_cont").appendChild(org_thumbnail[n]);
+				}
+				else {
+					if (document.querySelector("." + fileTag.id + "_cont .thumbnail")) {
+						$("." + fileTag.id + "_cont .thumbnail").remove();
+					}
+				}
+				sysname = "";
+			}
 		}
 		else {
+			uploadCheck = true;
 			//파일이 없었다가 업로드 한 경우
 			//#file0name
 			$("#" + fileTag.id + "name").text(file.name);
@@ -152,12 +263,11 @@
 				}
 			}
 			//가장 마지막 파일 선택 버튼을 눌렀을 때
-			if (fileTag.id.split("e")[1] == i) {
-
+			if (num == i) {
 				const cloneElement = $(".r" + i).clone(true);
 				i++;
-				cloneElement.appendTo(".photo_zone tbody")
-				const lastElement = $(".photo_zone tbody").children().last();
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
 
 				lastElement.attr("class", "r" + i + " at");
 				lastElement.children("th").text("파일 첨부" + (i + 1));
@@ -170,45 +280,12 @@
 				lastElement.find("span").attr("id", "file" + i + "name");
 				lastElement.find("span").text("선택된 파일 없음");
 
-				lastElement.find("a")[0].href = "javascript:upload('file" + i + "')";
-				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "')"
-
+				lastElement.find("a")[0].href = "javascript:upload('file" + i + "','')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "','선택된 파일 없음')"
 			}
+
 		}
 	})
-
-
-	function cancelFile(name) {
-		console.log("삭제")
-		if (name.split("e")[1] == i) {return;}
-
-		if (i != 0) {
-			let temp = Number(name.split("e")[1]);
-
-			$(".r" + temp).remove();
-
-			for (let j = temp + 1; j <= i; j++) {
-				const el = $(".photo_zone tbody").find(".r" + j);
-				el.attr("class", "r" + (j - 1) + " at");
-
-				el.children('th').text("파일 첨부" + j);
-
-				el.children('td').attr("class", "file" + (j - 1) + "_cont");
-
-				const fileTag = el.find("input[type='file']");
-				fileTag.attr("name", "file" + (j - 1));
-				fileTag.attr("id", "file" + (j - 1));
-
-				el.find("span").attr("id", "file" + (j - 1) + "name");
-
-				el.find("a")[0].href = "javascript:uplad('file" + (j - 1) + "')";
-				el.find("a")[1].href = "javascript:cancelfile('file" + (j - 1) + "')";
-			}
-			i--;
-		}
-	}
-
-
 </script>
 
 
