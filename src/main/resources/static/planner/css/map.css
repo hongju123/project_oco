@@ -13,15 +13,16 @@
 	text-decoration: none;
 }
 .map_wrap {
+	margin-top: 50px;
 	position: relative;
 	width: 100%;
 	height: 500px;
 }
 #menu_wrap {
 	position: absolute;
-	top: 0;
+	top: 0px;
 	left: 0;
-	bottom: 0;
+	bottom: 0px;
 	width: 250px;
 	margin: 10px 0 30px 10px;
 	padding: 5px;
@@ -211,20 +212,69 @@ td {
 }
 /* map css */
 
-.sub-inner{
-}
 
-#Form textarea{
+#Form{
 	width:100%;
+    resize: none;
+}
+textarea{
+	width:50%;
 	height:100px;
     resize: none;
+	margin-top: 15px;
+	font-size: larger;
+	font-weight: bolder;
+	border-radius: 10px;
 }
 .list{
 	display: flex;
+	border: 1px solid #efefef;
+	height: 40px;
 }
 .list > input{
-	border : 1px solid black
-
+	border : 1px solid #efefef
 }
+#Form{
+	margin-top: 3vh;
+	font-weight: bolder;
+}
+.calendarcheck, .calendarcancel{
+	color: #9e9c9c !important;
+}
+.calendars{
+	margin-top: 5px;
+	font-size: smaller;
+	border: 1px solid #efefef;
+    width: 100%;
+    height: 40px;
+	width: 30%;
+}
+.data{
+	margin-top: 5px;
+}
+.travel_title{
+	font-weight: bolder;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.a_input{
+	position: relative;
+	top: 10px;
+	font-size: medium;
+	font-weight: bolder;
+	border-radius: 5px;
+	color: #ffffff;
+}
+
+.parent_a{
+    display: block;
+    width: 50%;
+    background-color: #3182f6;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+	height: 40px;
+}
+
 /* map css end */
 

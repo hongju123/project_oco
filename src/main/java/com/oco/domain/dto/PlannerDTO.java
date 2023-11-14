@@ -9,7 +9,6 @@ public class PlannerDTO {
 	private String storeName;
 	private String addr;
 	private String memo;
-	private String coords;
 	private String userId;
 	private String businessId;
 }
