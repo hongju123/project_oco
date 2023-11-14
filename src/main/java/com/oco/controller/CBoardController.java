@@ -37,14 +37,16 @@ public class CBoardController {
 
 	@ResponseBody
 	@GetMapping("addList")
-	public List<BoardDTO> addList(Long amount, Long startRow, String topic) {
+	public List<BoardDTO> addList(Long amount, Long startRow, String topic,Model model) {
 		if(!topic.equals("전체")) {
 			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			log.info("topic NOT ALL: TOPIC{}", topic);
 			return list;
 		}
 		else {
 			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			log.info("topic: TOPIC{}", topic);
 			return list;
 		}

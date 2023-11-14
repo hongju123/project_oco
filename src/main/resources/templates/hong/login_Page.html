@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/sub.css}">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/hong/login_Page/css/login_frame.css}">
-
+	<html xmlns:th="http://www.thymeleaf.org">
+	<link rel="stylesheet" th:href="@{/main/css/common.css}">
+	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/hong/login_Page/css/login_frame.css}">
+</head>
 <body>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
     integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
@@ -15,16 +15,14 @@
     <th:block th:replace="~{layout/header::header}"></th:block>
     <div class="wrap">
 		<div class="sub-inner">
-            <div class="login_area">
-				<h1 class="logo">
-					<a href="#">
-						<img th:src="@{/main/images/logo_origin.png}">
-						<p>여행, 일일이 찾는게 귀찮을 때 <strong>오시오!</strong> </p>
-					</a>
-				</h1>
-		        <form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post">
+            <div class="login_area"data-aos="fade-up">
+				<div class="logo_sub"data-aos="fade-up">
+					<img th:src="@{/main/images/logo_origin.png}"data-aos="fade-up">
+					<p data-aos="fade-up">여행, 일일이 찾는게 귀찮을 때 <strong>오시오!</strong> </p>
+				</div>
+		        <form class="login_form" name="loginForm" th:action="@{/user/checklogin}" method="post" data-aos="fade-up">
                     <div class="userid_div">
-                        <input type="text" name="userId"  placeholder="아이디" class="userid_input" onfocus="this.placeholder = ''" />
+                        <input type="text" name="userId"  placeholder="아이디" class="userid_input"onfocus="this.placeholder = ''" />
                         <!--<a href="#" class="delete_innerText">X</a>-->
                     </div>
                     <div class="userpw_div">
@@ -32,18 +30,18 @@
                         <!--<a href="#" class="delete_innerText">X</a>-->
                     </div>
                 </form>
-                <button class="login_button">로그인</button>
-                <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+                <button class="login_button"data-aos="fade-up">로그인</button>
+                <a id="kakao-login-btn" href="javascript:loginWithKakao()" data-aos="fade-up">
 					<img th:src="@{/main/images/icon-login-kakaotalk-btn.svg}">
                 카카오로 시작하기</a>
                 <p id="token-result"></p>
 				<!--<a href="javascript:loginWithKakao()">
 					<img th:src="@{/hong/login_Page/img/icon-alarm-3.png}" alt=""> 카카오로 시작
 				</a>-->
-                <div class="bottom_navi">
+                <div class="bottom_navi"data-aos="fade-up">
 					<a th:href="@{/user/finduser_Page}">아이디/비밀번호찾기</a>
                     <a th:href="@{/user/join}">회원가입</a>
-                    <a th:href="@{/user/join_business_Page}">사업자회원가입</a>
+                    <a th:href="@{/user/join_business_Page}">사업자 회원가입</a>
                 </div>
                 
             </div>

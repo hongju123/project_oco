@@ -8,6 +8,7 @@
 	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
 	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/main/css/main.css}">
+	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 
 
 	<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
@@ -18,48 +19,35 @@
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
 		<div class="topic_area">
-		<div name="topic" class="topic">전체</div>
-		<div name="topic" class="topic">궁금해요</div>
-		<div name="topic" class="topic">얼마에요</div>
-		<div name="topic" class="topic">함께해요</div>
+			<div name="topic" class="topic">전체</div>
+			<div name="topic" class="topic">궁금해요</div>
+			<div name="topic" class="topic">얼마에요</div>
+			<div name="topic" class="topic">함께해요</div>
 		</div>
-		<table class="list">
-			<tr align="center" valign="middle" id="excludeRow">
-				<th width="8%">번호</th>
-				<th>제목</th>
-				<th width="15%">작성자</th>
-				<th>주제</th>
-				<th>카테고리</th>
-				<th width="17%">날짜</th>
-				<th width="10%">조회수</th>
-			</tr>
-			<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
-				<td>
-					[[${board.boardNum}]]
-				</td>
-
-				<td>
-					<a class="get" th:href="${board.boardNum}">
-						[[${board.boardTitle}]]
-						<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
+		<article>
+			<ul class="list">
+				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList" >
+					<a th:href="@{get?(boardNum=${board.boardNum})}">
+						<div class="topic_category">[[${board.topic}]] <sub> [[${board.category}]]</sub></div>
+						<div>제목 : [[${board.boardTitle}]] <span class="reply_cnt">조회수 :[[${board.readCount}]]</span></div>
+						<div>내용 : [[${board.boardContents}]]</div>
+						<div>유저아이디 : [[${board.userId}]]</div>
+						<div>조회수 : [[${board.readCount}]]</div>
+						<div class="boardNum" >
+							게시글 번호:[[${board.boardNum}]]
+							등록시간 : [[${board.regDate}]]
+						</div>
 					</a>
-					<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-					<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
-				</td>
-				<td>[[${board.userId}]]</td>
-				<td>[[${board.topic}]]</td>
-				<td>[[${board.category}]]</td>
-				<td>[[${board.regDate}]]</td>
-				<td>[[${board.readCount}]]</td>
-
-			</tr>
-			<th:block th:if="${list == null or list.size() == 0}">
-				<tr class="excludeRow">
-					<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-						게시글이 없습니다.</td>
-				</tr>
-			</th:block>
-		</table>
+				</li>
+				<li th:if="${list == null or list.size() == 0}">
+					<div class="excludeRow">
+						<div>
+							등록된 게시글이 없습니다.
+						</div>
+					</div>
+				</li>
+			</ul>
+		</article>
 		<br>
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<table>
@@ -91,8 +79,8 @@
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 	</form> -->
+	<div class="test">감지</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
-	<div class="test">감지<div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
@@ -143,10 +131,8 @@ document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",
 		return ;
 	} else{
 		//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
-		
-		$("tr:not(#excludeRow)").remove();
+		$(".list>li").remove();
 		topic = e.target.innerText;
-		
 		//값이 달라져서 다시 카운트 
 		cnt = 0;
 		startRow = 10;
@@ -154,10 +140,10 @@ document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",
 		//ajax 호출 
 		getList()
 	}
-	console.log(e.target.innerText);
 }))
 
-let observe = new IntersectionObserver(
+
+let observe = new IntersectionObserver( //특정 부분이 감지됐을때 작동.
   entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -184,31 +170,52 @@ let observe = new IntersectionObserver(
     });
   }
 );
-
-
-
-observe.observe(document.querySelector(".test"))
+observe.observe(document.querySelector(".test"));
+//토픽값 변경시 초기 기본값 호출
+//데이터는 기본값 0~10
+function getList(){
+	let table=$(".list");
+	$.ajax({
+          url: getListURL,
+          type: "get",
+          data: { "startRow": 0,"amount":10,"topic": topic},
+          success: function (result) {
+			if (result.length!=0) {
+				console.log(result)
+				appendDataToTable(result);
+			}else{
+				let noDataHtml = "<li><div colspan='7'>게시글이 없습니다.</div></li>";
+        		table.append(noDataHtml);
+			}
+          },
+          error: function (result
+		  ) {
+            // 에러 처리 코드 추가
+          },
+        });
+}
 
 function appendDataToTable(data) {
     let table = $(".list"); // 테이블을 나타내는 클래스를 선택
     data.forEach(item => {
         // 데이터를 기반으로 동적으로 HTML 형성
-        let newRowHtml = "<tr>" +
-            "<td>" + item.boardNum + "</td>" +
-            "<td><a class='get' href='" + item.boardNum + "'  id='"+item.boardNum+"'>" + item.boardTitle + "</a></td>" +
-            "<td>" + item.userId + "</td>" +
-            "<td>" + item.topic + "</td>" +
-            "<td>" + item.category + "</td>" +
-            "<td>" + item.regDate + "</td>" +
-            "<td>" + item.readCount + "</td>" +
-            "</tr>";
+		console.log(item.boardNum);
+		let newRowHtml = "<li>" +
+    "<a href='get?boardNum=" + item.boardNum + "'>" +
+    "<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
+    "<div>제목 : " + item.boardTitle + "<span class='reply_cnt'> 조회수:"+item.readCount+ "</span></div>" +
+    "<div>내용 : " + item.boardContents + "</div>" +
+    "<div>유저아이디 : " + item.userId + "</div>" +
+    "<div>조회수 : " + item.readCount + "</div>" +
+    "<div class='boardNum'>게시글 번호: " + item.boardNum + " 등록시간 : " + item.regDate + "</div>" +
+    "</a>" +
+    "</li>";
+
+			console.log("동적으로 생성은 되네?");
 			boardNum=item.boardNum;
         // 동적으로 형성된 HTML을 테이블에 삽입
-
         table.append(newRowHtml);
-
         // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
-
         // 예를 들어, 클릭 이벤트에 대한 처리
         $(".get:last").on("click", function (e) {
             e.preventDefault();
@@ -220,28 +227,12 @@ function appendDataToTable(data) {
             pageForm.submit();
         });
 
+
+		
     });
 
 }
 
-//토픽값 변경시 초기 기본값 호출
-//데이터는 기본값 0~10
-function getList(){
-	$.ajax({
-          url: getListURL,
-          type: "get",
-          data: { "startRow": 0,"amount":10,"topic": topic},
-          success: function (result) {
-			if (result!=null) {
-				appendDataToTable(result);
-			}
-          },
-          error: function (result
-		  ) {
-            // 에러 처리 코드 추가
-          },
-        });
-}
 
 
 </script>
