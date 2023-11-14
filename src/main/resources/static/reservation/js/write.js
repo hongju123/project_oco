@@ -173,19 +173,6 @@ function leftPad(value) {
 
 
 
-function selectAll(data, callback) {
-	let boardnum = data.boardnum;
-	let pagenum = data.pagenum;
-
-	$.getJSON(
-		"/reply/pages/" + boardnum + "/" + pagenum,
-		function(data) {
-			//data : {replyCnt:댓글개수, list:[....]}
-			callback(data.replyCnt, data.list);
-		}
-	)
-}
-
 
 
 
