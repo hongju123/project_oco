@@ -6,9 +6,8 @@
 	<title>키워드로 장소검색하고 목록으로 표출하기</title>
 </head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 <link rel="stylesheet" th:href="@{/main/css/main.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/planner/css/map.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <script th:src="@{/reservation/js/map.js}"></script>
@@ -25,7 +24,7 @@
             <li><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
 		  </ul>
 		</div>
-		<div class="map_wrap">
+		<div class="map_wrap" data-aos="fade-up">
 			<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
 			<div id="menu_wrap" class="bg_white">
@@ -43,7 +42,7 @@
 			</div>
 		</div>
 		<form id="Form" method="post" name="Form" th:action="@{/planner/map}">
-			<div class="sec-con" data-aos="fade-up">
+			<div class="sec-con">
 				<a href="#" class="calendar sec-tit">날짜</a>
 				<br>
 				<input type="text" class="calendars" name="scheduleDate" value="날짜 선택하기" readonly>
@@ -74,7 +73,7 @@
 					<a href="#" class="calendarcancel">닫기</a>
 				</div>
 			</div>
-			<div class="travel_title">
+			<div class="travel_title" >
 				우리의 여행지
 			</div>
 			<div class="list">
@@ -101,10 +100,13 @@
 <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script th:src="@{/planner/js/map.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script type="text/javascript">
-
+	AOS.init({
+		duration: 1200,
+	  });
 	function sendit() {
 		const Form = document.Form;
 		Form.submit();
