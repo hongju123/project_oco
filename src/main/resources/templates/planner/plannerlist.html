@@ -15,6 +15,15 @@
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
+			<div class="sub-tit">
+				<h2 data-aos="fade-up">플래너로<br> 내 여행을 더 쉽게<br> <strong>관리하세요!</strong></h2>
+			</div><!--.sub-tit-->
+			<div class="depth2-wrap" data-aos="fade-up">
+			  <ul class="depth2 sub-nav">
+			    <li class="active"><a th:href="@{/planner/map}">플래너 만들기</a></li>
+	            <li><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
+			  </ul>
+			</div>
 			<a th:href="${'/planner/map'}">플래너 작성</a>
 			<table class="list">
 				<tr align="right" valign="middle">
