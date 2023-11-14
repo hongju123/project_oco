@@ -1,24 +1,123 @@
-ul {
-	list-style-type: none;
-	padding-left: 0px;
+
+#Form{
+	width: 50%;
+}
+#Form .sec-half{
+	display: flex;
 }
 
-select#category {
-	display: inline-block;
-	border-radius: 5px;
-	padding: 5px;
-	appearance: none;
-	width: 170px;
+#Form .sec-half .left-sec {
+  width:49%;
+  position: relative;
+  margin-right: 2%;;
+}
+#Form .sec-half .right-sec{
+  width:49%;
+  position: relative;
 }
 
-select#category option:checked {
-	background: #3182f6;
+#Form .sec-con{
+	margin-bottom: 30px;
+}
+
+#Form .sec-con .sec-tit{
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+}
+
+#Form .sec-con input[type=text]{
+	border: 1px solid #efefef;
+	width: 100%;
+	height: 40px;
+}
+
+#Form select{
+  border:1px soid #efefef;
+  height: 40px;
+  width: 100%;
+  opacity: 0.4;
+
+}
+
+#Form option{
+ width:100%;
+  background-color: #efefef;
+}
+
+#Form textarea{
+	width:100%;
+	height:100px;
+}
+
+#Form .fuel{display: none;}
+
+.amenities ul{
+	display: flex;
+}
+.amenities ul:after{
+	display: block;
+	content: "";
+	clear: both;
+}
+.amenities ul li{
+	display: block;
+	font-size: 14px;
+}
+
+.submit-btn{
+	display: block;
+	width:50%;
+	background-color: #3182f6;
 	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
 }
 
-select option:hover {
-	background-color: none;
+
+
+
+
+
+
+#clock_box{
+	display:block;
+	position: fixed;
+	top:20%;
+	left:65%;
+	z-index:100;
+
+	}
+
+#clock {
+	text-align: left;
+	/* margin-top: 10%; */
+	font-size: 64px;
+	font-weight: bold;
+	font-family: 'Montserrat', 'Open Sans', sans-serif;
+	opacity:0.1;
+	width:100%;
+	line-height:0.9;
+	margin-top:7%;
+
 }
+
+#clock_p {
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: 'Montserrat', 'Open Sans', sans-serif;
+	opacity:0.15;
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -179,9 +278,9 @@ input[type=checkbox] {
 input[type=checkbox] {
 	content: "";
 	display: inline-block;
-	width: 17px;
-	height: 17px;
-	border: 2px solid #3182f6;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #efefef;
 	border-radius: 4px;
 	vertical-align: middle;
 }
@@ -198,9 +297,3 @@ input#check_btn:checked {
 
 /*편의시설 체크박스 끝*/
 
-#memo {
-	width: 200px;
-	height: 100px;
-	resize: none;
-	border-radius: 10px;
-}

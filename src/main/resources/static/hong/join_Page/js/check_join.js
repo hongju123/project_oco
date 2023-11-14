@@ -179,8 +179,9 @@ email.addEventListener("change",function(e){
         get_code.value = "인증번호";
     }
 })
-get_code.addEventListener("click",function(){
+get_code.addEventListener("click",function(e){
     console.log(email.value);
+    e.target.value = "확인중..";
     $.ajax({
         url: "/mail/getEmailcode",
         type: "POST",
