@@ -1,8 +1,68 @@
+function clock() {
+
+	//Save the times in variables
+
+	var today = new Date();
+
+	var hours = today.getHours();
+	var minutes = today.getMinutes();
+	var seconds = today.getSeconds();
+
+
+	//Set the AM or PM time
+
+	if (hours >= 12) {
+		meridiem = " pm";
+	}
+	else {
+		meridiem = " am";
+	}
+
+
+	//convert hours to 12 hour format and put 0 in front
+	if (hours > 12) {
+		hours = hours - 12;
+	}
+	else if (hours === 0) {
+		hours = 12;
+	}
+
+	//Put 0 in front of single digit minutes and seconds
+
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	else {
+		minutes = minutes;
+	}
+
+	if (seconds < 10) {
+		seconds = "0" + seconds;
+	}
+	else {
+		seconds = seconds;
+	}
+
+
+	document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
+
+}
+
+
+setInterval('clock()', 1000);
+
+AOS.init({
+	duration: 1500,
+});
+
+function sendit() {
+	const Form = document.Form;
+	Form.submit();
+}
 $(document).ready(function() {
 	$(".city").hide();
 	$(".data").hide();
 	$(".name").hide();
-	$(".typeA").hide();
 	$(".typeB").hide();
 	$(".typeC").hide();
 	$(".typeD").hide();
@@ -13,39 +73,39 @@ $(document).ready(function() {
 	$(".amenitiesD").hide();
 	$(".amenitiesE").hide();
 	$(".amenitiesF").hide();
-	const val = $("#category option:selected").text();
+	const val = $("#category option:selected").val();
+	$(".type").val("유형");
+	console.log(val)
+	$("input:checkbox").prop("checked", false);
 	if (val == "렌터카") {
-		console.log("렌터카")
 		$(".personnel").hide();
 		$(".fuel").show();
 	}
 	else {
-		console.log("숙소")
 		$(".fuel").hide();
 		$(".personnel").show();
 	}
 })
 const category = $("#category");
 function f() {
-	const val = $("#category option:selected").text();
-	console.log(val);
+	const val = $("#category option:selected").val();
 	$(".type").val("유형");
-	$(".amenities").val("편의시설");
 	$("input:checkbox").prop("checked", false);
 	if (val == "렌터카") {
-		console.log("렌터카")
 		$(".personnel").hide();
 		$(".fuel").show();
 	}
-	if (val == "숙소" || val == "식당" || val == "카페" || val == "기타") {
-		console.log("숙소")
+	else {
 		$(".fuel").hide();
 		$(".personnel").show();
 	}
 }
-$(".type").on("click", function(e) {
+
+
+
+$("#category").on("change", function(e) {
 	e.preventDefault();
-	const val = $("#category option:selected").text();
+	const val = $("#category option:selected").val();
 	if (val == "숙소") {
 		$(".typeA").show();
 		$(".typeB").hide();
@@ -82,130 +142,9 @@ $(".type").on("click", function(e) {
 		$(".typeA").hide();
 	}
 })
-$(".area").on("click", function(e) {
-	e.preventDefault();
-	$(".city").show();
-})
-$(".typeAA").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("모텔");
-	$(".typeA").hide();
-})
-$(".typeAB").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("호텔");
-	$(".typeA").hide();
-})
-$(".typeAC").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("펜션");
-	$(".typeA").hide();
-})
-$(".typeAD").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("에어비엔비");
-	$(".typeA").hide();
-})
-$(".typeAE").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("캠핑장");
-	$(".typeA").hide();
-})
-$(".typeBA").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("한식");
-	$(".typeB").hide();
-})
-$(".typeBB").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("일식");
-	$(".typeB").hide();
-})
-$(".typeBC").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("중식");
-	$(".typeB").hide();
-})
-$(".typeBD").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("분식");
-	$(".typeB").hide();
-})
-$(".typeBE").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("야식");
-	$(".typeB").hide();
-})
-$(".typeCA").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("개인");
-	$(".typeC").hide();
-})
-$(".typeCB").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("프랜차이즈");
-	$(".typeC").hide();
-})
-$(".typeCC").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("베이커리");
-	$(".typeC").hide();
-})
-$(".typeCD").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("디저트");
-	$(".typeC").hide();
-})
-$(".typeDA").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("경형/소형");
-	$(".typeD").hide();
-})
-$(".typeDB").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("중형/대형");
-	$(".typeD").hide();
-})
-$(".typeDC").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("SUV/승합");
-	$(".typeD").hide();
-})
-$(".typeEA").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("회의실");
-	$(".typeE").hide();
-})
-$(".typeEB").on("click", function(e) {
-	e.preventDefault();
-	const num = $(".type");
-	num.val("파티룸");
-	$(".typeE").hide();
-})
 
-$(".amenities").on("click", function(e) {
-	e.preventDefault();
-	const val = $("#category option:selected").text();
-	const vals = $(".type").val();
-	console.log(vals)
+$("#amenities").on("click", function(e) {
+	const val = $("#category option:selected").val();
 	if (val == "숙소") {
 		$(".amenitiesA").show();
 		$(".amenitiesB").hide();
@@ -265,7 +204,7 @@ $(".sum").on("click", function(e) {
 	});
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesA").hide();
 
 	}
@@ -281,7 +220,7 @@ $(".sum").on("click", function(e) {
 	});
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesB").hide();
 	}
 	$(".amenitiesB").hide();
@@ -297,7 +236,7 @@ $(".sum").on("click", function(e) {
 
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesC").hide();
 	}
 	$(".amenitiesC").hide();
@@ -312,7 +251,7 @@ $(".sum").on("click", function(e) {
 	});
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesD").hide();
 	}
 	$(".amenitiesD").hide();
@@ -327,7 +266,7 @@ $(".sum").on("click", function(e) {
 	});
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesE").hide();
 	}
 	$(".amenitiesE").hide();
@@ -342,7 +281,7 @@ $(".sum").on("click", function(e) {
 	});
 	console.log(checkBoxArr)
 	if (checkBoxArr.length != 0) {
-		$(".amenities").val(checkBoxArr);
+		$("#amenities").val(checkBoxArr);
 		$(".amenitiesF").hide();
 	}
 	$(".amenitiesF").hide();
@@ -366,6 +305,10 @@ $(".calendarcheck").on("click", function(e) {
 	result += year + "년" + month + "월" + startday + "일 ~ " + year + "년" + month + "월" + endday + "일";
 	console.log(result)
 	$(".calendars").val(result)
+	$(".data").hide();
+})
+$(".calendarcancel").on("click", function(e) {
+	e.preventDefault();
 	$(".data").hide();
 })
 /*지역 클릭시 모달창띄우기*/

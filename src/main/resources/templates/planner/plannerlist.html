@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-	<title>플래너 리스트</title>
-</head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
-<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
+
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
+			<div class="sub-tit">
+				<h2 data-aos="fade-up">플래너로<br> 내 여행을 더 쉽게<br> <strong>관리하세요!</strong></h2>
+			</div><!--.sub-tit-->
+			<div class="depth2-wrap" data-aos="fade-up">
+			  <ul class="depth2 sub-nav">
+			    <li class="active"><a th:href="@{/planner/map}">플래너 만들기</a></li>
+	            <li><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
+			  </ul>
+			</div>
 			<a th:href="${'/planner/map'}">플래너 작성</a>
 			<table class="list">
 				<tr align="right" valign="middle">
@@ -53,10 +57,13 @@
 <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/write.js}"></script>
 <script th:inline="javascript">
-	
+	AOS.init({
+		duration: 1200,
+	  });
 	const getForm = $("#getForm");
 	$(".get").on("click",function(e){
 		e.preventDefault()

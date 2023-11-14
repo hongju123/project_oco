@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<title>내 견적서 상세조회</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/reservation/css/write.css}">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
@@ -72,9 +68,12 @@
 <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
-
+AOS.init({
+		duration: 1200,
+	  });
 const addr = $(".addr").val();
 	const addrs = addr.split(",")
 	const linePath = [];

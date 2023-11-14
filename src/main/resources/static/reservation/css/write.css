@@ -198,26 +198,31 @@ td {
 /*달력 끝*/
 
 /* 지역 모달 창 시작 */
+
+.area-sec{
+	position: relative;
+}
+
+.category_2{
+	font-weight: bold;
+	border-bottom: 1px solid #efefef;
+}
+.category_2_detail{
+	font-weight: normal;
+	color: #333333;
+	margin-left: 40px;
+	border-bottom: 1px solid #efefef;
+}
+
 #modal.modal-overlay {
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	left: 0;
 	top: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: rgba(0,0,0,0.5) !important;
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	backdrop-filter: blur(1.5px);
-	-webkit-backdrop-filter: blur(1.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
 	display: none;
-	overflow-y: initial !important
+	z-index:3000;
 }
-
 
 #modal .modal-window {
 	background:#FFFFFF;
@@ -229,11 +234,15 @@ td {
 	width: 400px;
 	height: 500px;
 	position: relative;
-	top: -100px;
-	padding: 10px;
 	height: 500px;
 	overflow-y: auto;
 }
+
+#modal .modal-window .category_list{
+	padding: 30px ;
+	line-height: 40px;
+}
+
 
 #modal .title {
 	padding-left: 10px;
@@ -250,10 +259,9 @@ td {
 #modal .close-area {
 	display: inline;
 	float: right;
-	padding-right: 10px;
+	padding: 30px;
 	cursor: pointer;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
+	color: #333;
 }
 
 #modal .content {
