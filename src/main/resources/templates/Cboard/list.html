@@ -26,23 +26,18 @@
 		</div>
 		<article>
 			<ul class="list">
-				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
-					<div>
-						[[${board.boardNum}]]
-					</div>
-					<div>
-						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
-						<a class="get" th:href="${board.boardNum}">
-							[[${board.boardTitle}]]
-							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
-						</a>
-					</div>
-					<div>[[${board.userId}]]</div>
-					<div>[[${board.topic}]]</div>
-					<div>[[${board.category}]]</div>
-					<div>[[${board.regDate}]]</div>
-					<div>[[${board.readCount}]]</div>
+				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList" >
+					<a th:href="@{get?(boardNum=${board.boardNum})}">
+						<div class="topic_category">[[${board.topic}]] <sub> [[${board.category}]]</sub></div>
+						<div>제목 : [[${board.boardTitle}]] <span class="reply_cnt">조회수 :[[${board.readCount}]]</span></div>
+						<div>내용 : [[${board.boardContents}]]</div>
+						<div>유저아이디 : [[${board.userId}]]</div>
+						<div>조회수 : [[${board.readCount}]]</div>
+						<div class="boardNum" >
+							게시글 번호:[[${board.boardNum}]]
+							등록시간 : [[${board.regDate}]]
+						</div>
+					</a>
 				</li>
 				<li th:if="${list == null or list.size() == 0}">
 					<div class="excludeRow">
@@ -134,7 +129,7 @@ document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",
 		return ;
 	} else{
 		//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
-		$("tr:not(#excludeRow)").remove();
+		$(".list>li").remove();
 		topic = e.target.innerText;
 		//값이 달라져서 다시 카운트 
 		cnt = 0;
@@ -187,7 +182,7 @@ function getList(){
 				console.log(result)
 				appendDataToTable(result);
 			}else{
-				let noDataHtml = "<tr><td colspan='7'>게시글이 없습니다.</td></tr>";
+				let noDataHtml = "<li><div colspan='7'>게시글이 없습니다.</div></li>";
         		table.append(noDataHtml);
 			}
           },
@@ -203,15 +198,18 @@ function appendDataToTable(data) {
     data.forEach(item => {
         // 데이터를 기반으로 동적으로 HTML 형성
 		console.log(item.boardNum);
-        let newRowHtml = "<li>" +
-            "<div>" + item.boardNum + "</div>" +
-            "<div><a class='get' href='" + item.boardNum + "'  id='"+item.boardNum+"'>" + item.boardTitle + "</a></div>" +
-            "<div>" + item.userId + "</div>" +
-            "<div>" + item.topic + "</div>" +
-            "<div>" + item.category + "</div>" +
-            "<div>" + item.regDate + "</div>" +
-            "<div>" + item.readCount + "</div>" +
-            "</li>";
+		let newRowHtml = "<li>" +
+    "<a href='get?boardNum=" + item.boardNum + "'>" +
+    "<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
+    "<div>제목 : " + item.boardTitle + "<span class='reply_cnt'> 조회수:"+item.readCount+ "</span></div>" +
+    "<div>내용 : " + item.boardContents + "</div>" +
+    "<div>유저아이디 : " + item.userId + "</div>" +
+    "<div>조회수 : " + item.readCount + "</div>" +
+    "<div class='boardNum'>게시글 번호: " + item.boardNum + " 등록시간 : " + item.regDate + "</div>" +
+    "</a>" +
+    "</li>";
+
+			console.log("동적으로 생성은 되네?");
 			boardNum=item.boardNum;
         // 동적으로 형성된 HTML을 테이블에 삽입
         table.append(newRowHtml);

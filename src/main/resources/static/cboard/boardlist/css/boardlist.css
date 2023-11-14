@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&display=swap');
+
 .topic_area{
     border: 1px solid black;
     border-radius: 10px;
@@ -21,14 +23,13 @@
     font-weight: bolder;
     flex-grow: 1;
 }
-.topic:nth-child(1){
+.topic:nth-child(1):after{
 }
-.topic:nth-child(2){
+.topic:nth-child(2):after{
 }
-.topic:nth-child(3){
+.topic:nth-child(3):after{
 }
-.topic:nth-child(4){
-}
+
 
 
 body{
@@ -54,12 +55,18 @@ article>ul{
 }
 li{
     border : 1px solid black;
-    font-size: larger;
-    font-weight: bolder;
 }
 .addList{
 }
 article{
     height: 100%;
     width: 50%;
+}
+
+.topic_category{
+    margin: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-size: smaller;
+}
+.topic_category>span{
 }
