@@ -20,8 +20,8 @@
 		</div><!--.sub-tit-->
 		<div class="depth2-wrap" data-aos="fade-up">
 		  <ul class="depth2 sub-nav">
-		    <li><a th:href="@{/planner/map}">플래너 만들기</a></li>
-            <li class="active"><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
+		    <li class="active"><a th:href="@{/planner/map}">플래너 만들기</a></li>
+            <li><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
 		  </ul>
 		</div>
 		<div class="map_wrap" data-aos="fade-up">
@@ -338,7 +338,7 @@
 		polyline.setMap(map);
 	}
 	const str = [];
-	let yx = "";
+	const yx = [];
 	function f1(num) {
 		var jibun = $(".jibun" + num).html();
 		console.log(jibun)
@@ -377,7 +377,7 @@
 				//"<div class='drag' >" + store + "</div>";
 				strr += "<input type='text' value='" + store + "' class='storename' name='storeName' id='storename'>";
 				strr += "<input type='hidden' value='" + jibun + "' class='jibun" + num + "' name='addr' id='addr'>";
-				yx += coords+"/";
+				yx.push( coords+"/") 
 				console.log(yx)
 				$(".coordss").val(yx)
 				str.push(strr);
@@ -413,6 +413,8 @@
 						var list = $(".list")
 						var info = $("#info" + num).html()
 						str.splice(i, 1)
+						yx.splice(i, 1)
+						$(".coordss").val(yx)
 						list.html(str)
 					}
 				}
