@@ -13,6 +13,7 @@ public class BusinessImpl implements BusinessService {
 	BusinessMapper bm;
 	@Override
 	public boolean insert(BusinessDTO businessDto) {
+		System.out.println(businessDto);
 		if (bm.insertParentUser(businessDto) && bm.insertUser(businessDto) && bm.insertinfo(businessDto)) return true;
 		return false;
 	}

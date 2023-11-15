@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<link rel="stylesheet" th:href="@{/main/css/common.css}">
-	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
-	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-	<link rel="stylesheet" th:href="@{/hong/join_Page/css/css.css}">
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/hong/join_Page/css/css.css}">
 </head>
+
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-    <div class="wrap">
+	<div class="wrap">
 		<div class="sub-inner">
 			<div class="form_area" data-aos="fade-up">
-				<div class="logo_sub"data-aos="fade-up">
-					<img th:src="@{/main/images/logo_origin.png}"data-aos="fade-up">
+				<div class="logo_sub" data-aos="fade-up">
+					<img th:src="@{/main/images/logo_origin.png}" data-aos="fade-up">
 					<p data-aos="fade-up">여행, 일일이 찾는게 귀찮을 때 <strong>오시오!</strong> </p>
 				</div>
 				<form class="join_form" method="post" th:action="@{/user/join_business}" data-aos="fade-up">
@@ -52,7 +53,7 @@
 								<option value="경형/소형">경형/소형</option>
 								<option value="중형/대형">중형/대형</option>
 								<option value="SUV/승합">SUV/승합</option>
-							</select>		
+							</select>
 							<select name="businessCategory" class="hidden another">
 								<option value="회의실">회의실</option>
 								<option value="파티룸">파티룸</option>
@@ -61,8 +62,8 @@
 					</div>
 					<label for="userid">아이디</label>
 					<div class="row">
-						<input type="text" value="" class="userid" id="userid" name="businessId" 
-						placeholder="아이디*  (영문소문자/숫자, 4~16자)">
+						<input type="text" value="" class="userid" id="userid" name="businessId"
+							placeholder="아이디*  (영문소문자/숫자, 4~16자)">
 						<input type="button" class="userid_button" value="중복확인">
 					</div>
 					<span class="alarming hidden">*존재하는 아이디입니다.</span>
@@ -70,7 +71,8 @@
 					<br>
 					<label for="userpw">비밀번호</label>
 					<br>
-					<input type="password" value="" id="userpw" class="userpw" name="businessPassword" placeholder="비밀번호* (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자) ">
+					<input type="password" value="" id="userpw" class="userpw" name="businessPassword"
+						placeholder="비밀번호* (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자) ">
 					<br>
 					<span class="alarming hidden">영문, 숫자, 특수문자 포함 8~15자의 문자를 입력해주세요</span>
 					<br>
@@ -98,7 +100,7 @@
 					</div>
 					<span class="alarming hidden">잘못된 이메일 형식입니다</span>
 					<span class="alarming hidden">인증번호를 확인해주세요</span><br>
-					
+
 					<label for="businessPhoneNumber">연락처</label>
 					<br>
 					<input type="text" name="businessPhoneNumber" class="userphonenumber" id="userphonenumber">
@@ -107,17 +109,17 @@
 					<br>
 					<label>가맹점명</label>
 					<br>
-					<input type="text" value="밥묵자" name="businessStoreName" class="business_store_name" >
-					<br><br>		
+					<input type="text" value="밥묵자" name="businessStoreName" class="business_store_name">
+					<br><br>
 					<label>대표자</label>
 					<br>
 					<input type="text" value="유태웅" name="businessrepresent" class="business_represent">
-					<br><br>	
+					<br><br>
 					<label>등록번호</label>
-					<br>	
+					<br>
 					<input type="text" value="8068800032" class="check_business_num" name="businessNumber">
-					<br><br>	
-					
+					<br><br>
+
 					<label>등록일</label>
 					<br>
 					<div class="row">
@@ -129,14 +131,18 @@
 					<label for="sample6_postcode">주소</label>
 					<br>
 					<div class="row">
-						<input type="text" name="businessZipCode" id="sample6_postcode" placeholder="우편번호" readonly class="zipcode">
+						<input type="text" name="businessZipCode" id="sample6_postcode" placeholder="우편번호" readonly
+							class="zipcode">
 						<input type="button" class="postcodeCheckBox" onclick="sample6_execDaumPostcode()" value="주소찾기">
 					</div>
 					<div class="row">
-						<input type="text" name="businessAddress" id="sample6_address" placeholder="주소" class="useraddress" readonly style="width: 50%;">
-						<input type="text" name="businessAdditionalInfo" id="sample6_extraAddress"  readonly class="useradditionalinfo" style="width: 50%;">
-					</div>			
-						<input type="text" name="businessAddressDetail" id="sample6_detailAddress" placeholder="상세주소" class="useraddressdetail">	
+						<input type="text" name="businessAddress" id="sample6_address" placeholder="주소"
+							class="useraddress" readonly style="width: 50%;">
+						<input type="text" name="businessAdditionalInfo" id="sample6_extraAddress" readonly
+							class="useradditionalinfo" style="width: 50%;">
+					</div>
+					<input type="text" name="businessAddressDetail" id="sample6_detailAddress" placeholder="상세주소"
+						class="useraddressdetail">
 					<button id="submitButton" type="button">사업자 회원가입</button>
 				</form>
 			</div>
@@ -144,21 +150,20 @@
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
-<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
-<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
-<script>AOS.init({		duration: 1500,	  });</script>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+	<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+	<script>AOS.init({ duration: 1500, });</script>
 
-<script th:src="@{/hong/join_business_Page/js/businessCheck.js}"></script>
-<script th:src="@{/hong/join_business_Page/js/check_join.js}"></script>
+	<script th:src="@{/hong/join_business_Page/js/businessCheck.js}"></script>
+	<script th:src="@{/hong/join_business_Page/js/check_join.js}"></script>
 
 </body>
-</html>
 
-			
+</html>

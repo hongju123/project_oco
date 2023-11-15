@@ -50,7 +50,7 @@ public class BboardController {
 	@ResponseBody
 	@GetMapping(value = "findlist", consumes = "application/json")
 	public ResponseEntity<AllListDTO> findlist(@RequestParam String main, @RequestParam String city) {
-
+		
 		if (main.toString().contains("전체")) {
 			main = "";
 		}
@@ -70,7 +70,6 @@ public class BboardController {
 	// 아이디로 번호값 가져오기
 	@GetMapping("getpage")
 	public String getpage(String businessId) {
-		System.out.println(businessId);
 		Long businessIdx = service.getIndexNum(businessId);
 		return "redirect:/Bboard/get?businessIdx=" + businessIdx;
 	}
@@ -98,16 +97,8 @@ public class BboardController {
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
 		info.setUseTime(Time);
-		// 파일관련
-		System.out.println(files + "컨트롤러");
-		System.out.println(updateCnt + "컨트롤러");
-		if (files != null) {
-			for (int i = 0; i < files.length; i++) {
-				System.out.println(files[i].getOriginalFilename() + "컨트롤러");
-			}
-		}
-
-		if (service.modify(info, files, updateCnt)) {
+		//파일관련
+		if (service.modify(info,files,updateCnt)) {
 			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;

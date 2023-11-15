@@ -9,8 +9,6 @@
 	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
 	<link rel="stylesheet" th:href="@{/main/css/main.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
-
-
 	<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
 </head>
 
@@ -18,25 +16,25 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
-		<div class="topic_area">
+		<div class="topic_area depth1">
 			<div name="topic" class="topic">전체</div>
 			<div name="topic" class="topic">궁금해요</div>
 			<div name="topic" class="topic">얼마에요</div>
 			<div name="topic" class="topic">함께해요</div>
 		</div>
-				<!-- 글쓰기 버튼 배치하는 테이블 -->
+		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<div class="option_area">
-			<div class="loader loader-4"></div>
 			<a class="write" th:href="@{/Cboard/write}">글쓰기</a>
-		</div>	
+		</div>
 		<article>
 			<ul class="list">
-				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList" >
+				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
 					<a th:href="@{get?(boardNum=${board.boardNum})}">
 						<div class="topic_category">[[${board.topic}]] <sub> [[${board.category}]]</sub></div>
 						<!-- <img  class="img_test" th:src="@{/hong/join_business_Page/img/main_visual02.jpg}" alt="" srcset=""> -->
 						<div class="main_title">[[${board.boardTitle}]]</div>
-						<div class="main_content" th:text="${#strings.length(board.boardContents) > 30 ? #strings.substring(board.boardContents, 0, 30) + '...' : board.boardContents}">
+						<div class="main_content"
+							th:text="${#strings.length(board.boardContents) > 30 ? #strings.substring(board.boardContents, 0, 30) + '...' : board.boardContents}">
 						</div>
 						<div class="user">[[${board.userId}]]</div>
 						<div class="read_cnt_area">
@@ -44,6 +42,7 @@
 							<div class="regDate">[[${board.regDate}]]</div>
 						</div>
 					</a>
+					<hr>
 				</li>
 				<li th:if="${list == null or list.size() == 0}">
 					<div class="excludeRow">
@@ -88,7 +87,7 @@
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 	</form> -->
-<th:block th:replace="~{layout/footer::footer}"></th:block>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
@@ -124,114 +123,115 @@
 		searchForm.submit();
 	}
 
-let cnt = 0;
-let startRow = 10;
-let amount = 20;
-let topic = "전체";
-const getListURL = "/Cboard/addList";
-//토픽 클릭시 
+	let cnt = 0;
+	let startRow = 10;
+	let amount = 20;
+	let topic = "전체";
+	const getListURL = "/Cboard/addList";
+	//토픽 클릭시 
 
 
-document.querySelectorAll(".topic").forEach(data=>data.addEventListener("click",function(e){
-	//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.
-	if (topic == e.target.innerText) {
-		console.log("토픽 값이 같습니다 " + topic);
-		return ;
-	} else{
-		//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
-		$(".list>li").remove();
-		topic = e.target.innerText;
-		//값이 달라져서 다시 카운트 
-		cnt = 0;
-		startRow = 10;
-		amount = 20;
-		//ajax 호출 
-		getList()
+	document.querySelectorAll(".topic").forEach(data => data.addEventListener("click", function (e) {
+		//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.
+		if (topic == e.target.innerText) {
+			console.log("토픽 값이 같습니다 " + topic);
+			return;
+		} else {
+			//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
+			$(".list>li").remove();
+			topic = e.target.innerText;
+			//값이 달라져서 다시 카운트 
+			cnt = 0;
+			startRow = 10;
+			amount = 20;
+			//ajax 호출 
+			getList()
+		}
+	}))
+
+
+	let observe = new IntersectionObserver( //특정 부분이 감지됐을때 작동.
+		entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					console.log("감지완료");
+					cnt += 1;
+					startRow = 10 * cnt;
+					amount = 20 * cnt;
+					console.log("startRow : " + startRow + "," + "amount :" + amount + ", cnt : " + cnt + ", topic : " + topic)
+					$.ajax({
+						url: getListURL,
+						type: "get",
+						data: { "startRow": startRow, "amount": amount, "topic": topic },
+						success: function (result) {
+							if (result != null) {
+								appendDataToTable(result);
+							}
+						},
+						error: function (result
+						) {
+							// 에러 처리 코드 추가
+						},
+					});
+				}
+			});
+		}
+	);
+	observe.observe(document.querySelector(".info-area"));
+	//토픽값 변경시 초기 기본값 호출
+	//데이터는 기본값 0~10
+	function getList() {
+		let table = $(".list");
+		$.ajax({
+			url: getListURL,
+			type: "get",
+			data: { "startRow": 0, "amount": 10, "topic": topic },
+			success: function (result) {
+				if (result.length != 0) {
+					console.log(result)
+					appendDataToTable(result);
+				} else {
+					let noDataHtml = "<li><div colspan='7'>게시글이 없습니다.</div></li>";
+					table.append(noDataHtml);
+				}
+			},
+			error: function (result
+			) {
+				// 에러 처리 코드 추가
+			},
+		});
 	}
-}))
 
+	function appendDataToTable(data) {
+		let table = $(".list"); // 테이블을 나타내는 클래스를 선택
+		data.forEach(item => {
+			let newRowHtml = "<li class='addList'>" +
+				"<a href='/get?boardNum=" + item.boardNum + "'>" +
+				"<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
+				"<div class='main_title'>" + item.boardTitle + "</div>" +
+				"<div class='main_content'>" + (item.boardContents.length > 30 ? item.boardContents.substring(0, 30) + "..." : item.boardContents) + "</div>" +
+				"<div class='user'>" + item.userId + "</div>" +
+				"<div class='read_cnt_area'>" +
+				"<div class='read_cnt'>" + item.readCount + "</div>" +
+				"<div class='regDate'>" + item.regDate + "</div>" +
+				"</div>" +
+				"</a>" +
+				"<hr>" +
+				"</li>";
 
-let observe = new IntersectionObserver( //특정 부분이 감지됐을때 작동.
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-		console.log("감지완료");
-		cnt += 1;
-		startRow = 10*cnt;
-		amount = 20*cnt;
-		console.log("startRow : "+startRow+","+"amount :"+ amount+", cnt : "+cnt+", topic : "+topic)
-        $.ajax({
-          url: getListURL,
-          type: "get",
-          data: { "startRow": startRow,"amount":amount,"topic": topic },
-          success: function (result) {
-			if (result!=null) {
-				appendDataToTable(result);
-			}
-          },
-          error: function (result
-		  ) {
-            // 에러 처리 코드 추가
-          },
-        });
-      }
-    });
-  }
-);
-observe.observe(document.querySelector(".info-area"));
-//토픽값 변경시 초기 기본값 호출
-//데이터는 기본값 0~10
-function getList(){
-	let table=$(".list");
-	$.ajax({
-          url: getListURL,
-          type: "get",
-          data: { "startRow": 0,"amount":10,"topic": topic},
-          success: function (result) {
-			if (result.length!=0) {
-				console.log(result)
-				appendDataToTable(result);
-			}else{
-				let noDataHtml = "<li><div colspan='7'>게시글이 없습니다.</div></li>";
-        		table.append(noDataHtml);
-			}
-          },
-          error: function (result
-		  ) {
-            // 에러 처리 코드 추가
-          },
-        });
-}
+			// 동적으로 형성된 HTML을 테이블에 삽입
+			table.append(newRowHtml);
 
-function appendDataToTable(data) {
-    let table = $(".list"); // 테이블을 나타내는 클래스를 선택
-    data.forEach(item => {
-        let newRowHtml = "<li class='addList'>" +
-            "<a href='/get?boardNum=" + item.boardNum + "'>" +
-            "<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
-            "<div class='main_title'>" + item.boardTitle + "</div>" +
-            "<div class='main_content'>" + (item.boardContents.length > 30 ? item.boardContents.substring(0, 30) + "..." : item.boardContents) + "</div>" +
-            "<div>" + item.userId + "</div>" +
-            "<div class='read_cnt_area'>" +
-            "<div class='read_cnt'>" + item.readCount + "</div>" +
-            "<div class='regDate'>" + item.regDate + "</div>" +
-            "</div>" +
-            "</a>" +
-            "</li>";
-
-        // 동적으로 형성된 HTML을 테이블에 삽입
-        table.append(newRowHtml);
-
-        // 추가된 데이터의 이벤트 처리
-        table.find("li:last a").on("click", function (e) {
-            e.preventDefault();
-            let boardNum = item.boardNum;
-            let url = '/get?boardNum=' + boardNum;
-            // 여기서 페이지 이동 등을 수행할 수 있습니다.
-            window.location.href = url;
-        });
-    });
-}
+			// 추가된 데이터의 이벤트 처리
+			table.find("li:last a").on("click", function (e) {
+				e.preventDefault();
+				let boardNum = item.boardNum;
+				let url = '/get?boardNum=' + boardNum;
+				// 여기서 페이지 이동 등을 수행할 수 있습니다.
+				window.location.href = url;
+			});
+		});
+	}
 
 
 

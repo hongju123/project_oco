@@ -144,6 +144,10 @@ username.addEventListener("change", function () {
         functionCheck[2] = true;
     } else {
         functionCheck[2] = false;
+        username.classList.add("falseAction")
+        setInterval(function () {
+            username.classList.remove("falseAction")
+        }, 1000)
     }
 });
 //이름 끝 

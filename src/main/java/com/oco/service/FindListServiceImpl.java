@@ -39,7 +39,8 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public AllListDTO getMainList(String main, String city) {
-
+		
+		
 		String[] category = new String[2];
 		String[] addr = new String[2];
 
@@ -112,7 +113,6 @@ public class FindListServiceImpl implements FindListService {
 				// 후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
 				// 업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
 				ArrayList<String> sysnames = new ArrayList<>();
-				System.out.println("service : " + files.length);
 				for (int i = 0; i < files.length - 1; i++) {
 					MultipartFile file = files[i];
 					String orgname = file.getOriginalFilename();
