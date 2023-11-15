@@ -1,4 +1,4 @@
- package com.oco.controller;
+package com.oco.controller;
 
 import java.util.List;
 
@@ -23,29 +23,29 @@ public class PlannerController {
 
 	@Autowired
 	private PlannerService service;
-	
+
 	@GetMapping("plannerlist")
 	public void list(Model model) {
 		List<PlannerDTO> list = service.getplannerList();
 		model.addAttribute("list", list);
 		System.out.println(list);
 	}
+
 	@GetMapping("map")
 	public void map() {
 	}
-	
+
 	@PostMapping("map")
-	public String map(PlannerDTO planner)  throws Exception{
-		if(service.plannerwrite(planner)) {
+	public String map(PlannerDTO planner) throws Exception {
+		if (service.plannerwrite(planner)) {
 			return "redirect:/planner/plannerlist";
-		}
-		else {
+		} else {
 			return "redirect:/planner/plannerlist";
 		}
 	}
-	
+
 	@GetMapping(value = { "plannerget", "plannermodify" })
-	public String get( Long scheduleNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+	public String get(Long scheduleNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		HttpSession session = req.getSession();
 		PlannerDTO planner = service.getDetail(scheduleNum);
 		model.addAttribute("planner", planner);
@@ -53,17 +53,15 @@ public class PlannerController {
 		String requestURI = req.getRequestURI();
 		return requestURI;
 	}
-	
 
 	@PostMapping("plannerremove")
 	public String remove(Long scheduleNum, HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
-		if(service.remove(loginUser, scheduleNum)) {
+		String loginUser = (String) session.getAttribute("loginUser");
+		if (service.remove(loginUser, scheduleNum)) {
 			return "redirect:/planner/plannerlist";
-		}
-		else {
-			return "redirect:/planner/plannerget?"+"&scheduleNum="+scheduleNum;
+		} else {
+			return "redirect:/planner/plannerget?" + "&scheduleNum=" + scheduleNum;
 		}
 	}
 }

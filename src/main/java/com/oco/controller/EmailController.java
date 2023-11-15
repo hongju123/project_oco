@@ -8,36 +8,37 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oco.domain.dto.MailDTO;
 import com.oco.service.EmailService;
- 
+
 @Controller
 @RequestMapping("/mail/*")
 public class EmailController {
-	String brand = "OCO";
+    String brand = "OCO";
     private EmailService emailService;
- 
+
     public EmailController(EmailService emailService) {
         this.emailService = emailService;
     }
- 
+
     @GetMapping("send")
     public String main() {
         return "hong/SendMail.html";
     }
- 
+
     @PostMapping("send")
     public String sendMail(MailDTO mailDto) {
         emailService.sendSimpleMessage(mailDto);
         return "hong/SendMail.html";
     }
-    
+
     @ResponseBody
     @PostMapping("getEmailcode")
     public String getCode(MailDTO mailDto) {
-    	return emailService.getEmailCode(mailDto);
+        return emailService.getEmailCode(mailDto);
     }
+
     @ResponseBody
     @PostMapping("checkcode")
     public boolean checkCode(String code, String email) {
-    	return emailService.checkcode(code,email);
+        return emailService.checkcode(code, email);
     }
 }

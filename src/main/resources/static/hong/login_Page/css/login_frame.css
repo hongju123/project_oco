@@ -1,65 +1,60 @@
-.login_area{
-   width: 45%;
-   margin:0 auto;
-   text-align: center;
+.login_area {
+  width: 45%;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.logo_sub img{
-	width: 160px;
+.logo_sub img {
+  width: 160px;
 }
-.logo_sub p{
-	font-size: 18px;
-	margin-top: 20px;
-	font-weight: normal;
-}
-
-.login_form{
-	padding:50px 0 40px 0;
+.logo_sub p {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: normal;
 }
 
-.login_form > div{
-	border-bottom: 1px solid #efefef;
-	text-align: left;
-	padding: 20px 20px 10px 20px ;
+.login_form {
+  padding: 50px 0 40px 0;
 }
 
-.login_form > div input{
-	font-size: 16px;
-	width: 100%;
-}
-.login_button{
-	width: 100%;
-	background-color:#3182f6 ;
-	color: #fff;
-	padding: 20px 0;
-	border-radius: 10px;
+.login_form > div {
+  border-bottom: 1px solid #efefef;
+  text-align: left;
+  padding: 20px 20px 10px 20px;
 }
 
-
-.bottom_navi{
-	padding: 40px 0;
-	color: #707070;
+.login_form > div input {
+  font-size: 16px;
+  width: 100%;
+}
+.login_button {
+  width: 100%;
+  background-color: #3182f6;
+  color: #fff;
+  padding: 20px 0;
+  border-radius: 10px;
 }
 
+.bottom_navi {
+  padding: 40px 0;
+  color: #707070;
+}
 
-
-.bottom_navi a::after{
+.bottom_navi a::after {
   content: "|";
   padding: 0 20px;
 }
 
-.bottom_navi a:last-child::after{
+.bottom_navi a:last-child::after {
   content: "";
 }
 
-
-#kakao-login-btn{
-	display: inline-block;
-	background-color: #fee500;
-	width: 100%;
-	color: #333;
-	padding: 20px 0;
-	border-radius: 10px;
-	margin-top: 15px;
-	
+#kakao-login-btn {
+  display: inline-block;
+  background-color: #fee500;
+  width: 100%;
+  color: #333;
+  padding: 20px 0;
+  border-radius: 10px;
+  margin-top: 15px;
 }

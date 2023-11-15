@@ -1,115 +1,135 @@
-a{text-decoration: none;}
-html{width: 100%; height: 100%;}
-body{
-    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
+a {
+  text-decoration: none;
 }
-#header{
-    background-color: #3182f6;
+html {
+  width: 100%;
+  height: 100%;
 }
-#footer{
-    margin: 0;
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-.hidden{display: none;}.all_unset{all:unset;}
-.wrap{width: 100vw;}
-.first_section{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    background-image: url(../img/main_visual02.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+#header {
+  background-color: #3182f6;
 }
-
-.finduser_Page{
-    background-color:  rgba(49, 131, 246, 0.8);
-    width: 600px;
-    height: 300px;
-    border: 1px solid rgba(49, 131, 246, 0.8);
-    box-shadow: 0 0 10px  rgba(49, 131, 246, 0.8);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
+#footer {
+  margin: 0;
 }
-.choose{
-    display: flex;
-    cursor: pointer;
+.hidden {
+  display: none;
 }
-.choose>div{
-    display: flex;
-    border: 1px solid white;
-    flex-wrap: wrap;	
-    width: 300px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
+.all_unset {
+  all: unset;
 }
-form{
-	margin: 20px;
+.wrap {
+  width: 100vw;
+}
+.first_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-image: url(../img/main_visual02.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.color{
-    font-weight: bolder;
-    background-color: rgba(49, 131, 246, 0.8);
+.finduser_Page {
+  background-color: rgba(49, 131, 246, 0.8);
+  width: 600px;
+  height: 300px;
+  border: 1px solid rgba(49, 131, 246, 0.8);
+  box-shadow: 0 0 10px rgba(49, 131, 246, 0.8);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
-.finduser_Page_button{
-	margin-top: 20px;
-    height: 35px;
-    width: 60px;
-    border-radius: 5px;
-    text-align: center;
-}   
-    
-button{
-    margin: 10px;
-    width: 100px;
-    height: 30px;
-    border: 1px solid #3182f6;
-    box-shadow: 1px 1px 2px #3182f6;
-    background-color: #3182f6;
-    font-weight: bolder;
-    color: white;
+.choose {
+  display: flex;
+  cursor: pointer;
 }
-div,span{
-    color: white;
-    font-weight: bolder;
+.choose > div {
+  display: flex;
+  border: 1px solid white;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
 }
-span{
-    margin: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+form {
+  margin: 20px;
 }
 
-input:not([type=button]){
-    all:unset;
-    border-radius: 3px;
-    border-collapse: collapse;
-    background-color: #1673f6;
-    width: 200px;
-    height: 35px;
-    border: 1px solid ;
-    box-shadow: 0px 0px 1px black;
+.color {
+  font-weight: bolder;
+  background-color: rgba(49, 131, 246, 0.8);
 }
-input[type=text]::placeholder, input[type=email]::placeholder{
-    font-weight: bolder;
-    color: rgba(40, 39, 39, 0.7);
+.finduser_Page_button {
+  margin-top: 20px;
+  height: 35px;
+  width: 60px;
+  border-radius: 5px;
+  text-align: center;
 }
-input[type =button]{
-    margin: 10px;
-    width: 100px;
-    height: 30px;
-    box-shadow: 1px 1px 2px #3182f6;
-    color: white;
-    background-color: #1673f6;
-    border: 1px solid;
-    font-weight: bolder;
+
+button {
+  margin: 10px;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #3182f6;
+  box-shadow: 1px 1px 2px #3182f6;
+  background-color: #3182f6;
+  font-weight: bolder;
+  color: white;
 }
-input[type=text]:focus::placeholder, input[type=password]:focus::placeholder, input[type=email]:focus::placeholder{
-    color: transparent;
+div,
+span {
+  color: white;
+  font-weight: bolder;
+}
+span {
+  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+input:not([type="button"]) {
+  all: unset;
+  border-radius: 3px;
+  border-collapse: collapse;
+  background-color: #1673f6;
+  width: 200px;
+  height: 35px;
+  border: 1px solid;
+  box-shadow: 0px 0px 1px black;
+}
+input[type="text"]::placeholder,
+input[type="email"]::placeholder {
+  font-weight: bolder;
+  color: rgba(40, 39, 39, 0.7);
+}
+input[type="button"] {
+  margin: 10px;
+  width: 100px;
+  height: 30px;
+  box-shadow: 1px 1px 2px #3182f6;
+  color: white;
+  background-color: #1673f6;
+  border: 1px solid;
+  font-weight: bolder;
+}
+input[type="text"]:focus::placeholder,
+input[type="password"]:focus::placeholder,
+input[type="email"]:focus::placeholder {
+  color: transparent;
 }

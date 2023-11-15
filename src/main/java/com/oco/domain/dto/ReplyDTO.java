@@ -1,6 +1,5 @@
 package com.oco.domain.dto;
 
-
 import lombok.Data;
 
 @Data

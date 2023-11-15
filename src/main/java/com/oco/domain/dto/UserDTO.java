@@ -7,10 +7,10 @@ public class UserDTO {
     private String userId;
     private String userPassword;
     private String userName;
-    private String userGender; 
-	private String zipCode;
+    private String userGender;
+    private String zipCode;
     private String userAddress;
-    private String userAddressdetail; 
+    private String userAddressdetail;
     private String userAdditionalinfo;
     private String userHobby;
     private String userEmail;
