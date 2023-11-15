@@ -143,6 +143,10 @@ username.addEventListener("change", function () {
     if (reg.test(username.value)) {
         functionCheck[2] = true;
     } else {
+        username.classList.add("falseAction")
+        setInterval(function () {
+            username.classList.remove("falseAction")
+        }, 1000)
         functionCheck[2] = false;
     }
 });

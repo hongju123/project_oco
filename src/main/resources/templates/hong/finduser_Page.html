@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 찾기 페이지</title>
-
     <link rel="stylesheet" th:href="@{/main/css/common.css}">
-
     <link rel="stylesheet" th:href="@{/hong/finduser_Page/css/frame.css}">
-    
 </head>
+
 <body>
     <th:block th:replace="~{layout/header::header}"></th:block>
     <div class="wrap">
         <section class="first_section">
             <div class="finduser_Page">
                 <div class="choose">
-                	<div class="choose_id color">아이디찾기</div>
-                	<div class="choose_pw">비밀번호찾기</div>
+                    <div class="choose_id color">아이디찾기</div>
+                    <div class="choose_pw">비밀번호찾기</div>
                 </div>
                 <form class="id_form" name="id_form" th:action="@{/user/onlyFindUserID}" method="post">
                     <span>이메일 주소</span>
                     <div>
-                       <input type="useremail" class="email" placeholder="이메일주소 입력" name="userEmail" id="">
-                       <input type="button" class="get_code" value="인증번호 받기">                    
+                        <input type="useremail" class="email" placeholder="이메일주소 입력" name="userEmail" id="">
+                        <input type="button" class="get_code" value="인증번호 받기">
                     </div>
                     <div>
-                       <input type="text" placeholder="인증번호 입력">
-                       <input type="button" class="check_code_button" value="인증번호 확인">
-                   </div>
-	               <button class="finduser_Page_button">확인</button>
+                        <input type="text" placeholder="인증번호 입력">
+                        <input type="button" class="check_code_button" value="인증번호 확인">
+                    </div>
+                    <button class="finduser_Page_button">확인</button>
                 </form>
-                <form class="password_form hidden" name="password_form" th:action="@{/user/checkUserInfo}" method="post">
+                <form class="password_form hidden" name="password_form" th:action="@{/user/checkUserInfo}"
+                    method="post">
                     <span>아이디</span>
                     <div>
                         <input type="text" placeholder="아이디 입력" name="userId" id="id" class="userid">
@@ -40,20 +40,19 @@
                     <span>이메일 주소</span>
                     <div>
                         <input type="email" class="email" placeholder="이메일 입력" name="userEmail" id="email">
-                        <input type="button" class="get_code" value="인증번호 받기">                    
+                        <input type="button" class="get_code" value="인증번호 받기">
                     </div>
                     <div>
                         <input type="text" placeholder="인증번호 입력">
-                        <input type="button" class ="check_code_button" value="인증번호 확인">
+                        <input type="button" class="check_code_button" value="인증번호 확인">
                     </div>
                     <button class="finduser_Page_button">확인</button>
                 </form>
-            
+
             </div>
         </section>
     </div>
     <th:block th:replace="~{layout/footer::footer}"></th:block>
-    
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
@@ -64,12 +63,12 @@
     <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
-    <script>AOS.init({		duration: 1500,	  });</script>
-  
+    <script>AOS.init({ duration: 1500, });</script>
     <script th:src="@{/hong/finduser_Page/js/changeOption.js}"></script>
     <script th:src="@{/hong/finduser_Page/js/validator.js}"></script>
     <script th:src="@{/hong/finduser_Page/js/duplicateID.js}"></script>
     <script th:src="@{/hong/finduser_Page/js/check_cookies.js}"></script>
-    
+
 </body>
+
 </html>
