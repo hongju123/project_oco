@@ -8,6 +8,12 @@
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
+	<th:blocked th:if="${session.loginUser==null}">
+		<script>
+			alert("회원만 이용 가능합니다. 로그인후 이용하세요");
+			location.replace("/");
+		</script>
+	</th:blocked>
 	<div class="wrap reserv_write">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
@@ -27,15 +33,16 @@
 					<div class="sec-con left-sec">
 						<span class="sec-tit">카테고리</span>
 						<th:block th:if="${category} != null">
-							<select id="category"  onchange="f()" name="category">
-								<option th:value="${category}" class="category" selected disabled>[[${category}]]</option>
+							<select id="category" onchange="f()" name="category">
+								<option th:value="${category}" class="category" selected disabled>[[${category}]]
+								</option>
 								<option class="categoryA" value="숙소">숙소</option>
 								<option class="categoryB" value="식당">식당</option>
 								<option class="categoryC" value="카페">카페</option>
 								<option class="categoryD" value="렌터카">렌터카</option>
 								<option class="categoryE" value="기타">기타</option>
 							</select>
-						</th:block>	
+						</th:block>
 						<th:block th:if="${category} == null">
 							<select id="category" onchange="f()" name="category">
 								<option value="" selected disabled>카테고리를 선택하세요</option>
@@ -264,7 +271,7 @@
 		<div id="clock"></div>
 	</div>
 
-	
+
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 	<input type="hidden" class="car" th:value="${category}">
 </body>
@@ -355,7 +362,7 @@
 		$(".amenitiesE").hide();
 		$(".amenitiesF").hide();
 		var val = $(".category").val()
-		if(val == "렌터카"){
+		if (val == "렌터카") {
 			$(".personnel").hide();
 			$(".fuel").show();
 		}

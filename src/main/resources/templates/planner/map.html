@@ -13,6 +13,12 @@
 <script th:src="@{/reservation/js/map.js}"></script>
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
+	<th:blocked th:if="${session.loginUser==null}">
+		<script>
+			alert("회원만 이용 가능합니다. 로그인후 이용하세요");
+			location.replace("/");
+		</script>
+	</th:blocked>
 	<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 	<div class="sub-inner">
 		<div class="sub-tit">
