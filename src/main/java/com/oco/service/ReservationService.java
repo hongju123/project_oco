@@ -22,6 +22,7 @@ public interface ReservationService {
 	Long getTotal();
 	List<ReservationDTO> getReservationList();
 	ReservationDTO getDetail(Long requestNum);
+	List<ReservationDTO> getAllList(String category,String area, Long amount, Long startRow);
 	
 	//유저 요청에 유저 찾는 로직
 	public List<ReservationDTO> getUser(String userId);

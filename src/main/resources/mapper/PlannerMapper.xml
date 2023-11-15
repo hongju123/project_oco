@@ -3,8 +3,8 @@
 <mapper namespace="com.oco.mapper.PlannerMapper">
 	
 	<insert id="insertPlanner">
-		insert into schedule (schedule_date,store_name,addr,memo,user_id)
-		values(#{scheduleDate},#{storeName},#{addr},#{memo},#{userId})
+		insert into schedule (schedule_date,store_name,addr,coords,memo,user_id)
+		values(#{scheduleDate},#{storeName},#{addr},#{coords},#{memo},#{userId})
 	</insert>
 	
 	<delete id="deletereservation">

@@ -230,9 +230,9 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con"><!-- data-aos="fade-up" 있으면 나오지 않음-->
 					<span class="sec-tit">요청사항</span>
-					<textarea placeholder="요청사항을 적어주세요!" name="memo">[[${reservation.memo}]]</textarea>
+					<textarea name="memo" class="memo">[[${reservation.memo}]]</textarea>
 				</div>
 			</form>
 			<div>
@@ -246,7 +246,6 @@
 		<p id="clock_p">Time is going now.</p>
 		<div id="clock"></div>
 	</div>
-
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -257,9 +256,8 @@
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script th:src="@{/reservation/js/write.js}"></script>
-<script th:src="@{/reservation/js/modify.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script th:src="@{/reservation/js/modify.js}"></script>
 <script th:inline="javascript">
 </script>
 

@@ -26,51 +26,63 @@
 				<div class="sec-half">
 					<div class="sec-con left-sec">
 						<span class="sec-tit">카테고리</span>
-						<select id="category" onchange="f()" name="category">
-							<option value="" selected disabled>카테고리를 선택하세요</option>
-							<option class="categoryA" value="숙소">숙소</option>
-							<option class="categoryB" value="식당">식당</option>
-							<option class="categoryC" value="카페">카페</option>
-							<option class="categoryD" value="렌터카">렌터카</option>
-							<option class="categoryE" value="기타">기타</option>
-						</select>
+						<th:block th:if="${category} != null">
+							<select id="category"  onchange="f()" name="category">
+								<option th:value="${category}" class="category" selected disabled>[[${category}]]</option>
+								<option class="categoryA" value="숙소">숙소</option>
+								<option class="categoryB" value="식당">식당</option>
+								<option class="categoryC" value="카페">카페</option>
+								<option class="categoryD" value="렌터카">렌터카</option>
+								<option class="categoryE" value="기타">기타</option>
+							</select>
+						</th:block>	
+						<th:block th:if="${category} == null">
+							<select id="category" onchange="f()" name="category">
+								<option value="" selected disabled>카테고리를 선택하세요</option>
+								<option class="categoryA" value="숙소">숙소</option>
+								<option class="categoryB" value="식당">식당</option>
+								<option class="categoryC" value="카페">카페</option>
+								<option class="categoryD" value="렌터카">렌터카</option>
+								<option class="categoryE" value="기타">기타</option>
+							</select>
+						</th:block>
 					</div><!--.category-sec-->
 					<div class="sec-con right-sec">
 						<span class="sec-tit">유형</span>
 						<!--<input type="text" class="type" name="requestType" id="requestType" value="유형" readonly >-->
 						<select class="typeA" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeAA" value="숙소">모텔</option>
-							<option class="typeAB" value="식당">호텔</option>
-							<option class="typeAC" value="카페">펜션</option>
-							<option class="typeAD" value="렌터카">에어비엔비</option>
-							<option class="typeAE" value="기타">캠핑장</option>
+							<option class="typeAA" value="모텔">모텔</option>
+							<option class="typeAB" value="호텔">호텔</option>
+							<option class="typeAC" value="펜션">펜션</option>
+							<option class="typeAD" value="에어비엔비">에어비엔비</option>
+							<option class="typeAE" value="캠핑장">캠핑장</option>
 						</select>
 						<select class="typeB" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeBA">한식</option>
-							<option class="typeBB">일식</option>
-							<option class="typeBC">중식</option>
-							<option class="typeBD">분식</option>
-							<option class="typeBE">야식</option>
+							<option class="typeBA" value="한식">한식</option>
+							<option class="typeBB" value="일식">일식</option>
+							<option class="typeBC" value="중식">중식</option>
+							<option class="typeBD" value="분식">분식</option>
+							<option class="typeBE" value="야식">야식</option>
 						</select>
 						<select class="typeC" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeCA" value="숙소">개인</option>
-							<option class="typeCB" value="식당">프랜차이즈</option>
-							<option class="typeCC" value="카페">베이커리</option>
-							<option class="typeCD" value="렌터카">디저트</option>
+							<option class="typeCA" value="개인">개인</option>
+							<option class="typeCB" value="프랜차이즈">프랜차이즈</option>
+							<option class="typeCC" value="베이커리">베이커리</option>
+							<option class="typeCD" value="디저트">디저트</option>
 						</select>
 						<select class="typeD" name="requestType">
 							<option value="" selected disabled>카테고리를 선택하세요</option>
-							<option class="typeDA" value="숙소">경형/소형</option>
-							<option class="typeDB" value="식당">중형/대형</option>
-							<option class="typeDC" value="카페">SUV/승합</option>
+							<option class="typeDA" value="경형/소형">경형/소형</option>
+							<option class="typeDB" value="중형/대형">중형/대형</option>
+							<option class="typeDC" value="SUV/승합">SUV/승합</option>
 						</select>
 						<select class="typeE" name="requestType">
 							<option value="" selected disabled>유형을 선택하세요</option>
-							<option class="typeEA" value="숙소">회의실</option>
-							<option class="typeEB" value="식당">파티룸</option>
+							<option class="typeEA" value="회의실">회의실</option>
+							<option class="typeEB" value="파티룸">파티룸</option>
 						</select>
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
@@ -238,7 +250,7 @@
 				</div>
 				<div class="sec-con">
 					<span class="sec-tit">요청사항</span>
-					<textarea placeholder="요청사항을 적어주세요!" name="memo"></textarea>
+					<textarea placeholder="요청사항을 적어주세요!" name="memo" class="memo"></textarea>
 				</div>
 			</form>
 			<div>
@@ -252,8 +264,9 @@
 		<div id="clock"></div>
 	</div>
 
-
+	
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
+	<input type="hidden" class="car" th:value="${category}">
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
@@ -341,6 +354,78 @@
 		$(".amenitiesD").hide();
 		$(".amenitiesE").hide();
 		$(".amenitiesF").hide();
+		var val = $(".category").val()
+		if(val == "렌터카"){
+			$(".personnel").hide();
+			$(".fuel").show();
+		}
+		if (val == "숙소") {
+			$(".typeA").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "식당") {
+			$(".typeB").show();
+			$(".typeA").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "카페") {
+			$(".typeC").show();
+			$(".typeB").hide();
+			$(".typeA").hide();
+			$(".typeD").hide();
+			$(".typeE").hide();
+		}
+		if (val == "렌터카") {
+			$(".typeD").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeA").hide();
+			$(".typeE").hide();
+		}
+		if (val == "기타") {
+			$(".typeE").show();
+			$(".typeB").hide();
+			$(".typeC").hide();
+			$(".typeD").hide();
+			$(".typeA").hide();
+		}
+		if (val == "숙소") {
+			$(".amenitiesA").show();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "식당") {
+			$(".amenitiesB").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "카페") {
+			$(".amenitiesC").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "렌터카") {
+			$(".amenitiesD").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
 	})
 	const category = $("#category");
 	function f() {
@@ -554,6 +639,11 @@
 			$(".amenitiesE").hide();
 			$(".amenitiesF").hide();
 		}
+	})
+	$(".typeE").on("change", function (e) {
+		e.preventDefault();
+		const vals = $(".typeE option:selected").val();
+		console.log(vals)
 		if (vals == "회의실") {
 			$(".amenitiesE").show();
 			$(".amenitiesA").hide();

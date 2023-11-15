@@ -73,4 +73,9 @@ public class ReservationServiceImpl implements ReservationService{
 		return remapper.findByUser(userId);
 	}
 
+	@Override
+	public List<ReservationDTO> getAllList(String category, String area, Long amount, Long startRow) {
+		return remapper.getAllList(category,area,amount,startRow);
+	}
+
 }

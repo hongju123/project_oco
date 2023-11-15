@@ -8,6 +8,7 @@ public class PlannerDTO {
 	private String scheduleDate;
 	private String storeName;
 	private String addr;
+	private String coords;
 	private String memo;
 	private String userId;
 	private String businessId;

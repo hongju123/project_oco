@@ -32,7 +32,7 @@ public class FrontController {
 			
 			String userId = (String) req.getSession().getAttribute("loginUser");
 			System.out.println("현재 유저 아이디 : "+req.getSession().getAttribute("loginUser"));
-			System.out.println("GetUser :"+reService.getUser(userId));
+			//System.out.println("GetUser :"+reService.getUser(userId));
 			model.addAttribute("list",reService.getUser((String)req.getSession().getAttribute("loginUser")));
 			List<BoardDTO> clist = cservice.getBoardAllList(amount,startRow);
 			model.addAttribute("clist", clist);
@@ -40,4 +40,5 @@ public class FrontController {
 		//System.out.println(req.getSession().getAttribute("loginUser"));
 		return "index";
 	}
+	
 }

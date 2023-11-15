@@ -62,7 +62,7 @@
 			<div class="category-con" data-aos="fade-up">
 		      	<div class="category-item">
 		      		<div class="category-icon">
-		      			<a href="#">
+		      			<a th:href="1" class="get">
 		      				<img th:src="@{/main/images/main_icon01.png}">
 		  				</a>
 		      		</div>
@@ -70,7 +70,7 @@
 		      	</div>
 		      	<div class="category-item">
 		      		<div class="category-icon">
-		      			<a href="#">
+		      			<a href="2" class="get">
 		      				<img th:src="@{/main/images/main_icon02.png}">
 		  				</a>
 		      		</div>
@@ -78,7 +78,7 @@
 		      	</div>
 		      	<div class="category-item">
 		      		<div class="category-icon">
-		      			<a href="#">
+		      			<a href="3" class="get">
 		      				<img th:src="@{/main/images/main_icon03.png}">
 		  				</a>
 		      		</div>
@@ -86,7 +86,7 @@
 		      	</div>
 		      	<div class="category-item">
 		      		<div class="category-icon">
-		      			<a href="#">
+		      			<a href="4" class="get">
 		      				<img th:src="@{/main/images/main_icon04.png}">
 		  				</a>
 		      		</div>
@@ -94,7 +94,7 @@
 		      	</div>
 		      	<div class="category-item">
 		      		<div class="category-icon">
-		      			<a href="#">
+		      			<a href="5" class="get">
 		      				<img th:src="@{/main/images/main_icon05.png}">
 		  				</a>
 		      		</div>
@@ -225,7 +225,7 @@
 				<p>궁금했던 모든 것을 물어보고 답해보세요.</p>	
 			</div>
 			<div class="main06-con" data-aos="fade-up">
-			<th:block th:each="board, iterStat : ${clist}" th:if="${iterStat.index < 6}">
+			<th:block th:each="board, iterStat : ${clist}" th:if="${iterStat.index < 4}">
 				<div class="main06-item">
 					<span>[[${board.topic}]]</span>
 					<h5>[[${board.boardTitle}]]</h5>
@@ -242,7 +242,8 @@
 	<form id="pageForm">
 		
 	</form>
-	
+	<form name="getForm" id="getForm">
+	</form>
 	
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
@@ -252,12 +253,15 @@
   <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
   <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
   <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+  <script type="text/javascript" th:src="@{/main/js/get.js}"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
   <script>
 	  AOS.init({
 		duration: 1500,
 	  });
+	  
+	  
   </script>
 
 </html>
