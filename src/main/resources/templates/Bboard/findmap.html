@@ -144,6 +144,11 @@
 				<div class="select_category_section">
 					<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
 					<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+					<div class="modal">
+						<div class="modal_body">
+							
+						</div>
+					</div>
 					<div id="category_select_section">
 	
 					</div>
@@ -157,11 +162,11 @@
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:src="@{/list/js/selectcity.js}"></script>
-<script th:src="@{/list/js/selectmain.js}"></script>
+<script th:src="@{list/js/selectcity.js}"></script>
+<script th:src="@{list/js/selectmain.js}"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
-<script th:src="@{/map/js/onposition.js}"></script>
+<script th:src="@{map/js/onposition.js}"></script>
 <script>
 
 	var markers = [];
@@ -177,12 +182,12 @@
 
 		function selectAll(data) {
 			$.ajax({
-				url: "/list/getlist",
+				url: "/Bboard/findlist",
 				method: "GET",
 				data: {"main": data.category, "city": data.city},
 				contentType: "application/json;charset=utf-8",
 				success: function (data) {
-
+					console.log(data)
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
 					const category = ["숙소", "카페", "식당", "렌터카", "기타"]

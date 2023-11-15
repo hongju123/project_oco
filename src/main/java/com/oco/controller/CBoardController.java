@@ -37,49 +37,47 @@ public class CBoardController {
 
 	@ResponseBody
 	@GetMapping("addList")
-	public List<BoardDTO> addList(Long amount, Long startRow, String topic,Model model) {
-		if(!topic.equals("전체")) {
-			List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
+	public List<BoardDTO> addList(Long amount, Long startRow, String topic, Model model) {
+		if (!topic.equals("전체")) {
+			List<BoardDTO> list = service.getBoardList(amount, startRow, topic);
 			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			log.info("topic NOT ALL: TOPIC{}", topic);
 			return list;
-		}
-		else {
-			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+		} else {
+			List<BoardDTO> list = service.getBoardAllList(amount, startRow);
 			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			log.info("topic: TOPIC{}", topic);
 			return list;
 		}
 	}
-	
-	
+
 	@GetMapping("list")
-	public String list(Model model,Long amount, Long startRow, String topic) throws Exception {
+	public String list(Model model, Long amount, Long startRow, String topic) throws Exception {
 		amount = (amount != null && amount > 10L) ? amount : 10L;
 		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
-		topic = topic==null ? "전체" : topic;
+		topic = topic == null ? "전체" : topic;
 		log.info("topic:{}" + topic);
-		log.info("startRow:{}",startRow);
-		log.info("amount:{}",amount);
+		log.info("startRow:{}", startRow);
+		log.info("amount:{}", amount);
 		log.info("topic:{}", topic);
-			
-		if(topic.equals("전체")) {
-			List<BoardDTO> list = service.getBoardAllList(amount,startRow);
+
+		if (topic.equals("전체")) {
+			List<BoardDTO> list = service.getBoardAllList(amount, startRow);
 			model.addAttribute("list", list);
 			model.addAttribute("newly_board", service.getNewlyBoardList(list));
 			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			model.addAttribute("recent_reply", service.getRecentReplyList(list));
-		} else{
-		
-		List<BoardDTO> list = service.getBoardList(amount,startRow,topic);
-		model.addAttribute("list", list);
-		log.info("list : {}", service.getBoardList(amount,startRow,topic));
-		//model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
+		} else {
 
-		model.addAttribute("newly_board", service.getNewlyBoardList(list));
-		model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
-		log.info("{}",service.getReplyCntList(list));
-		model.addAttribute("recent_reply", service.getRecentReplyList(list));
+			List<BoardDTO> list = service.getBoardList(amount, startRow, topic);
+			model.addAttribute("list", list);
+			log.info("list : {}", service.getBoardList(amount, startRow, topic));
+			// model.addAttribute("pageMaker", new PageDTO(service.getTotal()));
+
+			model.addAttribute("newly_board", service.getNewlyBoardList(list));
+			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
+			log.info("{}", service.getReplyCntList(list));
+			model.addAttribute("recent_reply", service.getRecentReplyList(list));
 		}
 
 		return "Cboard/list";
@@ -92,8 +90,8 @@ public class CBoardController {
 
 	@PostMapping("write")
 	public String write(BoardDTO board, MultipartFile[] files) throws Exception {
-		//Long boardNum = 0l;
-		//수정사항
+		// Long boardNum = 0l;
+		// 수정사항
 		Long boardNum = board.getBoardNum();
 		if (service.regist(board, files)) {
 			boardNum = service.getLastNum(board.getUserId());
@@ -104,12 +102,12 @@ public class CBoardController {
 	}
 
 	@GetMapping(value = { "get", "modify" })
-	public String get( Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
-		//model.addAttribute("cri", cri);
+	public String get(Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+		// model.addAttribute("cri", cri);
 		HttpSession session = req.getSession();
-		log.info("boardNum : {}",boardNum);
+		log.info("boardNum : {}", boardNum);
 		BoardDTO board = service.getDetail(boardNum);
-		
+
 		model.addAttribute("board", board);
 		model.addAttribute("files", service.getFileList(boardNum));
 		String loginUser = (String) session.getAttribute("loginUser");
@@ -169,16 +167,16 @@ public class CBoardController {
 		req.getSession().getAttribute("loginUser");
 		req.getSession().getAttribute("businessUser");
 	}
+
 	@PostMapping("remove")
 	public String remove(Long boardNum, Criteria cri, HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
-		if(service.remove(loginUser, boardNum)) {
+		String loginUser = (String) session.getAttribute("loginUser");
+		if (service.remove(loginUser, boardNum)) {
 			return "redirect:/Cboard/list";
-		}
-		else {
-			return "redirect:/Cboard/get?boardNum="+boardNum;
+		} else {
+			return "redirect:/Cboard/get?boardNum=" + boardNum;
 		}
 	}
-	
+
 }

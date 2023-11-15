@@ -1,72 +1,166 @@
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&family=Noto+Sans+KR:wght@500&display=swap");
 
-.topic_area{
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-top: 170px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.topic_area {
+  border-radius: 10px;
+  margin-top: 170px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-.topic{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: -10px;
-    width: 80px;
-    height: 40px;
-    cursor: pointer;
-    font-size: large;
-    font-weight: bolder;
-    flex-grow: 1;
+.topic {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+  font-size: large;
+  font-weight: bolder;
+  flex-grow: 1;
+  border-collapse: collapse;
 }
-.topic:nth-child(1):after{
+.topic::before {
+  margin: 5px;
+  content: "·";
 }
-.topic:nth-child(2):after{
-}
-.topic:nth-child(3):after{
-}
-
-
-
-body{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
+.topic:hover {
+  color: #3182f6;
 }
 
-.wrap{
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-article>ul{
-    border: 1px solid black;
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
-}
-li{
-    border : 1px solid black;
-}
-.addList{
-}
-article{
-    height: 100%;
-    width: 50%;
+.topic:after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #3182f6;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease-out;
+  margin-left: 5px;
 }
 
-.topic_category{
-    margin: 5px;
-    font-family: 'Gothic A1', sans-serif;
-    font-size: smaller;
+.topic:hover:after {
+  width: 100%;
 }
-.topic_category>span{
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrap {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+article > ul {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+ul li {
+  list-style: none;
+}
+.list > li {
+  font-family: "Gothic A1", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
+}
+.list > li > a > div {
+  margin-left: 10px;
+}
+.list > li {
+}
+article {
+  height: 100%;
+  width: 40%;
+}
+
+.topic_category {
+  margin: 5px;
+  font-family: "Gothic A1", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: smaller;
+}
+.topic_category > span {
+}
+.main_title {
+  font-size: 14px;
+  font-weight: bolder;
+}
+.main_content {
+  letter-spacing: 1px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: rgb(96, 96, 96);
+}
+.img_test {
+  float: right;
+  width: 30%;
+  height: 80%;
+}
+.read_cnt_area {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.read_cnt {
+  display: flex;
+}
+
+.read_cnt:before {
+  content: ""; /* 가상 요소에 내용 추가 */
+  display: inline-block; /* 내용이 인라인 블록 요소로 표시되도록 설정 */
+  width: 16px; /* 적절한 너비로 설정 */
+  height: 16px; /* 적절한 높이로 설정 */
+  background-image: url(../img/readcntimg.png); /* 이미지 경로 설정 */
+  background-size: cover; /* 이미지를 요소에 맞게 크기 조정 */
+  margin-right: 5px; /* 이미지와 텍스트 간격 조절 */
+}
+.write {
+  position: relative;
+  font-size: large;
+}
+.write:hover {
+  color: rgb(0, 0, 0);
+}
+
+.write:after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgba(49, 131, 246, 1);
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  transition: width 0.3s ease-out;
+}
+
+.write:hover:after {
+  width: 100%;
+}
+
+.option_area {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+}
+a > div {
+  margin-top: 5px;
+}
+.regDate {
+  font-size: smaller;
+  margin-right: 10px;
+}
+.user {
+  font-size: smaller;
 }

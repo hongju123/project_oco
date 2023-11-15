@@ -32,12 +32,11 @@ public class UserController {
 	UserService user;
 	@Autowired
 	BusinessService buser;
-	
+
 	@Autowired
 	EmailService emailservice;
 	@Autowired
 	KakaoService kakaoUser;
-	
 
 	@GetMapping("")
 	public String Test(HttpServletRequest req) {
@@ -49,30 +48,32 @@ public class UserController {
 	public String login(@RequestParam("code") String code, HttpServletRequest req) {
 		System.out.println("Received code: " + code);
 
-		KakaoUserDTO  kakaoUserDto= new KakaoLoginService().login(code);
-		
+		KakaoUserDTO kakaoUserDto = new KakaoLoginService().login(code);
+
 		if (kakaoUser.findKakao(kakaoUserDto.getKakaoIdx())) {
-		
+
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
 			req.getSession().setAttribute("businessUser", "X");
 			return "redirect:/";
-		} else if(kakaoUser.insert(kakaoUserDto)) {
+		} else if (kakaoUser.insert(kakaoUserDto)) {
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
 			req.getSession().setAttribute("businessUser", "X");
 			return "redirect:/";
 		} else {
 			log.info("오류@@@@@@@@@@@");
-			return "/hong/login_Page"; 
+			return "/hong/login_Page";
 		}
 	}
+
 	@GetMapping("join")
 	public String joinPage() {
 		return "hong/join_Page";
 	}
+
 	@PostMapping("join")
 	public String join(UserDTO userDto, HttpServletRequest req) {
 		System.out.println(userDto);
-		
+
 		if (user.join(userDto)) {
 			req.getSession().setAttribute("loginUser", userDto.getUserId());
 			return "redirect:/";
@@ -85,11 +86,12 @@ public class UserController {
 	public String joinBusinessPage() {
 		return "hong/join_business_Page.html";
 	}
+
 	@PostMapping("join_business")
 	public String joinBusiness(@ModelAttribute BusinessDTO businessDto, HttpServletResponse res) {
-		log.info("{}",businessDto);
+		log.info("{}", businessDto);
 		businessDto.setBusinessCategory(businessDto.getBusinessCategory().replace(",", "/"));
-		log.info("현재 비지니스 카테고리:"+businessDto.getBusinessCategory());
+		log.info("현재 비지니스 카테고리:" + businessDto.getBusinessCategory());
 		if (buser.insert(businessDto)) {
 			System.out.println(businessDto.getBusinessId());
 			Cookie cookie = new Cookie("userId", businessDto.getBusinessId());
@@ -97,7 +99,7 @@ public class UserController {
 			res.addCookie(cookie);
 			return "hong/login_Page";
 		} else {
-			Cookie cookie = new Cookie("joinStatus","fals");
+			Cookie cookie = new Cookie("joinStatus", "fals");
 			cookie.setMaxAge(1);
 			res.addCookie(cookie);
 			return "hong/join_business_Page";
@@ -120,7 +122,7 @@ public class UserController {
 		System.out.println(userId + userPassword);
 		UserDTO loginUser = user.login(userId, userPassword);
 		if (loginUser != null) {
-// user가 있는 것을 확인 했으니 여기서 business user에 아이디 값이 있는지 확인
+			// user가 있는 것을 확인 했으니 여기서 business user에 아이디 값이 있는지 확인
 			if (buser.findById(loginUser.getUserId())) {
 				req.getSession().setAttribute("loginUser", loginUser.getUserId());
 				req.getSession().setAttribute("businessUser", "O");
@@ -150,7 +152,7 @@ public class UserController {
 		return "hong/finduser_Page";
 	}
 
-//    유저 아이디를 이메일로 찾기
+	// 유저 아이디를 이메일로 찾기
 	@PostMapping("onlyFindUserID")
 	public String onlyFindUserID(HttpServletResponse res, @ModelAttribute UserDTO userDto) {
 		UserDTO findUser = user.findByEmail(userDto.getUserEmail());
@@ -170,13 +172,13 @@ public class UserController {
 		}
 	}
 
-//    이메일과, 아이디로 있는 계정찾기 
+	// 이메일과, 아이디로 있는 계정찾기
 	@PostMapping("checkUserInfo")
 	public String checkUserInfo(@ModelAttribute UserDTO userDto, HttpServletResponse res) {
 		System.out.println(userDto);
 		userDto = user.findByUserInfo(userDto);
 		if (userDto != null) {
-//    		유저 이메일에 비밀번호 보내야함 
+			// 유저 이메일에 비밀번호 보내야함
 			emailservice.sendUserpassword(userDto);
 			Cookie cookie = new Cookie("userId", userDto.getUserId());
 			Cookie cookie1 = new Cookie("userpw", "true");
@@ -186,21 +188,22 @@ public class UserController {
 			res.addCookie(cookie1);
 			return "hong/login_Page";
 		} else {
-//    		else시 없는 것이기때문에 홈페이지 이동하지 않고 다시 제자리
+			// else시 없는 것이기때문에 홈페이지 이동하지 않고 다시 제자리
 			return "user/finduser_Page";
 		}
 	}
-// 	회원탈퇴 로직 
+
+	// 회원탈퇴 로직
 	@GetMapping("withdraw")
-	public String withdrow(HttpServletRequest req){
+	public String withdrow(HttpServletRequest req) {
 		log.info("{}", req.getSession().getAttribute("loginUser"));
-		String userId = (String)req.getSession().getAttribute("loginUser");
-		
-		if (req.getSession().getAttribute("businessUser")!="O") {
+		String userId = (String) req.getSession().getAttribute("loginUser");
+
+		if (req.getSession().getAttribute("businessUser") != "O") {
 			user.withdrawBusinessUser(userId);
-		}else {
+		} else {
 			user.withdrawUser(userId);
-			
+
 		}
 		return "redirect:/user/logout";
 	}

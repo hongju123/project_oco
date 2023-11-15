@@ -8,8 +8,8 @@
 	<!--비지니스 유저 회원가입-->
 	<insert id="insertUser">
 		insert into business_users
-		(business_id,business_password,business_name,business_number,business_zip_code,business_address,business_address_detail,business_additional_info,business_phone_number,business_email,business_store_name)
-		values(#{businessId},#{businessPassword},#{businessName},#{businessNumber},#{businessZipCode},#{businessAddress},#{businessAddressDetail},#{businessAdditionalInfo},#{businessPhoneNumber},#{businessEmail},#{businessStoreName});
+		(business_id,business_password,business_name,business_number,business_zip_code,business_address,business_address_detail,business_additional_info,business_phone_number,business_email,business_store_name,business_category)
+		values(#{businessId},#{businessPassword},#{businessName},#{businessNumber},#{businessZipCode},#{businessAddress},#{businessAddressDetail},#{businessAdditionalInfo},#{businessPhoneNumber},#{businessEmail},#{businessStoreName},#{businessCategory});
 	</insert>
 	<!-- 비지니스 유저 상세 페이지 구현위해 아이디만 생성 -->
 	<insert id="insertinfo">

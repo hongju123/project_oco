@@ -71,6 +71,10 @@
 						유저 상호이름 : [[${userboard.businessStoreName}]] <br>
 						유저 운영 시간 :[[${infoboard.useTime}]] <br>
 						유저 평점 : [[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]]) <br>
+						유저 서비스 : 
+						<th:block th:each="amenity : ${#strings.arraySplit(infoboard.amenities, ',')}">
+							<label><input type="checkbox" th:value="${amenity}">[[${amenity}]]</label>
+						</th:block>
 					</div>
 					<div class="shot_info">
 					</div>
@@ -198,7 +202,7 @@
 					if (list[i].userId == loginUser) {
 						str += '<a href = "' + list[i].replyNum + '" class ="modify">수정</a>';
 						str += '<a href = "' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
-						str += '<a href = "' + list[i].replyNum +" "+ list[i].boardNum + '" class="remove">삭제</a>';
+						str += '<a href = "' + list[i].replyNum + " " + list[i].boardNum + '" class="remove">삭제</a>';
 					}
 					str += '</div></li>';
 				}
@@ -238,7 +242,7 @@
 		}
 		page.html(str);
 
-		$(".changePage").on("click", function (e) { 
+		$(".changePage").on("click", function (e) {
 			e.preventDefault();
 			let target = $(this).attr("href");
 			nowpage = parseInt(target);

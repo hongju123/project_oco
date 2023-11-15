@@ -21,23 +21,24 @@ public class FrontController {
 	ReservationService reService;
 	@Autowired
 	private BoardService cservice;
-	
+
 	@GetMapping("/")
-	public String index(HttpServletRequest req,Model model,Long amount, Long startRow) {
-		if (req.getSession().getAttribute("loginUser")!=null&&reService.getUser((String)req.getSession().getAttribute("loginUser"))!=null) {
+	public String index(HttpServletRequest req, Model model, Long amount, Long startRow) {
+		if (req.getSession().getAttribute("loginUser") != null
+				&& reService.getUser((String) req.getSession().getAttribute("loginUser")) != null) {
 			amount = (amount != null && amount > 10L) ? amount : 10L;
 			startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
-			log.info("startRow:{}",startRow);
-			log.info("amount:{}",amount);
-			
+			log.info("startRow:{}", startRow);
+			log.info("amount:{}", amount);
+
 			String userId = (String) req.getSession().getAttribute("loginUser");
 			System.out.println("현재 유저 아이디 : "+req.getSession().getAttribute("loginUser"));
-			//System.out.println("GetUser :"+reService.getUser(userId));
+			System.out.println("GetUser :" + reService.getUser(userId));
 			model.addAttribute("list",reService.getUser((String)req.getSession().getAttribute("loginUser")));
 			List<BoardDTO> clist = cservice.getBoardAllList(amount,startRow);
 			model.addAttribute("clist", clist);
 		}
-		//System.out.println(req.getSession().getAttribute("loginUser"));
+		// System.out.println(req.getSession().getAttribute("loginUser"));
 		return "index";
 	}
 	
