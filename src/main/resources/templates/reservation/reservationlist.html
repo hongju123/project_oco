@@ -14,26 +14,72 @@
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<h1>견적서 조회</h1>
+			<div class="sub-tit">
+				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
+			</div><!--.sub-tit-->
+			<div class="depth2-wrap" data-aos="fade-up">
+				<ul class="depth2 sub-nav">
+					<li><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
+					<li class="active"><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
+					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+				</ul>
+			</div>
 			<div>
-				<a th:href="${'/reservation/reservationwrite'}">견적서 작성</a>
 				<th:block th:if="${session.businessUser == 'O'}">
-					<input type="button" value="카테고리"> <input type="button" value="지역">
+					<ul class="category">
+						<li class="categorys">
+							<div class="sec-con left-sec">
+								<select id="category" onchange="getList()" name="category">
+									<option value="" selected disabled>카테고리</option>
+									<option class="categoryA" value="숙소">숙소</option>
+									<option class="categoryB" value="식당">식당</option>
+									<option class="categoryC" value="카페">카페</option>
+									<option class="categoryD" value="렌터카">렌터카</option>
+									<option class="categoryE" value="기타">기타</option>
+								</select>
+							</div>
+						</li>
+						<li class="addr">
+							<div class="sec-con area-sec">
+								<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
+								<div id="modal" class="modal-overlay">
+									<div class="modal-window">
+										<div class="close-area">X</div>
+										<ul id="area">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
 				</th:block>
 			</div>
 			<div>
-				<ul>
+				<ul class="list">
 					<li>
 						<th:block th:if="${list != null and list.size()>0}" th:each="reservation : ${list}">
-							<div class="request">
-								<h3>[[${reservation.category}]]</h3>
-								<p>[[${reservation.requestType}]]</p><br>
-								<span>[[${reservation.regDate}]]</span><br><span>[[${reservation.address}]]</span><br>
-								<p class="memo">[[${reservation.memo}]]</p><br>
-								<div class="sum">
-									<a th:href="${reservation.requestNum}" class="get">자세히</a>
+							<th:block th:if="${reservation.userId == session.loginUser}">
+								<div class="request">
+									<h3>[[${reservation.category}]]</h3>
+									<p>[[${reservation.requestType}]]</p><br>
+									<span>[[${reservation.regDate}]]</span><br><span>[[${reservation.address}]]</span><br>
+									<p class="memo">[[${reservation.memo}]]</p><br>
+									<div class="sum">
+										<a th:href="${reservation.requestNum}" class="get">자세히</a>
+									</div>
 								</div>
-							</div>
+							</th:block>
+							<th:block th:if="${session.businessUser == 'O'}">
+								<div class="request">
+									<h3>[[${reservation.category}]]</h3>
+									<p>[[${reservation.requestType}]]</p><br>
+									<span>[[${reservation.regDate}]]</span><br><span>[[${reservation.address}]]</span><br>
+									<p class="memo">[[${reservation.memo}]]</p><br>
+									<div class="sum">
+										<a th:href="${reservation.requestNum}" class="get">자세히</a>
+									</div>
+								</div>
+							</th:block>
 						</th:block>
 					</li>
 				</ul>
@@ -52,7 +98,7 @@
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
-<script th:src="@{/reservation/js/write.js}"></script>
+<script th:src="@{/reservation/js/list.js}"></script>
 <script th:inline="javascript">
 
 	const getForm = $("#getForm");
@@ -65,6 +111,110 @@
 		getForm.attr("method", "get");
 		getForm.submit();
 	})
+
+
+
+	const getListURL = "/reservation/addList";
+
+
+	function getList() {
+		let table = $(".list");
+		 table.empty(); // 기존의 데이터를 모두 제거
+		let category = $("#category").val()
+		let area = $("#areaA").val()
+		console.log("category :",category)
+		console.log("area :",area)
+		$.ajax({
+			url: getListURL,
+			type: "get",
+			data: {"startRow": 0, "amount": 10, "category": category, "area": area},
+			success: function (result) {
+				if (result.length != 0) {
+					console.log(result)
+					appendDataToTable(result);
+				} else {
+					let noDataHtml = "<li><div colspan='7'>게시글이 없습니다.</div></li>";
+					table.append(noDataHtml);
+				}
+			},
+			error: function (result
+			) {
+				// 에러 처리 코드 추가
+			},
+		});
+	}
+
+	function appendDataToTable(data) {
+		let table = $(".list"); // 테이블을 나타내는 클래스를 선택
+		data.forEach(item => {
+			// 데이터를 기반으로 동적으로 HTML 형성
+			console.log(item.requestNum);
+			let newRowHtml = "<li>" +
+				"<div class='request'>"+
+				"<h3>"+item.category+"</h3>"+
+				"<P>"+item.requestType+"</p>"+
+				"<span>"+item.regDate+"</span><br><span>"+item.address+"</span><br>"+
+				"<P class='memo'>"+item.memo+"</p><br>"+
+				"<div class='sum'>"+
+				"<a href='"+item.requestNum+"' class='get'>자세히</a>"+
+				"</div>"+
+				"</div>"+
+				"</li>";
+
+ 			requestNum = item.requestNum;
+			// 동적으로 형성된 HTML을 테이블에 삽입
+			table.append(newRowHtml);
+			// 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
+			// 예를 들어, 클릭 이벤트에 대한 처리
+			$(".get:last").on("click", function (e) {
+				e.preventDefault();
+				let requestNum = $(this).attr("href");
+				let url =/*[[@{/reservation/reservationget}]]*/'';
+				getForm.append("<input type='hidden' name='requestNum' value='" + requestNum + "'>")
+				getForm.attr("action", url);
+				getForm.attr("method", "get");
+				getForm.submit();
+			});
+
+
+
+		});
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>

@@ -11,7 +11,7 @@
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<h2>상세조회</h2>
+			<h2>상세조회</h2> <input type="button" value="적용" onclick="f()">
 			<table>
 				<tr>
 					<th>날짜</th>
@@ -32,6 +32,7 @@
 					<td>
 						<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
 							readonly>
+						<input type="hidden" class="coords" th:value="${planner.coords}">
 					</td>
 				</tr>
 				<tr>
@@ -71,66 +72,77 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
-AOS.init({
+	AOS.init({
 		duration: 1200,
-	  });
-const addr = $(".addr").val();
+	});
+	const addr = $(".addr").val();
 	const addrs = addr.split(",")
 	const linePath = [];
-	const latng = [];
-
-	for (let i = 0; i < addrs.length; i++) {
-		add(i)
+	const latng = $(".coords").val().split("/");
+	const result = [];
+	latng.pop();
+	console.log("latng", latng)
+	//const x = $(".coords").val().split("/")[0].split(",")[1]
+	//const y = $(".coords").val().split("/")[0].split(",")[0]
+	for (let i = 0; i < latng.length; i++) {
+		const xy = latng[i].split(", ");
+		f1(xy, i)
 	}
-	function add(i) {
-		var geocoder = new kakao.maps.services.Geocoder();
-		console.log(addrs[i])
-		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch(addrs[i], function (result, status) {
-			// 정상적으로 검색이 완료됐으면 
-			console.log(addrs[1])
-			console.log(i)
-			if (status === kakao.maps.services.Status.OK) {
+	function f1(xy, i) {
+		console.log("xy", xy);
+		const x = xy[1].split(")")[0];
+		const y = xy[0].split("(")[1];
+		console.log("x:", x, "y:", y);
+		const coords = new kakao.maps.Coords(x, y);
+		const latlng = new kakao.maps.LatLng(y, x);
+		console.log("latlng :", latlng)
+		console.log("coords :", coords)
+		f(latlng)
+	}
 
-				let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-				latng.push(coords)
-				console.log(i)
-				let mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-					mapOption = {
-						center: latng[0], // 지도의 중심좌표 !!!바로 타임리프문으로 값을 넣어라!!
-						level: 5 // 지도의 확대 레벨
-					};
-				let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-				// 마커를 표시할 위치와 title 객체 배열입니다 
-				// 마커 이미지의 이미지 주소입니다
-				let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-				for (let j = 0; j < latng.length; j++) {
+	// 주소로 좌표를 검색합니다
+	// 정상적으로 검색이 완료됐으면 
+	console.log(addrs[1])
+	function f(latlng) {
+		console.log(latlng)
+		let mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+			mapOption = {
+				//center: new kakao.maps.LatLng(latng[0]), // 지도의 중심좌표 !!!바로 타임리프문으로 값을 넣어라!!
+				center: latlng,
+				level: 6 // 지도의 확대 레벨
+			};
+		let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		result.push(latlng)
+		console.log("result", result)
+		// 마커를 표시할 위치와 title 객체 배열입니다 
+		// 마커 이미지의 이미지 주소입니다
+		let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+		for (let i = 0; i < result.length; i++) {
+			// 마커 이미지의 이미지 크기 입니다
+			let imageSize = new kakao.maps.Size(24, 35);
 
-					// 마커 이미지의 이미지 크기 입니다
-					let imageSize = new kakao.maps.Size(24, 35);
-
-					// 마커 이미지를 생성합니다    
-					let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-					// 마커를 생성합니다
-					var marker = new kakao.maps.Marker({
-						map: map, // 마커를 표시할 지도
-						position: latng[j], // 마커를 표시할 위치
-						image: markerImage // 마커 이미지 
-					});
-				}
-				linePath.push(marker.getPosition())
-				var polyline = new kakao.maps.Polyline({
-					path: linePath, // 선을 구성하는 좌표배열 입니다
-					strokeWeight: 5, // 선의 두께 입니다
-					strokeColor: '#FFAE00', // 선의 색깔입니다
-					strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-					strokeStyle: 'solid' // 선의 스타일입니다
-				});
-				// 지도에 선을 표시합니다 
-				polyline.setMap(map);
-			}
+			// 마커 이미지를 생성합니다    
+			let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+				map: map, // 마커를 표시할 지도
+				position: result[i], // 마커를 표시할 위치
+				image: markerImage // 마커 이미지 
+			});
+		}
+		console.log("마커 :", marker.getPosition())
+		linePath.push(marker.getPosition())
+		console.log("linePath :",linePath)
+		var polyline = new kakao.maps.Polyline({
+			path: linePath, // 선을 구성하는 좌표배열 입니다
+			strokeWeight: 5, // 선의 두께 입니다
+			strokeColor: '#FFAE00', // 선의 색깔입니다
+			strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+			strokeStyle: 'solid' // 선의 스타일입니다
 		});
-	} 
+		// 지도에 선을 표시합니다 
+		polyline.setMap(map);
+	}
 </script>
 
 </html>

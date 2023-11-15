@@ -29,5 +29,6 @@ public interface ReservationMapper {
 	
 	List<ReservationDTO> findByUser(String userId);
 	
+	List<ReservationDTO> getAllList(String category, String area, Long amount , Long startRow);
 
 }

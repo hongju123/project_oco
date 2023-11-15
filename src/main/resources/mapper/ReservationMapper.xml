@@ -27,6 +27,12 @@
 		select * from user_requests
 	</select>
 	
+	<select id="getAllList">
+		select * from user_requests where
+		<if test="category != null">category like('%${category}%') </if> and
+		<if test="area != null ">address like('%${area}%') </if> order by request_num desc limit #{startRow},#{amount}
+	</select>	
+	
 	<select id="getTotal">
 		select count(*) from user_requests where request_num > 0
 	</select>
