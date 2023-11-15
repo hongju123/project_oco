@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oco.domain.dto.ReservationDTO;
-import com.oco.domain.dto.AllListDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.service.FindListService;
@@ -19,7 +19,9 @@ import com.oco.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/reservation/*")
 public class ReservationController {
@@ -34,6 +36,47 @@ public class ReservationController {
 	public void list(Model model) {
 		List<ReservationDTO> list = service.getReservationList();
 		model.addAttribute("list", list);
+	}
+	
+	@ResponseBody
+	@GetMapping("addList")
+	public List<ReservationDTO> addList(Model model,Long amount, Long startRow, String category, String area) {
+		amount = (amount != null && amount > 10L) ? amount : 10L;
+		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
+		if(area.equals("지역")) {
+			area = "";
+		}
+		log.info("category:{}" , category);
+		log.info("startRow:{}",startRow);
+		log.info("amount:{}",amount);
+		log.info("area:{}", area);
+		List<ReservationDTO> list = service.getAllList(category,area,amount,startRow);
+		log.info("list:{}", list);
+		return list;
+	}
+	
+	
+	@GetMapping("categorywrite")
+	public String categorywrite(int category, Model model) {
+		log.info("category:{}" , category);
+		switch(category) {
+		case 1 :
+			model.addAttribute("category", "숙소");
+			break;
+		case 2 :
+			model.addAttribute("category", "식당");
+			break;
+		case 3 :
+			model.addAttribute("category", "카페");
+			break;
+		case 4 :
+			model.addAttribute("category", "렌터카");
+			break;
+		case 5 :
+			model.addAttribute("category", "기타");
+			break;
+		}
+		return "reservation/reservationwrite";
 	}
 
 	@GetMapping("reservationwrite")

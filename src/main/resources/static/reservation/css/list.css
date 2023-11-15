@@ -1,16 +1,139 @@
-ul,li{
+@charset "utf-8";
+
+
+@font-face {
+    font-family: 'PyeongChang-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChang-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+select{
+  border:1px soid #efefef;
+  height: 40px;
+  width: 300px;
+  opacity: 0.4;
+
+}
+
+.sec-con{
+	margin-bottom: 30px;
+}
+
+.sec-con .sec-tit{
+	display: block;
+	margin-bottom: 10px;
+}
+
+.sec-con input[type=text]{
+	border: 1px solid #efefef;
+	width: 300px;
+	height: 40px;
+}
+
+/* 지역 모달 창 시작 */
+
+.area-sec{
+	position: relative;
+}
+
+.category_2{
+	font-weight: bold;
+	border-bottom: 1px solid #efefef;
+}
+.category_2_detail{
+	font-weight: normal;
+	color: #333333;
+	margin-left: 40px;
+	border-bottom: 1px solid #efefef;
+}
+
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index:3000;
+}
+
+#modal .modal-window {
+	background:#FFFFFF;
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	height: 500px;
+	overflow-y: auto;
+}
+
+#modal .modal-window .category_list{
+	padding: 30px ;
+	line-height: 40px;
+}
+
+
+#modal .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+
+}
+
+#modal .title h2 {
+	display: inline;
+}
+
+#modal .close-area {
+	display: inline;
+	float: right;
+	padding: 30px;
+	cursor: pointer;
+	color: #333;
+}
+
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+/* 지역 모달 끝*/
+
+.category{
 	display: flex;
+	flex-wrap: wrap;
+}
+
+.categorys,.addr{
+	margin-right: 20px;
+}
+
+
+.list{
+	font-weight: 700;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 
 h3{
+	font-family: 'PyeongChang-Bold';
+	font-size: 18px;
 	text-align: center;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 p{
-	font-size: 1rem;
-    font-weight: 700;
+	font-family: 'PyeongChang-Bold';
+    font-weight: 100;
 }
 
 
@@ -27,13 +150,16 @@ p{
 }
 
 
-
 .memo{
 	text-align: center;
 }
 .sum{
+	color: white;
 	text-align: center;
 	border-radius: 10px;
 	background-color:#3182f6;
 	padding: 15px;
+}
+.sum:hover{
+	
 }

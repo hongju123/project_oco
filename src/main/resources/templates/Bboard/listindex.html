@@ -7,34 +7,125 @@
 	<title>findList</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+	<style>
+		
+		.sub-inner{
+			display: flex;
+			justify-content: space-between;
+		}
+		.category_section {
+			width: 400px;
+		}
+
+		.btn_area {
+			width: 400px;
+			height: 50px;
+			text-align: center;
+		}
+
+		.category_btn {
+			margin: 0 10px;
+			border: 1px solid rgb(132, 179, 248);
+			border-radius: 20px;
+			width: 150px;
+			height: 50px;
+			text-align: center;
+		}
+
+		.service_list_section {
+			box-sizing: border-box;
+			border-bottom: 1px solid rgb(233, 233, 233);
+			width: 550px;
+			padding: 15px 10px;
+		}
+		 .total{
+            margin-bottom: 10px;
+        }
+        .marker{
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            vertical-align:bottom
+        }
+
+        .title {
+            display: inline;
+        }
+
+        .sub_title {
+            margin-left: 10px;
+        }
+		
+
+
+
+
+
+
+
+
+		.modal {
+			position: absolute;
+			display: none;
+			justify-content: center;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		.modal_body {
+			position: absolute;
+			top: 50%;
+			width: 400px;
+			height: 600px;
+			padding: 20px;
+			text-align: center;
+			background-color: rgb(255, 255, 255);
+			border-radius: 10px;
+			box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+			transform: translateY(-50%);
+		}
+	</style>
 </head>
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div class="wrap">
-		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
-		<div class="sub-inner">
-			<div class="category_section">
-				<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
-				<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+	<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+	<div class="sub-inner">
+		<div class="category_section">
+			<div class="btn_area">
+				<input type="text" class="category_btn" name="" id="category_main" value="전체"
+					onclick="selectCategory_main()">
+				<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
+					onclick="selectCategory_city()">
+			</div>
+			<div class="map_page">
+			</div>
+		</div>
+		<div id="find_list_section">
+
+		</div>
+		<div class="modal">
+			<div class="modal_body">
+				<div class="close_area">X</div>
 				<div id="category_select_section">
 
 				</div>
 			</div>
-			<a th:href="@{/Bboard/findmap}">맵으로 보기</a>
-			<a th:href="@{/Bboard/write}">글쓰기</a>
-			<div id="find_list_section">
-			</div>
-		</div><!--.sub-inner-->
-	</div><!--.wrap-->
+		</div>
+	</div>
+	</div><!--.sub-inner-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
 <script th:src="@{list/js/selectcity.js}"></script>
 <script th:src="@{list/js/selectmain.js}"></script>
+<script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
+
 	const list_section = document.getElementById("find_list_section")
 
 	const selectService = (function () {
@@ -49,25 +140,30 @@
 				success: function (data) {
 					const user = data.ulist;
 					const info = data.ilist;
+					
+					console.log(user)
+					console.log(info)
 					let txt = "";
 					for (let inf of info) {
 						for (let use of user) {
 							if (use.businessId == inf.businessId) {
-								txt += '<div class="service_list_section" onclick="sandit()">';
+								txt += '<div class="service_list_section">'
 								txt += '<div id="service_list_deteil_1">'
-								txt += '<h6>' + use.businessStoreName + use.businessId + '<h6>'
-								txt += '<div class="service_menu">'
-								txt += '<div class="overall_grade_area">'
-								txt += '<span>' + parseFloat(inf.overallGrade).toFixed(2) + '</span>'
+								txt += '<div class="total">'
+								txt +=	'<h3 class="title">' + use.businessStoreName + '</h3>'
+								txt += '<span class="sub_title">' +use.businessCategory+ '</span>'
 								txt += '</div>'
-								txt += '<p>' + '-' + inf.visitCount + '</p>'
-								txt += '<p>' + '-' + inf.useTime + '</p>'
-								txt += '<p>' + '-' + use.businessAddress + '</p>'
-								txt += '<p>' + '-' + use.businessCategory + '</p>'
+								txt += '<div class="service_menu">'
+								txt += '<div class="grade_area">'
+								txt += ' <img src="list/img/별.png">'
+								txt += '<span>'+ inf.overallGrade+'</span>'
+								txt += '<span>(' +inf.gradeCount + ')</span>'
+								txt += '<img src="list/img/marker.png" class="marker">'
+								txt += '<span>'+use.businessAddress+'</span>'
+								txt += '</div>'
 								txt += '</div>'
 								txt += '</div>'
 								txt += '<div class="service_list_deteil_2">'
-								txt += '<img src="#s" alt="">'
 								txt += '</div>'
 								txt += '</div>'
 							}

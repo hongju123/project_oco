@@ -14,6 +14,8 @@ function selectCategory_main() {
 		while (category_list_create.lastChild) {
 			category_list_create.removeChild(category_list_create.lastChild)
 		}
+		modal.style.display = "flex"
+		body.style.display = "inline"
 		category_list.className = "category_list"
 		category_list_create.appendChild(category_list)
 
@@ -23,12 +25,14 @@ function selectCategory_main() {
 				ul_1.innerHTML = key
 				ul_1.className = "category_2"
 				category_list.appendChild(ul_1)
-				
+
 				if (ul_1.innerHTML == "전체") {
 					ul_1.addEventListener("click", function() {
 						category_main.setAttribute("value", key)
 						category_select()
-						
+						modal.style.display = "none"
+						body.style.display = "none"
+
 						while (category_list.lastChild) {
 							category_list.removeChild(category_list.lastChild)
 						}
@@ -47,8 +51,12 @@ function selectCategory_main() {
 							ul_1.appendChild(li_2)
 							li_2.addEventListener("click", function() {
 								category_main.setAttribute("value", key + "/" + detail)
+
 								category_select()
-								
+								modal.style.display = "none"
+								body.style.display = "none"
+
+
 								while (category_list.lastChild) {
 									category_list.removeChild(category_list.lastChild)
 								}
@@ -74,7 +82,9 @@ function selectCategory_main() {
 		}
 		category_list_on = "main"
 	} else {
-		category_list_create.removeChild(category_list_create.lastChild)
+		if (category_list_create.lastChild) {
+			category_list_create.removeChild(category_list_create.lastChild)
+		}
 		category_list_on = null
 	}
 }

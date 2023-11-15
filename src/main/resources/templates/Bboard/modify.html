@@ -33,6 +33,11 @@
 			width: 320px;
 			height: 100%
 		}
+
+		input {
+			appearance: checkbox;
+			border: 1px solid black;
+		}
 	</style>
 </head>
 
@@ -42,9 +47,11 @@
 		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm" enctype="multipart/form-data"
 			onsubmit="return sandit()">
 			<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
+			<input type="hidden" th:value="${userboard.businessCategory}" id="service">
 			<div class="total_section">
 				<div class="main_section">
 					<div class="title_section">
+						[[${userboard.businessCategory}]]
 					</div>
 					<div class="shot_info">
 						<select name="maa1">
@@ -66,12 +73,6 @@
 						<textarea name="content">[[${infoboard.Content}]]</textarea>
 					</div>
 					<div class="free_service">
-						<input type="checkbox">
-						<input type="checkbox">
-						<input type="checkbox">
-						<input type="checkbox">
-						<input type="checkbox">
-						<input type="checkbox">
 					</div>
 					<table class="photo_zone" style="border-collapse: collapse;" border="1">
 						<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
@@ -80,7 +81,7 @@
 							<td th:class="${'file'+fileStat.index+'_cont'}">
 								<div style="float:left;">
 									<input type="file" name="files" th:id="${'file'+fileStat.index}"
-										style="display:none">
+										style="display:none" accept="image/gif,image/jpeg,image/png" />
 									<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
 								</div>
 								<div style="float:right; margin-right: 100px;">
@@ -106,7 +107,8 @@
 							<th>파일 첨부[[${files.size()+1}]]</th>
 							<td th:class="${'file'+files.size()+'_cont'}">
 								<div style="float:left;">
-									<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+									<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
+										accept="image/gif,image/jpeg,image/png">
 									<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
 								</div>
 								<div style="float:right; margin-right: 100px;">
@@ -129,6 +131,45 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
+	const service = document.getElementById("service")
+	const free_service = document.getElementsByClassName("free_service")
+	const free = {
+		"숙소": ["와이파이", "스파", "욕조", "드라이기", "다리미", "픽업", "주차", "취사", "반려견동반", "장애인 편의시설"],
+		"식당": ["단체룸", "주차", "발렛", "유아 동반", "반려견 동반", "장애인 편의시설"],
+		"카페": ["단체룸", "와이파이", "충전가능", "프린트", "주차", "발렛", "유아 동반", "반려견 동반", "장애인 편의시설"],
+		"렌트카": ["후방카메라", "블루투스", "내비게이션", "카시트", "유모차", "유아 동반", "반려견 동반", "장애인 편의시설"],
+		"회의실": ["빔 프로젝트", "사무용품", "프린트", "주차", "장애인 편의시설"],
+		"파티룸": ["생일 파티", "기념일 이벤트", "브라이덜 샤워", "웨딩/돌잔치", "주차", "유아 동반", "반려견 동반", "장애인 편의시설"]
+	};
+
+	let txt = "";
+	for (let key in free) {
+		if (service.value.includes(key)) {
+			for (let set of free[key]) {
+				const label = document.createElement("lablel")
+				label.innerHTML = set
+				const box = document.createElement("input")
+				box.type = "checkbox"
+				box.value = set
+				box.name = "amenities"
+				box.className = "amenities"
+				free_service[0].appendChild(label).appendChild(box)
+			}
+		}
+	}
+
+	const boxcheck = document.getElementsByClassName("amenities")
+	let check = /*[[${infoboard.amenities}]]*/'';
+	const set = check.split(",")
+
+	for (let j of set) {
+		for (let i = 0; boxcheck.length > i; i++) {
+			if (boxcheck[i].value == j) {
+				boxcheck[i].checked = true
+			}
+		}
+	}
+
 	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")
 
@@ -140,7 +181,7 @@
 			i.appendChild(option);
 		}
 	}
-	
+
 	let i = /*[[${files.size()}]]*/'';
 	let orgSize = i;
 
@@ -156,15 +197,9 @@
 		org_thumbnail[orgName[j].value] = document.querySelector(".file" + j + "_cont .thumbnail")
 	}
 	let sysname = "";
-	console.log(orgName);
-	console.log(org_thumbnail);
-	
-		console.log(updateCnt)
-		console.log(name)
-		
 	function cancelFile(name, systemname) {
-		
-		
+
+
 		updateCnt.val(updateCnt.val() + "\\" + systemname)
 		let num = name.split("e")[1];
 		if (num == i) {
@@ -223,7 +258,6 @@
 				let n = orgName[num].value;
 				let ext = n.split(".").pop();
 				updateCnt.val(updateCnt.val().replaceAll("\\" + sysname, ""));
-				console.log(num);
 				$("#file" + num + "name").text(n);
 				if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
 					$("." + fileTag.id + "_cont .thumbnail").remove();
@@ -241,10 +275,10 @@
 			uploadCheck = true;
 			//파일이 없었다가 업로드 한 경우
 			//#file0name
-			$("#" + fileTag.id + "name").text(file.name);
 			//업로드 된 파일의 확장자명
 			let ext = file.name.split(".").pop();
 			if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+				$("#" + fileTag.id + "name").text(file.name);
 				$("." + fileTag.id + "_cont .thumbnail").remove();
 				const reader = new FileReader();
 
@@ -255,34 +289,36 @@
 					document.querySelector("." + fileTag.id + "_cont").appendChild(img);
 				}
 				reader.readAsDataURL(file);
+				if (num == i) {
+					const cloneElement = $(".r" + i).clone(true);
+					i++;
+					cloneElement.appendTo("#boardForm tbody")
+					const lastElement = $("#boardForm tbody").children().last();
+
+					lastElement.attr("class", "r" + i + " at");
+					lastElement.children("th").text("파일 첨부" + (i + 1));
+					lastElement.children("td").attr("class", "file" + i + "_cont");
+
+					lastElement.find("input[type='file']").attr("name", "files");
+					lastElement.find("input[type='file']").attr("id", "file" + i);
+					lastElement.find("input[type='file']").val("");
+
+					lastElement.find("span").attr("id", "file" + i + "name");
+					lastElement.find("span").text("선택된 파일 없음");
+
+					lastElement.find("a")[0].href = "javascript:upload('file" + i + "','')";
+					lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "','선택된 파일 없음')"
+				}
 			}
 			else {
 				const temp = $("." + fileTag.id + "_cont .thumbnail");
+				alert("사진 관련파일만 업로드 가능합니다")
+				$(fileTag.val(""))
 				if (temp != null) {
 					temp.remove();
 				}
 			}
 			//가장 마지막 파일 선택 버튼을 눌렀을 때
-			if (num == i) {
-				const cloneElement = $(".r" + i).clone(true);
-				i++;
-				cloneElement.appendTo("#boardForm tbody")
-				const lastElement = $("#boardForm tbody").children().last();
-
-				lastElement.attr("class", "r" + i + " at");
-				lastElement.children("th").text("파일 첨부" + (i + 1));
-				lastElement.children("td").attr("class", "file" + i + "_cont");
-
-				lastElement.find("input[type='file']").attr("name", "files");
-				lastElement.find("input[type='file']").attr("id", "file" + i);
-				lastElement.find("input[type='file']").val("");
-
-				lastElement.find("span").attr("id", "file" + i + "name");
-				lastElement.find("span").text("선택된 파일 없음");
-
-				lastElement.find("a")[0].href = "javascript:upload('file" + i + "','')";
-				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "','선택된 파일 없음')"
-			}
 
 		}
 	})
