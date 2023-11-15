@@ -5,9 +5,9 @@ const check_code = document.querySelectorAll(".check_code");
 const check_code_button = document.querySelectorAll(".check_code_button");
 let emailInput = "null"
 get_code.forEach(data => {
-    data.addEventListener("click", function(e) {
+    data.addEventListener("click", function (e) {
         e.target.value = "로딩중..."
-		 emailInput = e.target.previousElementSibling.value;
+        emailInput = e.target.previousElementSibling.value;
         $.ajax({
             url: "/mail/getEmailcode",
             type: "POST",
@@ -16,9 +16,9 @@ get_code.forEach(data => {
                 console.log(result);
             },
             error: function (result) {
-				
+
                 /*console.log(result.responseText);*/
-            	alert("잘못된 입력입니다")
+                alert("잘못된 입력입니다")
             }
         });
 
@@ -26,25 +26,25 @@ get_code.forEach(data => {
 });
 
 check_code_button.forEach(data => {
-    data.addEventListener("click", function(e) {
+    data.addEventListener("click", function (e) {
         const codeInput = e.target.previousElementSibling.value;
         console.log(codeInput);
         $.ajax({
-        url: "/mail/checkcode",
-        type: "POST",
-        data: { code: codeInput, email :emailInput },
-        success: function (result) {
-			/*성공했을경우 onlyread로 이메일 못바꾸게하기*/
-            console.log(result);
-            email.forEach(data=>data.setAttribute("readonly", "readonly"));
-            userid.setAttribute("readonly", "readonly");
-            /*임시로 아이디,비밀번호창도 그냥 묶어서 onlyread줬음*/
-        },
-        error: function (result) {
-            console.log(result.responseText);
-            
-        }
-    });
+            url: "/mail/checkcode",
+            type: "POST",
+            data: { code: codeInput, email: emailInput },
+            success: function (result) {
+                /*성공했을경우 onlyread로 이메일 못바꾸게하기*/
+                console.log(result);
+                email.forEach(data => data.setAttribute("readonly", "readonly"));
+                userid.setAttribute("readonly", "readonly");
+                /*임시로 아이디,비밀번호창도 그냥 묶어서 onlyread줬음*/
+            },
+            error: function (result) {
+                console.log(result.responseText);
+
+            }
+        });
     });
 });
 

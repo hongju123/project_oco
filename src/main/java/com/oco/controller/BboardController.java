@@ -56,7 +56,7 @@ public class BboardController {
 		}
 		if (!city.contains("/")) {
 			city = "";
-			
+
 		}
 		return new ResponseEntity<AllListDTO>(service.getMainList(main, city), HttpStatus.OK);
 	}
@@ -78,7 +78,7 @@ public class BboardController {
 	// 사업자 소개 페이지 구별
 	@GetMapping(value = { "get", "modify" })
 	public String get(@RequestParam("businessIdx") Long businessIdx, HttpServletRequest req, Model model) {
-		
+
 		Long businessInfoIdx = businessIdx;
 		BusinessDTO userboard = service.userDetail(businessIdx);
 		BusinessInfoDTO infoboard = service.infoDetail(businessIdx);
@@ -91,22 +91,23 @@ public class BboardController {
 
 	// 사업자 수정 페이지
 	@PostMapping("modify")
-	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files,String updateCnt) throws Exception {
-		//시간대 
+	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files, String updateCnt)
+			throws Exception {
+		// 시간대
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
 		info.setUseTime(Time);
-		//파일관련
-		System.out.println(files +"컨트롤러");
+		// 파일관련
+		System.out.println(files + "컨트롤러");
 		System.out.println(updateCnt + "컨트롤러");
-		if(files != null) {
+		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
 				System.out.println(files[i].getOriginalFilename() + "컨트롤러");
 			}
 		}
-		
-		if (service.modify(info,files,updateCnt)) {
+
+		if (service.modify(info, files, updateCnt)) {
 			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;
@@ -126,7 +127,7 @@ public class BboardController {
 		boolean check = (service.riplyRegist(reply) && service.visit(businessInfoIdx));
 		Long replynum = service.getLastNum(reply.getUserId());
 		double allGrade = service.totalGrade(businessInfoIdx);
-		service.setallGrade(allGrade,businessInfoIdx);
+		service.setallGrade(allGrade, businessInfoIdx);
 		return check ? new ResponseEntity<String>(replynum + "", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -141,13 +142,13 @@ public class BboardController {
 
 	@ResponseBody
 	@GetMapping("deletereply")
-	public ResponseEntity<String> remove(@RequestParam("replynum") Long replynum, @RequestParam("businessInfoIdx") Long businessInfoIdx) {
-		if(service.remove(replynum) && service.removeInfo(businessInfoIdx)) {
+	public ResponseEntity<String> remove(@RequestParam("replynum") Long replynum,
+			@RequestParam("businessInfoIdx") Long businessInfoIdx) {
+		if (service.remove(replynum) && service.removeInfo(businessInfoIdx)) {
 			double allGrade = service.totalGrade(businessInfoIdx);
 			service.setallGrade(allGrade, businessInfoIdx);
 			return new ResponseEntity<String>("success", HttpStatus.OK);
-		}
-		else {
+		} else {
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

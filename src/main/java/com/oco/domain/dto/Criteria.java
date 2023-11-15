@@ -34,7 +34,7 @@ public class Criteria {
 		this.startRow = (this.pagenum - 1) * this.amount;
 	}
 
-//	MyBatis에서 #{typeArr} 로 사용 가능
+	// MyBatis에서 #{typeArr} 로 사용 가능
 	public String[] getTypeArr() {
 		// type이 null이라면 return {}
 		// type이 "TC"라면 return {"T","C"}

@@ -24,18 +24,24 @@
 			<div name="topic" class="topic">얼마에요</div>
 			<div name="topic" class="topic">함께해요</div>
 		</div>
+				<!-- 글쓰기 버튼 배치하는 테이블 -->
+		<div class="option_area">
+			<div class="loader loader-4"></div>
+			<a class="write" th:href="@{/Cboard/write}">글쓰기</a>
+		</div>	
 		<article>
 			<ul class="list">
 				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList" >
 					<a th:href="@{get?(boardNum=${board.boardNum})}">
 						<div class="topic_category">[[${board.topic}]] <sub> [[${board.category}]]</sub></div>
-						<div>제목 : [[${board.boardTitle}]] <span class="reply_cnt">조회수 :[[${board.readCount}]]</span></div>
-						<div>내용 : [[${board.boardContents}]]</div>
-						<div>유저아이디 : [[${board.userId}]]</div>
-						<div>조회수 : [[${board.readCount}]]</div>
-						<div class="boardNum" >
-							게시글 번호:[[${board.boardNum}]]
-							등록시간 : [[${board.regDate}]]
+						<!-- <img  class="img_test" th:src="@{/hong/join_business_Page/img/main_visual02.jpg}" alt="" srcset=""> -->
+						<div class="main_title">[[${board.boardTitle}]]</div>
+						<div class="main_content" th:text="${#strings.length(board.boardContents) > 30 ? #strings.substring(board.boardContents, 0, 30) + '...' : board.boardContents}">
+						</div>
+						<div class="user">[[${board.userId}]]</div>
+						<div class="read_cnt_area">
+							<div class="read_cnt">[[${board.readCount}]]</div>
+							<div class="regDate">[[${board.regDate}]]</div>
 						</div>
 					</a>
 				</li>
@@ -49,6 +55,7 @@
 			</ul>
 		</article>
 		<br>
+<<<<<<< HEAD
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<table>
 			<tr align="right" valign="middle" id="excludeRow">
@@ -74,13 +81,14 @@
 				</td>
 			</tr>
 		</table>
+=======
+>>>>>>> 338f249b6377b9e04ca4c154fd5cece47157f722
 	</div>
 	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 	</form> -->
-	<div class="test">감지</div>
-	<th:block th:replace="~{layout/footer::footer}"></th:block>
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
@@ -170,7 +178,7 @@ let observe = new IntersectionObserver( //특정 부분이 감지됐을때 작�
     });
   }
 );
-observe.observe(document.querySelector(".test"));
+observe.observe(document.querySelector(".info-area"));
 //토픽값 변경시 초기 기본값 호출
 //데이터는 기본값 0~10
 function getList(){
@@ -198,39 +206,31 @@ function getList(){
 function appendDataToTable(data) {
     let table = $(".list"); // 테이블을 나타내는 클래스를 선택
     data.forEach(item => {
-        // 데이터를 기반으로 동적으로 HTML 형성
-		console.log(item.boardNum);
-		let newRowHtml = "<li>" +
-    "<a href='get?boardNum=" + item.boardNum + "'>" +
-    "<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
-    "<div>제목 : " + item.boardTitle + "<span class='reply_cnt'> 조회수:"+item.readCount+ "</span></div>" +
-    "<div>내용 : " + item.boardContents + "</div>" +
-    "<div>유저아이디 : " + item.userId + "</div>" +
-    "<div>조회수 : " + item.readCount + "</div>" +
-    "<div class='boardNum'>게시글 번호: " + item.boardNum + " 등록시간 : " + item.regDate + "</div>" +
-    "</a>" +
-    "</li>";
+        let newRowHtml = "<li class='addList'>" +
+            "<a href='/get?boardNum=" + item.boardNum + "'>" +
+            "<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
+            "<div class='main_title'>" + item.boardTitle + "</div>" +
+            "<div class='main_content'>" + (item.boardContents.length > 30 ? item.boardContents.substring(0, 30) + "..." : item.boardContents) + "</div>" +
+            "<div>" + item.userId + "</div>" +
+            "<div class='read_cnt_area'>" +
+            "<div class='read_cnt'>" + item.readCount + "</div>" +
+            "<div class='regDate'>" + item.regDate + "</div>" +
+            "</div>" +
+            "</a>" +
+            "</li>";
 
-			console.log("동적으로 생성은 되네?");
-			boardNum=item.boardNum;
         // 동적으로 형성된 HTML을 테이블에 삽입
         table.append(newRowHtml);
-        // 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
-        // 예를 들어, 클릭 이벤트에 대한 처리
-        $(".get:last").on("click", function (e) {
+
+        // 추가된 데이터의 이벤트 처리
+        table.find("li:last a").on("click", function (e) {
             e.preventDefault();
-            let boardNum = $(this).attr("href");
-            let url = /*[[@{/Cboard/get}]]*/ '';
-            pageForm.append("<input type='hidden' name='boardNum' value='" + boardNum + "'>");
-            pageForm.attr("action", url);
-            pageForm.attr("method", "get");
-            pageForm.submit();
+            let boardNum = item.boardNum;
+            let url = '/get?boardNum=' + boardNum;
+            // 여기서 페이지 이동 등을 수행할 수 있습니다.
+            window.location.href = url;
         });
-
-
-		
     });
-
 }
 
 

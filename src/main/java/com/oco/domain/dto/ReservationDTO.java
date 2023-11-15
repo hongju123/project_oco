@@ -16,5 +16,4 @@ public class ReservationDTO {
 	private String memo;
 	private String userId;
 	private String businessId;
-	
 }
