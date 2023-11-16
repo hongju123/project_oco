@@ -15,25 +15,51 @@ body {
   justify-content: center;
   flex-direction: column;
 }
-<<<<<<< HEAD
+
 table{
 	margin-top: 170px;
     border:1px solid black;    
 }
 #main{
 	width: 750px;
-=======
-table {
-  margin-top: 170px;
-  border: 1px solid black;
->>>>>>> d55023c0a63b01121adbe399767ba414f7111615
+
 }
-th,
-tr {
-  border: 1px solid black;
+th,tr{
+	border: 1px solid black;
 }
-.hidden {
-  display: none;
+th{
+	background-color: #3182f6;
+	color: white;
+	border-bottom-color: white;
+	text-align: center;
+	vertical-align : middle;
+}
+td{
+	padding: 10px;
+}
+
+a{
+
+	box-sizing: content-box;
+}
+
+#btn_area{
+	box-sizing: content-box;
+}
+
+textarea{
+	border: none;
+	width: 598px;
+	height: 103px;
+	
+}
+
+textarea:hover{
+	transition: 1s;
+}
+
+.hidden{
+    display: none;
 }
 
 /* 실패 액션 */
@@ -67,31 +93,5 @@ tr {
     transform: translateX(-1px);
   }
 }
-<<<<<<< HEAD
-
-th{
-	background-color: #3182f6;
-	border-bottom-color: white;
-	text-decoration-color: white;
-	text-align: center;
-	vertical-align : middle;
-}
-td{
-	padding: 10px;
-}
-#btn_area{
-	box-sizing: content-box;
-	border-radius: 1.5px;
-}
-textarea{
-	border: none;
-	width: 598px;
-	height: 103px;
-}
 
 
-.hidden{
-    display: none;
-}
-=======
->>>>>>> d55023c0a63b01121adbe399767ba414f7111615
