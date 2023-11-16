@@ -137,14 +137,17 @@
 		"숙소": ["와이파이", "스파", "욕조", "드라이기", "다리미", "픽업", "주차", "취사", "반려견동반", "장애인 편의시설"],
 		"식당": ["단체룸", "주차", "발렛", "유아 동반", "반려견 동반", "장애인 편의시설"],
 		"카페": ["단체룸", "와이파이", "충전가능", "프린트", "주차", "발렛", "유아 동반", "반려견 동반", "장애인 편의시설"],
-		"렌트카": ["후방카메라", "블루투스", "내비게이션", "카시트", "유모차", "유아 동반", "반려견 동반", "장애인 편의시설"],
+		"렌터카": ["후방카메라", "블루투스", "내비게이션", "카시트", "유모차", "유아 동반", "반려견 동반", "장애인 편의시설"],
 		"회의실": ["빔 프로젝트", "사무용품", "프린트", "주차", "장애인 편의시설"],
 		"파티룸": ["생일 파티", "기념일 이벤트", "브라이덜 샤워", "웨딩/돌잔치", "주차", "유아 동반", "반려견 동반", "장애인 편의시설"]
 	};
 
 	let txt = "";
 	for (let key in free) {
+		console.log(key)
+		console.log(service.value)
 		if (service.value.includes(key)) {
+			console.log("check")
 			for (let set of free[key]) {
 				const label = document.createElement("lablel")
 				label.innerHTML = set
@@ -160,15 +163,17 @@
 
 	const boxcheck = document.getElementsByClassName("amenities")
 	let check = /*[[${infoboard.amenities}]]*/'';
-	const set = check.split(",")
-
-	for (let j of set) {
-		for (let i = 0; boxcheck.length > i; i++) {
-			if (boxcheck[i].value == j) {
-				boxcheck[i].checked = true
+	if (check != null) {
+		const set = check.split(",")
+		for (let j of set) {
+			for (let i = 0; boxcheck.length > i; i++) {
+				if (boxcheck[i].value == j) {
+					boxcheck[i].checked = true
+				}
 			}
 		}
 	}
+
 
 	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")

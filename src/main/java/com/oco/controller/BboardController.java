@@ -115,6 +115,7 @@ public class BboardController {
 	@ResponseBody
 	@PostMapping(value = "insertReply", consumes = "application/json;charset=utf-8")
 	public ResponseEntity<String> insertReply(@RequestBody ReplyDTO reply) {
+		System.out.println(reply);
 		Long businessInfoIdx = reply.getBoardNum();
 		boolean check = (service.riplyRegist(reply) && service.visit(businessInfoIdx));
 		Long replynum = service.getLastNum(reply.getUserId());
