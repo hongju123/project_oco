@@ -35,7 +35,8 @@
 						<span class="sec-tit">카테고리</span>
 						<th:block th:if="${category} != null">
 							<select id="category" onchange="f()" name="category">
-								<option th:value="${category}" class="category" selected disabled>[[${category}]]</option>
+								<option th:value="${category}" class="category" selected disabled>[[${category}]]
+								</option>
 								<option class="categoryA" value="숙소">숙소</option>
 								<option class="categoryB" value="식당">식당</option>
 								<option class="categoryC" value="카페">카페</option>
@@ -139,7 +140,7 @@
 				<div class="sec-half">
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
-						<select name="personnel">
+						<select name="personnel" class="personnel">
 							<option value="" selected disabled>인원수를 설정해주세요</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
@@ -155,7 +156,7 @@
 					</div>
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
-						<select name="fuel">
+						<select name="fuel" class="fuel">
 							<option value="" selected disabled>연료를 설정해주세요</option>
 							<option>전기</option>
 							<option>하이브리드</option>
@@ -261,7 +262,7 @@
 				</div>
 			</form>
 			<div>
-				<a href="javascript:sendit()" class="submit-btn">등록</a>
+				<a href="javascript:sendit()" class="submit-btn" onclick="return submit()">등록</a>
 			</div>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
@@ -363,7 +364,6 @@
 		$(".amenitiesF").hide();
 		var val = $(".category").val()
 		$("#category option:selected").val(val);
-		console.log($("#category option:selected").val())
 		if (val == "렌터카") {
 			$(".personnel").hide();
 			$(".fuel").show();
@@ -800,6 +800,42 @@
 			modal.style.display = "none"
 		}
 	})
+	function submit() {
+		const category = $("#category option:selected").val()
+		const typeA = $(".typeA option:selected").val()
+		const typeB = $(".typeB option:selected").val()
+		const typeC = $(".typeC option:selected").val()
+		const typeD = $(".typeD option:selected").val()
+		const typeE = $(".typeE option:selected").val()
+		const areaA = $(".areaA").val()
+		const calendars = $(".calendars").val()
+		const personnel = $(".personnel option:selected").val()
+		const fuel = $(".fuel option:selected").val()
+		const money = $(".money option:selected").val()
+		const amenities = $("#amenities").val()
+		const memo = $(".memo").val()
+		console.log(category)
+		if (category != "") {
+			if (areaA != "지역") {
+				if (calendars != "날짜") {
+					return true;
+				}
+				else {
+					alert("날짜를 선택해주세요")
+					return false;
+				}
+			}
+			else {
+				alert("지역을 선택해주세요")
+				return false;
+			}
+
+		}
+		else {
+			alert("카테고리를 선택해주세요")
+			return false;
+		}
+	}
 </script>
 
 </html>
