@@ -55,6 +55,33 @@
 			</ul>
 		</article>
 		<br>
+
+		<!-- 글쓰기 버튼 배치하는 테이블 -->
+		<table>
+			<tr align="right" valign="middle" id="excludeRow">
+				<span class="hidden takeMeJs" th:text="${session.loginUser}">글쓰기</span>
+				<td>
+
+					<script>
+						const takeMeJs = document.querySelector(".takeMeJs").innerText;
+						function onWrite(){
+							console.log(takeMeJs);
+							if (takeMeJs!=null&&takeMeJs==" ") {
+								console.log("not null :"+takeMeJs);
+								location.replace("/Cboard/write")
+							} else{
+								alert("로그인 회원만 작성 가능합니다.")
+								console.log(takeMeJs);
+							}
+							return false;
+							}
+					</script> 
+
+					<a class="write" th:href="@{/Cboard/write}">글쓰기</a>
+				</td>
+			</tr>
+		</table>
+
 	</div>
 	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
