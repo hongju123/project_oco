@@ -29,13 +29,13 @@
 			</div>
 			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
+				<input type="hidden" th:value="${category}" name="categorys">
 				<div class="sec-half">
 					<div class="sec-con left-sec">
 						<span class="sec-tit">카테고리</span>
 						<th:block th:if="${category} != null">
 							<select id="category" onchange="f()" name="category">
-								<option th:value="${category}" class="category" selected disabled>[[${category}]]
-								</option>
+								<option th:value="${category}" class="category" selected disabled>[[${category}]]</option>
 								<option class="categoryA" value="숙소">숙소</option>
 								<option class="categoryB" value="식당">식당</option>
 								<option class="categoryC" value="카페">카페</option>
@@ -362,6 +362,8 @@
 		$(".amenitiesE").hide();
 		$(".amenitiesF").hide();
 		var val = $(".category").val()
+		$("#category option:selected").val(val);
+		console.log($("#category option:selected").val())
 		if (val == "렌터카") {
 			$(".personnel").hide();
 			$(".fuel").show();
