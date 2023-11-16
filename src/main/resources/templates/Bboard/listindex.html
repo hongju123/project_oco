@@ -8,15 +8,36 @@
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
-		
-		.sub-inner{
+		@keyframes left {
+			0% {
+				opacity: 0;
+				transform: translateX(-40px);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		@keyframes slideUp {
+			0% {
+				opacity: 0;
+				transform: translateY(40px);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.sub-inner {
 			display: flex;
 			justify-content: space-between;
 		}
-		.category_section {
-			width: 400px;
-		}
 
+		/*버트 부분*/
 		.btn_area {
 			width: 400px;
 			height: 50px;
@@ -30,40 +51,63 @@
 			width: 150px;
 			height: 50px;
 			text-align: center;
+			animation: left 0.5s ease-out;
 		}
 
+		/*맵 이미지*/
+		.map_page {
+			margin-top: 50px;
+			text-align: center;
+			animation: left 0.5s ease-out;
+		}
+
+		.map_img {
+			width: 200px;
+		}
+
+		/*사업자 리스트 부분*/
 		.service_list_section {
 			box-sizing: border-box;
 			border-bottom: 1px solid rgb(233, 233, 233);
-			width: 550px;
+			width: 900px;
 			padding: 15px 10px;
+			animation: slideUp 1.5s ease-out;
+			cursor: pointer;
 		}
-		 .total{
-            margin-bottom: 10px;
-        }
-        .marker{
-            box-sizing: border-box;
-            width: 20px;
-            height: 20px;
-            vertical-align:bottom
-        }
 
-        .title {
-            display: inline;
-        }
+		.total {
+			margin-bottom: 10px;
+		}
 
-        .sub_title {
-            margin-left: 10px;
-        }
-		
+		.marker {
+			box-sizing: border-box;
+			width: 20px;
+			height: 20px;
+			vertical-align: bottom
+		}
 
+		.title {
+			display: inline;
+			margin-right: 10px;
+		}
 
+		.service_list {
+			width: 400px;
+			margin: 8px 0px;
+			display: flex;
+			flex-wrap: wrap;
+			position: relative;
+		}
 
+		.service_set {
+			box-sizing: border-box;
+			padding: 5px;
+			margin: 5px 8px 0px 0px;
+			background-color: rgba(132, 179, 248, 0.2);
+			border-radius: 10px;
+		}
 
-
-
-
-
+		/*모달창 부분*/
 		.modal {
 			position: absolute;
 			display: none;
@@ -81,12 +125,51 @@
 			width: 400px;
 			height: 600px;
 			padding: 20px;
-			text-align: center;
-			background-color: rgb(255, 255, 255);
-			border-radius: 10px;
+			background-color: rgba(255, 255, 255, 0.9);
 			box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-
 			transform: translateY(-50%);
+			overflow: auto;
+		}
+
+		.close_area {
+			text-align: right;
+			font-size: 24px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		#category_select_section {
+			margin-top: 20px;
+			background-color: rgba(233, 233, 233, 0.2);
+			border-radius: 20px;
+		}
+
+		.category_2 {
+			box-sizing: border-box;
+			padding: 10px;
+			font-size: 20px;
+			font-weight: bold;
+			border-bottom: 1px solid rgba(132, 179, 248, 0.35);
+			cursor: pointer;
+		}
+
+		.category_2_detail:hover {
+			background: rgb(233, 233, 233);
+		}
+
+		.category_2_detail:not(:last-child) {
+			box-sizing: border-box;
+			padding: 10px 0 10px 20px;
+			border-bottom: 1px solid rgba(132, 179, 248, 0.35);
+			cursor: pointer;
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+		.category_2_detail:last-child {
+			box-sizing: border-box;
+			padding: 10px 0 10px 20px;
+			cursor: pointer;
+			color: rgba(0, 0, 0, 0.4);
 		}
 	</style>
 </head>
@@ -98,11 +181,14 @@
 		<div class="category_section">
 			<div class="btn_area">
 				<input type="text" class="category_btn" name="" id="category_main" value="전체"
-					onclick="selectCategory_main()">
+					onclick="selectCategory_main()" readonly>
 				<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
-					onclick="selectCategory_city()">
+					onclick="selectCategory_city()" readonly>
 			</div>
 			<div class="map_page">
+				<a th:href="@{findmap}" id="map">
+					<img src="./list/img/지도아이콘.png" class="map_img">
+				</a>
 			</div>
 		</div>
 		<div id="find_list_section">
@@ -136,7 +222,15 @@
 <script th:src="@{list/js/selectmain.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
-
+	
+	const btn = document.getElementsByClassName("category_btn")
+	
+	
+	/*클릭시 이동*/
+	function business(businessIdx) {
+		window.location.href = '/Bboard/get?businessIdx=' + businessIdx;
+	}
+	
 	const list_section = document.getElementById("find_list_section")
 
 	const selectService = (function () {
@@ -151,36 +245,45 @@
 				success: function (data) {
 					const user = data.ulist;
 					const info = data.ilist;
-					
+					const box = "inf.amenities";
 					console.log(user)
 					console.log(info)
 					let txt = "";
 					for (let inf of info) {
 						for (let use of user) {
 							if (use.businessId == inf.businessId) {
-								txt += '<div class="service_list_section">'
-								txt += '<div id="service_list_deteil_1">'
-								txt += '<div class="total">'
-								txt +=	'<h3 class="title">' + use.businessStoreName + '</h3>'
-								txt += '<span class="sub_title">' +use.businessCategory+ '</span>'
-								txt += '</div>'
-								txt += '<div class="service_menu">'
-								txt += '<div class="grade_area">'
-								txt += ' <img src="list/img/별.png">'
-								txt += '<span>'+ inf.overallGrade+'</span>'
-								txt += '<span>(' +inf.gradeCount + ')</span>'
-								txt += '<img src="list/img/marker.png" class="marker">'
-								txt += '<span>'+use.businessAddress+'</span>'
-								txt += '</div>'
-								txt += '</div>'
-								txt += '</div>'
-								txt += '<div class="service_list_deteil_2">'
-								txt += '</div>'
-								txt += '</div>'
+								txt += '<div class="service_list_section" onclick=business(' + use.businessIdx + ')>';
+								txt += '<div id="service_list_deteil_1">';
+								txt += '<div class="total">';
+								txt += '<h3 class="title">' + use.businessStoreName + '</h3>';
+								txt += '<span class="sub_title">' + use.businessCategory + '</span>';
+								txt += '</div>';
+								txt += '<div class="service_menu">';
+								txt += '<div class="grade_area">';
+								txt += ' <img src="list/img/별.png">';
+								txt += '<span>' + inf.overallGrade + '</span>';
+								txt += '<span>(' + inf.gradeCount + ')</span>';
+								txt += '<img src="list/img/marker.png" class="marker">';
+								txt += '<span>' + use.businessAddress + '</span>';
+								txt += '</div>';
+								txt += '</div>';
+								txt += '</div>';
+								txt += '<div class="service_list_deteil_2">';
+								txt += '<ul class="service_list">';
+								if (inf.amenities != null) {
+									const amenities = inf.amenities.split(",");
+									for (let i = 0; amenities.length > i; i++) {
+										txt += '<li class="service_set"><div>' + amenities[i] + '</div></li>';
+									}
+								}
+								txt += '</ul>';
+								txt += '</div>';
+								txt += '</div>';
+
+								list_section.innerHTML = txt;
 							}
 						}
 					}
-					list_section.innerHTML = txt;
 				}
 			})
 		}

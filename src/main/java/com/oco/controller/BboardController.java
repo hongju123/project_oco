@@ -63,7 +63,8 @@ public class BboardController {
 
 	// 맵 가져오기
 	@GetMapping("findmap")
-	public String getmap() {
+	public String getmap(String code) {
+		System.out.println(code);
 		return "Bboard/findmap.html";
 	}
 

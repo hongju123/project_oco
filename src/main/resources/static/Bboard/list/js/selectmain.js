@@ -10,7 +10,7 @@ const area = {
 
 function selectCategory_main() {
 	if (category_list_on !== "main") {
-		const category_list = document.createElement("ul")
+		const category_list = document.createElement("li")
 		while (category_list_create.lastChild) {
 			category_list_create.removeChild(category_list_create.lastChild)
 		}
@@ -21,7 +21,7 @@ function selectCategory_main() {
 
 		if (category_list.children.length === 0) {
 			for (let key in area) {
-				const ul_1 = document.createElement('ul')
+				const ul_1 = document.createElement('li')
 				ul_1.innerHTML = key
 				ul_1.className = "category_2"
 				category_list.appendChild(ul_1)
@@ -51,7 +51,6 @@ function selectCategory_main() {
 							ul_1.appendChild(li_2)
 							li_2.addEventListener("click", function() {
 								category_main.setAttribute("value", key + "/" + detail)
-
 								category_select()
 								modal.style.display = "none"
 								body.style.display = "none"
@@ -88,3 +87,4 @@ function selectCategory_main() {
 		category_list_on = null
 	}
 }
+
