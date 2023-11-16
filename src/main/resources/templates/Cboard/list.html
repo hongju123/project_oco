@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<title>ComuList</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
-	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-	<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-	<link rel="stylesheet" th:href="@{/main/css/main.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<link rel="stylesheet" th:href="@{/cboard/boardlist/css/boardlist.css}">
 </head>
@@ -16,7 +13,7 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<!-- 게시글 리스트 띄우는 테이블 -->
-		<div class="topic_area depth1">
+		<div class="topic_area depth2-wrap aos-init aos-animate">
 			<div name="topic" class="topic">전체</div>
 			<div name="topic" class="topic">궁금해요</div>
 			<div name="topic" class="topic">얼마에요</div>
@@ -24,7 +21,10 @@
 		</div>
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<div class="option_area">
-			<a class="write" onclick="return loginUserHandler()" th:href="@{/Cboard/write}">글쓰기</a>
+			<div class="write">
+				<a class="write_button" onclick="return loginUserHandler()" th:href="@{/Cboard/write}">글쓰기</a>
+				<img src="/boardlist/css/writeimg.jpg" alt="" srcset="">
+			</div>
 		</div>
 
 		<article>
@@ -55,6 +55,7 @@
 			</ul>
 		</article>
 		<br>
+
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<table>
 			<tr align="right" valign="middle" id="excludeRow">
@@ -80,6 +81,7 @@
 				</td>
 			</tr>
 		</table>
+
 	</div>
 	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
@@ -88,8 +90,14 @@
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 </body>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
@@ -206,7 +214,7 @@
 		let table = $(".list"); // 테이블을 나타내는 클래스를 선택
 		data.forEach(item => {
 			let newRowHtml = "<li class='addList'>" +
-				"<a href='/get?boardNum=" + item.boardNum + "'>" +
+				"<a href='/CBoard/get?boardNum=" + item.boardNum + "'>" +
 				"<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
 				"<div class='main_title'>" + item.boardTitle + "</div>" +
 				"<div class='main_content'>" + (item.boardContents.length > 30 ? item.boardContents.substring(0, 30) + "..." : item.boardContents) + "</div>" +
@@ -234,12 +242,14 @@
 	}
 	function loginUserHandler() {
 		const userId =  /*[[${session.loginUser}]]*/'';
-		if (userId != null) {
-			return true;
-		} else {
-			alert("로그인후 이용해주세요")
-			return false;
-		}
+	// 	if (userId != null) {
+	// 		return true;
+	// 	} else {
+	// 		alert("로그인후 이용해주세요")
+	// 		return false;
+	// 	}
+	//
+	return true; 
 	}
 
 </script>
