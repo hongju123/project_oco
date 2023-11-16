@@ -24,7 +24,10 @@
 		</div>
 		<!-- 글쓰기 버튼 배치하는 테이블 -->
 		<div class="option_area">
-			<a class="write" onclick="return loginUserHandler()" th:href="@{/Cboard/write}">글쓰기</a>
+			<div class="write">
+				<a class="write_button" onclick="return loginUserHandler()" th:href="@{/Cboard/write}">글쓰기</a>
+				<img src="/boardlist/css/writeimg.jpg" alt="" srcset="">
+			</div>
 		</div>
 
 		<article>
@@ -181,7 +184,7 @@
 		let table = $(".list"); // 테이블을 나타내는 클래스를 선택
 		data.forEach(item => {
 			let newRowHtml = "<li class='addList'>" +
-				"<a href='/get?boardNum=" + item.boardNum + "'>" +
+				"<a href='/CBoard/get?boardNum=" + item.boardNum + "'>" +
 				"<div class='topic_category'>" + item.topic + " <sub>" + item.category + "</sub></div>" +
 				"<div class='main_title'>" + item.boardTitle + "</div>" +
 				"<div class='main_content'>" + (item.boardContents.length > 30 ? item.boardContents.substring(0, 30) + "..." : item.boardContents) + "</div>" +
