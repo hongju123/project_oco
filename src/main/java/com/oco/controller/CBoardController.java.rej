@@ -1,0 +1,14 @@
+diff a/src/main/java/com/oco/controller/CBoardController.java b/src/main/java/com/oco/controller/CBoardController.java	(rejected hunks)
+@@ -59,10 +59,10 @@
+ 		Long boardnum = 0l;
+ 		if(service.regist(board, files)) {
+ 			boardnum = service.getLastNum(board.getUserId());
+-			return "redirect:/board/get"+cri.getListLink()+"&boardnum="+boardnum;
++			return "board/get"+cri.getListLink()+"&boardnum="+boardnum;
+ 		}
+ 		else {
+-			return "redirect:/board/list"+cri.getListLink();
++			return "board/list"+cri.getListLink();
+ 		}
+ 	}
+ 	
