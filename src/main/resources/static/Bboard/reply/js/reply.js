@@ -2,6 +2,7 @@
 const replyService = (function() {
 
 	function insert(reply, callback) {
+		console.log(reply)
 		$.ajax({
 			method: "POST",
 			url: "/Bboard/insertReply",
