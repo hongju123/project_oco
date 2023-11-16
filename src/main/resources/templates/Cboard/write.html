@@ -15,7 +15,7 @@
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<th:blocked th:if="${session.loginUser==null}">
-		<!-- <script>
+	<!-- <script>
 		alert("회원만 이용 가능합니다. 로그인후 이용하세요");
 		location.replace("/Cboard/list");
 	</script> -->
@@ -26,7 +26,7 @@
 				<tr style="height:30px;">
 					<th>제목</th>
 					<td>
-						<input type="text" name="boardTitle" placeholder="제목을 입력하세요">
+						<input type="text" class="board_title" name="boardTitle" placeholder="제목을 입력하세요">
 					</td>
 				</tr>
 				<tr style="height:30px;">
@@ -38,8 +38,8 @@
 				<tr>
 					<th>주제</th>
 					<td>
-						<select name="topic">
-							<option value="" selected disabled>주제</option>
+						<select name="topic" class="topic">
+							<option value="topicNull" selected disabled>주제</option>
 							<option value="전체">전체</option>
 							<option value="궁금해요">궁금해요</option>
 							<option value="얼마에요">얼마에요</option>
@@ -51,7 +51,7 @@
 					<th>카테고리</th>
 					<td>
 						<select name="category" class="category">
-							<option value="" selected disabled>카테고리</option>
+							<option value="categoryNull" selected disabled>카테고리</option>
 							<option value="숙소">숙소</option>
 							<option value="식당">식당</option>
 							<option value="카페">카페</option>
@@ -92,7 +92,7 @@
 				<tr>
 					<th>내 용</th>
 					<td>
-						<textarea name="boardContents"></textarea>
+						<textarea name="boardContents" class="boardContents"></textarea>
 					</td>
 				</tr>
 				<tr class="r0 at">
@@ -113,7 +113,7 @@
 		<table class="btn_area">
 			<tr align="right" valign="middle">
 				<td>
-					<a onclick="boardForm.submit()">등록</a>
+					<a onclick="sendit()">등록</a>
 					<a th:href="${'/Cboard/list'}">목록</a>
 				</td>
 			</tr>
@@ -185,7 +185,7 @@
 
 	function cancelFile(name) {
 
-		if (name.split("e")[1] == i) {return;}
+		if (name.split("e")[1] == i) { return; }
 
 		if (i != 0) {
 
@@ -216,24 +216,45 @@
 	}
 
 	function sendit() {
-
-
-		const boardForm = document.boardForm;
-		const boardtitle = boardForm.boardtitle;
+		const boardForm = document.querySelector("#boardForm");
+		const boardtitle = document.querySelector(".board_title");
+		const topic = document.querySelector(".topic")
+		const category = document.querySelector(".category");
+		const boardcontents = boardForm.querySelector(".boardContents");
+		console.log("topic 값은:"+topic.value);
+		
 		if (boardtitle.value == "") {
 			alert("제목을 입력하세요.");
 			boardtitle.focus();
+			boardtitle.classList.add("falseAction");
+			setInterval(function(){boardtitle.classList.remove("falseAction")},1000)
 			return false;
 		}
+		if (topic.value=="topicNull") {
+			alert("주제를 입력하세요")
+			topic.focus
+			topic.classList.add("falseAction");
+			setInterval(function(){topic.classList.remove("falseAction")},1000)
+			return false;
+		}
+		console.log(category.value);
+		if(category.value=="categoryNull"){
+			alert("카테고리를 입력하세요")
+			category.focus()
+			category.classList.add("falseAction");
+			setInterval(function(){category.classList.remove("falseAction")},1000)
+			return false;
+			
+		}
 
-		const boardcontents = boardForm.boardcontents;
 		if (boardcontents.value == "") {
 			alert("내용을 입력하세요.");
 			boardcontents.focus();
+			boardcontents.classList.add("falseAction");
+			setInterval(function(){boardcontents.classList.remove("falseAction")},1000)
 			return false;
 		}
-
-
+		 
 		boardForm.submit();
 	}
 </script>

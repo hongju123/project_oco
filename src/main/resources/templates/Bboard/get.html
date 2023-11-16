@@ -54,6 +54,8 @@
 			color: #3182f6 !important;
 		}
 	</style>
+
+
 </head>
 
 <body>
@@ -71,7 +73,7 @@
 						유저 상호이름 : [[${userboard.businessStoreName}]] <br>
 						유저 운영 시간 :[[${infoboard.useTime}]] <br>
 						유저 평점 : [[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]]) <br>
-						유저 서비스 : 
+						유저 서비스 :
 						<th:block th:each="amenity : ${#strings.arraySplit(infoboard.amenities, ',')}">
 							<label><input type="checkbox" th:value="${amenity}">[[${amenity}]]</label>
 						</th:block>
@@ -132,8 +134,16 @@
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-<script th:src="@{reply/js/reply.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+
+<script th:src="@{reply/js/reply.js}"></script>
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardnum = /*[[${userboard.businessIdx}]]*/'';
@@ -162,7 +172,7 @@
 		let grade = $("[name='rating']:checked").val() / 2;
 
 		replyService.add(
-			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade},
+			{ "boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade },
 			function (resut) {
 				alert("등록");
 				$("[name='replyContents']").val("");
@@ -173,7 +183,7 @@
 	})
 	function showList(pagenum) {
 		replyService.getList(
-			{"boardNum": boardnum, "pagenum": pagenum || 1},
+			{ "boardNum": boardnum, "pagenum": pagenum || 1 },
 			function (replyCnt, list) {
 				let str = "";
 				if (list == null || list.length == 0) {
@@ -291,7 +301,7 @@
 		let replynum = $(this).attr("href");
 		let replyContents = $("." + replynum).val();
 
-		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
+		replyService.modify({ replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser },
 			function (result) {
 				if (result == "success") {
 					alert(replynum + "번 댓글 수정 완료!");

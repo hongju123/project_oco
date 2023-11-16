@@ -126,7 +126,8 @@ article {
 }
 .write {
   position: relative;
-  font-size: large;
+  font-weight: bolder;
+  font-size: 13px;
 }
 .write:hover {
   color: rgb(0, 0, 0);
@@ -139,14 +140,31 @@ article {
   background-color: rgba(49, 131, 246, 1);
   position: absolute;
   left: 0;
-  bottom: -3px;
+  bottom: -10px;
   transition: width 0.3s ease-out;
 }
 
 .write:hover:after {
   width: 100%;
 }
-
+.option_area> div{
+  height: 30px;
+  width: 70px;
+  background-color: #3182f6;
+  border-radius: 5px;
+  color: white;
+  font-weight: bolder;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.write_button::after{
+  margin-left: 3px;
+  content: '🖊️';
+  font-size: 10px;
+ 
+}
 .option_area {
   margin-top: 20px;
   margin-bottom: 20px;
