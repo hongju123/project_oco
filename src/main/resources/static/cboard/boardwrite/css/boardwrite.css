@@ -17,11 +17,36 @@ body{
 }
 table{
 	margin-top: 170px;
-    border:1px solid black;
+    border:1px solid black;    
+}
+#main{
+	width: 750px;
 }
 th,tr{
     border : 1px solid black;
 }
+
+th{
+	background-color: #3182f6;
+	border-bottom-color: white;
+	text-decoration-color: white;
+	text-align: center;
+	vertical-align : middle;
+}
+td{
+	padding: 10px;
+}
+#btn_area{
+	box-sizing: content-box;
+	border-radius: 1.5px;
+}
+textarea{
+	border: none;
+	width: 598px;
+	height: 103px;
+}
+
+
 .hidden{
     display: none;
 }
