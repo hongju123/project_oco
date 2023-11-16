@@ -73,7 +73,6 @@
 						<textarea name="content">[[${infoboard.Content}]]</textarea>
 					</div>
 					<div class="free_service">
-
 					</div>
 					<table class="photo_zone" style="border-collapse: collapse;" border="1">
 						<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
@@ -132,7 +131,6 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
-
 	const service = document.getElementById("service")
 	const free_service = document.getElementsByClassName("free_service")
 	const free = {
@@ -154,31 +152,23 @@
 				box.type = "checkbox"
 				box.value = set
 				box.name = "amenities"
+				box.className = "amenities"
 				free_service[0].appendChild(label).appendChild(box)
 			}
 		}
 	}
 
+	const boxcheck = document.getElementsByClassName("amenities")
+	let check = /*[[${infoboard.amenities}]]*/'';
+	const set = check.split(",")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	for (let j of set) {
+		for (let i = 0; boxcheck.length > i; i++) {
+			if (boxcheck[i].value == j) {
+				boxcheck[i].checked = true
+			}
+		}
+	}
 
 	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")

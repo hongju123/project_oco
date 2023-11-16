@@ -84,7 +84,11 @@ public class ReservationController {
 	}
 
 	@PostMapping("reservationwrite")
-	public String write(ReservationDTO reservation) throws Exception {
+	public String write(ReservationDTO reservation,String categorys) throws Exception {
+		if(reservation.getCategory() == null) {
+			reservation.setCategory(categorys);
+			log.info("category:{}" , reservation.getCategory());
+		}
 		if (service.regists(reservation)) {
 			return "redirect:/reservation/reservationlist";
 		} else {

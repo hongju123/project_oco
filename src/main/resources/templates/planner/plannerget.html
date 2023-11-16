@@ -4,6 +4,7 @@
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/reservation/css/write.css}">
+<link rel="stylesheet" th:href="@{/planner/css/map.css}">
 <script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
 <body>
@@ -11,46 +12,21 @@
 	<div class="wrap">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<h2>상세조회</h2> <input type="button" value="적용" onclick="f()">
-			<table>
-				<tr>
-					<th>날짜</th>
-					<td>
-						<input type="text" name="scheduleDate" size="50" maxlength="50"
-							th:value="${planner.scheduleDate}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>상호명</th>
-					<td>
-						<input type="text" name="storeName" size="50" maxlength="50" th:value="${planner.storeName}"
-							readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>주소</th>
-					<td>
-						<input type="text" class="addr" name="addr" size="50" maxlength="50" th:value="${planner.addr}"
-							readonly>
-						<input type="hidden" class="coords" th:value="${planner.coords}">
-					</td>
-				</tr>
-				<tr>
-					<th>메모</th>
-					<td>
-						<input type="text" name="memo" size="50" maxlength="50" th:value="${planner.memo}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td>
-						<input type="text" name="userid" size="50" maxlength="50" th:value="${planner.userId}" readonly>
-					</td>
-				</tr>
-			</table>
+			<h2>상세조회</h2>
 			<!-- 이미지 지도를 표시할 div 입니다 -->
 			<div id="map" style="width:100%;height:350px;"></div>
-
+			<div class="sec-con">
+				<h4>날짜</h4>
+				<input type="text" class="calendars" name="scheduleDate" th:value="${planner.scheduleDate}" readonly>
+			</div>
+			<div class="travel_title">
+				우리의 여행지
+			</div>
+			<div class="list">
+				<input type="text" name="storeName" class="storeName" size="50" maxlength="50" th:value="${planner.storeName}" readonly>
+			</div>
+			<textarea class="memo" name="memo" id="memo" th:value="${planner.memo}" readonly></textarea>
+			<input type="hidden" class="coords" th:value="${planner.coords}">
 			<form name="plannerForm" method="post" th:action="@{/planner/plannerremove}">
 				<input name="scheduleNum" th:value="${planner.scheduleNum}" type="hidden">
 				<a href="javascript:document.plannerForm.submit()">삭제</a>
@@ -72,15 +48,16 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
+
 	AOS.init({
 		duration: 1200,
 	});
-	const addr = $(".addr").val();
-	const addrs = addr.split(",")
 	const linePath = [];
-	const latng = $(".coords").val().split("/");
+	const latng = $(".coords").val().split("/,");
 	const result = [];
-	latng.pop();
+	const storeName = $(".storeName").val().split(",");
+	console.log("storeName", storeName)
+	//latng.pop();
 	console.log("latng", latng)
 	//const x = $(".coords").val().split("/")[0].split(",")[1]
 	//const y = $(".coords").val().split("/")[0].split(",")[0]
@@ -102,7 +79,6 @@
 
 	// 주소로 좌표를 검색합니다
 	// 정상적으로 검색이 완료됐으면 
-	console.log(addrs[1])
 	function f(latlng) {
 		console.log(latlng)
 		let mapContainer = document.getElementById('map'), // 지도를 표시할 div  
@@ -118,21 +94,44 @@
 		// 마커 이미지의 이미지 주소입니다
 		let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 		for (let i = 0; i < result.length; i++) {
-			// 마커 이미지의 이미지 크기 입니다
-			let imageSize = new kakao.maps.Size(24, 35);
+			// 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+			const positions = [
+				{
+					content: "<div class='name'>" + storeName[i] + "</div>",
+					latlng: result[i]
+				}
+			];
 
-			// 마커 이미지를 생성합니다    
-			let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-			// 마커를 생성합니다
-			var marker = new kakao.maps.Marker({
-				map: map, // 마커를 표시할 지도
-				position: result[i], // 마커를 표시할 위치
-				image: markerImage // 마커 이미지 
-			});
+			console.log("positions :", positions)
+			for (let j = 0; j < positions.length; j++) {
+				// 마커 이미지의 이미지 크기 입니다
+				let imageSize = new kakao.maps.Size(24, 35);
+
+				// 마커 이미지를 생성합니다    
+				let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+					map: map, // 마커를 표시할 지도
+					position: positions[j].latlng, // 마커를 표시할 위치
+					image: markerImage // 마커 이미지 
+				});
+				// 마커에 표시할 인포윈도우를 생성합니다 
+				var infowindow = new kakao.maps.InfoWindow({
+					content: positions[j].content // 인포윈도우에 표시할 내용
+				});
+
+				// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+				// 이벤트 리스너로는 클로저를 만들어 등록합니다 
+				// for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+				kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+				kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+			}
 		}
+
+
 		console.log("마커 :", marker.getPosition())
 		linePath.push(marker.getPosition())
-		console.log("linePath :",linePath)
+		console.log("linePath :", linePath)
 		var polyline = new kakao.maps.Polyline({
 			path: linePath, // 선을 구성하는 좌표배열 입니다
 			strokeWeight: 5, // 선의 두께 입니다
@@ -142,6 +141,19 @@
 		});
 		// 지도에 선을 표시합니다 
 		polyline.setMap(map);
+	}
+
+	function makeOverListener(map, marker, infowindow) {
+		return function () {
+			infowindow.open(map, marker);
+		};
+	}
+
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+		return function () {
+			infowindow.close();
+		};
 	}
 </script>
 
