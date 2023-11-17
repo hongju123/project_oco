@@ -51,8 +51,8 @@
 
 	<!-- 리뷰 저장 -->
 	<insert id="insertReply">
-		insert into replies(reply_contents, user_id, board_num, grade)
-		values(#{replyContents},#{userId},#{boardNum}, #{grade})
+		insert into replies(reply_contents, user_id, board_num,grade)
+		values(#{replyContents},#{userId},#{boardNum},#{grade})
 	</insert>
 
 	<select id="getLastNumber">
