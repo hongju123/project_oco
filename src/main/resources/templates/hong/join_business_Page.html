@@ -19,8 +19,9 @@
 				<form class="join_form" method="post" th:action="@{/user/join_business}" data-aos="fade-up">
 					<label for="businessCategory">사업자분류</label>
 					<br>
-					<div class="row">
-						<div style="width:50%;">
+					<div class="sec-half">
+						<div class="sec-con left-sec">
+							<span class="sec-tit">카테고리</span>
 							<select name="businessCategory" class="businessCategory">
 								<option value="숙소">숙소</option>
 								<option value="식당">식당</option>
@@ -29,8 +30,9 @@
 								<option value="기타">기타</option>
 							</select>
 						</div>
-						<div style="width:50%;">
-							<select name="businessCategory" class=" house">
+						<div class="sec-con right-sec">
+							<span class="sec-tit">유형</span>
+							<select name="businessCategory" class="house">
 								<option value="모텔">모텔</option>
 								<option value="호텔">호텔</option>
 								<option value="펜션">펜션</option>
@@ -75,14 +77,15 @@
 					<input type="password" value="" id="userpw" class="userpw" name="businessPassword"
 						placeholder="비밀번호* (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8자~16자) ">
 					<br>
-					<span class="alarming hidden">영문, 숫자, 특수문자 포함 8~15자의 문자를 입력해주세요</span>
+					<span class="alarming hidden">*영문, 숫자, 특수문자 포함 8~15자의 문자를 입력해주세요</span>
 					<br>
-					<!--<span class="alarming hidden">비밀번호를 입력해주세요</span>-->
+					<span class="alarming hidden">*비밀번호를 입력해주세요</span>
+					<br>
 					<label for="check_userpw">비밀번호 확인</label>
 					<br>
 					<input type="password" value="" class="check_userpw" id="check_userpw" placeholder="비밀번호 확인*">
 					<br>
-					<span class="alarming hidden">비밀번호가 일치하지 않습니다</span>
+					<span class="alarming hidden">*비밀번호가 일치하지 않습니다</span>
 					<br>
 					<label for="username">이름</label>
 					<br>
@@ -99,14 +102,14 @@
 						<input type="text" value="" class="check_code" placeholder="인증번호를 적어주세요" id="check_code">
 						<input type="button" value="확인" class="check_code_button">
 					</div>
-					<span class="alarming hidden">잘못된 이메일 형식입니다</span>
-					<span class="alarming hidden">인증번호를 확인해주세요</span><br>
+					<span class="alarming hidden">*잘못된 이메일 형식입니다</span>
+					<span class="alarming hidden">*인증번호를 확인해주세요</span><br>
 
 					<label for="businessPhoneNumber">연락처</label>
 					<br>
 					<input type="text" name="businessPhoneNumber" class="userphonenumber" id="userphonenumber">
 					<br>
-					<span class="alarming hidden">"-"를 제외한 11자를 입력해주세요</span>
+					<span class="alarming hidden">*"-"를 제외한 11자를 입력해주세요</span>
 					<br>
 					<label>가맹점명</label>
 					<br>
