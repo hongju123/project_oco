@@ -74,6 +74,8 @@
 			padding: 15px 10px;
 			animation: slideUp 1.5s ease-out;
 			cursor: pointer;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		.total {
@@ -106,6 +108,16 @@
 			margin: 5px 8px 0px 0px;
 			background-color: rgba(132, 179, 248, 0.2);
 			border-radius: 10px;
+		}
+
+		.deteil_img {
+			width: 180px;
+			height: 120px;
+		}
+
+		.list_img {
+			width: 150px;
+			height: 120px;
 		}
 
 		/*모달창 부분*/
@@ -234,7 +246,6 @@
 	const selectService = (function () {
 
 		function selectAll(data) {
-
 			$.ajax({
 				url: "/Bboard/findlist",
 				method: "GET",
@@ -243,7 +254,7 @@
 				success: function (data) {
 					const user = data.ulist;
 					const info = data.ilist;
-					const box = "inf.amenities";
+					const files = data.flist
 					console.log(user)
 					console.log(info)
 					let txt = "";
@@ -251,6 +262,7 @@
 						for (let use of user) {
 							if (use.businessId == inf.businessId) {
 								txt += '<div class="service_list_section" onclick=business(' + use.businessIdx + ')>';
+								txt += '<div class="deteil_area">';
 								txt += '<div id="service_list_deteil_1">';
 								txt += '<div class="total">';
 								txt += '<h3 class="title">' + use.businessStoreName + '</h3>';
@@ -275,6 +287,15 @@
 									}
 								}
 								txt += '</ul>';
+								txt += '</div>';
+								txt += '</div>';
+								txt += '<div class="deteil_img">';
+								for (let file of files) {
+									if (file.boardNum == use.businessIdx) {
+										txt += '<img class="list_img" src="/Bboard/thumbnail?systemName=' + file.systemName + '">'
+										break;
+									}
+								}
 								txt += '</div>';
 								txt += '</div>';
 							}
