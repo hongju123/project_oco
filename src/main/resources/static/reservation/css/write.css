@@ -302,7 +302,10 @@ input#check_btn:checked {
 	background-repeat: no-repeat;
 	background-position: 50%;
 }
-
+.amenitiesF{
+	display: flex;
+	flex-wrap: wrap;
+}
 /*편의시설 체크박스 끝*/
 /* 요청사항 */
 .memo{

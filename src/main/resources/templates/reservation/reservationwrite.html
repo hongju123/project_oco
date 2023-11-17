@@ -141,7 +141,7 @@
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
 						<select name="personnel" class="personnel">
-							<option value="" selected disabled>인원수를 설정해주세요</option>
+							<option value="0" selected disabled>인원수를 설정해주세요</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
 							<option value="3">3명</option>
@@ -157,7 +157,7 @@
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
 						<select name="fuel" class="fuel">
-							<option value="" selected disabled>연료를 설정해주세요</option>
+							<option value="0" selected disabled>연료를 설정해주세요</option>
 							<option>전기</option>
 							<option>하이브리드</option>
 							<option>가솔린</option>
@@ -168,7 +168,7 @@
 					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
 						<select class="money" name="cost">
-							<option value="" selected disabled>금액대를 설정해주세요</option>
+							<option value="0" selected disabled>금액대를 설정해주세요</option>
 							<option value="5">5만원~</option>
 							<option value="10">10만원~</option>
 							<option value="15">15만원</option>
@@ -243,13 +243,12 @@
 						</div>
 						<div class="amenitiesF">
 							<ul>
+								<li><input type="checkbox" value="주차" name="typeF" id="check_btn">주차</li>
 								<li><input type="checkbox" value="생일파티" name="typeF" id="check_btn">생일파티</li>
+								<li><input type="checkbox" value="웨딩/돌잔치" name="typeF" id="check_btn">웨딩/돌잔치</li>
+								<li><input type="checkbox" value="반려견 동반" name="typeF" id="check_btn">반려견 동반</li>
 								<li><input type="checkbox" value="기념일 이벤트" name="typeF" id="check_btn">기념일 이벤트</li>
 								<li><input type="checkbox" value="브라이덜 샤워" name="typeF" id="check_btn">브라이덜 샤워</li>
-								<li><input type="checkbox" value="웨딩/돌잔치" name="typeF" id="check_btn">웨딩/돌잔치</li>
-								<li><input type="checkbox" value="주차" name="typeF" id="check_btn">주차</li>
-								<li><input type="checkbox" value="유아 동반" name="typeF" id="check_btn">유아 동반</li>
-								<li><input type="checkbox" value="반려견 동반" name="typeF" id="check_btn">반려견 동반</li>
 								<li><input type="checkbox" value="장애인 편의시설" name="typeF" id="check_btn">장애인 편의시설</li>
 							</ul>
 						</div>
@@ -807,6 +806,7 @@
 		const typeC = $(".typeC option:selected").val()
 		const typeD = $(".typeD option:selected").val()
 		const typeE = $(".typeE option:selected").val()
+		const type = typeA + typeB + typeC + typeD + typeE
 		const areaA = $(".areaA").val()
 		const calendars = $(".calendars").val()
 		const personnel = $(".personnel option:selected").val()
@@ -815,18 +815,31 @@
 		const amenities = $("#amenities").val()
 		const memo = $(".memo").val()
 		console.log(category)
+		console.log("type :", type)
 		if (category != "") {
-			if (areaA != "지역") {
-				if (calendars != "날짜") {
-					return true;
+			if (type != "") {
+				if (areaA != "지역") {
+					if (calendars != "날짜") {
+						if (memo != "") {
+							return true;
+						}
+						else{
+							alert("메모를 남겨주세요")
+							return false;
+						}
+					}
+					else {
+						alert("날짜를 선택해주세요")
+						return false;
+					}
 				}
 				else {
-					alert("날짜를 선택해주세요")
+					alert("지역을 선택해주세요")
 					return false;
 				}
 			}
 			else {
-				alert("지역을 선택해주세요")
+				alert("유형을 선택해주세요")
 				return false;
 			}
 

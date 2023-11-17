@@ -56,8 +56,8 @@
 			</div>
 			<div>
 				<ul class="list">
-					<li>
-						<th:block th:if="${list != null and list.size()>0}" th:each="reservation : ${list}">
+					<th:block th:if="${list != null and list.size()>0}" th:each="reservation : ${list}">
+						<li>
 							<th:block th:if="${reservation.userId == session.loginUser}">
 								<div class="request">
 									<h3>[[${reservation.category}]]</h3>
@@ -80,8 +80,8 @@
 									</div>
 								</div>
 							</th:block>
-						</th:block>
-					</li>
+						</li>
+					</th:block>
 				</ul>
 			</div>
 			<form name="getForm" id="getForm" th:action="@{/reservation/reservationlist}">
@@ -119,11 +119,11 @@
 
 	function getList() {
 		let table = $(".list");
-		 table.empty(); // 기존의 데이터를 모두 제거
+		table.empty(); // 기존의 데이터를 모두 제거
 		let category = $("#category").val()
 		let area = $("#areaA").val()
-		console.log("category :",category)
-		console.log("area :",area)
+		console.log("category :", category)
+		console.log("area :", area)
 		$.ajax({
 			url: getListURL,
 			type: "get",
@@ -150,18 +150,18 @@
 			// 데이터를 기반으로 동적으로 HTML 형성
 			console.log(item.requestNum);
 			let newRowHtml = "<li>" +
-				"<div class='request'>"+
-				"<h3>"+item.category+"</h3>"+
-				"<P>"+item.requestType+"</p>"+
-				"<span>"+item.regDate+"</span><br><span>"+item.address+"</span><br>"+
-				"<P class='memo'>"+item.memo+"</p><br>"+
-				"<div class='sum'>"+
-				"<a href='"+item.requestNum+"' class='get'>자세히</a>"+
-				"</div>"+
-				"</div>"+
+				"<div class='request'>" +
+				"<h3>" + item.category + "</h3>" +
+				"<P>" + item.requestType + "</p>" +
+				"<span>" + item.regDate + "</span><br><span>" + item.address + "</span><br>" +
+				"<P class='memo'>" + item.memo + "</p><br>" +
+				"<div class='sum'>" +
+				"<a href='" + item.requestNum + "' class='get'>자세히</a>" +
+				"</div>" +
+				"</div>" +
 				"</li>";
 
- 			requestNum = item.requestNum;
+			requestNum = item.requestNum;
 			// 동적으로 형성된 HTML을 테이블에 삽입
 			table.append(newRowHtml);
 			// 추가된 데이터의 이벤트 처리 등이 필요하다면 여기서 추가 작업 수행
