@@ -14,22 +14,22 @@
 			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
 				<input type="hidden" th:value="${session.loginUser}" name="userId">
 				<div class="sec-half">
-					<div class="sec-con left-sec" data-aos="fade-up">
+					<div class="sec-con left-sec">
 						<span class="sec-tit">카테고리</span>
 						<input type="text" th:value="${reservation.category}" readonly>
 					</div><!--.category-sec-->
-					<div class="sec-con right-sec" data-aos="fade-up">
+					<div class="sec-con right-sec">
 						<span class="sec-tit">유형</span>
 						<input type="text" th:value="${reservation.requestType}" readonly>
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
 
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<span class="sec-tit">지역</span>
 					<input type="text" class="areaA" id="areaA" name="address" th:value="${reservation.address}"
 						readonly>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<a href="#" class="calendar sec-tit">날짜</a>
 					<input type="text" class="calendars" name="regDate" th:value="${reservation.regDate}" readonly>
 				</div>
@@ -52,12 +52,12 @@
 						<input type="text" th:value="${reservation.cost}+만원" readonly>
 					</div>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<span class="sec-tit">편의시설</span>
 					<!--<input type="text" class="amenities" name="amenities" id="amenities" value="선택" readonly>-->
 					<input type="text" name="amenities" id="amenities" th:value="${reservation.amenities}" readonly>
 				</div>
-				<div class="sec-con" data-aos="fade-up">
+				<div class="sec-con">
 					<span class="sec-tit">요청사항</span>
 					<textarea class="memo" name="memo" readonly>[[${reservation.memo}]]</textarea>
 				</div>
