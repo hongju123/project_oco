@@ -112,6 +112,7 @@ public class ReservationController {
 	public String get(Long requestNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
 		HttpSession session = req.getSession();
 		ReservationDTO reservation = service.getDetail(requestNum);
+		log.info("reservation :{}",reservation);
 		model.addAttribute("reservation", reservation);
 		String loginUser = (String) session.getAttribute("loginUser");
 		String requestURI = req.getRequestURI();
@@ -120,13 +121,15 @@ public class ReservationController {
 
 	@PostMapping("reservationmodify")
 	public String modify(ReservationDTO reservation) throws Exception {
-		log.info("reservation:{}" , reservation);
 		if(reservation.getFuel() == "" ) {
 			reservation.setFuel("0");
 		}
 		if(reservation.getPersonnel() == "" ) {
 			reservation.setPersonnel("0");
 		}
+		log.info("Fuel:{}" , reservation.getFuel());
+		log.info("Personnel:{}" , reservation.getPersonnel());
+		log.info("Personnel:{}" , reservation.getRequestType());
 		if (service.reservationmodify(reservation)) {
 
 			return "redirect:/reservation/reservationget?" + "&requestNum=" + reservation.getRequestNum();
