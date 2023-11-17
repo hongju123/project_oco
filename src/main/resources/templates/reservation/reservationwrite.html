@@ -24,7 +24,9 @@
 				<ul class="depth2 sub-nav">
 					<li class="active"><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
 					<li><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
-					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+					<th:block th:if="${session.businessUser == 'X'}">
+						<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+					</th:block>
 				</ul>
 			</div>
 			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationwrite}" data-aos="fade-up">
@@ -140,7 +142,7 @@
 				<div class="sec-half">
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
-						<select name="personnel" class="personnel">
+						<select name="personnel" class="personnel" value="0">
 							<option value="0" selected disabled>인원수를 설정해주세요</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
@@ -156,7 +158,7 @@
 					</div>
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
-						<select name="fuel" class="fuel">
+						<select name="fuel" class="fuel" value="0">
 							<option value="0" selected disabled>연료를 설정해주세요</option>
 							<option>전기</option>
 							<option>하이브리드</option>
@@ -167,7 +169,7 @@
 					</div>
 					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
-						<select class="money" name="cost">
+						<select class="money" name="cost" value="0">
 							<option value="0" selected disabled>금액대를 설정해주세요</option>
 							<option value="5">5만원~</option>
 							<option value="10">10만원~</option>
