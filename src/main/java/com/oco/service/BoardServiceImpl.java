@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 	private ReplyMapper rmapper;
 	@Autowired
 	private FileMapper fmapper;
-	@Value("${file.dir}")
+	@Value("${file.cumunity}")
 	private String saveFolder;
 	
 	@Override
