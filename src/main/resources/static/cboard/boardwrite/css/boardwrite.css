@@ -51,7 +51,9 @@ textarea{
 	border: none;
 	width: 598px;
 	height: 103px;
-	
+	min-height: 8rem;
+	overflow-y: hidden;
+    resize: none;
 }
 
 textarea:hover{
