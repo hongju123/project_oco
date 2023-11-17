@@ -17,7 +17,7 @@
 <th:block th:replace="~{layout/header::header}"></th:block>
 	<div id="cumuwrap">
 		<form>
-			<table style="border-collapse: collapse;" border="1" class="border-area">
+			<table style="border-collapse: collapse;" border="1" class="border_area">
 				<tr style="height:30px;">
 					<th style="text-align:center; width:150px;" class="a_row">제목</th>
 					<td>
@@ -73,8 +73,8 @@
 				</th:block>
 			</table>
 		</form>
-		<table class="btn_area">
-			<tr align="right" valign="middle">
+		<table class="btn_area" style="border: 0cap;">
+			<tr align="right" valign="middle" style="border: 0cap;">
 				<td>
 					<th:block th:if="${board.userId == session.loginUser}">
 						<form name="boardForm" method="post" th:action="@{/Cboard/remove}">
