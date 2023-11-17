@@ -19,32 +19,32 @@
 		<form>
 			<table style="border-collapse: collapse;" border="1" class="border-area">
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px; color:white;">제목</th>
+					<th style="text-align:center; width:150px;" class="a_row">제목</th>
 					<td>
 						<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
 					</td>
 				</tr>
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px; color:white;">작성자</th>
+					<th style="text-align:center; width:150px;" class="a_row">작성자</th>
 					<td>
 						<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
 					</td>
 				</tr>
 				<tr>
-					<th style="text-align: center; color:white;">조회수</th>
+					<th style="text-align: center;" class="a_row">조회수</th>
 					<td>[[${board.readCount}]]</td>
 				</tr>
 				<tr>
-					<th style="height: 30px; color: white;">주제</th>
+					<th style="height: 30px;" class="a_row">주제</th>
 					<td>[[${board.topic}]]</td>
 				</tr>
 				<tr>
-					<th style="height: 30px; color: white;">카테고리</th>
+					<th style="height: 30px;" class="a_row">카테고리</th>
 					<td>[[${board.category}]]</td>
 				</tr>
 				
 				<tr style="height:300px;">
-					<th style="text-align:center; width:150px; color:white;">내 용</th>
+					<th style="text-align:center; width:150px;" class="a_row">내 용</th>
 					<td>
 						<textarea name="boardContents" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContents}]]</textarea>
 					</td>
@@ -52,7 +52,7 @@
 				<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 					<th:block th:with="sar=${file.orgName.split('[.]')}">
 						<tr>
-							<th style="text-align:center; color:white;">첨부파일[[${fileStat.index+1}]]</th>
+							<th style="text-align:center;">첨부파일[[${fileStat.index+1}]]</th>
 							<td>
 								<a href="#">[[${file.orgName}]]</a>
 							</td>
