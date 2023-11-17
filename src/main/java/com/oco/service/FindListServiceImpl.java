@@ -61,7 +61,7 @@ public class FindListServiceImpl implements FindListService {
 				addr[1] = "";
 			}
 		}
-		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo());
+		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo(),fmapper.getallfiles());
 	}
 
 	@Override
@@ -226,5 +226,4 @@ public class FindListServiceImpl implements FindListService {
 	public boolean removeInfo(Long businessInfoIdx) {
 		return fmapper.removeInfo(businessInfoIdx);
 	}
-
 }

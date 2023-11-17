@@ -16,6 +16,8 @@ public interface FindListMapper {
 	
 	List<BusinessDTO> getMainList();
 
+	List<FileDTO> getallfiles();
+
 	List<BusinessDTO> getMainList(String main1, String main2, String addr1, String addr2);
 	
 	List<BusinessInfoDTO> getinfo();
