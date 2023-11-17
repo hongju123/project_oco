@@ -56,12 +56,15 @@ input[type=text]{
 
 }
 
+.non.file{
+	color: darkgray;
+}
+
 .btn_area{
 	margin-top: 10px;
 	margin-right: 5px;
     border-radius: 3px;
-    width: 75px; 
-	text-align: center;
+    width: 885px; 
 	
 }
 
@@ -71,8 +74,23 @@ form>a{
 	background-color: #3182f6;
 	color: white;
 	border-radius: 3px;
-	margin-right: 5px;
+	margin-left: 0 auto;
+	margin-bottom: 10px;
 	padding: 5px 10px 5px 10px ;
+  	color: white;
+ 	text-decoration: none;
+}
+
+a.back{
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #3182f6;
+	color: white;
+	border-radius: 3px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	padding: 5px 10px 7px 10px ;
+	text-align: right;
 }
 
 a.regist{
@@ -82,6 +100,40 @@ a.regist{
 	color: white;
 	border-radius: 3px;
 	margin-bottom: 30px;
-	padding: 5px 10px 5px 10px ;
+	padding: 5px 10px 7px 10px ;
+	text-align: center;
 
 }
+
+.replyForm.row{
+	padding-bottom: 20px;
+}
+
+h4{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom:2px solid #3182f6;
+	padding-bottom: 5px;
+}
+
+#replyContents{
+	padding: 5px 5px 5px 5px;
+	
+}
+
+div>a{
+	box-sizing: border-box;
+	background-color: #3182f6;
+	color: white;
+	border-radius: 3px;
+	margin-left: 0 auto;
+	margin-bottom: 15px;
+	padding: 5px 10px 5px 10px ;
+  	color: white;
+ 	text-decoration: none;
+}
+
+.button.finish,.button.cancel{
+	margin-bottom: 15px;
+}
+
