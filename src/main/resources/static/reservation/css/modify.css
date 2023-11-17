@@ -1,94 +1,125 @@
-/* 지역 모달 창 시작 */
-#modal.modal-overlay {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
+
+#Form{
+	width: 50%;
+}
+#Form .sec-half{
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: rgba(0,0,0,0.5) !important;
-	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-	backdrop-filter: blur(1.5px);
-	-webkit-backdrop-filter: blur(1.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	display: none;
-	overflow-y: initial !important
-}
-#modal .modal-window {
-	background:#FFFFFF;
-	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-	backdrop-filter: blur(13.5px);
-	-webkit-backdrop-filter: blur(13.5px);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	width: 400px;
-	height: 500px;
-	position: relative;
-	top: -100px;
-	padding: 10px;
-	height: 500px;
-	overflow-y: auto;
-}
-#modal .title {
-	padding-left: 10px;
-	display: inline;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-
-}
-#modal .title h2 {
-	display: inline;
-}
-#modal .close-area {
-	display: inline;
-	float: right;
-	padding-right: 10px;
-	cursor: pointer;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
-#modal .content {
-	margin-top: 20px;
-	padding: 0px 10px;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
-/* 지역 모달 끝*/
-/*편의시설 체크박스*/
-input[type=checkbox] {
-	cursor: pointer;
 }
 
-input[type=checkbox] {
-	vertical-align: middle;
-	padding-left: 5px;
+#Form .sec-half .left-sec {
+  width:49%;
+  position: relative;
+  margin-right: 2%;;
 }
-/* label:before에 체크하기 전 상태 CSS */
-input[type=checkbox] {
+#Form .sec-half .right-sec{
+  width:49%;
+  position: relative;
+}
+
+#Form .sec-con{
+	margin-bottom: 30px;
+}
+
+#Form .sec-con .sec-tit{
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+}
+
+#Form .sec-con input[type=text]{
+	border: 1px solid #efefef;
+	width: 100%;
+	height: 40px;
+}
+
+#Form select{
+  border:1px soid #efefef;
+  height: 40px;
+  width: 100%;
+  opacity: 0.4;
+
+}
+
+#Form option{
+ width:100%;
+  background-color: #efefef;
+}
+
+#Form textarea{
+	width:100%;
+	height:100px;
+}
+
+#Form .fuel{display: none;}
+
+.amenities ul{
+	display: flex;
+}
+.amenities ul:after{
+	display: block;
 	content: "";
-	display: inline-block;
-	width: 17px;
-	height: 17px;
-	border: 2px solid #3182f6;
-	border-radius: 4px;
-	vertical-align: middle;
+	clear: both;
+}
+.amenities ul li{
+	display: block;
+	font-size: 14px;
 }
 
-/* label:before에 체크 된 상태 CSS */
-input#check_btn:checked {
-	content: "";
+.submit-btn{
+	display: block;
+	width:50%;
 	background-color: #3182f6;
-	border-color: #3182f6;
-	background-image: url('check_btn.png');
-	background-repeat: no-repeat;
-	background-position: 50%;
+	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
 }
 
-/*편의시설 체크박스 끝*/
+
+
+
+
+
+#clock_box{
+	display:block;
+	position: fixed;
+	top:20%;
+	left:65%;
+	z-index:100;
+
+	}
+
+#clock {
+	text-align: left;
+	/* margin-top: 10%; */
+	font-size: 64px;
+	font-weight: bold;
+	font-family: 'Montserrat', 'Open Sans', sans-serif;
+	opacity:0.1;
+	width:100%;
+	line-height:0.9;
+	margin-top:7%;
+
+}
+
+#clock_p {
+	text-align: left;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: 'Montserrat', 'Open Sans', sans-serif;
+	opacity:0.15;
+
+}
+
+
+
+
+
+
+
+
+
+
 /*달력 시작*/
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 
@@ -164,3 +195,148 @@ td {
 	cursor: pointer;
 }
 /*달력 끝*/
+
+/* 지역 모달 창 시작 */
+
+.area-sec{
+	position: relative;
+}
+
+.category_2{
+	font-weight: bold;
+	border-bottom: 1px solid #efefef;
+}
+.category_2_detail{
+	font-weight: normal;
+	color: #333333;
+	margin-left: 40px;
+	border-bottom: 1px solid #efefef;
+}
+
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index:3000;
+}
+
+#modal .modal-window {
+	background:#FFFFFF;
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	height: 500px;
+	overflow-y: auto;
+}
+
+#modal .modal-window .category_list{
+	padding: 30px ;
+	line-height: 40px;
+}
+
+
+#modal .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+
+}
+
+#modal .title h2 {
+	display: inline;
+}
+
+#modal .close-area {
+	display: inline;
+	float: right;
+	padding: 30px;
+	cursor: pointer;
+	color: #333;
+}
+
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+/* 지역 모달 끝*/
+
+/*편의시설 체크박스*/
+input[type=checkbox] {
+	cursor: pointer;
+}
+
+input[type=checkbox] {
+	vertical-align: middle;
+	padding-left: 5px;
+}
+/* label:before에 체크하기 전 상태 CSS */
+input[type=checkbox] {
+	content: "";
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #efefef;
+	border-radius: 4px;
+	vertical-align: middle;
+}
+
+/* label:before에 체크 된 상태 CSS */
+input#check_btn:checked {
+	content: "";
+	background-color: #3182f6;
+	border-color: #3182f6;
+	background-image: url('check_btn.png');
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
+.amenitiesF{
+	display: flex;
+	flex-wrap: wrap;
+}
+/*편의시설 체크박스 끝*/
+/* 요청사항 */
+.memo{
+	resize: none;
+}
+
+
+.list-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff !important;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.modify-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	margin-right: 470px;
+	font-weight: bold;
+}
+.btns{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 670px;
+}
