@@ -22,7 +22,7 @@
 	</th:blocked>
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
-			<table style="border-collapse: collapse;">
+			<table style="border-collapse: collapse;" class="main">
 				<tr style="height:30px;">
 					<th>제목</th>
 					<td>
@@ -92,7 +92,7 @@
 				<tr>
 					<th>내 용</th>
 					<td>
-						<textarea name="boardContents" class="boardContents"></textarea>
+						<textarea name="boardContents" class="boardContents" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
 					</td>
 				</tr>
 				<tr class="r0 at">
@@ -256,6 +256,11 @@
 		}
 		 
 		boardForm.submit();
+	}
+	//textarea 크기 자동조절
+	function resize(obj) {
+    obj.style.height = '1px';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
 	}
 </script>
 

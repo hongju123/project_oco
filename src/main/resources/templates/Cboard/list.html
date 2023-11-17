@@ -234,7 +234,7 @@
 			table.find("li:last a").on("click", function (e) {
 				e.preventDefault();
 				let boardNum = item.boardNum;
-				let url = '/get?boardNum=' + boardNum;
+				let url = '/Cboard/get?boardNum=' + boardNum;
 				// 여기서 페이지 이동 등을 수행할 수 있습니다.
 				window.location.href = url;
 			});

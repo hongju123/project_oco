@@ -29,7 +29,10 @@ function selectCategory_main() {
 				if (ul_1.innerHTML == "전체") {
 					ul_1.addEventListener("click", function() {
 						category_main.setAttribute("value", key)
+						
 						category_select()
+						updateMapLink();
+						
 						modal.style.display = "none"
 						body.style.display = "none"
 
@@ -51,7 +54,10 @@ function selectCategory_main() {
 							ul_1.appendChild(li_2)
 							li_2.addEventListener("click", function() {
 								category_main.setAttribute("value", key + "/" + detail)
+								
 								category_select()
+								updateMapLink();
+								
 								modal.style.display = "none"
 								body.style.display = "none"
 
@@ -85,6 +91,14 @@ function selectCategory_main() {
 			category_list_create.removeChild(category_list_create.lastChild)
 		}
 		category_list_on = null
+	}
+}
+function updateMapLink() {
+	const mainValue = document.getElementById("category_main").value;
+	const cityValue = document.getElementById("category_city").value;
+	const URL = "findmap?main=" + mainValue + "&city=" + cityValue;
+	if (document.getElementById("setting")) {
+		document.getElementById("setting").setAttribute("href", URL)
 	}
 }
 

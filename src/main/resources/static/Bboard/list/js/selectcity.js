@@ -70,9 +70,12 @@ function selectCategory_city() {
 					ul_1.addEventListener("click", function() {
 						category_city.setAttribute("value", key)
 
+						category_select();
+						updateMapLink();
+
 						modal.style.display = "none"
 						body.style.display = "none"
-						category_select();
+
 
 						while (category_list.lastChild) {
 							category_list.removeChild(category_list.lastChild)
@@ -94,6 +97,8 @@ function selectCategory_city() {
 								category_city.setAttribute("value", key + "/" + detail)
 
 								category_select();
+								updateMapLink();
+
 								modal.style.display = "none"
 								body.style.display = "none"
 
@@ -127,5 +132,14 @@ function selectCategory_city() {
 			category_list_create.removeChild(category_list_create.lastChild)
 		}
 		category_list_on = null
+	}
+}
+
+function updateMapLink() {
+	const mainValue = document.getElementById("category_main").value;
+	const cityValue = document.getElementById("category_city").value;
+	const URL = "findmap?main=" + mainValue + "&city=" + cityValue;
+	if (document.getElementById("setting")) {
+		document.getElementById("setting").setAttribute("href", URL)
 	}
 }
