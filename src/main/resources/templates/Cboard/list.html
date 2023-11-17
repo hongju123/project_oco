@@ -31,7 +31,7 @@
 			<ul class="list">
 				<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
 					<a th:href="@{get?(boardNum=${board.boardNum})}">
-						<div class="topic_category">[[${board.topic}]] <sub> [[${board.category}]]</sub></div>
+						<div class="topic_category">[[${board.topic}]] [[${board.category}]]</div>
 						<!-- <img  class="img_test" th:src="@{/hong/join_business_Page/img/main_visual02.jpg}" alt="" srcset=""> -->
 						<div class="main_title">[[${board.boardTitle}]]</div>
 						<div class="main_content"

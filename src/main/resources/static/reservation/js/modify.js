@@ -33,12 +33,11 @@ const areaDate = {
 
 	"제주": ["서귀포", "제주"]
 }
-
-function f2() {
+function f6() {
 	const area = document.getElementById("area")
 	const areaA = document.getElementById("areaA")
 	const modal = document.getElementById("modal")
-	
+	console.log(12)
 	const category_list = document.createElement("ul")
 	while (area.lastChild) {
 		area.removeChild(area.lastChild)
@@ -88,6 +87,7 @@ function f2() {
 		}
 	}
 }
+
 /*지역 클릭시 모달창띄우기*/
 	const modal = document.getElementById("modal")
 	const areaA = document.getElementById("areaA")
@@ -107,6 +107,7 @@ function f2() {
 			modal.style.display = "none"
 		}
 	})
+
 
 
 function clock() {
@@ -159,6 +160,7 @@ function clock() {
 
 }
 
+
 setInterval('clock()', 1000);
 
 AOS.init({
@@ -194,6 +196,41 @@ $(document).ready(function() {
 	else {
 		$(".fuel").hide();
 		$(".personnel").show();
+	}
+	if (val == "숙소") {
+		$(".typeA").show();
+		$(".typeB").hide();
+		$(".typeC").hide();
+		$(".typeD").hide();
+		$(".typeE").hide();
+	}
+	if (val == "식당") {
+		$(".typeB").show();
+		$(".typeA").hide();
+		$(".typeC").hide();
+		$(".typeD").hide();
+		$(".typeE").hide();
+	}
+	if (val == "카페") {
+		$(".typeC").show();
+		$(".typeB").hide();
+		$(".typeA").hide();
+		$(".typeD").hide();
+		$(".typeE").hide();
+	}
+	if (val == "렌터카") {
+		$(".typeD").show();
+		$(".typeB").hide();
+		$(".typeC").hide();
+		$(".typeA").hide();
+		$(".typeE").hide();
+	}
+	if (val == "기타") {
+		$(".typeE").show();
+		$(".typeB").hide();
+		$(".typeC").hide();
+		$(".typeD").hide();
+		$(".typeA").hide();
 	}
 })
 const category = $("#category");
@@ -288,6 +325,7 @@ $("#amenities").on("click", function(e) {
 		$(".amenitiesE").hide();
 		$(".amenitiesF").hide();
 	}
+	const vals = $(".typeE option:selected").val();
 	if (vals == "회의실") {
 		$(".amenitiesE").show();
 		$(".amenitiesA").hide();
@@ -399,6 +437,7 @@ $(".sum").on("click", function(e) {
 })
 
 $(".calendars").on("click", function(e) {
+	
 	e.preventDefault();
 	buildCalendar();
 	$(".data").show();

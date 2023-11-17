@@ -74,8 +74,50 @@
 	text-align: center;
 	border-radius: 10px;
 }
+.remove-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	font-weight: bold;
+}
+.modify-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+.btn{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 850px;
+}
 
-
+.list-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff !important;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+textarea{
+	width: 835px !important;
+	height: 400px;
+}	
+	
 
 
 
@@ -309,34 +351,4 @@ input#check_btn:checked {
 /* 요청사항 */
 .memo{
 	resize: none;
-}
-
-
-.list-btn{
-	display: block;
-	width:100px;
-	background-color: #3182f6;
-	color: #fff !important;
-	padding: 20px 10px;
-	text-align: center;
-	border-radius: 10px;
-	font-weight: bold;
-}
-
-.modify-btn{
-	display: block;
-	width:100px;
-	background-color: #3182f6;
-	color: #fff;
-	padding: 20px 10px;
-	text-align: center;
-	border-radius: 10px;
-	margin-right: 470px;
-	font-weight: bold;
-}
-.btns{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	width: 670px;
 }

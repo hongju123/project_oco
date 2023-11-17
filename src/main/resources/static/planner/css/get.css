@@ -175,6 +175,7 @@ textarea{
 }
 .list{
 	display: flex;
+	flex-wrap: wrap;
 	border: 1px solid #efefef;
 	height: 40px;
 }
@@ -229,9 +230,120 @@ textarea{
 
 /* map css end */
 
-.name{
-	display: inline-block;
-	text-align: center;
-	border: 1px solid black;
-	border-radius: 5px;
+
+
+
+#Form textarea{
+	width:100%;
+	height:100px;
+	resize: none;
 }
+
+.btn{
+	display: flex;
+	flex-wrap: wrap;
+}
+.remove-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	margin-right: 15px;
+	font-weight: bold;
+}
+.list-btn{
+	display: block;
+	width:100px;
+	background-color: #3182f6;
+	color: #fff !important;
+	padding: 20px 10px;
+	text-align: center;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+
+
+
+
+/*달력 시작*/
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
+
+div .data {
+	background-color: white;
+	height: auto;
+	width: 400px;
+	margin: 0px;
+	padding: 20px;
+	margin: 0 auto;
+	border-radius: 5px;
+	box-shadow: 0px 40px 30px -20px rgba(0, 0, 0, 0.3);
+}
+
+td {
+	width: 50px;
+	height: 50px;
+}
+
+.Calendar {
+	text-align: center;
+}
+
+.Calendar>thead>tr:first-child>td {
+	font-family: 'Questrial', sans-serif;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.Calendar>thead>tr:last-child>td {
+	font-family: 'Questrial', sans-serif;
+	font-weight: 600;
+}
+
+.Calendar>tbody>tr>td>p {
+	font-family: 'Montserrat', sans-serif;
+	height: 45px;
+	width: 45px;
+	border-radius: 45px;
+	transition-duration: .2s;
+	line-height: 45px;
+	margin: 2.5px;
+	display: block;
+	text-align: center;
+}
+
+.pastDay {
+	color: lightgray;
+}
+
+.today {
+	background-color: #F5D042;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.futureDay {
+	background-color: #FFFFFF;
+	cursor: pointer;
+}
+
+.futureDay:hover {
+	background: #eee;
+}
+
+.futureDay.choiceDay,
+.today.choiceDay {
+	background: #0A174E;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+/*달력 끝*/
+
+
+

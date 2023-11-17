@@ -1,6 +1,10 @@
 .wrap {
   min-height: 100vh;
 }
+.sub-inner{
+  position: relative;
+  top: -50px;
+}
 
 .list {
   display: flex;
