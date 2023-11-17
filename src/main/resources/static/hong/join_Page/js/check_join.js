@@ -19,7 +19,7 @@ userid.addEventListener("focusout", function () {
         alarmingSpans[1].classList.add("hidden");
     } else {
         userid.classList.add("falseAction");
-        setInterval(function () {
+        setTimeout(function () {
             userid_button.classList.remove("falseAction");
         }, 1000)
         console.log(functionCheck[1]);
@@ -49,7 +49,7 @@ userid_button.addEventListener("click", function () {
                     userid_button.classList.remove("ani");
                     userid_button.classList.remove("checkBox");
                     userid_button.classList.add("falseAction");
-                    setInterval(function () {
+                    setTimeout (function () {
                         userid_button.classList.remove("falseAction");
                     }, 1000)
                     functionCheck[0] = false;
@@ -59,12 +59,18 @@ userid_button.addEventListener("click", function () {
             },
             error: function (result) {
                 console.log(result.responseText);
+                userid_button.classList.add("falseAction");
+                setTimeout (function () {
+                    userid_button.classList.remove("falseAction");
+                }, 1000)
             }
         });
     } else {
         userid.classList.add("falseAction");
-        setInterval(function () {
-            userid_button.classList.remove("falseAction");
+        userid.classList.add("falseBoard");
+        setTimeout(function () {
+            userid.classList.remove("falseAction");
+            userid.classList.remove("falseBoard");
         }, 1000)
         alarmingSpans[1].classList.remove("hidden");
     }
@@ -108,7 +114,7 @@ userpw.addEventListener("change", function (e) {
         alarmingSpans[2].classList.remove("hidden");
         console.log("비밀번호가 유효하지 않습니다.");
         userpw.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             userpw.classList.remove("falseAction")
         }, 1000)
     }
@@ -128,7 +134,7 @@ check_userpw.addEventListener("change", function () {
     } else {
         alarmingSpans[4].classList.remove("hidden");
         check_userpw.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             check_userpw.classList.remove("falseAction")
         }, 1000)
     }
@@ -144,7 +150,7 @@ username.addEventListener("change", function () {
         functionCheck[2] = true;
     } else {
         username.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             username.classList.remove("falseAction")
         }, 1000)
         functionCheck[2] = false;
@@ -175,7 +181,7 @@ email.addEventListener("change", function (e) {
         get_code.focus();
     } else {
         email.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             email.classList.remove("falseAction")
         }, 1000)
         alarmingSpans[5].classList.remove("hidden");
@@ -202,7 +208,7 @@ get_code.addEventListener("click", function (e) {
                 get_code.classList.remove("ani");
                 get_code.classList.remove("checkBox");
                 get_code.classList.add("falseAction");
-                setInterval(function () {
+                setTimeout(function () {
                     get_code.classList.remove("falseAction");
                 }, 1000)
                 get_code.value = "인증번호";
@@ -227,12 +233,17 @@ check_code_button.addEventListener("click", function () {
                 check_code_button.value = "✅";
                 check_code_button.classList.add("checkBox");
                 check_code_button.classList.add("ani");
+                
             } else {
                 functionCheck[3] = false
                 check_code_button.classList.remove("checkBox");
                 check_code_button.classList.remove("ani");
                 check_code_button.value = "확인";
                 check_code.focus();
+                check_code.classList.add("falseAction");
+                setTimeout(function () {
+                    check_code.classList.remove("falseAction");
+                }, 1000)
             }
         },
         error: function (result) {
@@ -241,6 +252,10 @@ check_code_button.addEventListener("click", function () {
             check_code_button.classList.remove("unset");
             check_code_button.value = "인증";
             check_code.focus();
+            check_code.classList.add("falseAction");
+            setTimeout(function () {
+                check_code.classList.remove("falseAction");
+            }, 1000)
         }
     });
 })
@@ -257,22 +272,13 @@ userphonenumber.addEventListener("change", function (e) {
     } else {
         alarmingSpans[7].classList.remove("hidden");
         functionCheck[4] = false;
+        userphonenumber.classList.add("falseAction");
+        setTimeout (function () {
+            userphonenumber.classList.remove("falseAction");
+        }, 1000)
+        
     }
 })
-
-
-//취미 체크 
-// const userhobby = document.querySelector(".userhobby")
-// userhobby.addEventListener("change", function(e){
-//         const reg =/^. {3,10}$/;
-//         if (reg.test(e.target.value)) {
-//             functionCheck[9]=true;
-//         }else{
-//             e.target.style.border ="1px solid red";
-//         }
-//     }
-// )
-//취미 체크 끝 
 
 //핸드폰 끝
 

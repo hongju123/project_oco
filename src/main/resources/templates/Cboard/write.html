@@ -23,7 +23,7 @@
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
 			<table style="border-collapse: collapse;" class="main">
-				<tr style="height:30px;">
+				<tr style="height:30px;" class="main_row">
 					<th class="a_row">제목</th>
 					<td>
 						<input type="text" class="board_title" name="boardTitle" placeholder="제목을 입력하세요">
@@ -90,7 +90,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="a_row">내 용</th>
+					<th>내 용</th>
 					<td>
 						<textarea name="boardContents" class="boardContents" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
 					</td>
@@ -111,10 +111,10 @@
 			</table>
 		</form>
 		<table class="btn_area">
-			<tr align="right" valign="middle">
-				<td>
-					<a onclick="sendit()">등록</a>
-					<a th:href="${'/Cboard/list'}">목록</a>
+			<tr align="right" valign="middle" style="border: 0cap;">
+				<td  style="border:none;">
+					<a onclick="sendit()" class="plus">등록</a>
+					<a th:href="${'/Cboard/list'}" class="back">목록</a>
 				</td>
 			</tr>
 		</table>

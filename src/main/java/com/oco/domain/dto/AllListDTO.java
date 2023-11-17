@@ -10,4 +10,5 @@ import lombok.Data;
 public class AllListDTO {
 	List<BusinessDTO> ulist;
 	List<BusinessInfoDTO> ilist;
+	List<FileDTO> flist;
 }

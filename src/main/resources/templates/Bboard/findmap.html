@@ -94,9 +94,8 @@
 			border: 1px solid black;
 			margin-top: 100px;
 		}
-		.comment_deteil_1{
-			
-		}
+
+		.comment_deteil_1 {}
 
 
 
@@ -323,6 +322,18 @@
 <script th:src="@{map/js/onposition.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
+
+	function thumbnail(use, files) {
+		console.log(use)
+		for (let file of files) {
+			if (file.boardNum == use.businessIdx) {
+				return '/Bboard/thumbnail?systemName=' + file.systemName;
+			}
+		}
+		return ''; // return an empty string if no thumbnail is found
+	}
+
+
 	let setMain = /*[[${main}]]*/'';
 	let setCity = /*[[${city}]]*/'';
 
@@ -331,8 +342,8 @@
 		document.getElementById("category_city").setAttribute("value", setCity)
 	}
 
+	const category = ["숙소", "카페", "식당", "렌터카", "기타"]
 	var markers = [];
-
 	let mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = {
 			center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -349,10 +360,10 @@
 				data: {"main": data.category, "city": data.city},
 				contentType: "application/json;charset=utf-8",
 				success: function (data) {
-					console.log(data)
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
-					const category = ["숙소", "카페", "식당", "렌터카", "기타"]
+					const files = data.flist;
+					console.log(files)
 
 					if (markers.length != 0) {
 						for (let i = 0; i < markers.length; i++) {
@@ -420,7 +431,15 @@
 										var img = document.createElement('div');
 										img.className = 'img';
 										var picture = document.createElement('img');
-										picture.src = 'img/숙소.png';
+										
+										for(let file of files){
+											if(file.boardNum == use.businessIdx){
+												console.log(file.systemName)
+												picture.src= '/Bboard/thumbnail?systemName=' + file.systemName
+												break;
+											}
+										}
+										console.log(picture);
 										picture.style.cssText = "width:73px; height:70px";
 
 										var desc = document.createElement('div');
