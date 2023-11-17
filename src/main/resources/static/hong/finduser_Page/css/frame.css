@@ -252,7 +252,13 @@ fieldset {
   height: 40px;
 }
 .finished:hover{
-  animation : color 1s ease-in-out forwards;
+  animation : color 2s ease-in-out forwards;
+  animation-play-state: running;
+}
+.finished:hover:active,.get_code:hover:active,.check_code_button:active,.userid_button_2:hover:active,.get_code_2:hover:active,.check_code_button_2:active{
+  font-weight: bolder;
+  color: white;
+  background-color: rgb(0, 0, 0);
 }
 @keyframes color{
   from{}to{

@@ -49,8 +49,8 @@ public class BboardController {
 	// 찾아보기 리스트 가져오기
 	@ResponseBody
 	@GetMapping(value = "findlist", consumes = "application/json")
-	public ResponseEntity<AllListDTO> findlist(@RequestParam String main, @RequestParam String city) {
-		
+	public ResponseEntity<AllListDTO> findlist(@RequestParam String main, @RequestParam String city, Model model) {
+
 		if (main.toString().contains("전체")) {
 			main = "";
 		}
@@ -58,14 +58,16 @@ public class BboardController {
 			city = "";
 
 		}
+		System.out.println(service.getMainList(main, city));
+	
 		return new ResponseEntity<AllListDTO>(service.getMainList(main, city), HttpStatus.OK);
 	}
 
 	// 맵 가져오기
 	@GetMapping("findmap")
-	public String getmap(String main,String city,Model model) {
-		model.addAttribute("main",main);
-		model.addAttribute("city",city);
+	public String getmap(String main, String city, Model model) {
+		model.addAttribute("main", main);
+		model.addAttribute("city", city);
 		return "Bboard/findmap.html";
 	}
 
@@ -99,8 +101,8 @@ public class BboardController {
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
 		String Time = open + " ~ " + close;
 		info.setUseTime(Time);
-		//파일관련
-		if (service.modify(info,files,updateCnt)) {
+		// 파일관련
+		if (service.modify(info, files, updateCnt)) {
 			return "redirect:/Bboard/get?businessIdx=" + info.getBusinessInfoIdx();
 		} else {
 			return null;

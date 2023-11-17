@@ -71,14 +71,20 @@ public class UserController {
 	}
 
 	@PostMapping("join")
-	public String join(UserDTO userDto, HttpServletRequest req) {
+	public String join(UserDTO userDto, HttpServletRequest req,HttpServletResponse res) {
 		System.out.println(userDto);
 
 		if (user.join(userDto)) {
-			req.getSession().setAttribute("loginUser", userDto.getUserId());
-			return "redirect:/";
+			System.out.println(userDto.getUserId());
+			Cookie cookie = new Cookie("userId", userDto.getUserId());
+			cookie.setMaxAge(1);
+			res.addCookie(cookie);
+			return "hong/login_Page";
 		} else {
-			return "hong/join_Page";
+			Cookie cookie = new Cookie("joinStatus", "fals");
+			cookie.setMaxAge(1);
+			res.addCookie(cookie);
+			return "hong/join_business_Page";
 		}
 	}
 

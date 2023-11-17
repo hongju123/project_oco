@@ -18,6 +18,7 @@ public interface FindListService {
 	
 	// 카테고리별 select
 	AllListDTO getMainList(String main, String city);
+	
 	//상세 페이지 select
 	Long getIndexNum(String businessId);
 	
