@@ -48,9 +48,10 @@ userid_button.addEventListener("click", function () {
                 } else {
                     userid_button.classList.remove("ani");
                     userid_button.classList.remove("checkBox");
-                    userid_button.classList.add("falseAction");
+
+                    userid.classList.add("falseAction");
                     setTimeout (function () {
-                        userid_button.classList.remove("falseAction");
+                        userid.classList.remove("falseAction");
                     }, 1000)
                     functionCheck[0] = false;
                     userid_button.value = "중복확인";
@@ -75,6 +76,7 @@ userid_button.addEventListener("click", function () {
         alarmingSpans[1].classList.remove("hidden");
     }
 });
+
 // 더블클릭 하면 정보 수정하는 것으로 간주
 userid.addEventListener("dblclick", function () {
     userid.removeAttribute("readonly");

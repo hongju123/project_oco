@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link rel="stylesheet" th:href="@{/planner/css/list.css}">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
@@ -14,37 +15,41 @@
 				<h2 data-aos="fade-up">플래너로<br> 내 여행을 더 쉽게<br> <strong>관리하세요!</strong></h2>
 			</div><!--.sub-tit-->
 			<div class="depth2-wrap" data-aos="fade-up">
-			  <ul class="depth2 sub-nav">
-			    <li><a th:href="@{/planner/map}">플래너 만들기</a></li>
-	            <li class="active"><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
-			  </ul>
+				<ul class="depth2 sub-nav">
+					<li><a th:href="@{/planner/map}">플래너 만들기</a></li>
+					<li class="active"><a th:href="@{/planner/plannerlist}">플래너 보기</a></li>
+				</ul>
 			</div>
-			<a th:href="${'/planner/map'}">플래너 작성</a>
-			<table class="list">
-				<tr align="right" valign="middle">
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">날짜</th>
-					<th>가게명</th>
-					<th>주소</th>
-					<th width="15%">메모</th>
-				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="planner : ${list}" align="center" valign="middle">
+			<ul class="list">
+				<th:block th:if="${list != null and list.size()>0}" th:each="planner : ${list}">
 					<th:block th:if="${planner.userId == session.loginUser}">
-						<td><a class="get" th:href="${planner.scheduleNum}">[[${planner.scheduleDate}]]</a></td>
-						<td>[[${planner.storeName}]]</td>
-						<td>[[${planner.addr}]]</td>
-						<td>[[${planner.memo}]]</td>
-					</td>
-					<!--사업자로그인 일떄 볼 리스트는 모든 유저의 게시글-->
-				</tr>
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
-					</tr>
+						<li class="item">
+							<a class="get" th:href="${planner.scheduleNum}">
+								<div><img class="img" th:src="@{/planner/img/marker.png}"></div>
+								<div class="contents_area">
+									계획일 
+									<br>
+									<span class="content">
+										[[${planner.scheduleDate}]]
+									</span>
+									<br>
+									장소 
+									<br> 
+									<span class="content">
+										[[${planner.storeName}]]
+									</span>
+									<br>
+									메모 
+									<br> 
+									<span class="content">
+										[[${planner.memo}]]
+									</span>
+								</div>
+							</a>
+						</li>
+					</th:block>
 				</th:block>
-			</table>
+			</ul>
 			<form name="getForm" id="getForm" th:action="@{/planner/plannerlist}"></form>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
@@ -63,17 +68,18 @@
 <script th:inline="javascript">
 	AOS.init({
 		duration: 1200,
-	  });
+	});
 	const getForm = $("#getForm");
-	$(".get").on("click",function(e){
+	$(".get").on("click", function (e) {
 		e.preventDefault()
 		let scheduleNum = $(this).attr("href");
-		let url=/*[[@{/planner/plannerget}]]*/'';
-		getForm.append("<input type='hidden' name='scheduleNum' value='"+scheduleNum+"'>")
-		getForm.attr("action",url);
-		getForm.attr("method","get");
+		let url =/*[[@{/planner/plannerget}]]*/'';
+		getForm.append("<input type='hidden' name='scheduleNum' value='" + scheduleNum + "'>")
+		getForm.attr("action", url);
+		getForm.attr("method", "get");
 		getForm.submit();
 	})
-	
+
 </script>
+
 </html>

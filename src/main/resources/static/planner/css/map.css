@@ -175,6 +175,7 @@ textarea{
 }
 .list{
 	display: flex;
+	flex-wrap: wrap;
 	border: 1px solid #efefef;
 	height: 40px;
 }

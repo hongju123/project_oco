@@ -1,4 +1,5 @@
 const areaDate = {
+	"전 지역": [],
 	"서울": ["강남구", "강동구", "관악구", "동작구", "서초구", "송파구", "영등포구", "강서구", "구로구", "금천구", "마포구", "서대문구", "양천구", "은평구", "노원구", "도봉구", "강북구", "성북구", "중랑구", "동대문구", "광진구", "성동구", "용산구", "종로구", "중구",],
 
 	"부산": ["강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"],
@@ -51,7 +52,17 @@ function f2() {
 			ul_1.innerHTML = key
 			ul_1.className = "category_2"
 			category_list.appendChild(ul_1)
+			if (ul_1.innerHTML == "전 지역") {
+				ul_1.addEventListener("click", function() {
+					areaA.setAttribute("value", key)
+					areaA.setAttribute("onchang", getList())
+					modal.style.display = "none"
 
+					while (category_list.lastChild) {
+						category_list.removeChild(category_list.lastChild)
+					}
+				})
+			}
 			ul_1.addEventListener("click", function() {
 				if (ul_1.children.length == 0) {
 					for (let detail of areaDate[key]) {
@@ -61,7 +72,7 @@ function f2() {
 						ul_1.appendChild(li_2)
 						li_2.addEventListener("click", function() {
 							areaA.setAttribute("value", key + "/" + detail)
-							areaA.setAttribute("onchang",getList())
+							areaA.setAttribute("onchang", getList())
 							modal.style.display = "none"
 							while (category_list.lastChild) {
 								category_list.removeChild(category_list.lastChild);
@@ -89,21 +100,21 @@ function f2() {
 	}
 }
 /*지역 클릭시 모달창띄우기*/
-	const modal = document.getElementById("modal")
-	const areaA = document.getElementById("areaA")
-	const main02 = $(".main02-inner")
-	areaA.addEventListener("click", e => {
-		modal.style.display = "flex"
-	})
-	/*X버튼 클릭시 모달창내리기*/
-	const closeBtn = modal.querySelector(".close-area")
-	closeBtn.addEventListener("click", e => {
+const modal = document.getElementById("modal")
+const areaA = document.getElementById("areaA")
+const main02 = $(".main02-inner")
+areaA.addEventListener("click", e => {
+	modal.style.display = "flex"
+})
+/*X버튼 클릭시 모달창내리기*/
+const closeBtn = modal.querySelector(".close-area")
+closeBtn.addEventListener("click", e => {
+	modal.style.display = "none"
+})
+/*모달창 밖을 클릭시 모달창내리기*/
+modal.addEventListener("click", e => {
+	const evTarget = e.target
+	if (evTarget.classList.contains("modal-overlay")) {
 		modal.style.display = "none"
-	})
-	/*모달창 밖을 클릭시 모달창내리기*/
-	modal.addEventListener("click", e => {
-		const evTarget = e.target
-		if (evTarget.classList.contains("modal-overlay")) {
-			modal.style.display = "none"
-		}
-	})
+	}
+})
