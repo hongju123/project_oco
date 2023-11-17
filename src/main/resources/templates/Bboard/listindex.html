@@ -37,7 +37,7 @@
 			justify-content: space-between;
 		}
 
-		/*버트 부분*/
+		/*버튼 부분*/
 		.btn_area {
 			width: 400px;
 			height: 50px;
@@ -52,6 +52,7 @@
 			height: 50px;
 			text-align: center;
 			animation: left 0.5s ease-out;
+			cursor: pointer;
 		}
 
 		/*맵 이미지*/
@@ -186,7 +187,7 @@
 					onclick="selectCategory_city()" readonly>
 			</div>
 			<div class="map_page">
-				<a th:href="@{findmap}" id="map">
+				<a th:href="@{findmap}" id="setting">
 					<img src="./list/img/지도아이콘.png" class="map_img">
 				</a>
 			</div>
@@ -222,15 +223,12 @@
 <script th:src="@{list/js/selectmain.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
-	
-	const btn = document.getElementsByClassName("category_btn")
-	
-	
+
 	/*클릭시 이동*/
 	function business(businessIdx) {
 		window.location.href = '/Bboard/get?businessIdx=' + businessIdx;
 	}
-	
+
 	const list_section = document.getElementById("find_list_section")
 
 	const selectService = (function () {
@@ -279,11 +277,10 @@
 								txt += '</ul>';
 								txt += '</div>';
 								txt += '</div>';
-
-								list_section.innerHTML = txt;
 							}
 						}
 					}
+					list_section.innerHTML = txt;
 				}
 			})
 		}

@@ -8,6 +8,42 @@
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
+		@keyframes left {
+			0% {
+				opacity: 0;
+				transform: translateX(-40px);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		@keyframes right {
+			0% {
+				opacity: 0;
+				transform: translateX(40px);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		@keyframes slideUp {
+			0% {
+				opacity: 0;
+				transform: translateY(40px);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
 		#wrap {
 			margin: 150px auto;
 			width: 1200px;
@@ -20,12 +56,122 @@
 			justify-content: space-between;
 		}
 
+		/*맵*/
 		#map {
 			border: 1px solid black;
 			width: 1000px;
 			height: 750px;
+			z-index: 1;
+			animation: right 0.5s ease-out;
 		}
 
+		/*버튼쪽 section*/
+		.select_category_section {
+			height: 100px;
+		}
+
+		.btn_area {
+			width: 400px;
+			height: 50px;
+			text-align: center;
+		}
+
+		.category_btn {
+			margin: 0 10px;
+			border: 1px solid rgb(132, 179, 248);
+			border-radius: 20px;
+			width: 150px;
+			height: 50px;
+			text-align: center;
+			cursor: pointer;
+			animation: left 0.5s ease-out;
+		}
+
+		/*코멘트 부분*/
+
+		.comment {
+			animation: slideUp 0.5s ease-out;
+			border: 1px solid black;
+			margin-top: 100px;
+		}
+		.comment_deteil_1{
+			
+		}
+
+
+
+
+
+
+
+		/*모달창 부분*/
+		.modal {
+			position: absolute;
+			display: none;
+			justify-content: center;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.4);
+			z-index: 2;
+		}
+
+		.modal_body {
+			position: absolute;
+			top: 50%;
+			width: 400px;
+			height: 600px;
+			padding: 20px;
+			background-color: rgba(255, 255, 255, 0.9);
+			box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+			transform: translateY(-50%);
+			overflow: auto;
+		}
+
+		.close_area {
+			text-align: right;
+			font-size: 24px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		#category_select_section {
+			margin-top: 20px;
+			background-color: rgba(233, 233, 233, 0.2);
+			border-radius: 20px;
+		}
+
+		.category_2 {
+			box-sizing: border-box;
+			padding: 10px;
+			font-size: 20px;
+			font-weight: bold;
+			border-bottom: 1px solid rgba(132, 179, 248, 0.35);
+			cursor: pointer;
+		}
+
+		.category_2_detail:hover {
+			background: rgb(233, 233, 233);
+		}
+
+		.category_2_detail:not(:last-child) {
+			box-sizing: border-box;
+			padding: 10px 0 10px 20px;
+			border-bottom: 1px solid rgba(132, 179, 248, 0.35);
+			cursor: pointer;
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+		.category_2_detail:last-child {
+			box-sizing: border-box;
+			padding: 10px 0 10px 20px;
+			cursor: pointer;
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+
+		/*맵 상세 레이아웃*/
 		.info_wrap {
 			position: absolute;
 			left: 0;
@@ -142,19 +288,27 @@
 		<div class="sub-inner">
 			<div class="select_map">
 				<div class="select_category_section">
-					<input type="text" name="" id="category_main" value="전체" onclick="selectCategory_main()">
-					<input type="text" name="" id="category_city" value="전 지역" onclick="selectCategory_city()">
+					<div class="btn_area">
+						<input type="text" class="category_btn" name="" id="category_main" value="전체"
+							onclick="selectCategory_main()" readonly>
+						<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
+							onclick="selectCategory_city()" readonly>
+					</div>
+					<div class="comment">
+						<p class="comment_deteil_1">맵으로</p>
+						<p class="comment_deteil_2">보세요</p>
+					</div>
 					<div class="modal">
 						<div class="modal_body">
-							
+							<div class="close_area">X</div>
+							<div id="category_select_section">
+
+							</div>
 						</div>
-					</div>
-					<div id="category_select_section">
-	
 					</div>
 				</div>
 				<div id="map">
-	
+
 				</div>
 			</div>
 		</div><!--.sub-inner-->
@@ -167,7 +321,15 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
 <script th:src="@{map/js/onposition.js}"></script>
-<script>
+<script th:src="@{list/js/modal.js}"></script>
+<script th:inline="javascript">
+	let setMain = /*[[${main}]]*/'';
+	let setCity = /*[[${city}]]*/'';
+
+	if (setMain != null && setCity != null) {
+		document.getElementById("category_main").setAttribute("value", setMain)
+		document.getElementById("category_city").setAttribute("value", setCity)
+	}
 
 	var markers = [];
 
@@ -191,13 +353,13 @@
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
 					const category = ["숙소", "카페", "식당", "렌터카", "기타"]
-					
+
 					if (markers.length != 0) {
-					for (let i = 0; i < markers.length; i++) {
-						markers[i].setMap(null);
+						for (let i = 0; i < markers.length; i++) {
+							markers[i].setMap(null);
+						}
+						markers = [];
 					}
-					markers = [];
-				}
 
 					for (let use of user) { //빠른 for문
 						for (let inf of info) {
@@ -220,7 +382,7 @@
 										for (let i = 0; i < markers.length; i++) {
 											markers[i].setMap(map)
 										}
-										
+
 										// 마커 위에 커스텀오버레이를 표시합니다
 										// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 										var overlay = new kakao.maps.CustomOverlay({
@@ -274,7 +436,7 @@
 										var link = document.createElement('a');
 										link.innerHTML = "개인 페이지"
 										link.className = 'link';
-										link.href = '#';
+										link.href = '/Bboard/get?businessIdx=' + use.businessIdx
 
 
 

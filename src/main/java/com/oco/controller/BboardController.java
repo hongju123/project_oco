@@ -63,8 +63,9 @@ public class BboardController {
 
 	// 맵 가져오기
 	@GetMapping("findmap")
-	public String getmap(String code) {
-		System.out.println(code);
+	public String getmap(String main,String city,Model model) {
+		model.addAttribute("main",main);
+		model.addAttribute("city",city);
 		return "Bboard/findmap.html";
 	}
 
