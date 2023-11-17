@@ -215,13 +215,13 @@
 	}
 	function loginUserHandler() {
 		const userId =  /*[[${session.loginUser}]]*/'';
-	// 	if (userId != null) {
-	// 		return true;
-	// 	} else {
-	// 		alert("로그인후 이용해주세요")
-	// 		return false;
-	// 	}
-	//
+		if (userId != null) {
+			return true;
+		} else {
+			alert("로그인후 이용해주세요")
+			return false;
+		}
+	
 	return true; 
 	}
 

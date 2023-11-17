@@ -15,8 +15,10 @@ body{
     justify-content: center;
     flex-direction: column;
 }
-form{
+
+table{
 	margin-top: 170px;
+	border:1.5px solid black;
 }
 
 th,tr{
@@ -40,10 +42,46 @@ td{
 
 textarea{
 	border: none;
-	width: 598px;
+	width: 500px;
 	height: 103px;
 	min-height: 8rem;
 	overflow-y: hidden;
     resize: none;
     outline: none;
+}
+
+input[type=text]{
+	margin: 0 auto;
+	border:none;
+
+}
+
+.btn_area{
+	margin-top: 10px;
+	margin-right: 5px;
+    border-radius: 3px;
+    width: 75px; 
+	text-align: center;
+	
+}
+
+form>a{
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #3182f6;
+	color: white;
+	border-radius: 3px;
+	margin-right: 5px;
+	padding: 5px 10px 5px 10px ;
+}
+
+a.regist{
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #3182f6;
+	color: white;
+	border-radius: 3px;
+	margin-bottom: 30px;
+	padding: 5px 10px 5px 10px ;
+
 }

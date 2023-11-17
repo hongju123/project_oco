@@ -48,9 +48,10 @@ userid_button.addEventListener("click", function () {
                 } else {
                     userid_button.classList.remove("ani");
                     userid_button.classList.remove("checkBox");
-                    userid_button.classList.add("falseAction");
+
+                    userid.classList.add("falseAction");
                     setTimeout (function () {
-                        userid_button.classList.remove("falseAction");
+                        userid.classList.remove("falseAction");
                     }, 1000)
                     functionCheck[0] = false;
                     userid_button.value = "중복확인";
