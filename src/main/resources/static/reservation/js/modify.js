@@ -33,12 +33,11 @@ const areaDate = {
 
 	"제주": ["서귀포", "제주"]
 }
-
-function f2() {
+function f6() {
 	const area = document.getElementById("area")
 	const areaA = document.getElementById("areaA")
 	const modal = document.getElementById("modal")
-	
+	console.log(12)
 	const category_list = document.createElement("ul")
 	while (area.lastChild) {
 		area.removeChild(area.lastChild)
@@ -88,6 +87,7 @@ function f2() {
 		}
 	}
 }
+
 /*지역 클릭시 모달창띄우기*/
 	const modal = document.getElementById("modal")
 	const areaA = document.getElementById("areaA")
@@ -107,6 +107,7 @@ function f2() {
 			modal.style.display = "none"
 		}
 	})
+
 
 
 function clock() {
@@ -158,6 +159,7 @@ function clock() {
 	document.getElementById("clock").innerHTML = (hours + ":" + minutes + ":" + seconds + meridiem);
 
 }
+
 
 setInterval('clock()', 1000);
 
@@ -399,6 +401,7 @@ $(".sum").on("click", function(e) {
 })
 
 $(".calendars").on("click", function(e) {
+	
 	e.preventDefault();
 	buildCalendar();
 	$(".data").show();
