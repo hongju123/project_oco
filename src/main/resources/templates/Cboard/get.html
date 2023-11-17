@@ -44,7 +44,7 @@
 				</tr>
 				
 				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;" class="a_row">내 용</th>
+					<th style="text-align:center; width:150px;">내 용</th>
 					<td>
 						<textarea name="boardContents" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContents}]]</textarea>
 					</td>
@@ -289,5 +289,11 @@
 		$(".regist").show();
 		$("[name='replycontents']").val("");
 	})
+	
+		//textarea 크기 자동조절
+	function resize(obj) {
+    obj.style.height = '1px';
+    obj.style.height = (12 + obj.scrollHeight) + 'px';
+	}
 </script>
 </html>
