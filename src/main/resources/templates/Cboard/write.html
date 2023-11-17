@@ -23,20 +23,20 @@
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
 			<table style="border-collapse: collapse;" class="main">
-				<tr style="height:30px;">
-					<th>제목</th>
+				<tr style="height:30px;" class="main_row">
+					<th class="a_row">제목</th>
 					<td>
 						<input type="text" class="board_title" name="boardTitle" placeholder="제목을 입력하세요">
 					</td>
 				</tr>
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">작성자</th>
+					<th style="text-align:center; width:150px;" class="a_row">작성자</th>
 					<td>
 						<input type="text" name="userId" th:value="${session.loginUser}" readonly>
 					</td>
 				</tr>
 				<tr>
-					<th>주제</th>
+					<th class="a_row">주제</th>
 					<td>
 						<select name="topic" class="topic">
 							<option value="topicNull" selected disabled>주제</option>
@@ -48,7 +48,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>카테고리</th>
+					<th class="a_row">카테고리</th>
 					<td>
 						<select name="category" class="category">
 							<option value="categoryNull" selected disabled>카테고리</option>
@@ -111,10 +111,10 @@
 			</table>
 		</form>
 		<table class="btn_area">
-			<tr align="right" valign="middle">
-				<td>
-					<a onclick="sendit()">등록</a>
-					<a th:href="${'/Cboard/list'}">목록</a>
+			<tr align="right" valign="middle" style="border: 0cap;">
+				<td  style="border:none;">
+					<a onclick="sendit()" class="plus">등록</a>
+					<a th:href="${'/Cboard/list'}" class="back">목록</a>
 				</td>
 			</tr>
 		</table>

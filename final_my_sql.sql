@@ -1,5 +1,5 @@
 CREATE DATABASE oco;				
-USE oco;				
+USE oco;	
 				
 				
 CREATE TABLE users (				

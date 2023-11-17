@@ -16,35 +16,62 @@ body {
   flex-direction: column;
 }
 
-table{
-	margin-top: 170px;
-    border:1px solid black;    
-}
-#main{
-	width: 750px;
 
+.main{
+	margin-top: 170px;
+    border:1.5px solid black;
+      
 }
+
+.btn_area{
+		margin-top: 30px;
+		margin-bottom: 60px;
+		border:none;
+		padding: 10px;
+}
+
 th,tr{
 	border: 1px solid black;
 }
+
 th{
+	
 	background-color: #3182f6;
 	color: white;
-	border-bottom-color: white;
 	text-align: center;
 	vertical-align : middle;
 }
+
+.a_row{
+	border-bottom-color: white;
+	}
+
 td{
-	padding: 10px;
+	padding: 15px;
 }
 
-a{
 
-	box-sizing: content-box;
+select{
+		padding: 5px 5px 5px 5px;
+		text-align: center;
 }
 
-#btn_area{
-	box-sizing: content-box;
+select:focus {
+	border-color: #aaa;
+	box-shadow: 0 0 1px 2px #3182f6;
+	box-shadow: 0 0 0 3px -moz-mac-focusring;
+	color: #222;
+	outline: none;
+	}
+
+.plus, .back{
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #3182f6;
+	color: white;
+	border-radius: 3px;
+	margin-right: 5px;
+	padding: 5px 10px 5px 10px ;
 }
 
 textarea{
@@ -54,10 +81,20 @@ textarea{
 	min-height: 8rem;
 	overflow-y: hidden;
     resize: none;
+    outline: none;
 }
 
-textarea:hover{
-	transition: 1s;
+div{
+	margin: 5px 5px 5px 5px;
+	padding: 5px;
+}
+
+div>a{
+	background-color: #3182f6;
+	box-sizing: border-box;
+	border-radius: 3px;
+	color: white;
+	padding: 5px 10px 5px 10px ;
 }
 
 .hidden{

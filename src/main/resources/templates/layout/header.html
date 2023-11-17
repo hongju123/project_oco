@@ -32,7 +32,7 @@
 				<th:block th:if="${session.loginUser != null}">
 					<li><a th:href="@{/user/logout}">로그아웃</a></li>
 					<th:block th:if="${session.businessUser == 'O'}">
-						<li><a th:href="@{/Bboard/getpage (businessId=${session.loginUser})}" class="myPage">내 상세 페이지 보기</a></li>
+						<li><a th:href="@{/Bboard/getpage (businessId=${session.loginUser})}" class="myPage">프로필 관리</a></li>
 					</th:block>
 				</th:block>
 			</ul>
