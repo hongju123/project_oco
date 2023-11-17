@@ -68,10 +68,7 @@ textarea{
 	min-height: 8rem;
 	overflow-y: hidden;
     resize: none;
-}
-
-textarea:hover{
-	transition: 1s;
+    outline: none;
 }
 
 
