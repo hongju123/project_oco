@@ -40,7 +40,7 @@
   margin:50px 0;
   max-width: 100%;
   white-space: nowrap;
-  z-index: 5000;
+  z-index: 100;
 }
 .depth2-wrap .depth2 {
 	padding: 15px 0;

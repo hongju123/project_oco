@@ -183,3 +183,35 @@ a > div {
 .user {
   font-size: smaller;
 }
+
+.addList {
+  position: relative;
+  font-weight: bolder;
+  font-size: 13px;
+}
+.addList:hover {
+  color: rgb(0, 0, 0);
+}
+
+.addList:after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgba(49, 131, 246, 1);
+  position: absolute;
+  bottom: 2px;
+  transition: width 0.3s ease-out;
+}
+
+.addList:hover:after {
+  width: 100%;
+}
+.addList:hover{
+  transform: scale(1.01);
+}
+.addList>a>div:hover{
+  color: #3182f6;
+}
+.regDate:hover,.read_cnt:hover{
+  color: #3182f6;
+}
