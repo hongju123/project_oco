@@ -33,3 +33,17 @@ th{
 .a_row{
 	border-bottom-color: white;
 }
+
+td{
+	padding: 15px;
+}
+
+textarea{
+	border: none;
+	width: 598px;
+	height: 103px;
+	min-height: 8rem;
+	overflow-y: hidden;
+    resize: none;
+    outline: none;
+}

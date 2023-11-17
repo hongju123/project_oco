@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>oco</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/slick.css}">
@@ -10,258 +11,249 @@
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
+
 <body id="main" class="intro notouch">
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	
+
 	<div class="wrap">
-	<section class="main01 hidden">
-		<div class="main01-slide-wrap">
-			<div class="main01-slide">
-		    	<div class="main01-slide-txt">
-		        	<img src="images/ico-quotes.svg" alt=""/>
-		        	<p>여행, 일일이 찾는게 귀찮을 때
-						<strong>오시오</strong>
-					</p>
+		<section class="main01 hidden">
+			<div class="main01-slide-wrap">
+				<div class="main01-slide">
+					<div class="main01-slide-txt">
+						<img src="images/ico-quotes.svg" alt="" />
+						<p>여행, 일일이 찾는게 귀찮을 때
+							<strong>오시오</strong>
+						</p>
+					</div>
+					<div class="img-area">
+						<img th:src="@{/main/images/main_visual01.jpg}">
+					</div>
 				</div>
-		        <div class="img-area">
-		        	<img th:src="@{/main/images/main_visual01.jpg}">
-		        </div>
-		    </div>
-		    <div class="main01-slide">
-		    	<div class="main01-slide-txt">
-		        	<img src="images/ico-quotes.svg" alt=""/>
-		        	<p>여행, 일일이 찾는게 귀찮을 때
-						<strong>오시오</strong>
-					</p>
+				<div class="main01-slide">
+					<div class="main01-slide-txt">
+						<img src="images/ico-quotes.svg" alt="" />
+						<p>여행, 일일이 찾는게 귀찮을 때
+							<strong>오시오</strong>
+						</p>
+					</div>
+					<div class="img-area">
+						<img th:src="@{/main/images/main_visual02.jpg}">
+					</div>
 				</div>
-		        <div class="img-area">
-		        	<img th:src="@{/main/images/main_visual02.jpg}">
-		        </div>
-		    </div>
-		</div>
-		<div class="main01-inner">
-		    <button class="ico ico-main-scroll"></button>
-		    <!--<p class="typo">Our Offer, Connect, Onward"</p>-->
-		    <div class="main01-slide-control">
-				<button class="main01-slide-btn prev"></button>
-				<button class="main01-slide-btn next"></button>
-				<button class="play"><i class="ico ico-play"></i></button>
-				<button class="pause"><i class="ico ico-pause"></i></button>
 			</div>
-		</div>
-	</section>
-	
-	
-	<section class="main02">
+			<div class="main01-inner">
+				<button class="ico ico-main-scroll"></button>
+				<!--<p class="typo">Our Offer, Connect, Onward"</p>-->
+				<div class="main01-slide-control">
+					<button class="main01-slide-btn prev"></button>
+					<button class="main01-slide-btn next"></button>
+					<button class="play"><i class="ico ico-play"></i></button>
+					<button class="pause"><i class="ico ico-pause"></i></button>
+				</div>
+			</div>
+		</section>
 
-		<div class="main02-inner">
-			<div class="main-tit"  data-aos="fade-up">
-				<h3>제공서비스</h3>
-				<p>여행을 제안받고 나에게 맞는 플랜을 세워보세요!</p>	
-			</div>
-			<div class="category-con" data-aos="fade-up">
-		      	<div class="category-item">
-		      		<div class="category-icon">
-		      			<a th:href="1" class="get">
-		      				<img th:src="@{/main/images/main_icon01.png}">
-		  				</a>
-		      		</div>
-		      		<p class="category-txt">숙소</p>
-		      	</div>
-		      	<div class="category-item">
-		      		<div class="category-icon">
-		      			<a href="2" class="get">
-		      				<img th:src="@{/main/images/main_icon02.png}">
-		  				</a>
-		      		</div>
-		      		<p class="category-txt">식당</p>
-		      	</div>
-		      	<div class="category-item">
-		      		<div class="category-icon">
-		      			<a href="3" class="get">
-		      				<img th:src="@{/main/images/main_icon03.png}">
-		  				</a>
-		      		</div>
-		      		<p class="category-txt">카페</p>
-		      	</div>
-		      	<div class="category-item">
-		      		<div class="category-icon">
-		      			<a href="4" class="get">
-		      				<img th:src="@{/main/images/main_icon04.png}">
-		  				</a>
-		      		</div>
-		      		<p class="category-txt">렌터카</p>
-		      	</div>
-		      	<div class="category-item">
-		      		<div class="category-icon">
-		      			<a href="5" class="get">
-		      				<img th:src="@{/main/images/main_icon05.png}">
-		  				</a>
-		      		</div>
-		      		<p class="category-txt">기타</p>
-		      	</div>
-			</div><!--.category-con-->
-		</div><!--.inner-->
-	</section>
-	<section class="main03">
-		<div class="inner">
-			<div class="main-tit"  data-aos="fade-up">
-				<h3>인기 플레이스</h3>
-				<p>지금 가장 핫한 플레이스를 만나보세요!</p>	
-			</div>
-		</div>
-		<swiper-container class="mySwiper"space-between="30"
-		    slides-per-view="3.5" autoplay="true" data-aos="fade-up">
-		    <swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img01.jpg}">
-					<div class="main03-txt">
-						<h4>[강원 양양군] 쏠비치 양양</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-			<swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img02.jpg}">
-					<div class="main03-txt">
-						<h4>[제주 제주] 일도</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-			<swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img03.jpg}">
-					<div class="main03-txt">
-						<h4>[경기 남양주] 포러데이 팔당</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-			<swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img04.jpg}">
-					<div class="main03-txt">
-						<h4>[부산 기장군] 고고 렌터카</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-			<swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img04.jpg}">
-					<div class="main03-txt">
-						<div class="main03-txt">
-						<h4>[강원 양양군] 쏠비치 양양</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-			<swiper-slide>
-				<div class="main03-con">
-					<img th:src="@{/main/images/main02_img04.jpg}">
-					<div class="main03-txt">
-						<h4>[강원 양양군] 쏠비치 양양</h4>
-						<h4><strong>★</strong> 4.9</h4>
-					</div>
-					<p>이용횟수 812,321회</p>
-				</div>
-			</swiper-slide>
-		  </swiper-container>
-		  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-	</section>
-	<section class="main04">
-		<div class="inner">
-			<div class="main-tit" data-aos="fade-up">
-				<h3>사용법</h3>
-				<p>오시오, 쉽게 알려드려요!</p>	
-			</div>
-			<div class="main04-con" data-aos="fade-up">
-		      	<div class="main04-item">
-					<span class="step">STEP 01</span>
-		      		<p class="main04-txt">여행지 정하기</p>
-		      	</div>
-		      	<div class="main04-item">
-					<span class="step">STEP 02</span>
-		      		<p class="main04-txt">내가 가고싶은 곳<br>요청하기</p>
-		      	</div>
-		      	<div class="main04-item">
-					<span class="step">STEP 03</span>
-		      		<p class="main04-txt">여러 사장님에게<br>제안받기</p>
-		      	</div>
-		      	<div class="main04-item">
-					<span class="step">STEP 04</span>
-		      		<p class="main04-txt">사장님과 개별연락 후<br>예약완료!</p>
-		      	</div>
-		      	<div class="main04-item">
-					<span class="step">STEP 05</span>
-		      		<p class="main04-txt">플래너로 일정관리하고<br>즐거운 여행 즐기기</p>
-		      	</div>
-		      	
-			</div><!--.category-con-->
-		</div>
-	</section>
-	<section class="main05">
-		<div class="main05_inner">
-			<div data-aos="fade-right"><img th:src="@{/main/images/main05_img.jpg}"></div>
-			<div class="main-tit" data-aos="fade-left">
-				<h3>오직 <strong>나를 위한 여행에서<br> 일정을 관리</strong>해보세요.</h3>
-				<p>여행갈 때 찾아보기 번거롭고 불편했던<br> 기존의 예약시스템을 새롭게 만들어낸<br> '오시오'입니다.</p>	
-				<a th:href="@{/planner/map}">플래너 바로가기</a>
-			</div>
-		</div>
-	</section>
-	<section class="main06">
-		<div class="inner">
-			<div class="main-tit" data-aos="fade-up">
-				<h3>커뮤니티에 물어보세요!</h3>
-				<p>궁금했던 모든 것을 물어보고 답해보세요.</p>	
-			</div>
-			<div class="main06-con" data-aos="fade-up">
-			<th:block th:each="board, iterStat : ${clist}" th:if="${iterStat.index < 4}">
-				<div class="main06-item">
-					<span>[[${board.topic}]]</span>
-					<h5>[[${board.boardTitle}]]</h5>
-					<p>[[${board.boardContents}]]</p>
-			 		<span class="main06-bottom">[[${board.category}]]</span>
-				</div>
-			</th:block>
-			</div>
-		</div>
-	</section>
 
-	
+		<section class="main02">
+
+			<div class="main02-inner">
+				<div class="main-tit" data-aos="fade-up">
+					<h3>제공서비스</h3>
+					<p>여행을 제안받고 나에게 맞는 플랜을 세워보세요!</p>
+				</div>
+				<div class="category-con" data-aos="fade-up">
+					<div class="category-item">
+						<div class="category-icon">
+							<a th:href="1" class="get">
+								<img th:src="@{/main/images/main_icon01.png}">
+							</a>
+						</div>
+						<p class="category-txt">숙소</p>
+					</div>
+					<div class="category-item">
+						<div class="category-icon">
+							<a href="2" class="get">
+								<img th:src="@{/main/images/main_icon02.png}">
+							</a>
+						</div>
+						<p class="category-txt">식당</p>
+					</div>
+					<div class="category-item">
+						<div class="category-icon">
+							<a href="3" class="get">
+								<img th:src="@{/main/images/main_icon03.png}">
+							</a>
+						</div>
+						<p class="category-txt">카페</p>
+					</div>
+					<div class="category-item">
+						<div class="category-icon">
+							<a href="4" class="get">
+								<img th:src="@{/main/images/main_icon04.png}">
+							</a>
+						</div>
+						<p class="category-txt">렌터카</p>
+					</div>
+					<div class="category-item">
+						<div class="category-icon">
+							<a href="5" class="get">
+								<img th:src="@{/main/images/main_icon05.png}">
+							</a>
+						</div>
+						<p class="category-txt">기타</p>
+					</div>
+				</div><!--.category-con-->
+			</div><!--.inner-->
+		</section>
+		<section class="main03">
+			<div class="inner">
+				<div class="main-tit" data-aos="fade-up">
+					<h3>인기 플레이스</h3>
+					<p>지금 가장 핫한 플레이스를 만나보세요!</p>
+				</div>
+			</div>
+			<swiper-container class="mySwiper" space-between="30" slides-per-view="3.5" autoplay="true"
+				data-aos="fade-up">
+
+			</swiper-container>
+			<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+		</section>
+		<section class="main04">
+			<div class="inner">
+				<div class="main-tit" data-aos="fade-up">
+					<h3>사용법</h3>
+					<p>오시오, 쉽게 알려드려요!</p>
+				</div>
+				<div class="main04-con" data-aos="fade-up">
+					<div class="main04-item">
+						<span class="step">STEP 01</span>
+						<p class="main04-txt">여행지 정하기</p>
+					</div>
+					<div class="main04-item">
+						<span class="step">STEP 02</span>
+						<p class="main04-txt">내가 가고싶은 곳<br>요청하기</p>
+					</div>
+					<div class="main04-item">
+						<span class="step">STEP 03</span>
+						<p class="main04-txt">여러 사장님에게<br>제안받기</p>
+					</div>
+					<div class="main04-item">
+						<span class="step">STEP 04</span>
+						<p class="main04-txt">사장님과 개별연락 후<br>예약완료!</p>
+					</div>
+					<div class="main04-item">
+						<span class="step">STEP 05</span>
+						<p class="main04-txt">플래너로 일정관리하고<br>즐거운 여행 즐기기</p>
+					</div>
+
+				</div><!--.category-con-->
+			</div>
+		</section>
+		<section class="main05">
+			<div class="main05_inner">
+				<div data-aos="fade-right"><img th:src="@{/main/images/main05_img.jpg}"></div>
+				<div class="main-tit" data-aos="fade-left">
+					<h3>오직 <strong>나를 위한 여행에서<br> 일정을 관리</strong>해보세요.</h3>
+					<p>여행갈 때 찾아보기 번거롭고 불편했던<br> 기존의 예약시스템을 새롭게 만들어낸<br> '오시오'입니다.</p>
+					<a th:href="@{/planner/map}">플래너 바로가기</a>
+				</div>
+			</div>
+		</section>
+		<section class="main06">
+			<div class="inner">
+				<div class="main-tit" data-aos="fade-up">
+					<h3>커뮤니티에 물어보세요!</h3>
+					<p>궁금했던 모든 것을 물어보고 답해보세요.</p>
+				</div>
+				<div class="main06-con" data-aos="fade-up">
+					<th:block th:each="board, iterStat : ${clist}" th:if="${iterStat.index < 4}">
+						<div class="main06-item" th:id="${board.boardNum}">
+							<span th:id="${board.boardNum}">[[${board.topic}]]</span>
+							<h5 th:id="${board.boardNum}">[[${board.boardTitle}]]</h5>
+							<p th:id="${board.boardNum}">[[${board.boardContents}]]</p>
+							<span class="main06-bottom" th:id="${board.boardNum}">[[${board.category}]]</span>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</section>
+
+
 	</div><!--#wrap-->
 	<form id="pageForm">
-		
+
 	</form>
 	<form name="getForm" id="getForm">
 	</form>
-	
+
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-  <script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
-  <script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
-  <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
-  <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
-  <script type="text/javascript" th:src="@{/main/js/get.js}"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
-  <script>
-	  AOS.init({
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/get.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script>
+	AOS.init({
 		duration: 1500,
-	  });
-	  
-	  
-  </script>
+	});
+	
+	$(".main06-item").on('click',function(e){
+		let num = e.target.id
+		window.location.href = '/Cboard/get?boardNum='+num
+	})
+	
+	//swiper 누르면 이동하게 만드는 function
+	function business(businessIdx){
+		
+		window.location.href = '/Bboard/get?businessIdx=' + businessIdx;
+	}
+	const mySwiper = document.getElementsByClassName("mySwiper")
+	
+	// ajax로 데이터 끌고와서 돔구현
+	function swiper() {
+
+		$.ajax({
+			type: "GET",
+			url: "/Bboard/findlist",
+			data: {"main": "전체", "city": "전 지역"},
+			contentType: "application/json;charset=utf-8",
+			success: function (data) {
+				const user = data.ulist;
+				const info = data.ilist;
+				const files = data.flist;
+				let txt = ""
+				for (let use of user) {
+					for (let inf of info) {
+						if (use.businessIdx == inf.businessInfoIdx) {
+							txt += '<swiper-slide>';
+							txt += '<div class="main03-con" onclick="business(' + use.businessIdx + ')">';
+							for (let file of files) {
+								if (file.boardNum == use.businessIdx) {
+									txt += '<img src = /Bboard/thumbnail?systemName=' + file.systemName + '>'
+									break;
+								}
+							}
+							txt += '<div class="main03-txt">'
+							txt += '<h4>[' + use.businessAddress + ']' + use.businessStoreName + '<h4>';
+							txt += '<h4><strong>★</strong>' + inf.overallGrade + '</h4>'
+							txt += '</div>'
+							txt += '<p>이용횟수' + inf.gradeCount + '회</p>'
+							txt += '</div>'
+							txt += '</swiper-slide>'
+						}
+					}
+				}
+				mySwiper[0].innerHTML = txt;
+			}
+		})
+	} swiper();
+
+
+</script>
 
 </html>

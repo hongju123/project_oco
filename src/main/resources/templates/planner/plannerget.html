@@ -27,7 +27,7 @@
 				<input type="hidden" name="addr" class="addr" size="50" maxlength="50" th:value="${planner.addr}" readonly>
 				<input type="text" name="storeNames " class="storeNames" size="50" maxlength="50" th:value="${planner.storeName}" readonly>
 			</div>
-			<textarea class="memo" name="memo" id="memo" th:value="${planner.memo}" readonly></textarea>
+			<textarea class="memo" name="memo" id="memo" th:value="${planner.memo}" readonly>[[${planner.memo}]]</textarea>
 			<input type="hidden" class="coords" th:value="${planner.coords}">
 			<form name="plannerForm" method="post" th:action="@{/planner/plannerremove}">
 				<input name="scheduleNum" th:value="${planner.scheduleNum}" type="hidden">

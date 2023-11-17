@@ -11,13 +11,14 @@
 	<div class="wrap reserv_write">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}" data-aos="fade-up">
+			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}">
 				<input type="hidden" th:value="${reservation.requestNum}" name="requestNum">
+				<input type="hidden" th:value="${reservation.requestType}" name="requestType" id="type">
 				<div class="sec-half">
 					<div class="sec-con left-sec" data-aos="fade-up">
 						<span class="sec-tit">카테고리</span>
 						<select id="category" onchange="f()" name="category">
-							<option value="" selected disabled>[[${reservation.category}]]</option>
+							<option th:value="${reservation.category}">[[${reservation.category}]]</option>
 							<option class="categoryA" value="숙소">숙소</option>
 							<option class="categoryB" value="식당">식당</option>
 							<option class="categoryC" value="카페">카페</option>
@@ -27,41 +28,38 @@
 					</div><!--.category-sec-->
 					<div class="sec-con right-sec" data-aos="fade-up">
 						<span class="sec-tit">유형</span>
-						<select class="typeA" name="requestType">
-							<option th:value="${reservation.requestType}" selected disabled>[[${reservation.requestType}]]
-							</option>
+						<select class="typeA" onchange="f1()">
+							<option>[[${reservation.requestType}]]</option>
 							<option class="typeAA" value="모텔">모텔</option>
 							<option class="typeAB" value="호텔">호텔</option>
 							<option class="typeAC" value="펜션">펜션</option>
 							<option class="typeAD" value="에어비엔비">에어비엔비</option>
 							<option class="typeAE" value="캠핑장">캠핑장</option>
 						</select>
-						<select class="typeB" name="requestType">
-							<option th:value="${reservation.requestType}" selected disabled>[[${reservation.requestType}]]
-							</option>
+						<select class="typeB" onchange="f2()">
+							<option>[[${reservation.requestType}]]</option>
 							<option class="typeBA" value="한식">한식</option>
 							<option class="typeBB" value="일식">일식</option>
 							<option class="typeBC" value="중식">중식</option>
 							<option class="typeBD" value="분식">분식</option>
 							<option class="typeBE" value="야식">야식</option>
 						</select>
-						<select class="typeC" name="requestType">
-							<option th:value="${reservation.requestType}" selected disabled>[[${reservation.requestType}]]
-							</option>
+						<select class="typeC" onchange="f3()">
+							<option>[[${reservation.requestType}]]</option>
 							<option class="typeCA" value="개인">개인</option>
 							<option class="typeCB" value="프랜차이즈">프랜차이즈</option>
 							<option class="typeCC" value="베이커리">베이커리</option>
 							<option class="typeCD" value="디저트">디저트</option>
 						</select>
-						<select class="typeD" name="requestType">
-							<option th:value="${reservation.requestType}" selected disabled>[[${reservation.requestType}]]
+						<select class="typeD" onchange="f4()">
+							<option>[[${reservation.requestType}]]
 							</option>
 							<option class="typeDA" value="경형/소형">경형/소형</option>
 							<option class="typeDB" value="중형/대형">중형/대형</option>
 							<option class="typeDC" value="SUV/승합">SUV/승합</option>
 						</select>
-						<select class="typeE" name="requestType">
-							<option th:value="${reservation.requestType}" selected disabled>[[${reservation.requestType}]]
+						<select class="typeE" onchange="f5()">
+							<option>[[${reservation.requestType}]]
 							</option>
 							<option class="typeEA" value="회의실">회의실</option>
 							<option class="typeEB" value="파티룸">파티룸</option>
@@ -69,9 +67,10 @@
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
 
-				<div class="sec-con area-sec">
+				<div class="sec-con area-sec" data-aos="fade-up">
 					<span class="sec-tit">지역</span>
-					<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
+					<input type="text" th:value="${reservation.address}" class="areaA" id="areaA" name="address"
+						onclick="f2()">
 					<div id="modal" class="modal-overlay">
 						<div class="modal-window">
 							<div class="close-area">X</div>
@@ -115,7 +114,7 @@
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
 						<select name="personnel">
-							<option value="" selected disabled>[[${reservation.personnel}]]
+							<option value="">[[${reservation.personnel}]]
 							</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
@@ -132,7 +131,7 @@
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
 						<select name="fuel">
-							<option value="" selected disabled>[[${reservation.fuel}]]</option>
+							<option value="">[[${reservation.fuel}]]</option>
 							<option>전기</option>
 							<option>하이브리드</option>
 							<option>가솔린</option>
@@ -143,7 +142,7 @@
 					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
 						<select class="money" name="cost">
-							<option value="${reservation.cost}" selected disabled>[[${reservation.cost}]]</option>
+							<option th:value="${reservation.cost}">[[${reservation.cost}]]</option>
 							<option value="5">5만원~</option>
 							<option value="10">10만원~</option>
 							<option value="15">15만원</option>
@@ -230,13 +229,14 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con"><!-- data-aos="fade-up" 있으면 나오지 않음-->
+				<div class="sec-con" data-aos="fade-up"><!-- data-aos="fade-up" -->
 					<span class="sec-tit">요청사항</span>
 					<textarea name="memo" class="memo">[[${reservation.memo}]]</textarea>
 				</div>
 			</form>
 			<div>
 				<a href="javascript:document.Form.submit()">수정완료</a>
+				
 				<a th:href="${'/reservation/reservationlist'}">목록</a>
 			</div>
 		</div><!--.sub-inner-->
@@ -259,6 +259,26 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/modify.js}"></script>
 <script th:inline="javascript">
+	function f1() {
+		const typeA = $(".typeA option:selected").val();
+		$("#type").val(typeA);
+	}
+	function f2() {
+		const typeB = $(".typeB option:selected").val();
+		$("#type").val(typeB);
+	}
+	function f3() {
+		const typeC = $(".typeC option:selected").val();
+		$("#type").val(typeC);
+	}
+	function f4() {
+		const typeD = $(".typeD option:selected").val();
+		$("#type").val(typeD);
+	}
+	function f5() {
+		const typeE = $(".typeE option:selected").val();
+		$("#type").val(typeE);
+	}
 </script>
 
 </html>

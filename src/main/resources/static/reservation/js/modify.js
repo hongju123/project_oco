@@ -144,6 +144,7 @@ $("#category").on("change", function(e) {
 
 $("#amenities").on("click", function(e) {
 	const val = $("#category option:selected").val();
+	console.log(val)
 	if (val == "숙소") {
 		$(".amenitiesA").show();
 		$(".amenitiesB").hide();
