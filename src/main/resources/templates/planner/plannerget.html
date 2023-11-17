@@ -25,6 +25,7 @@
 			<div class="list">
 				<input type="hidden" name="storeName" class="storeName" size="50" maxlength="50" th:value="${planner.storeName}" readonly>
 				<input type="hidden" name="addr" class="addr" size="50" maxlength="50" th:value="${planner.addr}" readonly>
+				<input type="text" name="storeNames " class="storeNames" size="50" maxlength="50" th:value="${planner.storeName}" readonly>
 			</div>
 			<textarea class="memo" name="memo" id="memo" th:value="${planner.memo}" readonly></textarea>
 			<input type="hidden" class="coords" th:value="${planner.coords}">
@@ -157,20 +158,6 @@
 			infowindow.close();
 		};
 	}
-	console.log("storeName :",storeName)
-	console.log("addr :",addr)
-	const storeNames = $(".storeNames");
-	const addrs = $('.addrs');
-	const list = $('.list');
-	const str = [];
-	for(let i=0; i<storeName.length; i++){
-		var strr = "";
-		strr = "<input type='text' value='" + storeName[i] + addr[i]+ "' class='storeNameaddr'>";
-		str.push(strr)
-		
-	}
-	
-		list.val(str)
 </script>
 
 </html>
