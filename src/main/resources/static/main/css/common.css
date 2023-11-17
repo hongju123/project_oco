@@ -518,8 +518,10 @@ input:focus {
 /* footer */
 
 #footer {
+	position: relative;
   width: 100%;
   background-color: #3182f6;
+  z-index:500;
 }
 
 @media (max-width: 768px) {

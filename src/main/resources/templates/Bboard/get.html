@@ -25,10 +25,10 @@
 					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
 				</ul>
 			</div>-->
-			<div class="total_section">
-				<div class="top_profile">
-					<div class="photo_zone_wrap">
-						<div class="photo_zone">
+			<div class="total_section" data-aos="fade-up">
+				<div class="top_profile" data-aos="fade-up">
+					<div class="photo_zone_wrap" data-aos="fade-up">
+						<div class="photo_zone" data-aos="fade-up">
 							<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 								<th:block th:with="sar=${file.orgName.split('[.]')}">
 									<th:block th:with="ext=${sar[sar.length-1]}">
@@ -43,13 +43,13 @@
 							</th:block>
 						</div>
 					</div>
-					<div class="profile_zone">
+					<div class="profile_zone" data-aos="fade-up">
 						<div><p>상호명</p>[[${userboard.businessStoreName}]]</div>
 						<div><p>카테고리</p>[[${userboard.businessCategory}]]</div>
 						<div><p>평점</p>[[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]])</div>
 					</div>
 				</div>
-				<div class="title_section_wrap">
+				<div class="title_section_wrap"  data-aos="fade-up">
 					<div class="title_section">
 						<div class="title_section_in">
 							<div><p>번호</p>[[${userboard.businessIdx}]]</div>
@@ -72,20 +72,17 @@
 				</div>
 				<div class="shot_info"></div>
 				<div class="free_service"></div>
-				<div class="reply">
+				<div class="reply" >
 					<div class="replyForm row">
 						<div>
-							<h4>작성자</h4>
 							<input type="txt" name="userId" th:value="${session.loginUser}" readonly>
 						</div>
 						<div>
-							<h4>내용</h4>
-							<textarea name="replyContents" placeholder="Contents" style="resize:none;"
-								value=""></textarea><br>
-							<fieldset class="rate">
-							</fieldset>
+							<fieldset class="rate"></fieldset><br>
+							<textarea name="replyContents" placeholder="" style="resize:none;"
+								value=""></textarea>
 						</div>
-						<div>
+						<div class="btn_wrap">
 							<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
 							<a href="#" class="button cancel">취소</a>
 						</div>

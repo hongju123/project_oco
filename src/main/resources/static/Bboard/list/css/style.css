@@ -113,7 +113,7 @@
 }
 .title_section .title_section_in div{
 	border-bottom: 1px solid #333;
-	padding: 20px 0;
+	padding: 30px 0;
 	color:#909090
 }
 .title_section .title_section_in label{
@@ -142,20 +142,31 @@
 	color:#909090;
 	font-size: 16px;
 	margin-bottom: -24px;
+	
 }
 
 
 .reply{
 	margin:30px 0;
-	padding: 20px;
 	width: 100%;
-	background-color: #efefef;
 	border-radius: 10px;
 }
 .reply input{
 	background: none;
+	font-size: 16px;
+	font-weight: bold;
 }
-
+.reply textarea{
+	background-color: #efefef;
+	width: 100%;
+	border: none;
+	outline: none;
+	height: 150px;
+	border-radius: 10px;
+	padding: 10px;
+	margin-top: 10px;
+	box-sizing: border-box;
+}
 .modify_btn{
 	position:absolute;
 	top: 0;
@@ -165,12 +176,25 @@
 	border-bottom: 1px solid #3182f6;
 }
 
+.reply .btn_wrap{
+	text-align: right;
+	margin-top: 20px;
+}
 
+.reply .btn_wrap a{
+	background-color: #efefef;
+	padding: 10px 20px;
+	border-radius: 10px;
+}
 
+.reply .btn_wrap .finish{
+	background-color: #3182f6;
+	color: #fff;
+}
 
-
-
-
+.noreply{
+	opacity: 0.5;
+}
 
 
 
