@@ -5,6 +5,7 @@
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	font-size: 12px;
 	border-radius: 10px;
+
 }
 .map_wrap a,
 .map_wrap a:hover,
@@ -159,7 +160,6 @@ td {
 }
 /* map css */
 
-
 #Form{
 	width:100%;
     resize: none;
@@ -178,6 +178,7 @@ textarea{
 	flex-wrap: wrap;
 	border: 1px solid #efefef;
 	height: 40px;
+	width: 50%;
 }
 .list > input{
 	border : 1px solid #efefef
