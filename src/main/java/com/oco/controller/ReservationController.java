@@ -43,8 +43,11 @@ public class ReservationController {
 	public List<ReservationDTO> addList(Model model,Long amount, Long startRow, String category, String area) {
 		amount = (amount != null && amount > 10L) ? amount : 10L;
 		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
-		if(area.equals("지역")) {
+		if(area.equals("전 지역") || area.equals("지역")) {
 			area = "";
+		}
+		if(category.equals("전체")) {
+			category = "";
 		}
 		log.info("category:{}" , category);
 		log.info("startRow:{}",startRow);
@@ -89,6 +92,15 @@ public class ReservationController {
 			reservation.setCategory(categorys);
 			log.info("category:{}" , reservation.getCategory());
 		}
+		if(reservation.getCost() == null) {
+			reservation.setCost("0");
+		}
+		if(reservation.getFuel() == null ) {
+			reservation.setFuel("0");
+		}
+		if(reservation.getPersonnel() == null ) {
+			reservation.setPersonnel("0");
+		}
 		if (service.regists(reservation)) {
 			return "redirect:/reservation/reservationlist";
 		} else {
@@ -108,7 +120,15 @@ public class ReservationController {
 
 	@PostMapping("reservationmodify")
 	public String modify(ReservationDTO reservation) throws Exception {
+		log.info("reservation:{}" , reservation);
+		if(reservation.getFuel() == "" ) {
+			reservation.setFuel("0");
+		}
+		if(reservation.getPersonnel() == "" ) {
+			reservation.setPersonnel("0");
+		}
 		if (service.reservationmodify(reservation)) {
+
 			return "redirect:/reservation/reservationget?" + "&requestNum=" + reservation.getRequestNum();
 		} else {
 			return "redirect:/reservation/reservationlist";

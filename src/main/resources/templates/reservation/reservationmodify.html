@@ -11,13 +11,18 @@
 	<div class="wrap reserv_write">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}" data-aos="fade-up">
+			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}">
 				<input type="hidden" th:value="${reservation.requestNum}" name="requestNum">
+				<input type="hidden" th:value="${reservation.category}" name="category">
+				<input type="hidden" th:value="${reservation.requestType}" name="requestType">
+				<input type="hidden" th:value="${reservation.personnel}" name="personnel">
+				<input type="hidden" th:value="${reservation.fuel}" name="fuel">
+				<input type="hidden" th:value="${reservation.cost}" name="cost">
 				<div class="sec-half">
 					<div class="sec-con left-sec" data-aos="fade-up">
 						<span class="sec-tit">카테고리</span>
-						<select id="category" onchange="f()" name="category">
-							<option value="" selected disabled>[[${reservation.category}]]</option>
+						<select id="category" onchange="f()" name="category" th:value="${reservation.category}">
+							<option th:value="${reservation.category}" selected disabled>[[${reservation.category}]]</option>
 							<option class="categoryA" value="숙소">숙소</option>
 							<option class="categoryB" value="식당">식당</option>
 							<option class="categoryC" value="카페">카페</option>
@@ -69,9 +74,9 @@
 					</div><!--.type-sec-->
 				</div><!--.sec-half-->
 
-				<div class="sec-con area-sec">
+				<div class="sec-con area-sec" data-aos="fade-up">
 					<span class="sec-tit">지역</span>
-					<input type="text" value="지역" class="areaA" id="areaA" name="address" onclick="f2()">
+					<input type="text" th:value="${reservation.address}" class="areaA" id="areaA" name="address" onclick="f2()" >
 					<div id="modal" class="modal-overlay">
 						<div class="modal-window">
 							<div class="close-area">X</div>
@@ -143,7 +148,7 @@
 					<div class="sec-con right-sec">
 						<span class="sec-tit">금액대</span>
 						<select class="money" name="cost">
-							<option value="${reservation.cost}" selected disabled>[[${reservation.cost}]]</option>
+							<option th:value="${reservation.cost}" selected disabled>[[${reservation.cost}]]</option>
 							<option value="5">5만원~</option>
 							<option value="10">10만원~</option>
 							<option value="15">15만원</option>
@@ -230,13 +235,14 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-				<div class="sec-con"><!-- data-aos="fade-up" 있으면 나오지 않음-->
+				<div class="sec-con"><!-- data-aos="fade-up" -->
 					<span class="sec-tit">요청사항</span>
-					<textarea name="memo" class="memo">[[${reservation.memo}]]</textarea>
+					<textarea name="memo" class="memo" th:value="${reservation.memo}"></textarea>
 				</div>
 			</form>
 			<div>
-				<a href="javascript:document.Form.submit()">수정완료</a>
+				<!--<a href="javascript:document.Form.submit()">수정완료</a>-->
+				<a href="#" class="sum">수정완료</a>
 				<a th:href="${'/reservation/reservationlist'}">목록</a>
 			</div>
 		</div><!--.sub-inner-->
@@ -259,6 +265,13 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:src="@{/reservation/js/modify.js}"></script>
 <script th:inline="javascript">
+	$(".sum").on("click",function(e){
+		e.preventDefault();
+		const Form = document.Form;
+		Form.setAttribute("action",/*[[@{/reservation/reservationmodify}]]*/'');
+		Form.setAttribute("method", "post");
+		Form.submit();
+	})
 </script>
 
 </html>

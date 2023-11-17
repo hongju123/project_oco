@@ -21,7 +21,9 @@
 				<ul class="depth2 sub-nav">
 					<li><a th:href="@{/reservation/reservationwrite}">견적서 작성</a></li>
 					<li class="active"><a th:href="@{/reservation/reservationlist}">견적서 조회</a></li>
-					<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+					<th:block th:if="${session.businessUser == 'X'}">
+						<li><a th:href="@{/reservation/proposal}">제안서</a></li>
+					</th:block>
 				</ul>
 			</div>
 			<div>
@@ -31,6 +33,7 @@
 							<div class="sec-con left-sec">
 								<select id="category" onchange="getList()" name="category">
 									<option value="" selected disabled>카테고리</option>
+									<option class="category" value="전체">전체</option>
 									<option class="categoryA" value="숙소">숙소</option>
 									<option class="categoryB" value="식당">식당</option>
 									<option class="categoryC" value="카페">카페</option>
