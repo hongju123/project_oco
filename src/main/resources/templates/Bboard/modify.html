@@ -1,136 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" th:href="@{/main/css/common.css}">
-	<style>
-		#wrap {
-			margin: 150px auto;
-			border: 1px solid black;
-			width: 1200px;
-			height: 100%
-		}
-
-		.total_section {
-			border: 1px solid black;
-			box-sizing: border-box;
-			padding: 10px;
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.main_section {
-			border: 1px solid black;
-			width: 850px;
-			height: 100%
-		}
-
-		.sub_section {
-			border: 1px solid black;
-			width: 320px;
-			height: 100%
-		}
-
-		input {
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/Bboard/list/css/style.css}">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
+<style>
+	input {
 			appearance: checkbox;
 			border: 1px solid black;
 		}
-	</style>
-</head>
-
+</style>
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="wrap">
-		<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm" enctype="multipart/form-data"
-			onsubmit="return sandit()">
-			<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
-			<input type="hidden" th:value="${userboard.businessCategory}" id="service">
-			<div class="total_section">
-				<div class="main_section">
-					<div class="title_section">
-						[[${userboard.businessCategory}]]
-					</div>
-					<div class="shot_info">
-						<select name="maa1">
-							<option>오전&nbsp;</option>
-							<option>오후&nbsp;</option>
-						</select>
-						<select name="open_time" class="time">
-							<option value="">시작 시간</option>
-						</select>
-						<select name="maa2">
-							<option>오전&nbsp;</option>
-							<option>오후&nbsp;</option>
-						</select>
-						<select name="close_time" class="time">
-							<option value="">마감 시간</option>
-						</select>
-					</div>
-					<div class="main content">
-						<textarea name="content">[[${infoboard.Content}]]</textarea>
-					</div>
-					<div class="free_service">
-					</div>
-					<table class="photo_zone" style="border-collapse: collapse;" border="1">
-						<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
-							th:each="file : ${files}">
-							<th>파일 첨부[[${fileStat.index+1}]]</th>
-							<td th:class="${'file'+fileStat.index+'_cont'}">
-								<div style="float:left;">
-									<input type="file" name="files" th:id="${'file'+fileStat.index}"
-										style="display:none" accept="image/gif,image/jpeg,image/png" />
-									<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
-								</div>
-								<div style="float:right; margin-right: 100px;">
-									<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
-									<a
-										th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
-										선택</a>
-									<a
-										th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
-										삭제</a>
-								</div>
-								<input type="hidden" name="orgName" th:value="${file.orgName}">
-								<th:block th:with="sar=${file.orgName.split('[.]')}">
-									<th:block th:with="ext=${sar[sar.length-1]}">
-										<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
-											th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
-											class="thumbnail">
+	<div class="wrap">
+		<div class="sub-inner">
+			<div class="sub-tit">
+				<h2 data-aos="fade-up">안녕하세요!<br> 반가워요!<br> <strong>사장님!</strong></h2>
+			</div><!--.sub-tit-->
+			<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm" enctype="multipart/form-data"
+				onsubmit="return sandit()">
+				<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
+				<input type="hidden" th:value="${userboard.businessCategory}" id="service">
+				<div class="total_section">
+					<div class="">
+						<div class="top_info info">
+							<div class="modi_tit">사업자분류</div>
+							<div class="title_section">
+								[[${userboard.businessCategory}]]
+							</div>
+						</div>
+						<div class="shot_info info">
+							<div class="modi_tit">영업시간을 알려주세요.</div>
+							<select name="maa1">
+								<option>오전&nbsp;</option>
+								<option>오후&nbsp;</option>
+							</select>
+							<select name="open_time" class="time">
+								<option value="">00:00</option>
+							</select>
+							<span>부터</span>&nbsp;&nbsp;&nbsp;
+							<select name="maa2">
+								<option>오전&nbsp;</option>
+								<option>오후&nbsp;</option>
+							</select>
+							<select name="close_time" class="time">
+								<option value="">00:00</option>
+							</select>
+							<span>까지</span>
+						</div>
+						<div class="main_content reply2 info">
+							<div class="modi_tit">한 줄 소개 문구를 입력해주세요.</div>
+							<textarea name="content">[[${infoboard.Content}]]</textarea>
+						</div>
+						<div class="free_service info">
+							<div class="modi_tit">제공가능한 서비스를 선택해주세요.</div>
+						</div>
+						<table class="" style="border-collapse: collapse;" border="1">
+							<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
+								th:each="file : ${files}">
+								<th>파일 첨부[[${fileStat.index+1}]]</th>
+								<td th:class="${'file'+fileStat.index+'_cont'}">
+									<div>
+										<input type="file" name="files" th:id="${'file'+fileStat.index}"
+											style="display:none" accept="image/gif,image/jpeg,image/png" />
+										<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
+									</div>
+									<div class="">
+										<a
+											th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
+											선택</a>
+										<a
+											th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
+											삭제</a>
+									</div>
+									<input type="hidden" name="orgName" th:value="${file.orgName}">
+									<th:block th:with="sar=${file.orgName.split('[.]')}">
+										<th:block th:with="ext=${sar[sar.length-1]}">
+											<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
+												th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
+												class="thumbnail">
+										</th:block>
 									</th:block>
-								</th:block>
-							</td>
-						</tr>
-						<tr th:class="${'r'+files.size()}">
-							<th>파일 첨부[[${files.size()+1}]]</th>
-							<td th:class="${'file'+files.size()+'_cont'}">
-								<div style="float:left;">
-									<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
-										accept="image/gif,image/jpeg,image/png">
-									<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
-								</div>
-								<div style="float:right; margin-right: 100px;">
-									<!-- <a href="javascript:upload('file9','')"> -->
-									<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
-									<!-- <a href="javascript:cancelFile('file9','')"> -->
-									<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
-								</div>
-							</td>
-						</tr>
-						<input type="hidden" value="" name="updateCnt" id="updateCnt">
-					</table>
+								</td>
+							</tr>
+							<tr th:class="${'r'+files.size()}">
+								<th>파일 첨부[[${files.size()+1}]]</th>
+								<td th:class="${'file'+files.size()+'_cont'}">
+									<div>
+										<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
+											accept="image/gif,image/jpeg,image/png">
+										<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+									</div>
+									<div class="file_modify">
+										<div class="photo_select">
+											<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
+												+
+											</a>
+										</div>
+										<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">삭제</a>
+									</div>
+								</td>
+							</tr>
+							<input type="hidden" value="" name="updateCnt" id="updateCnt">
+						</table>
+					</div>
+					<input type="submit"value="수정완료">
 				</div>
-				<div class="sub_section">
-					<input type="submit">
-				</div>
-		</form>
+			</form>
+		</div>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:inline="javascript">
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	AOS.init({
+		duration: 1200,
+	});
 	const service = document.getElementById("service")
 	const free_service = document.getElementsByClassName("free_service")
 	const free = {
@@ -328,32 +323,6 @@
 		}
 	})
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </html>

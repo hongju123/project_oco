@@ -46,6 +46,7 @@
 
 .total_section{
 	position:relative;
+	padding: 70px 0;
 }
 	
 .top_profile{
@@ -53,7 +54,7 @@
 	display: flex;
 	flex-flow: wrap;
 	justify-content: space-between;
-	padding: 70px 0;
+	
 }
 	
 	
@@ -167,6 +168,30 @@
 	margin-top: 10px;
 	box-sizing: border-box;
 }
+
+
+.reply2 textarea{
+	background-color: #efefef;
+	width: 100%;
+	border: none;
+	outline: none;
+	height: 150px;
+	border-radius: 10px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-bottom: 5px;
+}
+
+
+
+
+
+
+.info{
+	
+	border-bottom: 1px solid #efefef;
+	padding: 30px 0;
+}
 .modify_btn{
 	position:absolute;
 	top: 0;
@@ -198,5 +223,31 @@
 
 
 
+.modi_tit{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
 
+.shot_info select{
+	border: none;
+	font-size: 16px;
+	font-weight: bold;
+}
 
+.file_modify a{
+	font-size: 12px;
+}
+
+.photo_select{
+	width: 100px;
+	height: 100px;
+	background-color: #efefef;
+	
+}
+
+.photo_select a{
+	display: block;
+	font-size: 20px;
+	
+}
