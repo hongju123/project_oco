@@ -1,86 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Modify</title>
-
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
-
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/cboard/boardmodify/css/boardmodify.css}">
-</head>
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>s
 <body>
 <th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="wrap">
-		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/modify}" enctype="multipart/form-data">
-			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
-			<table style="border-collapse: collapse;" border="1" class="main">
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">제목</th>
-					<td>
-						<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
-					</td>
-				</tr>
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">작성자</th>
-					<td>
-						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
-					</td>
-				</tr>
-				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;">내 용</th>
-					<td>
-						<textarea name="boardContents" style="width:700px;height:290px;resize:none;">[[${board.boardContents}]]</textarea>
-					</td>
-				</tr>
-				<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-					<th>파일 첨부[[${fileStat.index+1}]]</th>
-					<td th:class="${'file'+fileStat.index+'_cont'}">
-						<div style="float:left;">
-							<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
-							<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
-						</div>
-						<div style="float:right; margin-right: 100px;">
-							<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
-							<a th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일 선택</a>
-							<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부 삭제</a>
-						</div>
-						<input type="hidden" name="orgName" th:value="${file.orgName}">
-						<th:block th:with="sar=${file.orgName.split('[.]')}">
-							<th:block th:with="ext=${sar[sar.length-1]}">
-								<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}" class="thumbnail">
+	<div class="wrap">
+		<div class="sub-inner">
+			<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/modify}" enctype="multipart/form-data">
+				<input type="hidden" th:value="${board.boardNum}" name="boardNum">
+				<table style="border-collapse: collapse;" border="1" class="main">
+					<tr style="height:30px;">
+						<th style="text-align:center; width:150px;">제목</th>
+						<td>
+							<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
+						</td>
+					</tr>
+					<tr style="height:30px;">
+						<th style="text-align:center; width:150px;">작성자</th>
+						<td>
+							<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+						</td>
+					</tr>
+					<tr style="height:300px;">
+						<th style="text-align:center; width:150px;">내 용</th>
+						<td>
+							<textarea name="boardContents" style="width:700px;height:290px;resize:none;">[[${board.boardContents}]]</textarea>
+						</td>
+					</tr>
+					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th>파일 첨부[[${fileStat.index+1}]]</th>
+						<td th:class="${'file'+fileStat.index+'_cont'}">
+							<div style="float:left;">
+								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
+								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
+							</div>
+							<div style="float:right; margin-right: 100px;">
+								<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
+								<a th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일 선택</a>
+								<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부 삭제</a>
+							</div>
+							<input type="hidden" name="orgName" th:value="${file.orgName}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}" class="thumbnail">
+								</th:block>
 							</th:block>
-						</th:block>
+						</td>
+					</tr>
+					<tr th:class="${'r'+files.size()}">
+						<th>파일 첨부[[${files.size()+1}]]</th>
+						<td th:class="${'file'+files.size()+'_cont'}">
+							<div style="float:left;">
+								<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+								<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+							</div>
+							<div style="float:right; margin-right: 5px;">
+								<!-- <a href="javascript:upload('file9','')"> -->
+								<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'" class="sel">파일 선택</a>
+								<!-- <a href="javascript:cancelFile('file9','')"> -->
+								<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'" class="del">첨부 삭제</a>
+							</div>
+						</td>
+					</tr>
+					<input type="hidden" value="" name="updateCnt" id="updateCnt">
+				</table>
+			</form>
+			<table class="btn_area">
+				<tr align="right" valign="middle">
+					<td>
+						<a href="javascript:document.boardForm.submit()" class="fin">수정완료</a>
+						<a th:href="${'/Cboard/list'}" class="list">목록</a>
 					</td>
 				</tr>
-				<tr th:class="${'r'+files.size()}">
-					<th>파일 첨부[[${files.size()+1}]]</th>
-					<td th:class="${'file'+files.size()+'_cont'}">
-						<div style="float:left;">
-							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
-							<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
-						</div>
-						<div style="float:right; margin-right: 5px;">
-							<!-- <a href="javascript:upload('file9','')"> -->
-							<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'" class="sel">파일 선택</a>
-							<!-- <a href="javascript:cancelFile('file9','')"> -->
-							<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'" class="del">첨부 삭제</a>
-						</div>
-					</td>
-				</tr>
-				<input type="hidden" value="" name="updateCnt" id="updateCnt">
 			</table>
-		</form>
-		<table class="btn_area">
-			<tr align="right" valign="middle">
-				<td>
-					<a href="javascript:document.boardForm.submit()" class="fin">수정완료</a>
-					<a th:href="${'/Cboard/list'}" class="list">목록</a>
-				</td>
-			</tr>
-		</table>
+		</div>
 	</div>
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>

@@ -183,13 +183,11 @@
 }
 
 
-
-
-
-
 .info{
-	
 	border-bottom: 1px solid #efefef;
+	padding: 30px 0;
+}
+.info2{
 	padding: 30px 0;
 }
 .modify_btn{
@@ -235,6 +233,10 @@
 	font-weight: bold;
 }
 
+.file_modify{
+	display: inline-block;
+}
+
 .file_modify a{
 	font-size: 12px;
 }
@@ -258,3 +260,31 @@
 	margin:40px 0 0 40px;
 	
 }
+
+.thumbnail{
+	width: 100px;
+	height: 100px;
+	margin:0 auto;
+	text-align: center;
+	border-radius: 10px;
+}
+
+#file0name{
+	display: none;
+}
+
+.free_service label{
+	margin-right: 10px;
+	
+}
+
+.submit_btn{
+	cursor: pointer;
+	float: right;
+	border: none;
+	padding: 10px 50px;
+	border-radius: 10px;
+	background-color: #3182f6;
+	color: #fff;
+}
+
