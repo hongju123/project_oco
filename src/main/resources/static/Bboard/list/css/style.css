@@ -242,12 +242,19 @@
 .photo_select{
 	width: 100px;
 	height: 100px;
-	background-color: #efefef;
-	
+	border: 1px dotted #707070;
+	margin:0 auto;
+	text-align: center;
+	border-radius: 10px;
 }
 
 .photo_select a{
 	display: block;
 	font-size: 20px;
+	border: 1px solid #333;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	margin:40px 0 0 40px;
 	
 }
