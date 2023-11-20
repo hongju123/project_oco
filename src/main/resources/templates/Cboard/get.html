@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <link rel="stylesheet" th:href="@{/cboard/boardget/css/boardget.css}">
-<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
@@ -15,13 +14,15 @@
 					<tr style="height:30px;">
 						<th style="text-align:center; width:150px;" class="a_row">제목</th>
 						<td>
-							<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
+							<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50"
+								th:value="${board.boardTitle}">
 						</td>
 					</tr>
 					<tr style="height:30px;">
 						<th style="text-align:center; width:150px;" class="a_row">작성자</th>
 						<td>
-							<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
+							<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}"
+								readonly>
 						</td>
 					</tr>
 					<tr>
@@ -36,11 +37,12 @@
 						<th style="height: 30px;" class="a_row">카테고리</th>
 						<td>[[${board.category}]]</td>
 					</tr>
-					
+
 					<tr style="height:300px;">
 						<th style="text-align:center; width:150px;">내 용</th>
 						<td>
-							<textarea name="boardContents" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContents}]]</textarea>
+							<textarea name="boardContents" style="width:700px;height:290px;resize:none;"
+								readonly>[[${board.boardContents}]]</textarea>
 						</td>
 					</tr>
 					<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
@@ -52,9 +54,11 @@
 								</td>
 							</tr>
 							<th:block th:with="ext=${sar[sar.length-1]}">
-								<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+								<tr
+									th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 									<td>
-										<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
+										<img style="width:100%;"
+											th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
 									</td>
 								</tr>
 							</th:block>
@@ -62,7 +66,8 @@
 					</th:block>
 					<th:block th:unless="${files != null and files.size() > 0}">
 						<tr>
-							<td colspan="2" style="text-align: center; font-size: 20px;" class="non file">첨부 파일이 없습니다.</td>
+							<td colspan="2" style="text-align: center; font-size: 20px;" class="non file">첨부 파일이 없습니다.
+							</td>
 						</tr>
 					</th:block>
 				</table>
@@ -86,11 +91,12 @@
 				<div class="replyForm row">
 					<div style="width:20%">
 						<h4>작성자</h4>
-						<input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: left;">
+						<input type="text" name="userId" th:value="${session.loginUser}" readonly
+							style="text-align: left;">
 					</div>
 					<div style="width:65%">
 						<h4>내 용</h4>
-						<textarea name="replyContents" style="resize:none;"></textarea>
+						<textarea name="replyContents" class="replyContents" style="resize:none;"></textarea>
 					</div>
 					<div style="width:15%">
 						<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
@@ -102,49 +108,51 @@
 			</div>
 		</div>
 	</div>
-<th:block th:replace="~{layout/footer::footer}"></th:block>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
-<script th:src="@{/cboard/boardget/js/reply.js}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/slick.min.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/common.js}"></script>
 <script type="text/javascript" th:src="@{/main/js/main.js}"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
+
+
+<script th:src="@{/cboard/boardget/js/reply.js}"></script>
+
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardNum = /*[[${board.boardNum}]]*/'';
 	const replies = $(".replies")
 	const page = $(".page")
-	
+
 	let nowpage = 0;
-	function modify(){
+	function modify() {
 		const boardForm = document.boardForm;
 		boardForm.setAttribute("action",/*[[@{/Cboard/modify}]]*/'');
-		boardForm.setAttribute("method","get");
+		boardForm.setAttribute("method", "get");
 		boardForm.submit();
 	}
-	
+
 	//댓글 등록
-	$(document).ready(function(){
+	$(document).ready(function () {
 		$(".replyForm").hide();
 		nowpage = 1;
 		showList(1);
 	})
-	$(".regist").on("click",function(e){
+	$(".regist").on("click", function (e) {
 		e.preventDefault();
 		$(".replyForm").show();
 		$(this).hide();
 	})
-	$(".finish").on("click",function(e){
+	$(".finish").on("click", function (e) {
 		e.preventDefault();
 		let replycontents = $("[name='replyContents']").val();
 		console.log("옴?")
 		replyService.add(
-			{"boardNum":boardNum,"userId":loginUser, "replyContents":replycontents},
-			function(result){
+			{ "boardNum": boardNum, "userId": loginUser, "replyContents": replycontents },
+			function (result) {
 				alert("등록!");
 				$(".replyForm").hide();
 				$(".regist").show();
@@ -152,150 +160,151 @@
 			}
 		)
 		$("[name='replycontents']").val("");
-		
+
 	})
-	
-	function showList(pagenum){
+
+	function showList(pagenum) {
 		replyService.getList(
-			{boardNum:boardNum, pagenum:pagenum||1},
-			function(replyCnt, list){
+			{ boardNum: boardNum, pagenum: pagenum || 1 },
+			function (replyCnt, list) {
 				let str = "";
-				if(list == null || list.length == 0){
+				if (list == null || list.length == 0) {
 					str += '<li class="noreply" style="clear:both;">등록된 댓글이 없습니다.</li>';
 					replies.html(str);
 					return;
 				}
-				
-				for(let i=0;i<list.length;i++){
+
+				for (let i = 0; i < list.length; i++) {
 					//<li style="clear:both;" class="li3">
-					str += '<li style="clear:both;" class="li'+list[i].replyNum+'">';
+					str += '<li style="clear:both;" class="li' + list[i].replyNum + '">';
 					str += '<div style="display:inline; float:left; width:80%;">';
 					//<strong class="userid3">apple</strong>
-					str += '<strong class="userid'+list[i].replyNum+'">'+list[i].userId+'</strong>';
+					str += '<strong class="userid' + list[i].replyNum + '">' + list[i].userId + '</strong>';
 					//<p class="reply3">댓글내용</p>
-					str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContents+'</p>';
+					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents + '</p>';
 					str += '</div><div style="text-align:right;">'
-					str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
-					if(list[i].userId == loginUser){
+					str += '<strong>' + replyService.displayTime(list[i]) + '</strong>'
+					if (list[i].userId == loginUser) {
 						//<a href="3" class="modify">수정</a>
-						str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
-						str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정 완료</a>';
-						str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
+						str += '<a href="' + list[i].replyNum + '" class="modify">수정</a>';
+						str += '<a href="' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
+						str += '<a href="' + list[i].replyNum + '" class="remove">삭제</a>';
 					}
 					str += '</div></li>';
 				}
 				replies.html(str);
-				
-				$(".remove").on("click",deleteReply);
-				$(".modify").on("click",modifyReply);
-				$(".mfinish").on("click",modifyReplyOk);
-				
+
+				$(".remove").on("click", deleteReply);
+				$(".modify").on("click", modifyReply);
+				$(".mfinish").on("click", modifyReplyOk);
+
 				showReplyPage(replyCnt, pagenum);
 			}
 		)
 	}
-	
-	function showReplyPage(replyCnt, pagenum){
-		let endPage = Math.ceil(pagenum/5)*5;
+
+	function showReplyPage(replyCnt, pagenum) {
+		let endPage = Math.ceil(pagenum / 5) * 5;
 		let startPage = endPage - 4;
-		
+
 		let prev = startPage != 1;
-		endPage = (endPage-1)*5 >= replyCnt ? Math.ceil(replyCnt/5) : endPage;
-		let next = endPage*5 < replyCnt ? true : false;
-		
+		endPage = (endPage - 1) * 5 >= replyCnt ? Math.ceil(replyCnt / 5) : endPage;
+		let next = endPage * 5 < replyCnt ? true : false;
+
 		let str = "";
-		if(prev){
+		if (prev) {
 			//<a class="changePage" href="5"><code>&lt;</code></a>
-			str += '<a class="changePage" href="'+(startPage-1)+'"><code>&lt;</code></a>';
+			str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
 		}
-		for(let i=startPage;i<=endPage;i++){
-			if(i == pagenum){
+		for (let i = startPage; i <= endPage; i++) {
+			if (i == pagenum) {
 				//<code class="nowPage">7</code>
-				str += '<code class="nowPage">'+i+'</code>';
+				str += '<code class="nowPage">' + i + '</code>';
 			}
-			else{
+			else {
 				//<a class="changePage" href="9"><code>9</code></a>
-				str += '<a class="changePage" href="'+i+'"><code>'+i+'</code></a>';
+				str += '<a class="changePage" href="' + i + '"><code>' + i + '</code></a>';
 			}
 		}
-		if(next){
-			str += '<a class="changePage" href="'+(endPage+1)+'"><code>&gt;</code></a>';
+		if (next) {
+			str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
 		}
-		
+
 		page.html(str);
-		
-		$(".changePage").on("click",function(e){
+
+		$(".changePage").on("click", function (e) {
 			e.preventDefault();
 			let target = $(this).attr("href");
 			nowpage = parseInt(target);
 			showList(nowpage);
-			window.setTimeout(function(){
-				window.scrollTo(0,document.body.scrollHeight)
-			},10)
+			window.setTimeout(function () {
+				window.scrollTo(0, document.body.scrollHeight)
+			}, 10)
 		})
 	}
-	
-	function deleteReply(e){
+
+	function deleteReply(e) {
 		e.preventDefault();
 		let replynum = $(this).attr("href");
 		replyService.remove(
 			replynum,
-			function(result){
-				if(result == "success"){
-					alert(replynum+"번 댓글 삭제 완료!");
+			function (result) {
+				if (result == "success") {
+					alert(replynum + "번 댓글 삭제 완료!");
 					showList(nowpage);
 				}
 			}
 		)
 	}
 	let replyFlag = false;
-	function modifyReply(e){
+	function modifyReply(e) {
 		e.preventDefault();
-		if(!replyFlag){
+		if (!replyFlag) {
 			replyFlag = true;
 			let replynum = $(this).attr("href");
-			const replyTag = $(".reply"+replynum);
+			const replyTag = $(".reply" + replynum);
 			//<textarea class="3 mdf">댓글내용</textarea> 
-			replyTag.html('<textarea class="'+replynum+' mdf">'+replyTag.text()+'</textarea>')
+			replyTag.html('<textarea class="' + replynum + ' mdf">' + replyTag.text() + '</textarea>')
 			$(this).hide();
 			$(this).next().show();
 		}
-		else{
+		else {
 			alert("수정중인 댓글이 있습니다!");
 		}
 	}
-	function modifyReplyOk(e){
+	function modifyReplyOk(e) {
 		e.preventDefault();
 		replyFlag = false;
-		
+
 		let replyNum = $(this).attr("href");
-		let replyContents = $("."+replyNum).val();
-		
-		if(replyContents == ""){
+		let replyContents = $("." + replyNum).val();
+
+		if (replyContents == "") {
 			alert("수정할 댓글 내용을 입력하세요!");
 			return;
 		}
 		replyService.modify(
-			{replyNum:replyNum, replyContents:replyContents, boardNum:boardNum, userId:loginUser},
-			function(result){
-				if(result == "success"){
-					alert(replyNum+"번 댓글 수정 완료!");
+			{ replyNum: replyNum, replyContents: replyContents, boardNum: boardNum, userId: loginUser },
+			function (result) {
+				if (result == "success") {
+					alert(replyNum + "번 댓글 수정 완료!");
 					showList(nowpage);
 				}
 			}
 		)
 	}
-	$(".cancel").on("click",function(e){
+	$(".cancel").on("click", function (e) {
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
 		$("[name='replycontents']").val("");
 	})
-	
-		//textarea 크기 자동조절
+
+	//textarea 크기 자동조절
 	function resize(obj) {
-    obj.style.height = '1px';
-    obj.style.height = (12 + obj.scrollHeight) + 'px';
+		obj.style.height = '1px';
+		obj.style.height = (12 + obj.scrollHeight) + 'px';
 	}
 </script>
+
 </html>
