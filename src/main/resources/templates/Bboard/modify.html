@@ -56,56 +56,59 @@
 						<div class="free_service info">
 							<div class="modi_tit">제공가능한 서비스를 선택해주세요.</div>
 						</div>
-						<table class="" style="border-collapse: collapse;" border="1">
-							<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
-								th:each="file : ${files}">
-								<th>파일 첨부[[${fileStat.index+1}]]</th>
-								<td th:class="${'file'+fileStat.index+'_cont'}">
-									<div>
-										<input type="file" name="files" th:id="${'file'+fileStat.index}"
-											style="display:none" accept="image/gif,image/jpeg,image/png" />
-										<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
-									</div>
-									<div class="">
-										<a
-											th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
-											선택</a>
-										<a
-											th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
-											삭제</a>
-									</div>
-									<input type="hidden" name="orgName" th:value="${file.orgName}">
-									<th:block th:with="sar=${file.orgName.split('[.]')}">
-										<th:block th:with="ext=${sar[sar.length-1]}">
-											<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
-												th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
-												class="thumbnail">
-										</th:block>
-									</th:block>
-								</td>
-							</tr>
-							<tr th:class="${'r'+files.size()}">
-								<th>파일 첨부[[${files.size()+1}]]</th>
-								<td th:class="${'file'+files.size()+'_cont'}">
-									<div>
-										<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
-											accept="image/gif,image/jpeg,image/png">
-										<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
-									</div>
-									<div class="file_modify">
-										<div class="photo_select">
-											<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
-												+
-											</a>
+						<div class="info2 ">
+							<div class="modi_tit">사진을 등록해주세요.</div>
+							<table class="">
+								<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
+									th:each="file : ${files}">
+									<!--<th>파일 첨부[[${fileStat.index+1}]]</th>-->
+									<td th:class="${'file'+fileStat.index+'_cont'}">
+										<div>
+											<input type="file" name="files" th:id="${'file'+fileStat.index}"
+												style="display:none" accept="image/gif,image/jpeg,image/png" />
+											<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
 										</div>
-										<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">삭제</a>
-									</div>
-								</td>
-							</tr>
-							<input type="hidden" value="" name="updateCnt" id="updateCnt">
-						</table>
+										<div class="">
+											<a
+												th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
+												선택</a>
+											<a
+												th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
+												삭제</a>
+										</div>
+										<input type="hidden" name="orgName" th:value="${file.orgName}">
+										<th:block th:with="sar=${file.orgName.split('[.]')}">
+											<th:block th:with="ext=${sar[sar.length-1]}">
+												<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
+													th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
+													class="thumbnail">
+											</th:block>
+										</th:block>
+									</td>
+								</tr>
+								<tr th:class="${'r'+files.size()}">
+									<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
+									<td th:class="${'file'+files.size()+'_cont'}">
+										<div>
+											<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
+												accept="image/gif,image/jpeg,image/png">
+											<span th:id="${'file'+files.size()+'name'}"></span>
+										</div>
+										<div class="file_modify">
+											<div class="photo_select">
+												<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
+													+
+												</a>
+											</div>
+											<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">삭제</a>
+										</div>
+									</td>
+								</tr>
+								<input type="hidden" value="" name="updateCnt" id="updateCnt">
+							</table>
+						</div>
 					</div>
-					<input type="submit"value="수정완료">
+					<input type="submit"value="수정완료" class="submit_btn">
 				</div>
 			</form>
 		</div>
@@ -144,7 +147,7 @@
 		if (service.value.includes(key)) {
 			console.log("check")
 			for (let set of free[key]) {
-				const label = document.createElement("lablel")
+				const label = document.createElement("label")
 				label.innerHTML = set
 				const box = document.createElement("input")
 				box.type = "checkbox"

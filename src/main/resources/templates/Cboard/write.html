@@ -1,16 +1,12 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-	<meta charset="UTF-8">
-	<title>ComuWrite</title>
-	<link rel="stylesheet" th:href="@{/main/css/common.css}">
-	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
-	<link rel="stylesheet" th:href="@{/cboard/boardwrite/css/boardwrite.css}">
-</head>
-
+<link rel="stylesheet" th:href="@{/main/css/common.css}">
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/cboard/boardwrite/css/boardwrite.css}">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 <body>
+
 	<th:blocked th:if="${session.loginUser==null}">
 	<!-- <script>
 		alert("회원만 이용 가능합니다. 로그인후 이용하세요");
@@ -18,104 +14,107 @@
 	</script> -->
 	</th:blocked>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="wrap">
-		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
-			<table style="border-collapse: collapse;" class="main">
-				<tr style="height:30px;" class="main_row">
-					<th class="a_row">제목</th>
-					<td>
-						<input type="text" class="board_title" name="boardTitle" placeholder="제목을 입력하세요">
-					</td>
-				</tr>
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;" class="a_row">작성자</th>
-					<td>
-						<input type="text" name="userId" th:value="${session.loginUser}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th class="a_row">주제</th>
-					<td>
-						<select name="topic" class="topic">
-							<option value="topicNull" selected disabled>주제</option>
-							<option value="전체">전체</option>
-							<option value="궁금해요">궁금해요</option>
-							<option value="얼마에요">얼마에요</option>
-							<option value="함께해요">함께해요</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th class="a_row">카테고리</th>
-					<td>
-						<select name="category" class="category">
-							<option value="categoryNull" selected disabled>카테고리</option>
-							<option value="숙소">숙소</option>
-							<option value="식당">식당</option>
-							<option value="카페">카페</option>
-							<option value="렌터카">렌터카</option>
-							<option value="기타">기타</option>
-						</select>
-						<select name="category" class="hidden house">
-							<option value="모텔">모텔</option>
-							<option value="호텔">호텔</option>
-							<option value="펜션">펜션</option>
-							<option value="에어비엔비">에어비엔비</option>
-							<option value="캠핑">캠핑</option>
-						</select>
-						<select name="category" class="hidden food">
-							<option value="한식">한식</option>
-							<option value="일식">일식</option>
-							<option value="중식">중식</option>
-							<option value="분식">분식</option>
-							<option value="야식">야식</option>
-						</select>
-						<select name="category" class="hidden bakery">
-							<option value="개인">개인</option>
-							<option value="프랜차이즈">프랜차이즈</option>
-							<option value="베이커리">베이커리</option>
-							<option value="디저트">디저트</option>
-						</select>
-						<select name="category" class="hidden car">
-							<option value="경형/소형">경형/소형</option>
-							<option value="중형/대형">중형/대형</option>
-							<option value="SUV/승합">SUV/승합</option>
-						</select>
-						<select name="category" class="hidden another">
-							<option value="회의실">회의실</option>
-							<option value="파티룸">파티룸</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th class="a_row">내 용</th>
-					<td>
-						<textarea name="boardContents" class="boardContents" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
-					</td>
-				</tr>
-				<tr class="r0 at">
-					<th>파일 첨부1</th>
-					<td class="file0_cont">
-						<div>
-							<input type="file" name="files" id="file0" style="display:none">
-							<span id="file0name">선택된 파일 없음</span>
-						</div>
-						<div>
-							<a href="javascript:upload('file0')">파일 선택</a>
-							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
-						</div>
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="wrap">
+		<div class="sub-inner">
+			<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/write}" enctype="multipart/form-data">
+				<table style="border-collapse: collapse;" class="main">
+					<tr style="height:30px;" class="main_row">
+						<th class="a_row">제목</th>
+						<td>
+							<input type="text" class="board_title" name="boardTitle" placeholder="제목을 입력하세요">
+						</td>
+					</tr>
+					<tr style="height:30px;">
+						<th style="text-align:center; width:150px;" class="a_row">작성자</th>
+						<td>
+							<input type="text" name="userId" th:value="${session.loginUser}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th class="a_row">주제</th>
+						<td>
+							<select name="topic" class="topic">
+								<option value="topicNull" selected disabled>주제</option>
+								<option value="전체">전체</option>
+								<option value="궁금해요">궁금해요</option>
+								<option value="얼마에요">얼마에요</option>
+								<option value="함께해요">함께해요</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th class="a_row">카테고리</th>
+						<td>
+							<select name="category" class="category">
+								<option value="categoryNull" selected disabled>카테고리</option>
+								<option value="숙소">숙소</option>
+								<option value="식당">식당</option>
+								<option value="카페">카페</option>
+								<option value="렌터카">렌터카</option>
+								<option value="기타">기타</option>
+							</select>
+							<select name="category" class="hidden house">
+								<option value="모텔">모텔</option>
+								<option value="호텔">호텔</option>
+								<option value="펜션">펜션</option>
+								<option value="에어비엔비">에어비엔비</option>
+								<option value="캠핑">캠핑</option>
+							</select>
+							<select name="category" class="hidden food">
+								<option value="한식">한식</option>
+								<option value="일식">일식</option>
+								<option value="중식">중식</option>
+								<option value="분식">분식</option>
+								<option value="야식">야식</option>
+							</select>
+							<select name="category" class="hidden bakery">
+								<option value="개인">개인</option>
+								<option value="프랜차이즈">프랜차이즈</option>
+								<option value="베이커리">베이커리</option>
+								<option value="디저트">디저트</option>
+							</select>
+							<select name="category" class="hidden car">
+								<option value="경형/소형">경형/소형</option>
+								<option value="중형/대형">중형/대형</option>
+								<option value="SUV/승합">SUV/승합</option>
+							</select>
+							<select name="category" class="hidden another">
+								<option value="회의실">회의실</option>
+								<option value="파티룸">파티룸</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th class="a_row">내 용</th>
+						<td>
+							<textarea name="boardContents" class="boardContents" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+						</td>
+					</tr>
+					<tr class="r0 at">
+						<th>파일 첨부1</th>
+						<td class="file0_cont">
+							<div>
+								<input type="file" name="files" id="file0" style="display:none">
+								<span id="file0name">선택된 파일 없음</span>
+							</div>
+							<div>
+								<a href="javascript:upload('file0')">파일 선택</a>
+								<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<table class="btn_area">
+				<tr align="right" valign="middle" style="border: 0cap;">
+					<td class="enroll_area" style="border:none;">
+						<a onclick="sendit()" class="plus">등록</a>
+						<a th:href="${'/Cboard/list'}" class="back">목록</a>
 					</td>
 				</tr>
 			</table>
-		</form>
-		<table class="btn_area">
-			<tr align="right" valign="middle" style="border: 0cap;">
-				<td class="enroll_area" style="border:none;">
-					<a onclick="sendit()" class="plus">등록</a>
-					<a th:href="${'/Cboard/list'}" class="back">목록</a>
-				</td>
-			</tr>
-		</table>
+		</div>
 	</div>
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
