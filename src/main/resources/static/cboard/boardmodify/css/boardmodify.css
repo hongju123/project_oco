@@ -1,23 +1,69 @@
-<<<<<<< HEAD
-=======
-body{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&family=Noto+Sans+KR:wght@500&display=swap");
+
+.topic_area {
+  border-radius: 10px;
+  margin-top: 170px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
-#header{
-    background-color: blue;
+.topic {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+  font-size: large;
+  font-weight: bolder;
+  flex-grow: 1;
+  border-collapse: collapse;
 }
-.wrap{
-    margin-top: 170px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.topic::before {
+  margin: 5px;
+  content: "·";
 }
+.topic:hover {
+  color: #3182f6;
+}
+
+.topic:after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #3182f6;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease-out;
+  margin-left: 5px;
+}
+
+.topic:hover:after {
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrap {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ }
+  
 form{
 	margin-top: 170px;
 }
@@ -45,4 +91,3 @@ th{
 .btn_area{
 	margin-left: 150px;
 }
->>>>>>> 366a0a007fa5e8f8731ff297f56ecfb3a54bc27a
