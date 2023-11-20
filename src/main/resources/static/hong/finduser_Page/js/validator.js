@@ -21,7 +21,7 @@ email.addEventListener("change", function (e) {
         get_code.focus();
     } else {
         email.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             email.classList.remove("falseAction")
         }, 2000)
         get_code.setAttribute("disabled", "disabled");
@@ -47,7 +47,7 @@ get_code.addEventListener("click", function (e) {
                 get_code.classList.remove("ani");
                 get_code.classList.remove("checkBox");
                 get_code.classList.add("falseAction");
-                setInterval(function () {
+                setTimeout(function () {
                     get_code.classList.remove("falseAction");
                 }, 2000)
                 get_code.value = "인증번호";
@@ -90,18 +90,18 @@ function submitHandler(){
     const finduser_Page_button = document.querySelector(".finduser_Page_button");
     if (get_code.value!="✅") {
         get_code.classList.add("falseAction");
-        setInterval(function(){get_code.classList.remove("falseAction")},2000)
+        setTimeout(function(){get_code.classList.remove("falseAction")},2000)
 
         finduser_Page_button.classList.add("falseAction");
-        setInterval(function(){finduser_Page_button.classList.remove("falseAction")},2000)
+        setTimeout(function(){finduser_Page_button.classList.remove("falseAction")},2000)
         return false
     }
     if (check_code_button.value!="✅") {
         check_code_button.classList.add("falseAction");
-        setInterval(function(){check_code_button.classList.remove("falseAction")},2000)
+        setTimeout(function(){check_code_button.classList.remove("falseAction")},2000)
 
         finduser_Page_button.classList.add("falseAction");
-        setInterval(function(){finduser_Page_button.classList.remove("falseAction")},2000)
+        setTimeout(function(){finduser_Page_button.classList.remove("falseAction")},2000)
         return false
     }
     id_form.submit();
@@ -130,7 +130,7 @@ email_2.addEventListener("change", function (e) {
         get_code_2.focus();
     } else {
         email_2.classList.add("falseAction")
-        setInterval(function () {
+        setTimeout(function () {
             email_2.classList.remove("falseAction")
         }, 2000)
         get_code_2.setAttribute("disabled", "disabled");
@@ -156,7 +156,7 @@ get_code_2.addEventListener("click", function (e) {
                 get_code_2.classList.remove("ani");
                 get_code_2.classList.remove("checkBox");
                 get_code_2.classList.add("falseAction");
-                setInterval(function () {
+                setTimeout(function () {
                     get_code_2.classList.remove("falseAction");
                 }, 2000)
                 get_code_2.value = "인증번호";
@@ -200,32 +200,33 @@ check_code_button_2.addEventListener("click", function () {
 
 function submitHandler_2(){
     const finduser_Page_button_2 = document.querySelector(".finduser_Page_button_2");
-    console.log("여기 들어오는듯?");
+
     if (userid_button_2.value!="✅") {
         userid_button_2.classList.add("falseAction");
-        setInterval(function(){userid_button_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){userid_button_2.classList.remove("falseAction")},2000)
         
         finduser_Page_button_2.classList.add("falseAction");
-        setInterval(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
         return false
     }
     if (get_code_2.value!="✅") {
         get_code_2.classList.add("falseAction");
-        setInterval(function(){get_code_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){get_code_2.classList.remove("falseAction")},2000)
 
         finduser_Page_button_2.classList.add("falseAction");
-        setInterval(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
         return false
     }
     if (check_code_button_2.value!="✅") {
         check_code_button_2.classList.add("falseAction");
-        setInterval(function(){check_code_button_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){check_code_button_2.classList.remove("falseAction")},2000)
 
         finduser_Page_button_2.classList.add("falseAction");
-        setInterval(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
+        setTimeout(function(){finduser_Page_button_2.classList.remove("falseAction")},2000)
         return false
     }
     password_form.submit();
+
 }
 
 
