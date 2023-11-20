@@ -91,3 +91,29 @@ th{
 .btn_area{
 	margin-left: 150px;
 }
+
+.sel, .del, .fin, .list:hover {
+  color: rgb(0, 0, 0);
+}
+
+.sel:after, .del:after, .list:after, .fin:after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgba(49, 131, 246, 1);
+  transition: width 0.3s ease-out;
+  bottom: -3px;
+}
+
+.sel:hover::after, .del:hover::after, .list:hover::after, .fin:hover::after {
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: -5px;
+}
+.sel:hover, .del:hover, .list, .fin{
+  transform: scale(1.01);
+}
+.sel:hover, .del:hover, .list:hover, .fin:hover{
+  color: #ffffff;
+}
