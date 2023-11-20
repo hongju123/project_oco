@@ -16,7 +16,7 @@
 	<div id="wrap">
 		<form id="boardForm" method="post" name="boardForm" th:action="@{/Cboard/modify}" enctype="multipart/form-data">
 			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
-			<table style="border-collapse: collapse;" border="1">
+			<table style="border-collapse: collapse;" border="1" class="main">
 				<tr style="height:30px;">
 					<th style="text-align:center; width:150px;">제목</th>
 					<td>
@@ -62,11 +62,11 @@
 							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
 							<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
 						</div>
-						<div style="float:right; margin-right: 100px;">
+						<div style="float:right; margin-right: 5px;">
 							<!-- <a href="javascript:upload('file9','')"> -->
-							<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
+							<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'" class="sel">파일 선택</a>
 							<!-- <a href="javascript:cancelFile('file9','')"> -->
-							<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
+							<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'" class="del">첨부 삭제</a>
 						</div>
 					</td>
 				</tr>
@@ -76,8 +76,8 @@
 		<table class="btn_area">
 			<tr align="right" valign="middle">
 				<td>
-					<a href="javascript:document.boardForm.submit()">수정완료</a>
-					<a th:href="${'/Cboard/list'}">목록</a>
+					<a href="javascript:document.boardForm.submit()" class="fin">수정완료</a>
+					<a th:href="${'/Cboard/list'}" class="list">목록</a>
 				</td>
 			</tr>
 		</table>

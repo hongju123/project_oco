@@ -6,9 +6,6 @@ body {
   align-items: center;
   flex-direction: column;
 }
-#header {
-  background-color: blue;
-}
 .wrap {
   display: flex;
   align-items: center;
@@ -132,5 +129,44 @@ div>a{
     transform: translateX(-1px);
   }
 }
+.board_title{
+  width: 100%;
+}
+.thumbnail{
+  max-width: 150px;
+  max-height: 150px;
+}
+.plus, .back{
+  font-size: larger;
+  font-weight: bolder;
+  position: relative;
+}
+.plus, .back:hover {
+  color: rgb(0, 0, 0);
+}
 
+.plus:after, .back:after {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgba(49, 131, 246, 1);
+  transition: width 0.3s ease-out;
+  bottom: -3px;
+}
 
+.plus:hover::after, .back:hover::after {
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: -5px;
+}
+.plus:hover, .back:hover{
+  transform: scale(1.01);
+}
+.plus:hover, .back:hover{
+  color: #ffffff;
+}
+
+.enroll_area{
+  position: relative;
+}

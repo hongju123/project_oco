@@ -11,19 +11,11 @@
 	<div class="wrap reserv_write">
 		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
 		<div class="sub-inner">
-<<<<<<< HEAD
-			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}"  data-aos="fade-up">
-				<input type="hidden" th:value="${reservation.requestNum}" name="requestNum">
-				<input type="hidden" th:value="${reservation.requestType}" name="requestType" id="type">
-				<div class="sec-half">
-					<div class="sec-con left-sec"ss>
-=======
 			<form id="Form" method="post" name="Form" th:action="@{/reservation/reservationmodify}" data-aos="fade-up">
 				<input type="hidden" th:value="${reservation.requestNum}" name="requestNum">
 				<input type="hidden" th:value="${reservation.requestType}" name="requestType" id="type">
 				<div class="sec-half">
 					<div class="sec-con left-sec">
->>>>>>> 81d86932dad8b9b05443b5c88b53683f85f907ed
 						<span class="sec-tit">카테고리</span>
 						<select id="category" onchange="f()" name="category">
 							<option th:value="${reservation.category}">[[${reservation.category}]]</option>
@@ -143,6 +135,9 @@
 							<option>전기</option>
 							<option>하이브리드</option>
 							<option>가솔린</option>
+
+
+
 							<option>디젤</option>
 							<option>LPG</option>
 						</select>
@@ -236,14 +231,11 @@
 						<a href="#" class="sum">확인</a>
 					</div>
 				</div>
-<<<<<<< HEAD
 				<div class="sec-con">
-=======
-				<div class="sec-con"><!-- data-aos="fade-up" -->
->>>>>>> 81d86932dad8b9b05443b5c88b53683f85f907ed
-					<span class="sec-tit">요청사항</span>
-					<textarea name="memo" class="memo">[[${reservation.memo}]]</textarea>
-				</div>
+					<div class="sec-con"><!-- data-aos="fade-up" -->
+						<span class="sec-tit">요청사항</span>
+						<textarea name="memo" class="memo">[[${reservation.memo}]]</textarea>
+					</div>
 			</form>
 			<div class="btns">
 				<a href="javascript:document.Form.submit()" class="modify-btn">수정완료</a>
@@ -251,7 +243,7 @@
 			</div>
 		</div><!--.sub-inner-->
 	</div><!--.wrap-->
-x
+	<div id="clock_box">
 		<p id="clock_p">Time is going now.</p>
 		<div id="clock"></div>
 	</div>
