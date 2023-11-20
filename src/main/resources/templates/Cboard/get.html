@@ -65,10 +65,6 @@
 						</th:block>
 					</th:block>
 					<th:block th:unless="${files != null and files.size() > 0}">
-						<tr>
-							<td colspan="2" style="text-align: center; font-size: 20px;" class="non file">첨부 파일이 없습니다.
-							</td>
-						</tr>
 					</th:block>
 				</table>
 			</form>
@@ -86,25 +82,24 @@
 					</td>
 				</tr>
 			</table>
-			<div class="reply_line">
-				<a href="#" class="regist">댓글 등록</a>
-				<div class="replyForm row">
-					<div style="width:20%">
-						<h4>작성자</h4>
-						<input type="text" name="userId" th:value="${session.loginUser}" readonly
-							style="text-align: left;">
-					</div>
-					<div style="width:65%">
-						<h4>내 용</h4>
-						<textarea name="replyContents" class="replyContents" style="resize:none;"></textarea>
-					</div>
-					<div style="width:15%">
-						<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
-						<a href="#" class="button cancel">취소</a>
-					</div>
-				</div>
 				<ul class="replies"></ul>
-				<div class="page"></div>
+				<a href="#" class="regist">덧글작성</a>
+				<div class="reply_line">
+					<div class="replyForm row">
+						<div style="width:20%">
+							<h4>작성자</h4>
+							<input class="userId" type="text" name="userId" th:value="${session.loginUser}" readonly
+								style="text-align: left;">
+						</div>
+						<div style="width:65%">
+							<h4 class="content_area">내 용</h4>
+							<textarea name="replyContents" class="replyContents" style="resize:none;"></textarea>
+						</div>
+						<div >
+							<a href="#" class="button finish" style="margin-top:10px;">등록</a>
+							<a href="#" class="button cancel">취소</a>
+						</div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -149,7 +144,6 @@
 	$(".finish").on("click", function (e) {
 		e.preventDefault();
 		let replycontents = $("[name='replyContents']").val();
-		console.log("옴?")
 		replyService.add(
 			{ "boardNum": boardNum, "userId": loginUser, "replyContents": replycontents },
 			function (result) {
@@ -176,21 +170,21 @@
 
 				for (let i = 0; i < list.length; i++) {
 					//<li style="clear:both;" class="li3">
-					str += '<li style="clear:both;" class="li' + list[i].replyNum + '">';
-					str += '<div style="display:inline; float:left; width:80%;">';
+					str += '<li class="li' + list[i].replyNum + " relpy_area" + '">';
+					str += '<div">';
 					//<strong class="userid3">apple</strong>
 					str += '<strong class="userid' + list[i].replyNum + '">' + list[i].userId + '</strong>';
 					//<p class="reply3">댓글내용</p>
-					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents + '</p>';
-					str += '</div><div style="text-align:right;">'
-					str += '<strong>' + replyService.displayTime(list[i]) + '</strong>'
+					str += '<p class="reply' + list[i].replyNum + " reply_content_area" + '">' + list[i].replyContents + '</p>';
+					str += '</div><div class=button_area ">'
 					if (list[i].userId == loginUser) {
 						//<a href="3" class="modify">수정</a>
 						str += '<a href="' + list[i].replyNum + '" class="modify">수정</a>';
 						str += '<a href="' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
 						str += '<a href="' + list[i].replyNum + '" class="remove">삭제</a>';
 					}
-					str += '</div></li>';
+					str += '<strong>' + replyService.displayTime(list[i]) + '</strong>'
+					str += '</div></li><br><hr>';
 				}
 				replies.html(str);
 
