@@ -1,116 +1,118 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>ComuGet</title>
-
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick.css}">
-<link rel="stylesheet" th:href="@{/main/css/slick-theme.css}">
-<link rel="stylesheet" th:href="@{/main/css/main.css}">
-
+<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{/cboard/boardget/css/boardget.css}">
+<script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 
-
-</head>	
 <body>
-<th:block th:replace="~{layout/header::header}"></th:block>
-	<div id="cumuwrap">
-		<form>
-			<table style="border-collapse: collapse;" border="1" class="border_area">
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;" class="a_row">제목</th>
-					<td>
-						<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
-					</td>
-				</tr>
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;" class="a_row">작성자</th>
-					<td>
-						<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;" class="a_row">조회수</th>
-					<td>[[${board.readCount}]]</td>
-				</tr>
-				<tr>
-					<th style="height: 30px;" class="a_row">주제</th>
-					<td>[[${board.topic}]]</td>
-				</tr>
-				<tr>
-					<th style="height: 30px;" class="a_row">카테고리</th>
-					<td>[[${board.category}]]</td>
-				</tr>
-				
-				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;">내 용</th>
-					<td>
-						<textarea name="boardContents" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContents}]]</textarea>
-					</td>
-				</tr>
-				<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-					<th:block th:with="sar=${file.orgName.split('[.]')}">
-						<tr>
-							<th style="text-align:center;">첨부파일[[${fileStat.index+1}]]</th>
-							<td>
-								<a href="#">[[${file.orgName}]]</a>
-							</td>
-						</tr>
-						<th:block th:with="ext=${sar[sar.length-1]}">
-							<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+	<th:block th:replace="~{layout/header::header}"></th:block>
+	<div class="wrap">
+		<div class="sub-inner">
+			<form>
+				<table style="border-collapse: collapse;" border="1" class="border_area">
+					<tr style="height:30px;">
+						<th style="text-align:center; width:150px;" class="a_row">제목</th>
+						<td>
+							<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
+						</td>
+					</tr>
+					<tr style="height:30px;">
+						<th style="text-align:center; width:150px;" class="a_row">작성자</th>
+						<td>
+							<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;" class="a_row">조회수</th>
+						<td>[[${board.readCount}]]</td>
+					</tr>
+					<tr>
+						<th style="height: 30px;" class="a_row">주제</th>
+						<td>[[${board.topic}]]</td>
+					</tr>
+					<tr>
+						<th style="height: 30px;" class="a_row">카테고리</th>
+						<td>[[${board.category}]]</td>
+					</tr>
+					
+					<tr style="height:300px;">
+						<th style="text-align:center; width:150px;">내 용</th>
+						<td>
+							<textarea name="boardContents" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContents}]]</textarea>
+						</td>
+					</tr>
+					<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th:block th:with="sar=${file.orgName.split('[.]')}">
+							<tr>
+								<th style="text-align:center;">첨부파일[[${fileStat.index+1}]]</th>
 								<td>
-									<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
+									<a href="#">[[${file.orgName}]]</a>
 								</td>
 							</tr>
+							<th:block th:with="ext=${sar[sar.length-1]}">
+								<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+									<td>
+										<img style="width:100%;" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
+									</td>
+								</tr>
+							</th:block>
 						</th:block>
 					</th:block>
-				</th:block>
-				<th:block th:unless="${files != null and files.size() > 0}">
-					<tr>
-						<td colspan="2" style="text-align: center; font-size: 20px;" class="non file">첨부 파일이 없습니다.</td>
-					</tr>
-				</th:block>
-			</table>
-		</form>
-		<table class="btn_area" style="border: 0cap;">
-			<tr align="right" valign="middle" style="border: 0cap;">
-				<td>
-					<th:block th:if="${board.userId == session.loginUser}">
-						<form name="boardForm" method="post" th:action="@{/Cboard/remove}">
-							<input name="boardNum" th:value="${board.boardNum}" type="hidden">
-							<a href="javascript:modify()">수정</a>
-							<a href="javascript:document.boardForm.submit()">삭제</a>
-						</form>
+					<th:block th:unless="${files != null and files.size() > 0}">
+						<tr>
+							<td colspan="2" style="text-align: center; font-size: 20px;" class="non file">첨부 파일이 없습니다.</td>
+						</tr>
 					</th:block>
-					<a th:href="${'/Cboard/list'}" class="back">목록</a>
-				</td>
-			</tr>
-		</table>
-		<div class="reply_line">
-			<a href="#" class="regist">댓글 등록</a>
-			<div class="replyForm row">
-				<div style="width:20%">
-					<h4>작성자</h4>
-					<input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: left;">
+				</table>
+			</form>
+			<table class="btn_area" style="border: 0cap;">
+				<tr align="right" valign="middle" style="border: 0cap;">
+					<td>
+						<th:block th:if="${board.userId == session.loginUser}">
+							<form name="boardForm" method="post" th:action="@{/Cboard/remove}">
+								<input name="boardNum" th:value="${board.boardNum}" type="hidden">
+								<a href="javascript:modify()">수정</a>
+								<a href="javascript:document.boardForm.submit()">삭제</a>
+							</form>
+						</th:block>
+						<a th:href="${'/Cboard/list'}" class="back">목록</a>
+					</td>
+				</tr>
+			</table>
+			<div class="reply_line">
+				<a href="#" class="regist">댓글 등록</a>
+				<div class="replyForm row">
+					<div style="width:20%">
+						<h4>작성자</h4>
+						<input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: left;">
+					</div>
+					<div style="width:65%">
+						<h4>내 용</h4>
+						<textarea name="replyContents" style="resize:none;"></textarea>
+					</div>
+					<div style="width:15%">
+						<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
+						<a href="#" class="button cancel">취소</a>
+					</div>
 				</div>
-				<div style="width:65%">
-					<h4>내 용</h4>
-					<textarea name="replyContents" style="resize:none;"></textarea>
-				</div>
-				<div style="width:15%">
-					<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
-					<a href="#" class="button cancel">취소</a>
-				</div>
+				<ul class="replies"></ul>
+				<div class="page"></div>
 			</div>
-			<ul class="replies"></ul>
-			<div class="page"></div>
 		</div>
 	</div>
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script th:src="@{/cboard/boardget/js/reply.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/jquery-3.6.0.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardNum = /*[[${board.boardNum}]]*/'';
