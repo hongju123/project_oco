@@ -33,6 +33,11 @@
 					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 						<th>파일 첨부[[${fileStat.index+1}]]</th>
 						<td th:class="${'file'+fileStat.index+'_cont'}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}" class="thumbnail">
+								</th:block>
+							</th:block>
 							<div style="float:left;">
 								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
 								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
@@ -43,11 +48,6 @@
 								<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부 삭제</a>
 							</div>
 							<input type="hidden" name="orgName" th:value="${file.orgName}">
-							<th:block th:with="sar=${file.orgName.split('[.]')}">
-								<th:block th:with="ext=${sar[sar.length-1]}">
-									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}" class="thumbnail">
-								</th:block>
-							</th:block>
 						</td>
 					</tr>
 					<tr th:class="${'r'+files.size()}">
