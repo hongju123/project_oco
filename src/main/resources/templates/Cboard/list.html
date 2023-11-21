@@ -64,6 +64,7 @@
 			</article>
 		</div>
 	</div>
+	<input type="hidden" class="topic" th:value="${topic}">
 	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
@@ -116,10 +117,10 @@
 	let cnt = 0;
 	let startRow = 10;
 	let amount = 20;
-	let topic = "전체";
+	let topic = /*[[${topic}]]*/'';
+	console.log("topic :",topic)
 	const getListURL = "/Cboard/addList";
 	//토픽 클릭시 
-
 
 	document.querySelectorAll(".topic").forEach(data => data.addEventListener("click", function (e) {
 		//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.

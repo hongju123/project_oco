@@ -1,5 +1,7 @@
 package com.oco.controller;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,11 +55,10 @@ public class CBoardController {
 	}
 
 	@GetMapping("list")
-	public String list(Model model, Long amount, Long startRow, String topic) throws Exception {
+	public String list(Model model, Long amount, Long startRow, @RequestParam("topic") String topic) throws Exception {
 		amount = (amount != null && amount > 10L) ? amount : 10L;
 		startRow = (startRow != null && startRow > 0L) ? startRow : 0L;
 		topic = topic == null ? "전체" : topic;
-		log.info("topic:{}" + topic);
 		log.info("startRow:{}", startRow);
 		log.info("amount:{}", amount);
 		log.info("topic:{}", topic);
@@ -78,10 +80,18 @@ public class CBoardController {
 			model.addAttribute("reply_cnt_list", service.getReplyCntList(list));
 			log.info("{}", service.getReplyCntList(list));
 			model.addAttribute("recent_reply", service.getRecentReplyList(list));
+			model.addAttribute("topic",topic);
 		}
 
 		return "Cboard/list";
 
+	}
+	@GetMapping("topic")
+	public String topic(@RequestParam("topic") String topic) {
+		String encodedTopic = URLEncoder.encode(topic, StandardCharsets.UTF_8);
+		String url = "redirect:/Cboard/list?topic=" + encodedTopic;
+		log.info("topic:{}", topic);
+		return url;
 	}
 
 	@GetMapping("write")
