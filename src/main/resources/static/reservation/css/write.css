@@ -77,7 +77,16 @@
 	text-align: center;
 	border-radius: 10px;
 }
-
+.sum{
+	display: block;
+	width: 10%;
+	background-color: #3182f6;
+	color: #fff !important;
+	padding: 10px 5px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 10px;
+}
 
 
 

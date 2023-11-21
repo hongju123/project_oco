@@ -65,10 +65,10 @@
 			<form name="reservationForm" method="post" th:action="@{/reservation/reservationremove}">
 				<th:block th:if="${reservation.userId == session.loginUser}">
 					<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
-					<ul class="btn"> 
+					<ul class="btn">
 						<div style="display: flex;">
-						<li><a href="javascript:modify()" class="modify-btn">수정</a></li>
-						<li><a href="javascript:document.reservationForm.submit()" class="remove-btn">삭제</a></li>
+							<li><a href="javascript:modify()" class="modify-btn">수정</a></li>
+							<li><a href="javascript:document.reservationForm.submit()" class="remove-btn">삭제</a></li>
 						</div>
 						<div class="lists-btn">
 							<li><a th:href="${'/reservation/reservationlist'}" class="list-btn">목록</a></li>
@@ -77,7 +77,14 @@
 				</th:block>
 				<th:block th:if="${session.businessUser == 'O'}">
 					<input name="requestNum" th:value="${reservation.requestNum}" type="hidden">
-					<a href="javascript:proposal()">제안하기</a>
+					<ul class="btn">
+						<div style="display: flex;">
+							<li><a href="javascript:proposal()" class="modify-btn">제안하기</a></li>
+						</div>
+						<div class="lists-btn">
+							<li><a th:href="${'/reservation/reservationlist'}" class="list-btn">목록</a></li>
+						</div>
+					</ul>
 				</th:block>
 			</form>
 		</div><!--.sub-inner-->
@@ -112,8 +119,8 @@
 		reservationForm.setAttribute("method", "post");
 		reservationForm.submit();
 	}
-	
-	
+
+
 	function clock() {
 
 		//Save the times in variables
