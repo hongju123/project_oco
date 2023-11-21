@@ -1,7 +1,10 @@
 package com.oco.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,7 +48,7 @@ public class UserController {
 	}
 
 	@GetMapping("login-kakao")
-	public String login(@RequestParam("code") String code, HttpServletRequest req) {
+	public String login(String code, HttpServletRequest req) {
 		System.out.println("Received code: " + code);
 
 		KakaoUserDTO kakaoUserDto = new KakaoLoginService().login(code);
@@ -54,13 +57,14 @@ public class UserController {
 
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
 			req.getSession().setAttribute("businessUser", "X");
+			req.getSession().setAttribute("socialUser", "kakao");
 			return "redirect:/";
 		} else if (kakaoUser.insert(kakaoUserDto)) {
 			req.getSession().setAttribute("loginUser", kakaoUserDto.getKakaoName());
+			req.getSession().setAttribute("socialUser", "kakao");
 			req.getSession().setAttribute("businessUser", "X");
 			return "redirect:/";
 		} else {
-			log.info("오류@@@@@@@@@@@");
 			return "/hong/login_Page";
 		}
 	}
@@ -149,6 +153,7 @@ public class UserController {
 
 	@GetMapping("logout")
 	public String logout(HttpServletRequest req) {
+		log.info("........................");
 		req.getSession().invalidate();
 		return "redirect:/";
 	}
