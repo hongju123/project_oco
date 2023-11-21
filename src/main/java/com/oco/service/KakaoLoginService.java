@@ -1,8 +1,16 @@
 package com.oco.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +21,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oco.domain.dto.KakaoUserDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class KakaoLoginService {
  	String rest_key ="010c3e05dede938779d609079d44d487";
  	String redirect_ = "http://localhost:8080/user/login-kakao";
@@ -20,7 +31,7 @@ public class KakaoLoginService {
     String kakaoTokenUrl = "https://kauth.kakao.com/oauth/token";
     String idx;
     String nickname;
-    String YOUR_LOGOUT_REDIRECT_URI = "";
+    String YOUR_LOGOUT_REDIRECT_URI = "https://localhost:8080/user/kakao-logout";
     String logoutUrl="https://kauth.kakao.com/oauth/logout?client_id="+rest_key+"&logout_redirect_uri="+YOUR_LOGOUT_REDIRECT_URI;
 
     public KakaoUserDTO login(String code) {
@@ -106,10 +117,5 @@ public class KakaoLoginService {
     
     return kakaoDto;
     
-    }
-
-    public boolean kakaoLogout(String ACCESS_TOKEN){
-//        구현할 예정
-        return false;
     }
 }

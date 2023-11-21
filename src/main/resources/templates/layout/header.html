@@ -30,7 +30,12 @@
 				</th:block>
 
 				<th:block th:if="${session.loginUser != null}">
-					<li><a th:href="@{/user/logout}">로그아웃</a></li>
+					<th:block th:if="${session.socialUser==null}">
+						<li><a th:href="@{/user/logout}">로그아웃</a></li>
+					</th:block>
+					<th:block th:if="${session.socialUser!=null}">
+						<li><a href="https://kauth.kakao.com/oauth/logout?client_id=010c3e05dede938779d609079d44d487&logout_redirect_uri=http://localhost:8080/user/logout">로그아웃</a></li>
+					</th:block>
 					<th:block th:if="${session.businessUser == 'O'}">
 						<li><a th:href="@{/Bboard/getpage (businessId=${session.loginUser})}" class="myPage">프로필 관리</a></li>
 					</th:block>
