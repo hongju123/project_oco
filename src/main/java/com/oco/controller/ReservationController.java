@@ -121,6 +121,7 @@ public class ReservationController {
 
 	@PostMapping("reservationmodify")
 	public String modify(ReservationDTO reservation) throws Exception {
+		log.info("sPersonnel:{}" , reservation.getPersonnel());
 		if(reservation.getFuel() == "" ) {
 			reservation.setFuel("0");
 		}
@@ -129,7 +130,6 @@ public class ReservationController {
 		}
 		log.info("Fuel:{}" , reservation.getFuel());
 		log.info("Personnel:{}" , reservation.getPersonnel());
-		log.info("Personnel:{}" , reservation.getRequestType());
 		if (service.reservationmodify(reservation)) {
 
 			return "redirect:/reservation/reservationget?" + "&requestNum=" + reservation.getRequestNum();

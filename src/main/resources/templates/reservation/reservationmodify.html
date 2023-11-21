@@ -114,7 +114,7 @@
 					<div class="sec-con left-sec personnel">
 						<span class="sec-tit">인원수</span>
 						<select name="personnel">
-							<option value="">[[${reservation.personnel}]]
+							<option th:value="${reservation.personnel}">[[${reservation.personnel}]]
 							</option>
 							<option value="1">1명</option>
 							<option value="2">2명</option>
@@ -131,13 +131,10 @@
 					<div class="sec-con fuel left-sec">
 						<span class="sec-tit">연료</span>
 						<select name="fuel">
-							<option value="">[[${reservation.fuel}]]</option>
+							<option th:value="${reservation.fuel}">[[${reservation.fuel}]]</option>
 							<option>전기</option>
 							<option>하이브리드</option>
 							<option>가솔린</option>
-
-
-
 							<option>디젤</option>
 							<option>LPG</option>
 						</select>
