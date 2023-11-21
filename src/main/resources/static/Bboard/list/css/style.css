@@ -46,6 +46,7 @@
 
 .total_section{
 	position:relative;
+	padding: 70px 0;
 }
 	
 .top_profile{
@@ -53,7 +54,7 @@
 	display: flex;
 	flex-flow: wrap;
 	justify-content: space-between;
-	padding: 70px 0;
+	
 }
 	
 	
@@ -167,6 +168,28 @@
 	margin-top: 10px;
 	box-sizing: border-box;
 }
+
+
+.reply2 textarea{
+	background-color: #efefef;
+	width: 100%;
+	border: none;
+	outline: none;
+	height: 150px;
+	border-radius: 10px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-bottom: 5px;
+}
+
+
+.info{
+	border-bottom: 1px solid #efefef;
+	padding: 30px 0;
+}
+.info2{
+	padding: 30px 0;
+}
 .modify_btn{
 	position:absolute;
 	top: 0;
@@ -198,5 +221,70 @@
 
 
 
+.modi_tit{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
 
+.shot_info select{
+	border: none;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.file_modify{
+	display: inline-block;
+}
+
+.file_modify a{
+	font-size: 12px;
+}
+
+.photo_select{
+	width: 100px;
+	height: 100px;
+	border: 1px dotted #707070;
+	margin:0 auto;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.photo_select a{
+	display: block;
+	font-size: 20px;
+	border: 1px solid #333;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	margin:40px 0 0 40px;
+	
+}
+
+.thumbnail{
+	width: 100px;
+	height: 100px;
+	margin:0 auto;
+	text-align: center;
+	border-radius: 10px;
+}
+
+#file0name{
+	display: none;
+}
+
+.free_service label{
+	margin-right: 10px;
+	
+}
+
+.submit_btn{
+	cursor: pointer;
+	float: right;
+	border: none;
+	padding: 10px 50px;
+	border-radius: 10px;
+	background-color: #3182f6;
+	color: #fff;
+}
 
