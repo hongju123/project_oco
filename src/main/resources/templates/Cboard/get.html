@@ -25,7 +25,7 @@
 					<tr style="height:30px;">
 						<th style="text-align:center; width:150px;" class="a_row">작성자</th>
 						<td>
-							<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}"
+							<input class="user_id" type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}"
 								readonly>
 						</td>
 					</tr>
@@ -35,7 +35,7 @@
 					</tr>
 					<tr>
 						<th style="height: 30px;" class="a_row">주제</th>
-						<td>[[${board.topic}]]</td>
+						<td >[[${board.topic}]]</td>
 					</tr>
 					<tr>
 						<th style="height: 30px;" class="a_row">카테고리</th>
@@ -54,18 +54,12 @@
 							<tr>
 								<th style="text-align:center;">첨부파일[[${fileStat.index+1}]]</th>
 								<td>
-									<a href="#">[[${file.orgName}]]</a>
+									<div>
+										<a href="#">[[${file.orgName}]]</a>
+									</div>
+									<img class="thumbnail" th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
 								</td>
 							</tr>
-							<th:block th:with="ext=${sar[sar.length-1]}">
-								<tr
-									th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-									<td>
-										<img style="width:100%;"
-											th:src="@{/Cboard/thumbnail (systemName=${file.systemName})}">
-									</td>
-								</tr>
-							</th:block>
 						</th:block>
 					</th:block>
 					<th:block th:unless="${files != null and files.size() > 0}">
@@ -82,7 +76,7 @@
 								<a href="javascript:document.boardForm.submit()">삭제</a>
 							</form>
 						</th:block>
-						<a th:href="${'/Cboard/list'}" class="back">목록</a>
+						<a th:href="${'/Cboard/list?topic='}" class="back">목록</a>
 					</td>
 				</tr>
 			</table>
