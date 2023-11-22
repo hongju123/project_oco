@@ -137,7 +137,11 @@ div>a:not(.regist,.modify,.mfinish,.remove){
 .user_id{
 	font-weight: bold;
 }
-
+.thumbnail{
+margin-top: 15px;
+  max-width: 150px;
+  max-height: 150px;
+}
 
 /* 게시판 css끝 */
 
