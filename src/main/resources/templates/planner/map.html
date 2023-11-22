@@ -17,7 +17,7 @@
 	<th:blocked th:if="${session.loginUser==null}">
 		<script>
 			alert("회원만 이용 가능합니다. 로그인후 이용하세요");
-			location.replace("/");
+			location.replace("/user/login");
 		</script>
 	</th:blocked>
 	<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
