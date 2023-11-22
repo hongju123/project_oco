@@ -1,11 +1,13 @@
-
+  
 .btn_area{
   margin-top: 30px;
   margin-bottom: 60px;
   border:none;
   padding: 10px;
 }
-
+.btn_area_tr{
+  border: 0px solid white !important;
+}
 th,tr{
 border: 1px solid black;
 }
@@ -72,6 +74,13 @@ border-radius: 3px;
 color: white;
 padding: 5px 10px 5px 10px ;
 }
+td>a{
+  background-color: #3182f6;
+  box-sizing: border-box;
+  border-radius: 3px;
+  color: white;
+  padding: 5px 10px 5px 10px ;
+  }
 
 .hidden{
   display: none;
