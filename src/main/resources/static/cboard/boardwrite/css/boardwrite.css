@@ -1,6 +1,26 @@
+.wrap{width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
+.topic,.category{
+  width: 30%;
+  font-weight: bold;
+}
+.category{
+  width: 20%;
+  font-weight: bold;
+}
+.category{
+  width: 25%;
+  font-weight: bold;
+}
+.sub_category{
+  width: 20%;
+  
+}
 
 
-
+select{
+  opacity: 0.8;
+  height: 100%;
+}
 .btn_area{
 		margin-top: 30px;
 		margin-bottom: 60px;
@@ -8,8 +28,9 @@
 		padding: 10px;
 }
 
+
 th,tr{
-	border: 1px solid black;
+	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 th{
@@ -41,16 +62,6 @@ select:focus {
 	color: #222;
 	outline: none;
 	}
-
-.plus, .back{
-	display: inline-block;
-	box-sizing: border-box;
-	background-color: #3182f6;
-	color: white;
-	border-radius: 3px;
-	margin-right: 5px;
-	padding: 5px 10px 5px 10px ;
-}
 
 textarea{
 	border: none;
@@ -118,15 +129,18 @@ div>a{
   max-height: 150px;
 }
 .plus, .back{
-  font-size: larger;
-  font-weight: bolder;
-  position: relative;
-}
-.plus, .back:hover {
-  color: rgb(0, 0, 0);
+  color: white !important;
+	display: inline-block;
+	box-sizing: border-box;
+	background-color: #3182f6;
+	border-radius: 3px;
+	margin-right: 5px;
+	padding: 5px 10px 5px 10px ;
 }
 
-.plus:after, .back:after {
+
+
+.back:after,.plus:after {
   content: "";
   width: 0%;
   height: 3px;
@@ -134,19 +148,19 @@ div>a{
   transition: width 0.3s ease-out;
   bottom: -3px;
 }
-
 .plus:hover::after, .back:hover::after {
   width: 100%;
   position: absolute;
   left: 0px;
   bottom: -5px;
 }
-.plus:hover, .back:hover{
+.back:hover,.plus:hover{
   transform: scale(1.01);
+  color: #000000 !important;
+  font-weight: bolder;
+  
 }
-.plus:hover, .back:hover{
-  color: #ffffff;
-}
+
 
 .enroll_area{
   position: relative;

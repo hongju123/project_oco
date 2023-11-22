@@ -13,13 +13,14 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<div class="sub-inner">
+			
 			<form>
 				<table style="border-collapse: collapse;" border="1" class="border_area">
 					<tr style="height:30px;">
 						<th style="text-align:center; width:150px;" class="a_row">제목</th>
 						<td>
 							<input type="text" class="board_title" name="boardTitle" size="50" maxlength="50"
-								th:value="${board.boardTitle}">
+								th:value="${board.boardTitle}" readonly>
 						</td>
 					</tr>
 					<tr style="height:30px;">
@@ -115,6 +116,9 @@
 <script th:src="@{/cboard/boardget/js/reply.js}"></script>
 
 <script th:inline="javascript">
+	AOS.init({
+		duration: 1200,
+	});
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardNum = /*[[${board.boardNum}]]*/'';
 	const replies = $(".replies")
