@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Song+Myung&display=swap');
 
+body{width: 100%;height: 100%;} 
+.wrap{display: flex;align-items: center;justify-content: center; width: 100%;height: 100%;}
+.sub-inner{position: relative;}
 table{
 	border:1.5px solid black;
 }
@@ -75,35 +79,41 @@ a.back{
 	text-align: right;
 }
 
-a.regist{
-	display: inline-block;
+.regist{
+	float:right;
+	text-align: right;
+	margin: 5px;
 	box-sizing: border-box;
 	background-color: #3182f6;
 	color: white;
-	border-radius: 3px;
-	margin-bottom: 30px;
-	padding: 5px 10px 7px 10px ;
-	text-align: center;
-
+	padding: 5px 10px 5px 10px ;
+	left: -3px;
+}
+.regist:hover{
 }
 
 .replyForm.row{
 	padding-bottom: 20px;
 }
-
+.userId{
+	color: #3182f6;
+	margin-top: 5px !important;
+	margin-left: 10px !important;
+	font-size: larger;
+	font-weight: bolder;
+}
 h4{
 	margin-top: 10px;
-	margin-bottom: 10px;
-	border-bottom:2px solid #3182f6;
-	padding-bottom: 5px;
 }
 
-#replyContents{
-	padding: 5px 5px 5px 5px;
+.replyContents{
+	box-shadow: 0px 0px 1px black;
+	width: 100%;
+	height: 100%;
 	
 }
 
-div>a{
+div>a:not(.regist,.modify,.mfinish,.remove){
 	box-sizing: border-box;
 	background-color: #3182f6;
 	color: white;
@@ -114,8 +124,63 @@ div>a{
   	color: white;
  	text-decoration: none;
 }
-
 .button.finish,.button.cancel{
-	margin-bottom: 15px;
+	position: relative;
+	top: 15px;
+}
+/* 게시판 css */
+.board_title{
+	font-weight: bolder;
+	font-size: larger;
+	font-family: 'Song Myung', serif;
+}
+.user_id{
+	font-weight: bold;
+}
+.thumbnail{
+margin-top: 15px;
+  max-width: 150px;
+  max-height: 150px;
 }
 
+/* 게시판 css끝 */
+
+
+
+/* 댓글 css */
+.reply_line{
+}
+.relpy_area{
+	margin-top: 15px;
+}
+.reply_content_area{
+	margin-top: 10px;
+	margin-left: 10px;
+	font-weight: bolder;
+}
+.mdf{
+	margin-top: 10px;
+	margin-left: 10px;
+	font-weight: bolder;
+	font-size: larger;
+	box-shadow: 0px 0px 1px black;
+}
+.button_area{
+	float: right;
+	margin-top: 5px;
+}
+.button_area>a{
+	font-size: smaller;
+}
+.modify:after{
+	margin: 1px;
+	content: "·";
+}
+.button{
+	position: relative;
+}
+.content_area{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+/* 댓글 css 끝 */

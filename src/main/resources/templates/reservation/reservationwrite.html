@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>견적서 작성</title>
+	<link rel="icon" th:href="@{/main/images/logo.png}" type="image/x-icon"> 
+</head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -272,9 +277,10 @@
 		<p id="clock_p">Time is going now.</p>
 		<div id="clock"></div>
 		<div class="about_video_In" style="margin-left:0;">
-			<video  style="width:400px; height:400px; margin-top: -30px;" class="z-video" muted="" autoplay="" loop="" playsinline="" poster="" th:src="@{/main/images/video.mp4}" type="video/mp4">
+			<video style="width:400px; height:400px; margin-top: -30px;" class="z-video" muted="" autoplay="" loop=""
+				playsinline="" poster="" th:src="@{/main/images/video.mp4}" type="video/mp4">
 			</video>
-			
+
 		</div><!--about_video_In-->
 	</div>
 
@@ -355,14 +361,12 @@
 		Form.submit();
 	}
 	$(document).ready(function () {
-		$(".city").hide();
 		$(".data").hide();
-		$(".name").hide();
 		$(".typeB").hide();
 		$(".typeC").hide();
 		$(".typeD").hide();
 		$(".typeE").hide();
-		//$(".amenitiesA").hide();
+		$(".amenitiesA").hide();
 		$(".amenitiesB").hide();
 		$(".amenitiesC").hide();
 		$(".amenitiesD").hide();
@@ -441,6 +445,14 @@
 			$(".amenitiesE").hide();
 			$(".amenitiesF").hide();
 		}
+		if (val == "기타") {
+			$(".amenitiesD").hide();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
 	})
 	const category = $("#category");
 	function f() {
@@ -499,10 +511,6 @@
 			$(".typeD").hide();
 			$(".typeA").hide();
 		}
-	})
-	$(".area").on("click", function (e) {
-		e.preventDefault();
-		$(".city").show();
 	})
 	$(".typeAA").on("click", function (e) {
 		e.preventDefault();
@@ -676,6 +684,61 @@
 			$(".amenitiesE").hide();
 		}
 	})
+	$("#amenities").on("click", function (e) {
+
+		const val = $("#category option:selected").val();
+		console.log(val)
+		if (val == "숙소") {
+			$(".amenitiesA").show();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "식당") {
+			$(".amenitiesB").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "카페") {
+			$(".amenitiesC").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		if (val == "렌터카") {
+			$(".amenitiesD").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesE").hide();
+			$(".amenitiesF").hide();
+		}
+		const vals = $(".typeE option:selected").val();
+		if (vals == "회의실") {
+			$(".amenitiesE").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesF").hide();
+		}
+		if (vals == "파티룸") {
+			$(".amenitiesF").show();
+			$(".amenitiesA").hide();
+			$(".amenitiesB").hide();
+			$(".amenitiesC").hide();
+			$(".amenitiesD").hide();
+			$(".amenitiesE").hide();
+		}
+	})
+
 	$(".sum").on("click", function (e) {
 		e.preventDefault();
 		var checkBoxArr = [];
@@ -830,7 +893,7 @@
 						if (memo != "") {
 							return true;
 						}
-						else{
+						else {
 							alert("메모를 남겨주세요")
 							return false;
 						}

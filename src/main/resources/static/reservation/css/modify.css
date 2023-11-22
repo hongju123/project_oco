@@ -322,6 +322,18 @@ input#check_btn:checked {
 	font-weight: bold;
 }
 
+.sum{
+	display: block;
+	width: 10%;
+	background-color: #3182f6;
+	color: #fff !important;
+	padding: 10px 5px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+
 .modify-btn{
 	display: block;
 	width:100px;

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>커뮤니티</title>
+	<link rel="icon" th:href="@{/main/images/logo.png}" type="image/x-icon"> 
+</head>
 <link rel="stylesheet" th:href="@{/main/css/common.css}">
 <link rel="stylesheet" th:href="@{/main/css/sub.css}">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -11,12 +16,16 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<div class="sub-inner">
-			<!-- 게시글 리스트 띄우는 테이블 -->
-			<div class="topic_area depth2-wrap aos-init aos-animate">
-				<div name="topic" class="topic">전체</div>
-				<div name="topic" class="topic">궁금해요</div>
-				<div name="topic" class="topic">얼마에요</div>
-				<div name="topic" class="topic">함께해요</div>
+			<div class="sub-tit">
+				<h2>여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
+			</div><!--.sub-tit-->
+			<div class="depth2-wrap">
+				<ul class="depth2 sub-nav">
+					<li><div name="topic" class="topic">전체</div></li>
+					<li><div name="topic" class="topic">궁금해요</div></li>
+					<li><div name="topic" class="topic">얼마에요</div></li>
+					<li><div name="topic" class="topic">함께해요</div></li>
+				</ul>
 			</div>
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
 			
@@ -58,6 +67,7 @@
 			</article>
 		</div>
 	</div>
+	<input type="hidden" class="topic" th:value="${topic}">
 	<!-- <form name="pageForm" id="pageForm" th:action="@{/Cboard/list}">
 		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
@@ -113,10 +123,10 @@
 	let cnt = 0;
 	let startRow = 10;
 	let amount = 20;
-	let topic = "전체";
+	let topic = /*[[${topic}]]*/'';
+	console.log("topic :",topic)
 	const getListURL = "/Cboard/addList";
 	//토픽 클릭시 
-
 
 	document.querySelectorAll(".topic").forEach(data => data.addEventListener("click", function (e) {
 		//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.

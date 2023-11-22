@@ -246,9 +246,8 @@ function f() {
 		$(".fuel").hide();
 		$(".personnel").show();
 	}
+	
 }
-
-
 
 $("#category").on("change", function(e) {
 	e.preventDefault();
@@ -288,9 +287,64 @@ $("#category").on("change", function(e) {
 		$(".typeD").hide();
 		$(".typeA").hide();
 	}
+	
+	if (val == "숙소") {
+		$(".amenitiesA").show();
+		$(".amenitiesB").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesE").hide();
+		$(".amenitiesF").hide();
+	}
+	if (val == "식당") {
+		$(".amenitiesB").show();
+		$(".amenitiesA").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesE").hide();
+		$(".amenitiesF").hide();
+	}
+	if (val == "카페") {
+		$(".amenitiesC").show();
+		$(".amenitiesA").hide();
+		$(".amenitiesB").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesE").hide();
+		$(".amenitiesF").hide();
+	}
+	if (val == "렌터카") {
+		$(".amenitiesD").show();
+		$(".amenitiesA").hide();
+		$(".amenitiesB").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesE").hide();
+		$(".amenitiesF").hide();
+	}
 })
-
+$(".typeE").on("change", function(e) {
+	e.preventDefault();
+	$("input:checkbox").prop("checked", false);
+	const vals = $(".typeE option:selected").val();
+	if (vals == "회의실") {
+		$(".amenitiesE").show();
+		$(".amenitiesA").hide();
+		$(".amenitiesB").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesF").hide();
+	}
+	if (vals == "파티룸") {
+		$(".amenitiesF").show();
+		$(".amenitiesA").hide();
+		$(".amenitiesB").hide();
+		$(".amenitiesC").hide();
+		$(".amenitiesD").hide();
+		$(".amenitiesE").hide();
+	}
+	})
+	
 $("#amenities").on("click", function(e) {
+	
 	const val = $("#category option:selected").val();
 	console.log(val)
 	if (val == "숙소") {
@@ -343,6 +397,7 @@ $("#amenities").on("click", function(e) {
 		$(".amenitiesE").hide();
 	}
 })
+
 $(".sum").on("click", function(e) {
 	e.preventDefault();
 	var checkBoxArr = [];
