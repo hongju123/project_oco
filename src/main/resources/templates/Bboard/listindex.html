@@ -70,7 +70,7 @@
 		.service_list_section {
 			box-sizing: border-box;
 			border-bottom: 1px solid rgb(233, 233, 233);
-			width: 900px;
+			/*width: 900px;*/
 			padding: 15px 10px;
 			animation: slideUp 1.5s ease-out;
 			cursor: pointer;
@@ -189,34 +189,34 @@
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
-	<div class="sub-inner">
-		<div class="category_section">
-			<div class="btn_area">
-				<input type="text" class="category_btn" name="" id="category_main" value="전체"
-					onclick="selectCategory_main()" readonly>
-				<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
-					onclick="selectCategory_city()" readonly>
-			</div>
-			<div class="map_page">
-				<a th:href="@{findmap}" id="setting">
-					<img src="./list/img/지도아이콘.png" class="map_img">
-				</a>
-			</div>
-		</div>
-		<div id="find_list_section">
-
-		</div>
-		<div class="modal">
-			<div class="modal_body">
-				<div class="close_area">X</div>
-				<div id="category_select_section">
-
+	<div class="wrap">
+		<div class="sub-inner">
+			<div class="category_section">
+				<div class="btn_area">
+					<input type="text" class="category_btn" name="" id="category_main" value="전체"
+						onclick="selectCategory_main()" readonly>
+					<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
+						onclick="selectCategory_city()" readonly>
+				</div>
+				<div class="map_page">
+					<a th:href="@{findmap}" id="setting">
+						<img src="./list/img/지도아이콘.png" class="map_img">
+					</a>
 				</div>
 			</div>
-		</div>
+			<div id="find_list_section">
+	
+			</div>
+			<div class="modal">
+				<div class="modal_body">
+					<div class="close_area">X</div>
+					<div id="category_select_section">
+	
+					</div>
+				</div>
+			</div>
+		</div><!--.sub-inner-->
 	</div>
-	</div><!--.sub-inner-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 
