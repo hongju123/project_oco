@@ -11,6 +11,7 @@ import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ProfileDTO;
 import com.oco.domain.dto.ReplyDTO;
 import com.oco.domain.dto.ReplyPageDTO;
 
@@ -48,4 +49,11 @@ public interface FindListService {
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
+
+	//프로필 사진
+	boolean profilemodify(MultipartFile[] profiles,BusinessInfoDTO info,String profileCnt) throws Exception;
+
+	List<ProfileDTO> getprofile(Long businessInfoIdx);
+
+	ResponseEntity<Resource> getThumbnailResourceProfile(String systemName) throws Exception;
 }

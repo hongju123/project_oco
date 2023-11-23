@@ -1,5 +1,6 @@
 package com.oco.controller;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,7 +59,6 @@ public class BboardController {
 			city = "";
 
 		}
-		System.out.println(service.getMainList(main, city));
 	
 		return new ResponseEntity<AllListDTO>(service.getMainList(main, city), HttpStatus.OK);
 	}
@@ -88,14 +88,19 @@ public class BboardController {
 		model.addAttribute("userboard", userboard);
 		model.addAttribute("infoboard", infoboard);
 		model.addAttribute("files", service.getFileList(businessInfoIdx));
+		
+		model.addAttribute("profiles",service.getprofile(businessInfoIdx));
+		System.out.println(service.getprofile(businessInfoIdx));
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
 
 	// 사업자 수정 페이지
 	@PostMapping("modify")
-	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files, String updateCnt)
+	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files, MultipartFile[] profiles,String profileCnt, String updateCnt)
 			throws Exception {
+		
+		service.profilemodify(profiles,info,profileCnt);
 		// 시간대
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
 		String close = req.getParameter("maa2") + req.getParameter("close_time");
@@ -113,12 +118,16 @@ public class BboardController {
 	public ResponseEntity<Resource> thumbnail(String systemName) throws Exception {
 		return service.getThumbnailResource(systemName);
 	}
+	
+	@GetMapping("profile")
+	public ResponseEntity<Resource> profile(String systemName) throws Exception {
+		return service.getThumbnailResourceProfile(systemName);
+	}
 
 	// 리뷰
 	@ResponseBody
 	@PostMapping(value = "insertReply", consumes = "application/json;charset=utf-8")
 	public ResponseEntity<String> insertReply(@RequestBody ReplyDTO reply) {
-		System.out.println(reply);
 		Long businessInfoIdx = reply.getBoardNum();
 		boolean check = (service.riplyRegist(reply) && service.visit(businessInfoIdx));
 		Long replynum = service.getLastNum(reply.getUserId());
