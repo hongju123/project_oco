@@ -16,8 +16,10 @@ import com.oco.domain.dto.ReplyDTO;
 public interface FindListMapper {
 	
 	List<BusinessDTO> getMainList();
-
+	
 	List<FileDTO> getallfiles();
+
+	List<ProfileDTO> getallprofile();
 
 	List<BusinessDTO> getMainList(String main1, String main2, String addr1, String addr2);
 	

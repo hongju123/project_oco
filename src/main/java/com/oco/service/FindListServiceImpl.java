@@ -66,7 +66,7 @@ public class FindListServiceImpl implements FindListService {
 			}
 		}
 		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo(),
-				fmapper.getallfiles());
+				fmapper.getallprofile(),fmapper.getallfiles());
 	}
 
 	@Override
