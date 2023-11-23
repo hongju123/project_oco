@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ProfileDTO;
 import com.oco.domain.dto.ReplyDTO;
 import com.oco.domain.dto.ReplyPageDTO;
 import com.oco.mapper.FindListMapper;
@@ -37,10 +39,12 @@ public class FindListServiceImpl implements FindListService {
 	@Value("${file.dir}")
 	private String saveFolder;
 
+	@Value("${file.profile}")
+	private String pofileFolder;
+
 	@Override
 	public AllListDTO getMainList(String main, String city) {
-		
-		
+
 		String[] category = new String[2];
 		String[] addr = new String[2];
 
@@ -61,7 +65,8 @@ public class FindListServiceImpl implements FindListService {
 				addr[1] = "";
 			}
 		}
-		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo(),fmapper.getallfiles());
+		return new AllListDTO(fmapper.getMainList(category[0], category[1], addr[0], addr[1]), fmapper.getinfo(),
+				fmapper.getallprofile(),fmapper.getallfiles());
 	}
 
 	@Override
@@ -97,9 +102,24 @@ public class FindListServiceImpl implements FindListService {
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
+	
+	@Override
+	public ResponseEntity<Resource> getThumbnailResourceProfile(String systemName) throws Exception {
+		Path path = Paths.get(pofileFolder + systemName);
+
+		String contenttype = Files.probeContentType(path);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, contenttype);
+
+		Resource resource = new InputStreamResource(Files.newInputStream(path));
+		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+	}
+	
+	
 
 	@Override
-	public boolean modify(BusinessInfoDTO info, MultipartFile[] files, String updateCnt) throws Exception  {
+	public boolean modify(BusinessInfoDTO info, MultipartFile[] files, String updateCnt) throws Exception {
 		int row = fmapper.updateinfo(info);
 		if (row != 1) {
 			return false;
@@ -171,6 +191,88 @@ public class FindListServiceImpl implements FindListService {
 		}
 	}
 
+	@Override
+	public boolean profilemodify(MultipartFile[] profiles, BusinessInfoDTO info,String profileCnt) throws Exception {
+		System.out.println(info);	
+		
+		List<ProfileDTO> org_file_list = fmapper.getprofile(info.getBusinessInfoIdx());
+		if (org_file_list.size() == 0 && (profiles == null || profiles.length == 0)) {
+			return true;
+		} else {
+			if (profiles != null) {
+				boolean flag = false;
+				// 후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
+				// 업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
+				ArrayList<String> sysnames = new ArrayList<>();
+				for (int i = 0; i < profiles.length; i++) {
+					MultipartFile profil = profiles[i];
+					String orgname = profil.getOriginalFilename();
+					// 수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
+					// 그런 경우의 file의 orgname은 null 이거나 "" 이다.
+					// 따라서 업로드가 될 필요가 없으므로 continue로 다음 파일로 넘어간다.
+					if (orgname == null || orgname.equals("")) {
+						continue;
+					}
+					int lastIdx = orgname.lastIndexOf(".");
+					String extension = orgname.substring(lastIdx);
+					LocalDateTime now = LocalDateTime.now();
+					String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+					String systemname = time + UUID.randomUUID().toString() + extension;
+					sysnames.add(systemname);
+
+					String path = pofileFolder + systemname;
+
+					ProfileDTO pdto = new ProfileDTO();
+					pdto.setBoardNum(info.getBusinessInfoIdx());
+					pdto.setOrg(orgname);
+					pdto.setSystemName(systemname);
+
+					profil.transferTo(new File(path));
+					
+					if(fmapper.checkProfile(info.getBusinessInfoIdx()) != 1) {
+						flag = fmapper.insertprofile(pdto) == 1;
+					}else {
+						flag = fmapper.updateprofile(pdto) == 1;
+					}
+						
+					if (!flag) {
+						break;
+					}
+				}
+				// 강제탈출(실패)
+				if (!flag) {
+					// 아까 추가했던 systemname들(업로드 성공한 파일의 systemname)을 꺼내오면서
+					// 실제 파일이 존재한다면 삭제 진행
+					for (String systemname : sysnames) {
+						File file = new File(pofileFolder, systemname);
+						if (file.exists()) {
+							file.delete();
+						}
+						fmapper.deleteBySystemname(systemname);
+					}
+				}
+			}
+			// 지워져야 할 파일(기존에 있었던 파일들 중 수정된 파일)들의 이름 추출
+			String[] deleteNames = profileCnt.split("\\\\");
+			for (int i = 1; i < deleteNames.length; i++) {
+				File file = new File(pofileFolder, deleteNames[i]);
+				// 해당 파일 삭제
+				if (file.exists()) {
+					file.delete();
+					// DB상에서도 삭제
+					fmapper.deleteprofile(deleteNames[i]);
+				}
+			}
+			return true;
+		}
+	}
+
+	@Override
+	public List<ProfileDTO> getprofile(Long businessInfoIdx) {
+		System.out.println(businessInfoIdx + "프로필사진");
+		return fmapper.getprofile(businessInfoIdx);
+	}
+
 	// 모든 정보 가져오기
 	@Override
 	public List<BusinessInfoDTO> BusinessinfoList() {
@@ -226,4 +328,5 @@ public class FindListServiceImpl implements FindListService {
 	public boolean removeInfo(Long businessInfoIdx) {
 		return fmapper.removeInfo(businessInfoIdx);
 	}
+
 }

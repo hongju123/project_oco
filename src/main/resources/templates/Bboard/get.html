@@ -17,13 +17,15 @@
 				<div class="top_profile" data-aos="fade-up">
 					<div class="photo_zone_wrap" data-aos="fade-up">
 						<div class="photo_zone" data-aos="fade-up">
-							<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-								<th:block th:with="sar=${file.orgName.split('[.]')}">
+							<th:block th:if="${profiles != null and profiles.size() > 0}"
+								th:each="profile : ${profiles}">
+								<th:block th:with="sar=${profile.org.split('[.]')}">
 									<th:block th:with="ext=${sar[sar.length-1]}">
 										<th:block
 											th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 											<ul>
-												<li><img th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"></li>
+												<li><img th:src="@{/Bboard/profile (systemName=${profile.systemName})}">
+												</li>
 											</ul>
 										</th:block>
 									</th:block>
@@ -32,21 +34,36 @@
 						</div>
 					</div>
 					<div class="profile_zone" data-aos="fade-up">
-						<div><p>상호명</p>[[${userboard.businessStoreName}]]</div>
-						<div><p>카테고리</p>[[${userboard.businessCategory}]]</div>
-						<div><p>평점</p>[[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]])</div>
+						<div>
+							<p>상호명</p>[[${userboard.businessStoreName}]]
+						</div>
+						<div>
+							<p>카테고리</p>[[${userboard.businessCategory}]]
+						</div>
+						<div>
+							<p>평점</p>[[${infoboard.overallGrade}]] ([[${infoboard.gradeCount}]])
+						</div>
 					</div>
 				</div>
-				<div class="title_section_wrap"  data-aos="fade-up">
+				<div class="title_section_wrap" data-aos="fade-up">
 					<div class="title_section">
 						<div class="title_section_in">
-							<div><p>번호</p>[[${userboard.businessIdx}]]</div>
-							<div><p>아이디</p>[[${userboard.businessId}]]</div>
-							<div><p>주소</p>[[${userboard.businessAddress}]]</div>
+							<div>
+								<p>번호</p>[[${userboard.businessIdx}]]
+							</div>
+							<div>
+								<p>아이디</p>[[${userboard.businessId}]]
+							</div>
+							<div>
+								<p>주소</p>[[${userboard.businessAddress}]]
+							</div>
 						</div>
 						<div class="title_section_in">
-							<div><p>운영 시간</p>[[${infoboard.useTime}]]</div>
-							<div><p>제공 가능 서비스</p>
+							<div>
+								<p>운영 시간</p>[[${infoboard.useTime}]]
+							</div>
+							<div>
+								<p>제공 가능 서비스</p>
 								<th:block th:each="amenity : ${#strings.arraySplit(infoboard.amenities,',')}">
 									<label>[[${amenity}]]</label>
 								</th:block>
@@ -60,15 +77,14 @@
 				</div>
 				<div class="shot_info"></div>
 				<div class="free_service"></div>
-				<div class="reply" >
+				<div class="reply">
 					<div class="replyForm row">
 						<div>
 							<input type="txt" name="userId" th:value="${session.loginUser}" readonly>
 						</div>
 						<div>
 							<fieldset class="rate"></fieldset><br>
-							<textarea name="replyContents" placeholder="" style="resize:none;"
-								value=""></textarea>
+							<textarea name="replyContents" placeholder="" style="resize:none;" value=""></textarea>
 						</div>
 						<div class="btn_wrap">
 							<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
@@ -97,12 +113,12 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 
-<script th:src="@{reply/js/reply.js}"></script>
+<script th:src="@{page/js/reply.js}"></script>
 <script th:inline="javascript">
 	AOS.init({
 		duration: 1200,
 	});
-	
+
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardnum = /*[[${userboard.businessIdx}]]*/'';
 	const replies = $(".replies")
@@ -130,7 +146,7 @@
 		let grade = $("[name='rating']:checked").val() / 2;
 
 		replyService.add(
-			{ "boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade },
+			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade},
 			function (resut) {
 				alert("등록");
 				$("[name='replyContents']").val("");
@@ -141,7 +157,7 @@
 	})
 	function showList(pagenum) {
 		replyService.getList(
-			{ "boardNum": boardnum, "pagenum": pagenum || 1 },
+			{"boardNum": boardnum, "pagenum": pagenum || 1},
 			function (replyCnt, list) {
 				let str = "";
 				if (list == null || list.length == 0) {
@@ -259,7 +275,7 @@
 		let replynum = $(this).attr("href");
 		let replyContents = $("." + replynum).val();
 
-		replyService.modify({ replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser },
+		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
 			function (result) {
 				if (result == "success") {
 					alert(replynum + "번 댓글 수정 완료!");

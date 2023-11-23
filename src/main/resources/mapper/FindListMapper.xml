@@ -32,10 +32,22 @@
 	<select id="getFiles">
 		select * from files where board_num = #{businessInfoIdx}
 	</select>
-	
+
+	<select id="getallprofile">
+		select * from profile
+	</select>
+
 	<select id="getallfiles">
 		select * from files
 	</select>
+
+	<!--프로필사진 꺼내오기-->
+	<select id="getprofile">
+		select * from profile where board_num = #{businessIdx}
+	</select>
+	<delete id="deleteprofile">
+		delete from profile where system_name=#{systemname}
+	</delete>
 
 	<!-- 개인 파일 넣기 -->
 	<insert id="insertFile">
@@ -46,6 +58,22 @@
 	<delete id="deleteBySystemname">
 		delete from files where system_name=#{systemname}
 	</delete>
+
+
+	<!--프로필 사진 넣기-->
+	<insert id="insertprofile">
+		insert into profile(system_name,org,board_num)
+		value(#{systemName},#{org},#{boardNum})
+	</insert>
+	<!-- 프로필 사진 있는지 체크-->
+	<select id="checkProfile">
+		select count(*) from profile where board_num = #{businessInfoIdx}
+	</select>
+	<!-- 프로필 사진 업데이트 -->
+	<update id="updateprofile">
+		update profile set system_name = #{systemName}, org = #{org} where
+		board_num = #{boardNum}
+	</update>
 
 	<!-- 상세페이지 수정 -->
 	<update id="updateinfo">

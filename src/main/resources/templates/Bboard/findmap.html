@@ -322,12 +322,12 @@
 <script th:src="@{map/js/onposition.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
-	AOS.init({
+	
+/*	AOS.init({
 		duration: 1200,
-	});
+	}); */
 
 	function thumbnail(use, files) {
-		console.log(use)
 		for (let file of files) {
 			if (file.boardNum == use.businessIdx) {
 				return '/Bboard/thumbnail?systemName=' + file.systemName;
@@ -365,8 +365,7 @@
 				success: function (data) {
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
-					const files = data.flist;
-					console.log(files)
+					const profiles = data.plist;
 
 					if (markers.length != 0) {
 						for (let i = 0; i < markers.length; i++) {
@@ -435,10 +434,9 @@
 										img.className = 'img';
 										var picture = document.createElement('img');
 										
-										for(let file of files){
-											if(file.boardNum == use.businessIdx){
-												console.log(file.systemName)
-												picture.src= '/Bboard/thumbnail?systemName=' + file.systemName
+										for(let profile of profiles){
+											if(profile.boardNum == use.businessIdx){
+												picture.src= '/Bboard/profile?systemName=' + profile.systemName
 												break;
 											}
 										}

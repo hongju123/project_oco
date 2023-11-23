@@ -9,14 +9,17 @@ import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
 import com.oco.domain.dto.Criteria;
 import com.oco.domain.dto.FileDTO;
+import com.oco.domain.dto.ProfileDTO;
 import com.oco.domain.dto.ReplyDTO;
 
 @Mapper
 public interface FindListMapper {
 	
 	List<BusinessDTO> getMainList();
-
+	
 	List<FileDTO> getallfiles();
+
+	List<ProfileDTO> getallprofile();
 
 	List<BusinessDTO> getMainList(String main1, String main2, String addr1, String addr2);
 	
@@ -34,7 +37,9 @@ public interface FindListMapper {
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
-
+	
+	
+//파일 관련
 	Long getnum(String businessId);
 
 	int insertFile(FileDTO fdto);
@@ -62,5 +67,16 @@ public interface FindListMapper {
 	void setallGrade(double allGrade,Long businessInfoIdx);
 
 	boolean removeInfo(Long businessInfoIdx);
+	
+	//프로필 테스트
+	int insertprofile(ProfileDTO pdto);
+
+	List<ProfileDTO> getprofile(Long businessInfoIdx);
+
+	int updateprofile(ProfileDTO pdto);
+
+	int checkProfile(Long businessInfoIdx);
+
+	void deleteprofile(String string);
 
 }

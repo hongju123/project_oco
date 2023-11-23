@@ -7,10 +7,11 @@
 <script src="https://kit.fontawesome.com/81ba6ca618.js" crossorigin="anonymous"></script>
 <style>
 	input {
-			appearance: checkbox;
-			border: 1px solid black;
-		}
+		appearance: checkbox;
+		border: 1px solid black;
+	}
 </style>
+
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
@@ -18,97 +19,162 @@
 			<div class="sub-tit">
 				<h2 data-aos="fade-up">안녕하세요!<br> 반가워요!<br> <strong>사장님!</strong></h2>
 			</div><!--.sub-tit-->
-			<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm" enctype="multipart/form-data"
-				onsubmit="return sandit()">
+			<form th:action="@{/Bboard/modify}" method="post" name="boardForm" id="boardForm"
+				enctype="multipart/form-data" onsubmit="return sandit()">
 				<input type="hidden" th:value="${infoboard.businessInfoIdx}" name="businessInfoIdx">
 				<input type="hidden" th:value="${userboard.businessCategory}" id="service">
 				<div class="total_section">
 					<div class="">
-						<div class="top_info info">
-							<div class="modi_tit">사업자분류</div>
-							<div class="title_section">
-								[[${userboard.businessCategory}]]
+						<div class="profile">
+							<div class="modi_tit">사진을 등록해주세요.</div>
+							<div id="profile_area">
+								<table class="pofile_table">
+									<tr class="profile0"
+										th:if="${profiles != null and profiles.size() > 0}"
+										th:each="profile : ${profiles}">
+										<!--<th>파일 첨부[[${profileStat.index+1}]]</th>-->
+										<td th:class="${'profile'+profileStat.index+'_cont'}">
+											<div>
+												<input type="file" name="profiles"
+													th:id="${'profile'+profileStat.index}" style="display:none"
+													accept="image/gif,image/jpeg,image/png" />
+												<span th:id="${'profile'+profileStat.index+'name'}"
+													th:text="${profile.org}"></span>
+											</div>
+											<div class="file_modify">
+												<div class="photo_select">
+												<a
+													th:href="'javascript:load(\'profile'+${profileStat.index}+'\',\''+${profile.systemName}+'\')'"> x
+													</a>
+												</div>
+												<a
+													th:href="'javascript:cancel(\'profile'+${profileStat.index}+'\',\''+${profile.systemName}+'\')'">첨부
+													삭제</a>
+											</div>
+											<input type="hidden" name="org" th:value="${profile.org}">
+											<th:block th:with="sar=${profile.org.split('[.]')}">
+												<th:block th:with="ext=${sar[sar.length-1]}">
+													<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
+														th:src="@{/Bboard/profile (systemName=${profile.systemName})}"
+														class="thumbnail">
+												</th:block>
+											</th:block>
+										</td>
+									</tr>
+									<th:block th:if="${profiles == null and profiles.size() < 0}">
+										<tr class="prfile0">
+											<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
+											<td th:class="${'profile'+profiles.size()+'_cont'}">
+												<div>
+													<input type="file" name="profiles"
+														id="profile0" style="display:none"
+														accept="image/gif,image/jpeg,image/png">
+													<span th:id="${'profile'+profiles.size()+'name'}"></span>
+												</div>
+												<div class="file_modify">
+													<div class="photo_select">
+														<a
+															th:href="'javascript:load(\'profile'+${profiles.size()}+'\',\'\')'">
+															+
+														</a>
+													</div>
+													<a
+														th:href="'javascript:cancel(\'profile'+${profiles.size()}+'\',\'\')'">삭제</a>
+												</div>
+											</td>
+										</tr>
+									</th:block>
+									<input type="hidden" value="" name="profileCnt" id="profileCnt">
+								</table>
+							</div>
+							<div class="top_info info">
+								<div class="modi_tit">사업자분류</div>
+								<div class="title_section">
+									[[${userboard.businessCategory}]]
+								</div>
+							</div>
+							<div class="shot_info info">
+								<div class="modi_tit">영업시간을 알려주세요.</div>
+								<select name="maa1">
+									<option>오전&nbsp;</option>
+									<option>오후&nbsp;</option>
+								</select>
+								<select name="open_time" class="time">
+									<option value="">00:00</option>
+								</select>
+								<span>부터</span>&nbsp;&nbsp;&nbsp;
+								<select name="maa2">
+									<option>오전&nbsp;</option>
+									<option>오후&nbsp;</option>
+								</select>
+								<select name="close_time" class="time">
+									<option value="">00:00</option>
+								</select>
+								<span>까지</span>
+							</div>
+							<div class="main_content reply2 info">
+								<div class="modi_tit">한 줄 소개 문구를 입력해주세요.</div>
+								<textarea name="content">[[${infoboard.Content}]]</textarea>
+							</div>
+							<div class="free_service info">
+								<div class="modi_tit">제공가능한 서비스를 선택해주세요.</div>
+							</div>
+							<div class="info2 ">
+								<div class="modi_tit">사진을 등록해주세요.</div>
+								<table class="">
+									<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
+										th:each="file : ${files}">
+										<!--<th>파일 첨부[[${fileStat.index+1}]]</th>-->
+										<td th:class="${'file'+fileStat.index+'_cont'}">
+											<div>
+												<input type="file" name="files" th:id="${'file'+fileStat.index}"
+													style="display:none" accept="image/gif,image/jpeg,image/png" />
+												<span th:id="${'file'+fileStat.index+'name'}"
+													th:text="${file.orgName}"></span>
+											</div>
+											<div class="">
+												<a
+													th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
+													선택</a>
+												<a
+													th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
+													삭제</a>
+											</div>
+											<input type="hidden" name="orgName" th:value="${file.orgName}">
+											<th:block th:with="sar=${file.orgName.split('[.]')}">
+												<th:block th:with="ext=${sar[sar.length-1]}">
+													<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
+														th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
+														class="thumbnail">
+												</th:block>
+											</th:block>
+										</td>
+									</tr>
+									<tr th:class="${'r'+files.size()}">
+										<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
+										<td th:class="${'file'+files.size()+'_cont'}">
+											<div>
+												<input type="file" name="files" th:id="${'file'+files.size()}"
+													style="display:none" accept="image/gif,image/jpeg,image/png">
+												<span th:id="${'file'+files.size()+'name'}"></span>
+											</div>
+											<div class="file_modify">
+												<div class="photo_select">
+													<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
+														+
+													</a>
+												</div>
+												<a
+													th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">삭제</a>
+											</div>
+										</td>
+									</tr>
+									<input type="hidden" value="" name="updateCnt" id="updateCnt">
+								</table>
 							</div>
 						</div>
-						<div class="shot_info info">
-							<div class="modi_tit">영업시간을 알려주세요.</div>
-							<select name="maa1">
-								<option>오전&nbsp;</option>
-								<option>오후&nbsp;</option>
-							</select>
-							<select name="open_time" class="time">
-								<option value="">00:00</option>
-							</select>
-							<span>부터</span>&nbsp;&nbsp;&nbsp;
-							<select name="maa2">
-								<option>오전&nbsp;</option>
-								<option>오후&nbsp;</option>
-							</select>
-							<select name="close_time" class="time">
-								<option value="">00:00</option>
-							</select>
-							<span>까지</span>
-						</div>
-						<div class="main_content reply2 info">
-							<div class="modi_tit">한 줄 소개 문구를 입력해주세요.</div>
-							<textarea name="content">[[${infoboard.Content}]]</textarea>
-						</div>
-						<div class="free_service info">
-							<div class="modi_tit">제공가능한 서비스를 선택해주세요.</div>
-						</div>
-						<div class="info2 ">
-							<div class="modi_tit">사진을 등록해주세요.</div>
-							<table class="">
-								<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
-									th:each="file : ${files}">
-									<!--<th>파일 첨부[[${fileStat.index+1}]]</th>-->
-									<td th:class="${'file'+fileStat.index+'_cont'}">
-										<div>
-											<input type="file" name="files" th:id="${'file'+fileStat.index}"
-												style="display:none" accept="image/gif,image/jpeg,image/png" />
-											<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
-										</div>
-										<div class="">
-											<a
-												th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">파일
-												선택</a>
-											<a
-												th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemName}+'\')'">첨부
-												삭제</a>
-										</div>
-										<input type="hidden" name="orgName" th:value="${file.orgName}">
-										<th:block th:with="sar=${file.orgName.split('[.]')}">
-											<th:block th:with="ext=${sar[sar.length-1]}">
-												<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
-													th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}"
-													class="thumbnail">
-											</th:block>
-										</th:block>
-									</td>
-								</tr>
-								<tr th:class="${'r'+files.size()}">
-									<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
-									<td th:class="${'file'+files.size()+'_cont'}">
-										<div>
-											<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none"
-												accept="image/gif,image/jpeg,image/png">
-											<span th:id="${'file'+files.size()+'name'}"></span>
-										</div>
-										<div class="file_modify">
-											<div class="photo_select">
-												<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
-													+
-												</a>
-											</div>
-											<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">삭제</a>
-										</div>
-									</td>
-								</tr>
-								<input type="hidden" value="" name="updateCnt" id="updateCnt">
-							</table>
-						</div>
+						<input type="submit" value="수정완료" class="submit_btn">
 					</div>
-					<input type="submit"value="수정완료" class="submit_btn">
 				</div>
 			</form>
 		</div>
@@ -125,10 +191,12 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111023863-1"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script th:inline="javascript">
 	AOS.init({
 		duration: 1200,
 	});
+
 	const service = document.getElementById("service")
 	const free_service = document.getElementsByClassName("free_service")
 	const free = {
@@ -140,12 +208,8 @@
 		"파티룸": ["생일 파티", "기념일 이벤트", "브라이덜 샤워", "웨딩/돌잔치", "주차", "유아 동반", "반려견 동반", "장애인 편의시설"]
 	};
 
-	let txt = "";
 	for (let key in free) {
-		console.log(key)
-		console.log(service.value)
 		if (service.value.includes(key)) {
-			console.log("check")
 			for (let set of free[key]) {
 				const label = document.createElement("label")
 				label.innerHTML = set
@@ -172,7 +236,6 @@
 		}
 	}
 
-
 	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")
 
@@ -196,14 +259,15 @@
 
 	const orgName = document.getElementsByName("orgName");
 	const org_thumbnail = {};
+
 	for (let j = 0; j < orgName.length; j++) {
 		org_thumbnail[orgName[j].value] = document.querySelector(".file" + j + "_cont .thumbnail")
 	}
 	let sysname = "";
-	function cancelFile(name, systemname) {
 
-
-		updateCnt.val(updateCnt.val() + "\\" + systemname)
+	function cancelFile(name, systemName) {
+		console.log(i)
+		updateCnt.val(updateCnt.val() + "\\" + systemName)
 		let num = name.split("e")[1];
 		if (num == i) {
 			return;
@@ -215,7 +279,7 @@
 			$(".r" + temp).remove();
 			//지워진 다음 행 부터 숫자 바꿔주기
 			for (let j = temp + 1; j <= i; j++) {
-				const el = $("#boardForm tbody").find(".r" + j);
+				const el = $(".info2 tbody").find(".r" + j);
 				el.attr("class", "r" + (j - 1) + " at");
 
 				el.children('th').text("파일 첨부" + j);
@@ -236,19 +300,20 @@
 			i--;
 		}
 	}
-	function upload(name, systemname) {
+
+	function upload(name, systemName) {
 		let temp = $("#" + name + "name").text();
 		num = Number(name.split("e")[1]);
 		if (temp == '선택된 파일 없음') {
 			$("#" + name).click();
 		}
 		else {
-			updateCnt.val(updateCnt.val() + "\\" + systemname)
-			sysname = systemname;
+			updateCnt.val(updateCnt.val() + "\\" + systemName)
+			sysname = systemName;
 			$("#" + name).click();
 		}
 	}
-	$("[type='file']").change(function (e) {
+	$("[name='files']").change(function (e) {
 		const file = e.target.files[0];
 		const fileTag = e.target;
 
@@ -292,26 +357,6 @@
 					document.querySelector("." + fileTag.id + "_cont").appendChild(img);
 				}
 				reader.readAsDataURL(file);
-				if (num == i) {
-					const cloneElement = $(".r" + i).clone(true);
-					i++;
-					cloneElement.appendTo("#boardForm tbody")
-					const lastElement = $("#boardForm tbody").children().last();
-
-					lastElement.attr("class", "r" + i + " at");
-					lastElement.children("th").text("파일 첨부" + (i + 1));
-					lastElement.children("td").attr("class", "file" + i + "_cont");
-
-					lastElement.find("input[type='file']").attr("name", "files");
-					lastElement.find("input[type='file']").attr("id", "file" + i);
-					lastElement.find("input[type='file']").val("");
-
-					lastElement.find("span").attr("id", "file" + i + "name");
-					lastElement.find("span").text("선택된 파일 없음");
-
-					lastElement.find("a")[0].href = "javascript:upload('file" + i + "','')";
-					lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "','선택된 파일 없음')"
-				}
 			}
 			else {
 				const temp = $("." + fileTag.id + "_cont .thumbnail");
@@ -322,10 +367,120 @@
 				}
 			}
 			//가장 마지막 파일 선택 버튼을 눌렀을 때
+			if (num == i) {
 
+				const cloneElement = $(".r" + i).clone(true);
+				i++;
+				cloneElement.appendTo(".info2 tbody")
+				const lastElement = $(".info2 tbody").children().last();
+
+				lastElement.attr("class", "r" + i + " at");
+				lastElement.children("th").text("파일 첨부" + (i + 1));
+				lastElement.children("td").attr("class", "file" + i + "_cont");
+
+				lastElement.find("input[type='file']").attr("name", "files");
+				lastElement.find("input[type='file']").attr("id", "file" + i);
+				lastElement.find("input[type='file']").val("");
+
+				lastElement.find("span").attr("id", "file" + i + "name");
+				lastElement.find("span").text("선택된 파일 없음");
+
+
+				lastElement.find("a")[0].href = "javascript:upload('file" + i + "','')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file" + i + "','선택된 파일 없음')"
+			}
 		}
 	})
-</script>
 
+	let p = 0;
+	let loadCheck = false;
+	const org = document.getElementsByName("org");
+	const profile_thumbnail = {};
+	for (let j = 0; j < org.length; j++) {
+		profile_thumbnail[org[j].value] = document.querySelector(".profile" + j + "_cont .thumbnail")
+	}
+	const profileCnt = $("#profileCnt")
+	let number = 0;
+	let sysn = "";
+	function load(name, systemName) {
+		let temp = $("#" + name + "name").text();
+		num = Number(name.split("e")[1]);
+		if (temp == '선택된 파일 없음') {
+			console.log("check")
+			$("#" + name).click();
+		}
+		else {
+			profileCnt.val(profileCnt.val() + "\\" + systemName)
+			sysn = systemName;
+			$("#" + name).click();
+		}
+	}
+	$("[name='profiles']").change(function (e) {
+		const profile = e.target.files[0];
+		const profileTag = e.target;
+
+		if (profile == undefined) {
+			if (!$("." + profileTag.id + "_cont [name='org']").val()) {
+				cancel(profileTag.id)
+			}
+			else {
+				let n = org[num].value;
+				let ext = n.split(".").pop();
+				profileCnt.val(profileCnt.val().replaceAll("\\" + sysn, ""));
+				$("#profile" + num + "name").text(n);
+				if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+					$("." + profileTag.id + "_cont .thumbnail").remove();
+					document.querySelector("." + profileTag.id + "_cont").appendChild(profile_thumbnail[n]);
+				}
+				else {
+					if (document.querySelector("." + profileTag.id + "_cont .thumbnail")) {
+						$("." + profileTag.id + "_cont .thumbnail").remove();
+					}
+				}
+				sysn = "";
+			}
+		}
+		else {
+			loadCheck = true;
+			let ext = profile.name.split(".").pop();
+			if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
+				$("#" + profileTag.id + "name").text(profile.name);
+				$("." + profileTag.id + "_cont .thumbnail").remove();
+
+				const reader = new FileReader();
+				reader.onload = function (ie) {
+					console.log(ie.target.result)
+					const img = document.createElement("img");
+					img.setAttribute("src", ie.target.result)
+					img.setAttribute("class", "thumbnail");
+					document.querySelector("." + profileTag.id + "_cont").appendChild(img);
+				}
+				reader.readAsDataURL(profile);
+			}
+			else {
+				const temp = $("." + profileTag.id + "_cont");
+				alert("사진 관련파일만 업로드 가능합니다")
+				$(ProfileTag.val(""))
+				if (temp != null) {
+					temp.remove();
+				}
+			}
+		}
+
+	})
+	let text = "";
+	function cancel(name, systemName) {
+		console.log(name)
+
+		profileCnt.val(profileCnt.val() + "\\" + systemName)
+		let number = name.split("e")[1];
+		if (p === 0) {
+			$("#" + name).val("");
+			$("#" + name + "name").text('선택된 파일 없음');
+			$("." + name + "_cont .thumbnail").remove();
+		}
+	}
+
+</script>
 
 </html>
