@@ -61,7 +61,7 @@
 											</th:block>
 										</td>
 									</tr>
-									<th:block th:if="${profiles == null and profiles.size() < 0}">
+									<th:block th:if="${profiles != null and profiles.size() == 0}">
 										<tr class="prfile0">
 											<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
 											<td th:class="${'profile'+profiles.size()+'_cont'}">
