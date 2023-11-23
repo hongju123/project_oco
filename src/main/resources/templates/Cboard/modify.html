@@ -57,7 +57,7 @@
 					</tr>
 					<tr th:class="${'r'+files.size()}">
 						<th>파일 첨부[[${files.size()+1}]]</th>
-						<td th:class="${'file'+files.size()+'_cont'}">
+						<td th:class="${'file'+files.size()+'_cont '}">
 							<div style="float:left;">
 								<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
 								<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
@@ -74,7 +74,7 @@
 				</table>
 			</form>
 			<table class="btn_area">
-				<tr align="right" valign="middle">
+				<tr class="btn_area_tr" align="right" valign="middle">
 					<td>
 						<a href="javascript:document.boardForm.submit()" class="fin">수정완료</a>
 						<a th:href="${'/Cboard/list?topic='}" class="list">목록</a>
@@ -129,7 +129,7 @@
 			//지워진 다음 행 부터 숫자 바꿔주기
 			for(let j=temp+1;j<=i;j++){
 				const el = $("#boardForm tbody").find(".r"+j);
-				el.attr("class","r"+(j-1)+" at");
+				el.attr("class","r"+(j-1)+" at file");
 				
 				el.children('th').text("파일 첨부"+j);
 				
