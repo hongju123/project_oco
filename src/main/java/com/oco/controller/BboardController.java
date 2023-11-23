@@ -90,7 +90,7 @@ public class BboardController {
 		model.addAttribute("files", service.getFileList(businessInfoIdx));
 		
 		model.addAttribute("profiles",service.getprofile(businessInfoIdx));
-		System.out.println(service.getprofile(businessInfoIdx));
+		System.out.println(service.getprofile(businessInfoIdx).size());
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}
@@ -99,7 +99,6 @@ public class BboardController {
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files, MultipartFile[] profiles,String profileCnt, String updateCnt)
 			throws Exception {
-		
 		service.profilemodify(profiles,info,profileCnt);
 		// 시간대
 		String open = req.getParameter("maa1") + req.getParameter("open_time");
