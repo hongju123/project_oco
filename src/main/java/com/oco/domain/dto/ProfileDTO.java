@@ -7,5 +7,4 @@ public class ProfileDTO {
 	private String systemName;
 	private String org;
 	private Long boardNum;
-	private String profile;
 }

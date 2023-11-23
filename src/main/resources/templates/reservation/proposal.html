@@ -33,27 +33,30 @@
 								<th:block th:each="boardId : ${#strings.arraySplit(board.businessId, '/')}">
 									<th:block th:if="${blist.businessId == boardId}">
 										<div class="proposal">
-											<h3>[[${blist.businessCategory}]]</h3>
-											<span>[[${blist.businessAddress}]]</span>
-											<span>[[${blist.businessStoreName}]]</span>
-											<p>[[${blist.businessId}]]</p>
-											<th:block th:if="${profiles != null and profiles.size() > 0}"
-												th:each="profile : ${profiles}">
-												<th:block th:if="${blist.businessIdx eq profile.boardNum}">
-													<th:block th:with="sar=${profile.org.split('[.]')}">
-														<th:block th:with="ext=${sar[sar.length-1]}">
-															<th:block
-																th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-																<ul>
-																	<li class="img"><img
+											<div class="contents_area">
+												<div>
+													<h3>[[${blist.businessCategory}]]</h3>
+													<span>[[${blist.businessAddress}]]</span>
+													<span>[[${blist.businessStoreName}]]</span>
+													<p>[[${blist.businessId}]]</p>
+												</div>
+												<div>
+													<th:block th:if="${profiles != null and profiles.size() > 0}"
+														th:each="profile : ${profiles}">
+														<th:block th:if="${blist.businessIdx eq profile.boardNum}">
+															<th:block th:with="sar=${profile.org.split('[.]')}">
+																<th:block th:with="ext=${sar[sar.length-1]}">
+																	<th:block
+																		th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+																		<img class="img"
 																			th:src="@{/Bboard/profile (systemName=${profile.systemName})}">
-																	</li>
-																</ul>
+																	</th:block>
+																</th:block>
 															</th:block>
 														</th:block>
 													</th:block>
-												</th:block>
-											</th:block>
+												</div>
+											</div>
 											<div class="sum">
 												<a class="get" th:href="${blist.businessId}">자세히</a>
 											</div>

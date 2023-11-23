@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>맵으로 보기</title>
-	<link rel="icon" sizes="96x96" th:href="@{/main/images/favi.svg}">
+	<link rel="icon" sizes="96x96" th:href="@{/main/images/favi.svg}"> 
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
@@ -332,10 +332,10 @@
 <script th:src="@{map/js/onposition.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
-
-	/*	AOS.init({
-			duration: 1200,
-		});  */
+	
+/*	AOS.init({
+		duration: 1200,
+	});  */
 
 	function thumbnail(use, files) {
 		for (let file of files) {
@@ -343,7 +343,7 @@
 				return '/Bboard/thumbnail?systemName=' + file.systemName;
 			}
 		}
-		return '';
+		return ''; 
 	}
 
 
@@ -443,10 +443,10 @@
 										var img = document.createElement('div');
 										img.className = 'img';
 										var picture = document.createElement('img');
-
-										for (let profile of profiles) {
-											if (profile.boardNum == use.businessIdx) {
-												picture.src = '/Bboard/profile?systemName=' + profile.systemName
+										
+										for(let profile of profiles){
+											if(profile.boardNum == use.businessIdx){
+												picture.src= '/Bboard/profile?systemName=' + profile.systemName
 												break;
 											}
 										}
