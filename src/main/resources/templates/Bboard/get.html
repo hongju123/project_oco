@@ -51,7 +51,7 @@
 							<div>
 								<p>번호</p>[[${userboard.businessIdx}]]
 							</div>
-							<div>
+							<div class="userboard_id">
 								<p>아이디</p>[[${userboard.businessId}]]
 							</div>
 							<div>
@@ -82,14 +82,16 @@
 						<div>
 							<input type="txt" name="userId" th:value="${session.loginUser}" readonly>
 						</div>
-						<div>
-							<fieldset class="rate"></fieldset><br>
-							<textarea name="replyContents" placeholder="" style="resize:none;" value=""></textarea>
-						</div>
-						<div class="btn_wrap">
-							<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
-							<a href="#" class="button cancel">취소</a>
-						</div>
+						<th:block th:if="${session.loginUser!=userboard.businessId}">
+							<div>
+								<fieldset class="rate"></fieldset><br>
+								<textarea name="replyContents" placeholder="" style="resize:none;" value=""></textarea>
+							</div>
+							<div class="btn_wrap">
+								<a href="#" class="button finish" style="margin-bottom: 1rem;">등록</a>
+								<a href="#" class="button cancel">취소</a>
+							</div>
+						</th:block>
 					</div>
 					<ul class="replies"></ul>
 					<div class="page"></div>
@@ -144,9 +146,13 @@
 		e.preventDefault();
 		let replyContents = $("[name='replyContents']").val();
 		let grade = $("[name='rating']:checked").val() / 2;
-
+		if (replyContents=='') {
+			alert("평가를 작성해주세요")
+			$("[name='replyContents']").focus()
+			return false
+		}
 		replyService.add(
-			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade},
+			{ "boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade },
 			function (resut) {
 				alert("등록");
 				$("[name='replyContents']").val("");
@@ -157,7 +163,7 @@
 	})
 	function showList(pagenum) {
 		replyService.getList(
-			{"boardNum": boardnum, "pagenum": pagenum || 1},
+			{ "boardNum": boardnum, "pagenum": pagenum || 1 },
 			function (replyCnt, list) {
 				let str = "";
 				if (list == null || list.length == 0) {
@@ -171,13 +177,13 @@
 
 					str += '<li style=clear:both;" class="li' + list[i].relyNum + '">';
 
-					str += '<div style="display:inline; float:left; width:80%;">';
+					str += '<div class="reply_area">';
 
 					str += '<strong class="userid' + list[i].replyNum + '">' + list[i].userId + '</strong>';
 
 					str += '<span>&nbsp' + list[i].grade.toFixed(1) + '<spand>'
 
-					str += '<p class="reply' + list[i].replyNum + '">' + list[i].replyContents + '</p>';
+					str += '<p class="reply' + list[i].replyNum + ' replyContent">' + list[i].replyContents + '</p>';
 
 					str += '</div><div style="text-align:right;">'
 
@@ -188,7 +194,8 @@
 						str += '<a href = "' + list[i].replyNum + '" class="mfinish" style="display:none;">수정 완료</a>';
 						str += '<a href = "' + list[i].replyNum + " " + list[i].boardNum + '" class="remove">삭제</a>';
 					}
-					str += '</div></li>';
+					str += '</div></li><hr>';
+					
 				}
 				replies.html(str);
 
@@ -275,7 +282,7 @@
 		let replynum = $(this).attr("href");
 		let replyContents = $("." + replynum).val();
 
-		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
+		replyService.modify({ replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser },
 			function (result) {
 				if (result == "success") {
 					alert(replynum + "번 댓글 수정 완료!");
