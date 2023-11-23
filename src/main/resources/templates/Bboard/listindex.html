@@ -195,6 +195,15 @@
 	<th:block th:replace="~{layout/header::header}"></th:block>
 	<div class="wrap">
 		<div class="sub-inner">
+			<div class="sub-tit">
+				<h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
+			</div><!--.sub-tit-->
+			<div class="depth2-wrap" data-aos="fade-up">
+				<ul class="depth2 sub-nav">
+					<li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
+					<li><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
+				</ul>
+			</div>
 			<div class="category_section">
 				<div class="btn_area">
 					<input type="text" class="category_btn" name="" id="category_main" value="전체"
