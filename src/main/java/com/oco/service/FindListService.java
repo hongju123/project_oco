@@ -49,7 +49,8 @@ public interface FindListService {
 	//김민준
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
-
+	List<ProfileDTO> getallprofile();
+	
 	//프로필 사진
 	boolean profilemodify(MultipartFile[] profiles,BusinessInfoDTO info,String profileCnt) throws Exception;
 

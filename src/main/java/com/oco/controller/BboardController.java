@@ -90,7 +90,7 @@ public class BboardController {
 		model.addAttribute("files", service.getFileList(businessInfoIdx));
 		
 		model.addAttribute("profiles",service.getprofile(businessInfoIdx));
-		System.out.println(service.getprofile(businessInfoIdx).size());
+		System.out.println(service.getprofile(businessInfoIdx));
 		String requsetURI = req.getRequestURI();
 		return requsetURI;
 	}

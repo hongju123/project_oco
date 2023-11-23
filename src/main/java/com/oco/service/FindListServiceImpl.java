@@ -326,5 +326,11 @@ public class FindListServiceImpl implements FindListService {
 	public boolean removeInfo(Long businessInfoIdx) {
 		return fmapper.removeInfo(businessInfoIdx);
 	}
+	
+	//모든 프로필 가져오기
+	@Override
+	public List<ProfileDTO> getallprofile() {
+		return fmapper.getallprofile();
+	}
 
 }
