@@ -98,6 +98,7 @@ function selectCategory_city() {
 
 								category_select();
 								updateMapLink();
+								updateMapLinks();
 
 								modal.style.display = "none"
 								body.style.display = "none"
@@ -140,6 +141,14 @@ function updateMapLink() {
 	const cityValue = document.getElementById("category_city").value;
 	const URL = "findmap?main=" + mainValue + "&city=" + cityValue;
 	if (document.getElementById("setting")) {
-		document.getElementById("setting").setAttribute("href", URL)
+		document.getElementById("setting").setAttribute("href", URL);
+	}
+}
+function updateMapLinks() {
+	const mainValue = document.getElementById("category_main").value;
+	const cityValue = document.getElementById("category_city").value;
+	const URL = "findmap?main=" + mainValue + "&city=" + cityValue;
+	if (document.getElementById("mapping")) {
+		document.getElementById("mapping").setAttribute("href", URL);
 	}
 }

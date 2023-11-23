@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>findList</title>
+	<title>찾아보기</title>
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
+	<link rel="icon" sizes="96x96" th:href="@{/main/images/favi.svg}">
 	<style>
 
 		@keyframes left {
@@ -201,7 +201,7 @@
 			<div class="depth2-wrap" data-aos="fade-up">
 				<ul class="depth2 sub-nav">
 					<li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
-					<li><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
+					<li><a th:href="@{findmap}" id="mapping">맵으로 찾기</a></li>
 				</ul>
 			</div>
 			<div class="category_section">
