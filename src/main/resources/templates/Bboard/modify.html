@@ -29,8 +29,7 @@
 							<div class="modi_tit">사진을 등록해주세요.</div>
 							<div id="profile_area">
 								<table class="pofile_table">
-									<tr class="profile0"
-										th:if="${profiles != null and profiles.size() > 0}"
+									<tr class="profile0" th:if="${profiles != null and profiles.size() > 0}"
 										th:each="profile : ${profiles}">
 										<!--<th>파일 첨부[[${profileStat.index+1}]]</th>-->
 										<td th:class="${'profile'+profileStat.index+'_cont'}">
@@ -43,8 +42,9 @@
 											</div>
 											<div class="file_modify">
 												<div class="photo_select">
-												<a
-													th:href="'javascript:load(\'profile'+${profileStat.index}+'\',\''+${profile.systemName}+'\')'"> x
+													<a
+														th:href="'javascript:load(\'profile'+${profileStat.index}+'\',\''+${profile.systemName}+'\')'">
+														x
 													</a>
 												</div>
 												<a
@@ -66,9 +66,8 @@
 											<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
 											<td th:class="${'profile'+profiles.size()+'_cont'}">
 												<div>
-													<input type="file" name="profiles"
-														id="profile0" style="display:none"
-														accept="image/gif,image/jpeg,image/png">
+													<input type="file" name="profiles" id="profile0"
+														style="display:none" accept="image/gif,image/jpeg,image/png">
 													<span th:id="${'profile'+profiles.size()+'name'}"></span>
 												</div>
 												<div class="file_modify">
@@ -95,22 +94,44 @@
 							</div>
 							<div class="shot_info info">
 								<div class="modi_tit">영업시간을 알려주세요.</div>
-								<select name="maa1">
-									<option>오전&nbsp;</option>
-									<option>오후&nbsp;</option>
-								</select>
-								<select name="open_time" class="time">
-									<option value="">00:00</option>
-								</select>
-								<span>부터</span>&nbsp;&nbsp;&nbsp;
-								<select name="maa2">
-									<option>오전&nbsp;</option>
-									<option>오후&nbsp;</option>
-								</select>
-								<select name="close_time" class="time">
-									<option value="">00:00</option>
-								</select>
-								<span>까지</span>
+								<th:block th:if="${infoboard.useTime == null}">
+									<select name="maa1">
+										<option>오전&nbsp;</option>
+										<option>오후&nbsp;</option>
+									</select>
+									<select name="open_time" class="time">
+									</select>
+									<span>부터</span>&nbsp;&nbsp;&nbsp;
+									<select name="maa2">
+										<option>오전&nbsp;</option>
+										<option>오후&nbsp;</option>
+									</select>
+									<select name="close_time" class="time">
+									</select>
+									<span>까지</span>
+								</th:block>
+								<th:block th:if="${infoboard.useTime != null}">
+									<th:block th:with="set=${infoboard.useTime.split(' ')}">
+										<select name="maa1">
+											<option hidden selected>[[${set[0]}]]</option>
+											<option>오전&nbsp;</option>
+											<option>오후&nbsp;</option>
+										</select>
+										<select name="open_time" class="time">
+											<option hidden selected>[[${set[1]}]]</option>
+										</select>
+										<span>부터</span>&nbsp;&nbsp;&nbsp;
+										<select name="maa2">
+											<option hidden selected>[[${set[3]}]]</option>
+											<option>오전&nbsp;</option>
+											<option>오후&nbsp;</option>
+										</select>
+										<select name="close_time" class="time">
+											<option hidden selected>[[${set[4]}]]</option>
+										</select>
+										<span>까지</span>
+									</th:block>
+								</th:block>
 							</div>
 							<div class="main_content reply2 info">
 								<div class="modi_tit">한 줄 소개 문구를 입력해주세요.</div>
@@ -236,8 +257,9 @@
 		}
 	}
 
-	const date = ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
+	const date = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00"]
 	const time = document.getElementsByClassName("time")
+	const content = document.getElementsByClassName("content")
 
 	for (let i of time) {
 		for (let key of date) {
@@ -245,6 +267,15 @@
 			option.value = key
 			option.innerHTML = key
 			i.appendChild(option);
+		}
+	}
+
+	function sandit() {
+		if (time[0].value == "" || time[1].value == "") {
+			alert("운영 시간을 입력해주세요")
+			return false;
+		}
+		if (content[0].value == "") {
 		}
 	}
 
