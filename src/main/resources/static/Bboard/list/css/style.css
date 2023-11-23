@@ -290,3 +290,45 @@ body{
 	color: #fff;
 }
 
+/* 덧글 css */
+.reply_area{
+	margin-bottom: 5px;
+}
+.replies{
+	margin-top: 30px;
+}
+.liundefined{
+}
+.replyContent{
+	padding: auto;
+	margin-top: 15px;
+	margin-left: 10px;
+	font-weight: bolder;
+}
+
+
+/* 덧글 cc 끝 */
+/* 페이지네이션 */
+.page{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.nowPage,.changePage{
+	text-align: center;
+	border: 1px solid black;
+	height: 30px;
+	width: 25px;
+	font-weight: bolder;
+	line-height: -5px;
+	font-size: 18px;
+}
+.nowPage{
+	background-color: #333;
+	color: white;
+}
+
+
+
+/* 페이지네이션 끝 */
