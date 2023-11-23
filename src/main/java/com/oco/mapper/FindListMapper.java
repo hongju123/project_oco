@@ -38,7 +38,6 @@ public interface FindListMapper {
 	List<BusinessInfoDTO> BusinessinfoList();
 	List<BusinessDTO> BusinessList();
 	
-	
 //파일 관련
 	Long getnum(String businessId);
 

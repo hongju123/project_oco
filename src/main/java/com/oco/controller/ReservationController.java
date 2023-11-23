@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oco.domain.dto.ReservationDTO;
 import com.oco.domain.dto.BusinessDTO;
 import com.oco.domain.dto.BusinessInfoDTO;
+import com.oco.domain.dto.ProfileDTO;
 import com.oco.service.FindListService;
 import com.oco.service.ReservationService;
 
@@ -174,14 +175,14 @@ public class ReservationController {
 			String userId = (String) req.getSession().getAttribute("loginUser");
 			// System.out.println("현재 유저 아이디 :
 			// "+req.getSession().getAttribute("loginUser"));
-			// System.out.println("GetUser :"+service.getUser(userId));
-			List<ReservationDTO> reservation = service.getUser(userId);
+			System.out.println("GetUser :"+service.getUser(userId));
 			List<BusinessDTO> blist = fservice.BusinessList();
-			List<BusinessInfoDTO> binfolist = fservice.BusinessinfoList();
+			List<ProfileDTO> profiles = fservice.getallprofile();
+			log.info("profile:{}" , profiles);
+			log.info("list:{}" , service.getUser((String) req.getSession().getAttribute("loginUser")));
 			model.addAttribute("list", service.getUser((String) req.getSession().getAttribute("loginUser")));
 			model.addAttribute("blist", blist);
-			model.addAttribute("binfolist", binfolist);
-			model.addAttribute("reservation", reservation);
+			model.addAttribute("profiles", profiles );
 		}
 		return "reservation/proposal";
 	}

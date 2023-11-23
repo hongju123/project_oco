@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BusinessDTO {
-    private String businessIdx;
+    private Long businessIdx;
     private String businessId;
     private String businessPassword;
     private String businessName;

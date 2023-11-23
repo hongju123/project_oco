@@ -193,7 +193,6 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public boolean profilemodify(MultipartFile[] profiles, BusinessInfoDTO info,String profileCnt) throws Exception {
-		System.out.println(info);	
 		
 		List<ProfileDTO> org_file_list = fmapper.getprofile(info.getBusinessInfoIdx());
 		if (org_file_list.size() == 0 && (profiles == null || profiles.length == 0)) {
@@ -269,7 +268,6 @@ public class FindListServiceImpl implements FindListService {
 
 	@Override
 	public List<ProfileDTO> getprofile(Long businessInfoIdx) {
-		System.out.println(businessInfoIdx + "프로필사진");
 		return fmapper.getprofile(businessInfoIdx);
 	}
 
@@ -327,6 +325,12 @@ public class FindListServiceImpl implements FindListService {
 	@Override
 	public boolean removeInfo(Long businessInfoIdx) {
 		return fmapper.removeInfo(businessInfoIdx);
+	}
+	
+	//모든 프로필 가져오기
+	@Override
+	public List<ProfileDTO> getallprofile() {
+		return fmapper.getallprofile();
 	}
 
 }

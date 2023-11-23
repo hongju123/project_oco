@@ -99,7 +99,6 @@ public class BboardController {
 	@PostMapping("modify")
 	public String modifyOk(BusinessInfoDTO info, HttpServletRequest req, MultipartFile[] files, MultipartFile[] profiles,String profileCnt, String updateCnt)
 			throws Exception {
-		
 		service.profilemodify(profiles,info,profileCnt);
 		// 시간대
 		String open = req.getParameter("maa1") + req.getParameter("open_time");

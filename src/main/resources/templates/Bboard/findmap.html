@@ -325,7 +325,7 @@
 	
 /*	AOS.init({
 		duration: 1200,
-	}); */
+	});  */
 
 	function thumbnail(use, files) {
 		for (let file of files) {
@@ -333,7 +333,7 @@
 				return '/Bboard/thumbnail?systemName=' + file.systemName;
 			}
 		}
-		return ''; // return an empty string if no thumbnail is found
+		return ''; 
 	}
 
 
@@ -440,7 +440,6 @@
 												break;
 											}
 										}
-										console.log(picture);
 										picture.style.cssText = "width:73px; height:70px";
 
 										var desc = document.createElement('div');
