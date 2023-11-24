@@ -89,12 +89,12 @@
 		}
 
 		/*로드뷰 부분*/
-		
-		#roadview{
-			width: 300px;
-			height: 300px;
-			margin: 20px auto;
-		}
+
+      #roadview {
+         width: 1000px;
+         height: 375px;
+         margin-top: 20px;
+      }
 
 
 
@@ -281,43 +281,44 @@
 
 <body>
 	<th:block th:replace="~{layout/header::header}"></th:block>
-	<div class="wrap">
-		<th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
-		<div class="sub-inner">
-			<div class="sub-tit">
-				<h2 data-aos="fade-up">여행<br> 어디로<br> <strong>떠나볼까요?</strong></h2>
-			</div><!--.sub-tit-->
-			<div class="depth2-wrap" data-aos="fade-up">
-				<ul class="depth2 sub-nav">
-					<li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
-					<li class="active"><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
-				</ul>
-			</div>
-			<div class="select_map">
-				<div class="select_category_section">
-					<div class="btn_area">
-						<input type="text" class="category_btn" name="" id="category_main" value="전체"
-							onclick="selectCategory_main()" readonly>
-						<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
-							onclick="selectCategory_city()" readonly>
-					</div>
-					<div id="roadview" style="width:300px; height:300px;">
-					</div>
-					<div class="modal">
-						<div class="modal_body">
-							<div class="close_area">X</div>
-							<div id="category_select_section">
+ <div class="wrap">
+      <th:block th:replace="~{layout/subVisual::subVisual}"></th:block>
+      <div class="sub-inner">
+         <div class="sub-tit">
+            <h2 data-aos="fade-up">여행, 예약부터<br> 막막하다면?<br> <strong>오시오!</strong></h2>
+         </div><!--.sub-tit-->
+         <div class="depth2-wrap" data-aos="fade-up">
+            <ul class="depth2 sub-nav">
+               <li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
+               <li class="active"><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
+            </ul>
+         </div>
+         <div class="select_map">
+            <div class="select_category_section">
+               <div class="btn_area">
+                  <input type="text" class="category_btn" name="" id="category_main" value="전체"
+                     onclick="selectCategory_main()" readonly>
+                  <input type="text" class="category_btn" name="" id="category_city" value="전 지역"
+                     onclick="selectCategory_city()" readonly>
+               </div>
+               <div class="modal">
+                  <div class="modal_body">
+                     <div class="close_area">X</div>
+                     <div id="category_select_section">
 
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="map">
-
-				</div>
-			</div>
-		</div><!--.sub-inner-->
-	</div><!--.wrap-->
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="map_area">
+               <div id="map">
+               </div>
+               <div id="roadview">
+               </div>
+            </div>
+         </div>
+      </div><!--.sub-inner-->
+   </div><!--.wrap-->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -366,10 +367,10 @@
 	var roadviewContainer = document.getElementById('roadview'); //로드뷰를 표시할 div
 	var roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
 	var roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
-	const showRoadView = function(position){
-		roadviewClient.getNearestPanoId(position, 50, function(panoId) {
-	        roadview.setPanoId(panoId, position);
-    	});
+	const showRoadView = function (position) {
+		roadviewClient.getNearestPanoId(position, 50, function (panoId) {
+			roadview.setPanoId(panoId, position);
+		});
 	}
 	//
 	$(document).ready(function () {
@@ -387,7 +388,7 @@
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
 					const profiles = data.plist;
-					
+
 
 					if (markers.length != 0) {
 						for (let i = 0; i < markers.length; i++) {
@@ -427,7 +428,7 @@
 											image: markerImage,
 											position: coords // 주소
 										});
-										
+
 
 										markers.push(marker)
 
@@ -447,8 +448,10 @@
 
 										kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭 했을때만 지움
 											roadviewContainer.style.display = "";
+											mapContainer.style.height = "440px";
 											let position = marker.getPosition()
 											showRoadView(position);
+											map.setCenter(position);
 											if (clickOverlay != null) {
 
 												clickOverlay.setMap(null);
@@ -470,7 +473,7 @@
 										var close = document.createElement('div');
 										close.id = 'close';
 										close.title = '닫기';
-										close.onclick = function () {overlay.setMap(null);};
+										close.onclick = function () {overlay.setMap(null), roadviewContainer.style.display = "none", mapContainer.style.height = "750px";};
 
 										var body = document.createElement('div');
 										body.className = 'body';

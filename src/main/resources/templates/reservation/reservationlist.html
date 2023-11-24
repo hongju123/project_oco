@@ -63,7 +63,7 @@
 			<div data-aos="fade-up">
 				<ul class="list">
 					<th:block th:if="${list != null and list.size()>0}" th:each="reservation : ${list}">
-						<li>
+						<li class="li_list">
 							<th:block th:if="${reservation.userId == session.loginUser}">
 								<div class="request">
 									<h4>견적요청서</h4>
@@ -83,7 +83,7 @@
 						</li>
 					</th:block>
 					<th:block th:if="${lists != null and lists.size()>0}" th:each="reservation : ${lists}">
-						<li>
+						<li class="li_lists">
 							<th:block th:if="${session.businessUser == 'O'}">
 								<div class="request">
 									<h3>[[${reservation.category}]]</h3>
@@ -169,7 +169,7 @@
 		data.forEach(item => {
 			// 데이터를 기반으로 동적으로 HTML 형성
 			console.log(item.requestNum);
-			let newRowHtml = "<li>" +
+			let newRowHtml = "<li class='li_lists'>" +
 				"<div class='request'>" +
 				"<h3>" + item.category + "</h3>" +
 				"<P>" + item.requestType + "</p>" +

@@ -125,10 +125,16 @@ select{
 .list{
 	font-weight: 700;
 	display: flex;
-	justify-content: space-around;
+	justify-content: left;
 	flex-flow:wrap;
+	margin-right: 10px;
 }
-
+.li_list{
+	margin-right: 10px;
+}
+.li_lists{
+	margin-right: 10px;
+}
 
 h3{
 	font-size: 24px;
