@@ -61,7 +61,7 @@
 												<th:block th:with="ext=${sar[sar.length-1]}">
 													<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}"
 														th:src="@{/Bboard/profile (systemName=${profile.systemName})}"
-														class="thumbnail">
+														id="profile">
 												</th:block>
 											</th:block>
 										</td>
@@ -147,7 +147,7 @@
 							</div>
 							<div class="info2 ">
 								<div class="modi_tit">사진을 등록해주세요.</div>
-								<table class="">
+								<table class="file_table">
 									<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}"
 										th:each="file : ${files}">
 										<!--<th>파일 첨부[[${fileStat.index+1}]]</th>-->
@@ -185,9 +185,9 @@
 												<span th:id="${'file'+files.size()+'name'}"></span>
 											</div>
 											<div class="file_modify">
-												<div class="photo_select">
+												<div class="file_select">
 													<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">
-														+
+														x
 													</a>
 												</div>
 												<a
@@ -428,6 +428,13 @@
 		}
 	})
 
+	$(document).ready(function () {
+		// 실행할 기능을 정의해주세요.
+		if ($("#profile")) {
+			$(".photo_select").hide();
+		}
+	});
+
 	let p = 0;
 	let loadCheck = false;
 	const org = document.getElementsByName("org");
@@ -481,15 +488,16 @@
 			let ext = profile.name.split(".").pop();
 			if (ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp') {
 				$("#" + profileTag.id + "name").text(profile.name);
-				$("." + profileTag.id + "_cont .thumbnail").remove();
+				$("." + profileTag.id + "_cont #profile").remove();
 
 				const reader = new FileReader();
 				reader.onload = function (ie) {
 					console.log(ie.target.result)
 					const img = document.createElement("img");
 					img.setAttribute("src", ie.target.result)
-					img.setAttribute("class", "thumbnail");
+					img.setAttribute("id", "profile");
 					document.querySelector("." + profileTag.id + "_cont").appendChild(img);
+					$(".photo_select").hide();
 				}
 				reader.readAsDataURL(profile);
 			}
@@ -504,7 +512,6 @@
 		}
 
 	})
-	let text = "";
 	function cancel(name, systemName) {
 		console.log(name)
 
@@ -513,7 +520,10 @@
 		if (p === 0) {
 			$("#" + name).val("");
 			$("#" + name + "name").text('선택된 파일 없음');
-			$("." + name + "_cont .thumbnail").remove();
+			$("." + name + "_cont #profile").remove();
+			if ($(".photo_select")) {
+				$(".photo_select").show();
+			}
 		}
 	}
 

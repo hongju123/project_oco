@@ -303,10 +303,8 @@
 						<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
 							onclick="selectCategory_city()" readonly>
 					</div>
-					<div class="comment">
-						<p class="comment_deteil_1">맵으로</p>
-						<p class="comment_deteil_2">보세요</p>
-					</div>
+					<canvas id="roadview">
+					</canvas>
 					<div class="modal">
 						<div class="modal_body">
 							<div class="close_area">X</div>
@@ -343,7 +341,7 @@
 				return '/Bboard/thumbnail?systemName=' + file.systemName;
 			}
 		}
-		return ''; 
+		return '';
 	}
 
 
@@ -357,12 +355,16 @@
 
 	const category = ["숙소", "카페", "식당", "렌터카", "기타"]
 	var markers = [];
+
+
 	let mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		mapOption = {
 			center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 			level: 4 // 지도의 확대 레벨
 		};
-	let map = new kakao.maps.Map(mapContainer, mapOption); // 지도생성
+	let map = new kakao.maps.Map(mapContainer, mapOption); // 지도생성*/
+
+
 
 	const selectService = (function () {
 
@@ -417,10 +419,13 @@
 										clickOverlay = null;
 
 										kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭 했을때만 지움
+
 											if (clickOverlay != null) {
 
 												clickOverlay.setMap(null);
 											}
+
+
 											overlay.setMap(map)
 											clickOverlay = overlay;
 										});
@@ -443,10 +448,10 @@
 										var img = document.createElement('div');
 										img.className = 'img';
 										var picture = document.createElement('img');
-										
-										for(let profile of profiles){
-											if(profile.boardNum == use.businessIdx){
-												picture.src= '/Bboard/profile?systemName=' + profile.systemName
+
+										for (let profile of profiles) {
+											if (profile.boardNum == use.businessIdx) {
+												picture.src = '/Bboard/profile?systemName=' + profile.systemName
 												break;
 											}
 										}
@@ -485,7 +490,7 @@
 			})
 		}
 		return {getlist: selectAll}
-	})();
+	})()
 
 	function category_select() {
 		selectService.getlist({"category": category_main.value, "city": category_city.value})

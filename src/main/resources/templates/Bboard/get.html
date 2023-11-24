@@ -53,21 +53,21 @@
 				<div class="title_section_wrap" data-aos="fade-up">
 					<div class="title_section">
 						<div class="title_section_in">
-							<div>
+							<div class="deteil">
 								<p>번호</p>[[${userboard.businessIdx}]]
 							</div>
-							<div class="userboard_id">
+							<div class="deteil">
 								<p>아이디</p>[[${userboard.businessId}]]
 							</div>
-							<div>
+							<div class="deteil">
 								<p>주소</p>[[${userboard.businessAddress}]]
 							</div>
 						</div>
 						<div class="title_section_in">
-							<div>
+							<div class="deteil">
 								<p>운영 시간</p>[[${infoboard.useTime}]]
 							</div>
-							<div>
+							<div class="deteil">
 								<p>제공 가능 서비스</p>
 								<th:block th:each="amenity : ${#strings.arraySplit(infoboard.amenities,',')}">
 									<label>[[${amenity}]]</label>
@@ -75,13 +75,31 @@
 							</div>
 							<div class="main_content ">
 								<p>한줄소개</p>
-								<textarea>[[${infoboard.content}]]</textarea>
+								<textarea readonly>[[${infoboard.content}]]</textarea>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="shot_info"></div>
-				<div class="free_service"></div>
+				<div class="file_List">
+					<p>이미지</p>
+					<ul class="img_list">
+						<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<th:block
+										th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<li>
+											<img th:src="@{/Bboard/thumbnail (systemName=${file.systemName})}" class="img_file">
+										</li>
+									</th:block>
+								</th:block>
+							</th:block>
+						</th:block>
+						<th:block th:if="${files != null and files.size() == 0}">
+							<li><p>등록 된 사진이 없습니다.</p></li>
+						</th:block>
+					</ul>
+				</div>
 				<div class="reply">
 					<div class="replyForm row">
 						<div>
@@ -151,13 +169,13 @@
 		e.preventDefault();
 		let replyContents = $("[name='replyContents']").val();
 		let grade = $("[name='rating']:checked").val() / 2;
-		if (replyContents=='') {
+		if (replyContents == '') {
 			alert("평가를 작성해주세요")
 			$("[name='replyContents']").focus()
 			return false
 		}
 		replyService.add(
-			{ "boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade },
+			{"boardNum": boardnum, "userId": loginUser, "replyContents": replyContents, "grade": grade},
 			function (resut) {
 				alert("등록");
 				$("[name='replyContents']").val("");
@@ -168,7 +186,7 @@
 	})
 	function showList(pagenum) {
 		replyService.getList(
-			{ "boardNum": boardnum, "pagenum": pagenum || 1 },
+			{"boardNum": boardnum, "pagenum": pagenum || 1},
 			function (replyCnt, list) {
 				let str = "";
 				if (list == null || list.length == 0) {
@@ -200,7 +218,7 @@
 						str += '<a href = "' + list[i].replyNum + " " + list[i].boardNum + '" class="remove">삭제</a>';
 					}
 					str += '</div></li><hr>';
-					
+
 				}
 				replies.html(str);
 
@@ -287,7 +305,7 @@
 		let replynum = $(this).attr("href");
 		let replyContents = $("." + replynum).val();
 
-		replyService.modify({ replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser },
+		replyService.modify({replyNum: replynum, replyContents: replyContents, boardNum: boardnum, userId: loginUser},
 			function (result) {
 				if (result == "success") {
 					alert(replynum + "번 댓글 수정 완료!");
