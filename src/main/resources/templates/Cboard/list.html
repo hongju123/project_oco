@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="utf-8">
 	<title>커뮤니티</title>
@@ -21,23 +22,31 @@
 			</div><!--.sub-tit-->
 			<div class="depth2-wrap">
 				<ul class="depth2 sub-nav">
-					<li><div name="topic" class="topic">전체</div></li>
-					<li><div name="topic" class="topic">궁금해요</div></li>
-					<li><div name="topic" class="topic">얼마에요</div></li>
-					<li><div name="topic" class="topic">함께해요</div></li>
+					<li>
+						<div name="topic" class="topic clickTopic">전체</div>
+					</li>
+					<li>
+						<div name="topic" class="topic">궁금해요</div>
+					</li>
+					<li>
+						<div name="topic" class="topic">얼마에요</div>
+					</li>
+					<li>
+						<div name="topic" class="topic">함께해요</div>
+					</li>
 				</ul>
 			</div>
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
-			
-			
-		
+
+
+
 			<div class="option_area">
 				<div class="write">
 					<a class="write_button" onclick="return loginUserHandler()" th:href="@{/Cboard/write}">글쓰기</a>
 					<img src="/boardlist/css/writeimg.jpg" alt="" srcset="">
 				</div>
 			</div>
-	
+
 			<article>
 				<ul class="list">
 					<li th:if="${list != null and list.size()>0}" th:each="board : ${list}" class="addList">
@@ -124,16 +133,20 @@
 	let startRow = 10;
 	let amount = 20;
 	let topic = /*[[${topic}]]*/'';
-	console.log("topic :",topic)
+	console.log("topic :", topic)
 	const getListURL = "/Cboard/addList";
 	//토픽 클릭시 
 
 	document.querySelectorAll(".topic").forEach(data => data.addEventListener("click", function (e) {
 		//만약 현재 토픽값과 같다면 ajax호출 안하고 그냥 딱히 변화 없는것으로.
+
 		if (topic == e.target.innerText) {
 			console.log("토픽 값이 같습니다 " + topic);
 			return;
 		} else {
+			document.querySelectorAll(".topic").forEach(data=>data.classList.remove("clickTopic"));
+			e.target.classList.add("clickTopic");
+			
 			//토픽값이 다르다면 돔을 재구성 해서 다시 스타트
 			$(".list>li").remove();
 			topic = e.target.innerText;
@@ -237,8 +250,8 @@
 			alert("로그인후 이용해주세요")
 			return false;
 		}
-	
-	return true; 
+
+		return true;
 	}
 
 </script>

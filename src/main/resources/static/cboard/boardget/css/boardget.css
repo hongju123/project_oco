@@ -133,12 +133,8 @@ div>a:not(.regist,.modify,.mfinish,.remove){
 }
 /* 게시판 css */
 .board_title{
-	font-weight: bolder;
-	font-size: larger;
-	font-family: 'Song Myung', serif;
 }
 .user_id{
-	font-weight: bold;
 }
 .thumbnail{
 margin-top: 15px;
