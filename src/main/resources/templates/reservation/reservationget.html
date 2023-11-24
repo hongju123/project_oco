@@ -76,9 +76,6 @@
 							<li><a href="javascript:modify()" class="modify-btn">수정</a></li>
 							<li><a href="javascript:document.reservationForm.submit()" class="remove-btn">삭제</a></li>
 						</div>
-						<div class="lists-btn">
-							<li><a th:href="${'/reservation/reservationlist'}" class="list-btn">목록</a></li>
-						</div>
 					</ul>
 				</th:block>
 				<th:block th:if="${session.businessUser == 'O'}">

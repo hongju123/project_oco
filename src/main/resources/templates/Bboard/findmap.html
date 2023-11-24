@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>맵으로 보기</title>
-	<link rel="icon" sizes="96x96" th:href="@{/main/images/favi.svg}"> 
+	<link rel="icon" sizes="96x96" th:href="@{/main/images/favi.svg}">
 	<link rel="stylesheet" th:href="@{/main/css/common.css}">
 	<link rel="stylesheet" th:href="@{/main/css/sub.css}">
 	<style>
@@ -292,7 +292,7 @@
 			<div class="depth2-wrap" data-aos="fade-up">
 				<ul class="depth2 sub-nav">
 					<li><a th:href="@{/Bboard/getlist}">찾아보기</a></li>
-					<li><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
+					<li class="active"><a th:href="@{/Bboard/findmap}">맵으로 찾기</a></li>
 				</ul>
 			</div>
 			<div class="select_map">
@@ -328,12 +328,14 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
 <script th:src="@{map/js/onposition.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
-	
-/*	AOS.init({
-		duration: 1200,
-	});  */
+
+	/*	AOS.init({
+			duration: 1200,
+		});  */
 
 	function thumbnail(use, files) {
 		for (let file of files) {
@@ -398,7 +400,23 @@
 
 										var coords = new kakao.maps.LatLng(result[0].y, result[0].x); //
 
+										var imgeSrc = "",
+											imageSize = new kakao.maps.Size(36, 40), // 마커이미지의 크기입니다
+											imageOption = {offset: new kakao.maps.Point(18, 32)}; //
+
+
+										for (let cate of category) {
+											console.log(use.businessCategory.includes(cate))
+											use.businessCategory.includes(cate) ? imgeSrc = "./map/img/" + cate + ".png" : "";
+										}
+										console.log(imgeSrc)
+										var markerImage = new kakao.maps.MarkerImage(imgeSrc, imageSize, imageOption),
+											markerPosition = coords // 마커가 표시될 위치입니다
+
+
+
 										var marker = new kakao.maps.Marker({  // 결과값으로 받은 위치를 마커로 표시합니다
+											image: markerImage,
 											position: coords // 주소
 										});
 
