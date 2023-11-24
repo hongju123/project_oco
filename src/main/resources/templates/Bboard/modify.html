@@ -66,7 +66,7 @@
 											</th:block>
 										</td>
 									</tr>
-									<th:block th:if="${profiles != null and profiles.size() == 0}">
+									<th:block th:if="${profiles == null or profiles.size() == 0}">
 										<tr class="prfile0">
 											<!--<th>파일 첨부[[${files.size()+1}]]</th>-->
 											<td th:class="${'profile'+profiles.size()+'_cont'}">
@@ -429,8 +429,8 @@
 	})
 
 	$(document).ready(function () {
-		// 실행할 기능을 정의해주세요.
-		if ($("#profile")) {
+		console.log($("#profile"))
+		if (document.getElementById("profile")) {
 			$(".photo_select").hide();
 		}
 	});
