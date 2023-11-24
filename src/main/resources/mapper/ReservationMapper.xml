@@ -26,6 +26,9 @@
 	<select id="getReservationList">
 		select * from user_requests where user_id=#{loginUser}
 	</select>
+	<select id="getReservationLists">
+		select * from user_requests
+	</select>
 	
 	<select id="getAllList">
 		select * from user_requests where

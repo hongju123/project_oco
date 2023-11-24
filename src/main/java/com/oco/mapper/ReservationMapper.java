@@ -22,6 +22,7 @@ public interface ReservationMapper {
 
 	// select
 	List<ReservationDTO> getReservationList(String loginUser);
+	List<ReservationDTO> getReservationLists();
 
 	Long getTotal();
 

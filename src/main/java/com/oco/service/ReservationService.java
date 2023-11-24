@@ -21,6 +21,7 @@ public interface ReservationService {
 	//select
 	Long getTotal();
 	List<ReservationDTO> getReservationList(String loginUser);
+	List<ReservationDTO> getReservationLists();
 	ReservationDTO getDetail(Long requestNum);
 	List<ReservationDTO> getAllList(String category,String area, Long amount, Long startRow);
 	

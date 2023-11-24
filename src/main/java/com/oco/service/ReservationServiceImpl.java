@@ -78,4 +78,11 @@ public class ReservationServiceImpl implements ReservationService{
 		return remapper.getAllList(category,area,amount,startRow);
 	}
 
+	
+
+	@Override
+	public List<ReservationDTO> getReservationLists() {
+		return remapper.getReservationLists();
+	}
+
 }

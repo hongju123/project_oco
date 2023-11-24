@@ -37,7 +37,9 @@ public class ReservationController {
 		HttpSession session = req.getSession();
 		String loginUser = (String) session.getAttribute("loginUser");
 		List<ReservationDTO> list = service.getReservationList(loginUser);
+		List<ReservationDTO> lists = service.getReservationLists();
 		model.addAttribute("list", list);
+		model.addAttribute("lists", lists);
 	}
 	
 	@ResponseBody
