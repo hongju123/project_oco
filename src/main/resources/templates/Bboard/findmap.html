@@ -328,6 +328,8 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71d14da2b8928980c31f877a8bc84a90&libraries=services"></script>
 <script th:src="@{map/js/onposition.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/main/js/main.js}"></script>
 <script th:src="@{list/js/modal.js}"></script>
 <script th:inline="javascript">
 
@@ -405,7 +407,7 @@
 
 										for (let cate of category) {
 											console.log(use.businessCategory.includes(cate))
-											use.businessCategory.includes(cate) ? imgeSrc = "./map/img/"+cate+".png" : "";
+											use.businessCategory.includes(cate) ? imgeSrc = "./map/img/" + cate + ".png" : "";
 										}
 										console.log(imgeSrc)
 										var markerImage = new kakao.maps.MarkerImage(imgeSrc, imageSize, imageOption),
