@@ -52,16 +52,16 @@
 			height: 1000px;
 		}
 
+		/*맵*/
 		.select_map {
 			display: flex;
-			justify-content: space-between;
 		}
 
-		/*맵*/
 		#map {
+			float: left;
 			border: 1px solid black;
 			width: 1000px;
-			height: 750px;
+			height: 700px;
 			z-index: 1;
 			animation: right 0.5s ease-out;
 		}
@@ -89,11 +89,17 @@
 		}
 
 		/*로드뷰 부분*/
-		
-		#roadview{
-			width: 300px;
-			height: 300px;
-			margin: 20px auto;
+
+		.map_area {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		#roadview {
+			width: 1000px;
+			height: 375px;
+			margin-top: 20px;
 		}
 
 
@@ -301,8 +307,6 @@
 						<input type="text" class="category_btn" name="" id="category_city" value="전 지역"
 							onclick="selectCategory_city()" readonly>
 					</div>
-					<div id="roadview" style="width:300px; height:300px;">
-					</div>
 					<div class="modal">
 						<div class="modal_body">
 							<div class="close_area">X</div>
@@ -312,8 +316,11 @@
 						</div>
 					</div>
 				</div>
-				<div id="map">
-
+				<div class="map_area">
+					<div id="map">
+					</div>
+					<div id="roadview">
+					</div>
 				</div>
 			</div>
 		</div><!--.sub-inner-->
@@ -363,15 +370,16 @@
 			level: 4 // 지도의 확대 레벨
 		};
 	let map = new kakao.maps.Map(mapContainer, mapOption); // 지도생성*/
+	
 	var roadviewContainer = document.getElementById('roadview'); //로드뷰를 표시할 div
 	var roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
 	var roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
-	const showRoadView = function(position){
-		roadviewClient.getNearestPanoId(position, 50, function(panoId) {
-	        roadview.setPanoId(panoId, position);
-    	});
+	const showRoadView = function (position) {
+		roadviewClient.getNearestPanoId(position, 50, function (panoId) {
+			roadview.setPanoId(panoId, position);
+		});
 	}
-	$(document).ready(function(){
+	$(document).ready(function () {
 		roadviewContainer.style.display = "none";
 	})
 	const selectService = (function () {
@@ -386,7 +394,7 @@
 					const user = data.ulist; //유저 데이터 추출
 					const info = data.ilist;
 					const profiles = data.plist;
-					
+
 
 					if (markers.length != 0) {
 						for (let i = 0; i < markers.length; i++) {
@@ -426,7 +434,7 @@
 											image: markerImage,
 											position: coords // 주소
 										});
-										
+
 
 										markers.push(marker)
 
@@ -446,14 +454,16 @@
 
 										kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭 했을때만 지움
 											roadviewContainer.style.display = "";
+											mapContainer.style.height = "440px";
 											let position = marker.getPosition()
 											showRoadView(position);
+											map.setCenter(position);
+
+
 											if (clickOverlay != null) {
 
 												clickOverlay.setMap(null);
 											}
-
-
 											overlay.setMap(map)
 											clickOverlay = overlay;
 										});
@@ -469,7 +479,7 @@
 										var close = document.createElement('div');
 										close.id = 'close';
 										close.title = '닫기';
-										close.onclick = function () {overlay.setMap(null);};
+										close.onclick = function () {overlay.setMap(null), roadviewContainer.style.display = "none", mapContainer.style.height = "750px";};
 
 										var body = document.createElement('div');
 										body.className = 'body';
