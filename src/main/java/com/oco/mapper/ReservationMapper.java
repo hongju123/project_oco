@@ -21,7 +21,7 @@ public interface ReservationMapper {
 	int deletereservation(Long requestNum);
 
 	// select
-	List<ReservationDTO> getReservationList();
+	List<ReservationDTO> getReservationList(String loginUser);
 
 	Long getTotal();
 

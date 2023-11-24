@@ -25,8 +25,8 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<ReservationDTO> getReservationList() {
-		return remapper.getReservationList();
+	public List<ReservationDTO> getReservationList(String loginUser) {
+		return remapper.getReservationList(loginUser);
 	}
 
 	@Override

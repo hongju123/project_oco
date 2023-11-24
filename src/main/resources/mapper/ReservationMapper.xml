@@ -24,7 +24,7 @@
 	</delete>
 	
 	<select id="getReservationList">
-		select * from user_requests
+		select * from user_requests where user_id=#{loginUser}
 	</select>
 	
 	<select id="getAllList">

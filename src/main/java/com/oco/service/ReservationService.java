@@ -20,7 +20,7 @@ public interface ReservationService {
 	
 	//select
 	Long getTotal();
-	List<ReservationDTO> getReservationList();
+	List<ReservationDTO> getReservationList(String loginUser);
 	ReservationDTO getDetail(Long requestNum);
 	List<ReservationDTO> getAllList(String category,String area, Long amount, Long startRow);
 	

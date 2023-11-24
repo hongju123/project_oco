@@ -33,8 +33,10 @@ public class ReservationController {
 	private FindListService fservice;
 
 	@GetMapping("reservationlist")
-	public void list(Model model) {
-		List<ReservationDTO> list = service.getReservationList();
+	public void list(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String loginUser = (String) session.getAttribute("loginUser");
+		List<ReservationDTO> list = service.getReservationList(loginUser);
 		model.addAttribute("list", list);
 	}
 	
