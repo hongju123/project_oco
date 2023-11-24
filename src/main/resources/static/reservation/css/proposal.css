@@ -26,9 +26,10 @@ h3{
 }
 .img{
 	border-radius: 100%;
-	width: 200px;
-	height: 100px;
-
+	width: 150px;
+	height: 80px;
+	margin-top: 10px;
+	margin-left: 10px;
 }
 
 .memo{
